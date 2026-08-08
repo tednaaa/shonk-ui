@@ -4,4 +4,4 @@
 /* NOTE: uncomment this if in dist any styles... */
 /*@import "../../dist/style.css";*/
 
-@source "../../dist";
+@source "../../dist/**/*.js";
