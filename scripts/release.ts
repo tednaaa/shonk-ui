@@ -1,19 +1,28 @@
 import { execSync } from 'node:child_process';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import process from 'node:process';
-import { cancel, confirm, isCancel, select } from '@clack/prompts';
+import { cancel, confirm, intro, isCancel, log, note, outro, select } from '@clack/prompts';
 import { versionBump } from 'bumpp';
 
 const FIELD_SEP = '\x1F';
 const RECORD_SEP = '\x1E';
+const VERSION_PATH = 'package.json';
 const CHANGELOG_PATH = 'CHANGELOG.md';
 const CHANGELOG_HEADER = '# Changelog\n\n';
 const RELEASE_COMMIT_PATTERN = '^chore: release';
+const RELEASE_COMMIT_MESSAGE = 'chore: release v';
+const RELEASE_FILES = [VERSION_PATH, CHANGELOG_PATH];
+const TAG_PREFIX = 'v';
 
 interface Commit {
   sha: string;
   subject: string;
   body: string;
+}
+
+interface Snapshot {
+  path: string;
+  content: string | null;
 }
 
 function run(command: string): string {
@@ -96,14 +105,22 @@ function buildSection(version: string, commits: Commit[], webUrl: string): strin
   return `## v${version} (${today()})\n\n${entries}\n`;
 }
 
+function dropSection(body: string, version: string): string {
+  return body
+    .split(/(?=^## v)/m)
+    .filter(section => !section.startsWith(`## v${version} `))
+    .join('');
+}
+
 function readExistingBody(): string {
   if (!existsSync(CHANGELOG_PATH))
     return '';
   return readFileSync(CHANGELOG_PATH, 'utf8').replace(/^# Changelog\n+/, '');
 }
 
-function writeChangelog(section: string): void {
-  writeFileSync(CHANGELOG_PATH, `${CHANGELOG_HEADER + section}\n${readExistingBody()}`);
+function writeChangelog(version: string, section: string): void {
+  const body = dropSection(readExistingBody(), version);
+  writeFileSync(CHANGELOG_PATH, `${CHANGELOG_HEADER + section}\n${body}`);
 }
 
 function stageChangelog(): void {
@@ -116,19 +133,54 @@ function generateChangelog(version: string): void {
   const webUrl = resolveWebUrl();
   const commits = collectCommits(range);
 
-  writeChangelog(buildSection(version, commits, webUrl));
+  writeChangelog(version, buildSection(version, commits, webUrl));
   stageChangelog();
 
-  console.log(`Changelog updated for v${version} (${commits.length} entries).`);
+  log.step(`Changelog updated for v${version} (${commits.length} entries).`);
 }
 
-function abort(): never {
-  cancel('Release cancelled.');
+function snapshotReleaseFiles(): Snapshot[] {
+  return RELEASE_FILES.map(path => ({
+    path,
+    content: existsSync(path) ? readFileSync(path, 'utf8') : null,
+  }));
+}
+
+function restoreReleaseFiles(snapshots: Snapshot[]): void {
+  for (const { path, content } of snapshots) {
+    tryRun(`git reset --quiet -- ${path}`);
+    if (content === null) {
+      rmSync(path, { force: true });
+      continue;
+    }
+    writeFileSync(path, content);
+  }
+}
+
+function isChangelogDirty(): boolean {
+  return Boolean(run(`git status --porcelain -- ${CHANGELOG_PATH}`));
+}
+
+function amendChangelog(): void {
+  stageChangelog();
+  run('git commit --amend --no-edit');
+}
+
+function tagRelease(version: string): void {
+  run(`git tag --annotate ${TAG_PREFIX}${version} --message "${RELEASE_COMMIT_MESSAGE}${version}"`);
+}
+
+function pushRelease(): void {
+  run('git push --follow-tags');
+}
+
+function abort(hint?: string): never {
+  cancel(hint ? `Release cancelled. ${hint}` : 'Release cancelled.');
   process.exit(0);
 }
 
 function readCurrentVersion(): string {
-  const pkg = JSON.parse(readFileSync('package.json', 'utf8')) as { version: string };
+  const pkg = JSON.parse(readFileSync(VERSION_PATH, 'utf8')) as { version: string };
   return pkg.version;
 }
 
@@ -159,25 +211,71 @@ async function pickVersion(): Promise<string> {
 
 async function confirmRelease(version: string): Promise<void> {
   const proceed = await confirm({
-    message: `Bump to v${version}, update changelog, tag and push?`,
+    message: `Bump to v${version}, update changelog and create the release commit?`,
   });
   if (isCancel(proceed) || !proceed)
     abort();
 }
 
+async function commitRelease(version: string): Promise<void> {
+  const snapshots = snapshotReleaseFiles();
+
+  try {
+    await versionBump({
+      release: version,
+      all: true,
+      commit: RELEASE_COMMIT_MESSAGE,
+      tag: false,
+      push: false,
+      confirm: false,
+      execute: operation => generateChangelog(operation.state.newVersion),
+    });
+  }
+  catch (error) {
+    restoreReleaseFiles(snapshots);
+    log.warn(`Restored ${RELEASE_FILES.join(' and ')} — no version bump, no changelog.`);
+    throw error;
+  }
+}
+
+async function reviewChangelog(version: string): Promise<void> {
+  note(
+    `Review ${CHANGELOG_PATH} and edit it if needed.\nUnstaged edits are amended into the release commit,\nor amend it yourself before continuing.`,
+    `Release commit for v${version} is local only`,
+  );
+
+  const proceed = await confirm({ message: 'Changelog looks good — tag and push?' });
+  if (isCancel(proceed) || !proceed)
+    abort('Nothing was tagged or pushed. Undo the commit with: git reset --soft HEAD~1');
+}
+
+function applyChangelogEdits(): void {
+  if (!isChangelogDirty()) {
+    log.step('No pending changelog edits.');
+    return;
+  }
+  amendChangelog();
+  log.success('Amended changelog edits into the release commit.');
+}
+
 async function release(): Promise<void> {
+  intro('shonk-ui release');
+
   const version = await pickVersion();
   await confirmRelease(version);
 
-  await versionBump({
-    release: version,
-    all: true,
-    commit: true,
-    tag: true,
-    push: true,
-    confirm: false,
-    execute: operation => generateChangelog(operation.state.newVersion),
-  });
+  await commitRelease(version);
+  await reviewChangelog(version);
+  applyChangelogEdits();
+
+  tagRelease(version);
+  log.step(`Tagged ${TAG_PREFIX}${version}.`);
+
+  pushRelease();
+  outro(`Released v${version}.`);
 }
 
-release();
+release().catch((error: unknown) => {
+  cancel(`Release failed: ${error instanceof Error ? error.message : String(error)}`);
+  process.exit(1);
+});
