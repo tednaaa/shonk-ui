@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.6 (2026-08-08)
+
+- remove double \n\n as changelog commits seperator [`38c6c280`](https://github.com/tednaaa/shonk-ui/commit/38c6c2809a7601f2c586a9cf6820246036d5d8d5)
+
 ## v0.1.5 (2026-08-08)
 
 - update pkgs [`356f61ac`](https://github.com/tednaaa/shonk-ui/commit/356f61ac4e0520cc7138a659420c1f9bf8545833)
