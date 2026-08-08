@@ -1,8 +1,13 @@
 {
   "name": "shonk-ui",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Shonk UI kit",
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tednaaa/shonk-ui"
+  },
   "sideEffects": [
     "**/*.css"
   ],
