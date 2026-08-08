@@ -1,7 +1,7 @@
 {
   "name": "shonk-ui",
   "type": "module",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Shonk UI kit",
   "license": "GPL-3.0-only",
   "repository": {
