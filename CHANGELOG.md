@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.8 (2026-08-08)
+
+- open changelog page by default [`01958c09`](https://github.com/tednaaa/shonk-ui/commit/01958c09c189b13f757ca58d64de668573dd168b)
+
 ## v0.1.7 (2026-08-08)
 
 - fix: exclude sourcemaps from tailwind source scanning [`e81e6a5e`](https://github.com/tednaaa/shonk-ui/commit/e81e6a5e864e86c4b6c40ee2dd7d313b1b1597e2)
