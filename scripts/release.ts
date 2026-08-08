@@ -101,7 +101,7 @@ function today(): string {
 }
 
 function buildSection(version: string, commits: Commit[], webUrl: string): string {
-  const entries = commits.map(commit => formatCommit(commit, webUrl)).join('\n\n');
+  const entries = commits.map(commit => formatCommit(commit, webUrl)).join('\n');
   return `## v${version} (${today()})\n\n${entries}\n`;
 }
 
