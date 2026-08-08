@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.7 (2026-08-08)
+
+- fix: exclude sourcemaps from tailwind source scanning [`e81e6a5e`](https://github.com/tednaaa/shonk-ui/commit/e81e6a5e864e86c4b6c40ee2dd7d313b1b1597e2)
+
 ## v0.1.6 (2026-08-08)
 
 - remove double \n\n as changelog commits seperator [`38c6c280`](https://github.com/tednaaa/shonk-ui/commit/38c6c2809a7601f2c586a9cf6820246036d5d8d5)
