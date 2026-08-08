@@ -1,18 +1,9 @@
-shellEmulator: true
-trustPolicy: no-downgrade
-
-trustPolicyExclude:
-  # false positive — semver@6.x never had provenance; pnpm wrongly compares vs semver@7.x (https://github.com/orgs/pnpm/discussions/11084)
-  - semver@6.3.1
-
 allowBuilds:
   esbuild: false
-  # vue-demi runs a postinstall script to detect Vue version and write a compat shim — safe, maintained by Vue core team
-  vue-demi: true
+  vue-demi: false
 
-overrides:
-  # fflate 0.8.3 broke `filename` property access - pin until fixed upstream
-  # see: https://github.com/arethetypeswrong/arethetypeswrong.github.io/issues/258
-  fflate: 0.8.2
-  # pinned to prevent accidental upgrades that could introduce supply chain risk
-  vue-demi: 0.14.10
+minimumReleaseAgeExclude:
+  - eslint@10.8.1
+
+shellEmulator: true
+trustPolicy: no-downgrade
