@@ -1,13 +1,6 @@
-# Devenv
 .devenv*
 devenv.local.nix
 devenv.local.yaml
-
-# direnv
-.direnv
-
-# pre-commit
-.pre-commit-config.yaml
 
 node_modules
 dist
@@ -16,6 +9,3 @@ dist
 
 *storybook.log
 storybook-static
-
-# GitHub Pages / Storybook build output
-public
