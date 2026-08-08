@@ -1,0 +1,7 @@
+@import "vue-sonner/style.css";
+
+@import "./theme.css";
+/* NOTE: uncomment this if in dist any styles... */
+/*@import "../../dist/style.css";*/
+
+@source "../../dist";

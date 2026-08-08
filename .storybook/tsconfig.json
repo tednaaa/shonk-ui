@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.lib.json",
+  "compilerOptions": {
+    "composite": false,
+    "jsx": "react",
+    "types": ["node", "vite/client", "react"],
+    "declaration": false,
+    "emitDeclarationOnly": false,
+    "noEmit": true
+  },
+  "include": ["**/*", "../src/**/*.stories.ts", "../src/lib/storybook/**/*.tsx"]
+}
