@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.2.0 (2026-08-21)
+
+- unquote class*= attribute selectors so icon sizes apply [`1a4296f5`](https://github.com/tednaaa/shonk-ui/commit/1a4296f5c36add5667935426353788432f40fc8a)
+- ship CHANGELOG.md to dist too [`8d5254b5`](https://github.com/tednaaa/shonk-ui/commit/8d5254b579f584d7ce4f28a0e664b107825a80d9)
+- bind carousel viewport with a function ref [`4f426393`](https://github.com/tednaaa/shonk-ui/commit/4f426393027de0b3299800cf92a7beeee156b0c7)
+- translate UI strings to English [`07e5c30c`](https://github.com/tednaaa/shonk-ui/commit/07e5c30ce203ede33d1aedb16d6c8aac4153287c)
+
 ## v0.1.8 (2026-08-08)
 
 - open changelog page by default [`01958c09`](https://github.com/tednaaa/shonk-ui/commit/01958c09c189b13f757ca58d64de668573dd168b)
