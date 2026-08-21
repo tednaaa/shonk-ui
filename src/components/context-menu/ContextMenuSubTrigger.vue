@@ -22,7 +22,7 @@ const forwardedProps = useForwardProps(delegatedProps);
     :data-inset="inset ? '' : undefined"
     v-bind="forwardedProps"
     :class="cn(
-      'focus:bg-bg-brand-subtle focus:text-text-brand data-[state=open]:bg-bg-brand-subtle data-[state=open]:text-text-brand flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\'size-\'])]:size-4',
+      'focus:bg-bg-brand-subtle focus:text-text-brand data-[state=open]:bg-bg-brand-subtle data-[state=open]:text-text-brand flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
       props.class,
     )"
   >

@@ -29,7 +29,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
     :data-variant="variant"
     v-bind="forwarded"
     :class="cn(
-      'focus:bg-bg-brand-subtle focus:text-text-brand data-[variant=destructive]:text-text-danger data-[variant=destructive]:focus:bg-bg-danger/10 dark:data-[variant=destructive]:focus:bg-bg-danger/20 data-[variant=destructive]:focus:text-text-danger data-[variant=destructive]:*:[svg]:!text-text-danger [&_svg:not([class*=\'text-\'])]:text-text-tertiary relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\'size-\'])]:size-4',
+      'focus:bg-bg-brand-subtle focus:text-text-brand data-[variant=destructive]:text-text-danger data-[variant=destructive]:focus:bg-bg-danger/10 dark:data-[variant=destructive]:focus:bg-bg-danger/20 data-[variant=destructive]:focus:text-text-danger data-[variant=destructive]:*:[svg]:!text-text-danger [&_svg:not([class*=text-])]:text-text-tertiary relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
       props.class,
     )"
   >
