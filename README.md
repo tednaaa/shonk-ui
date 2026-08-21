@@ -2,6 +2,15 @@
 
 Shonk UI — Vue 3 + Reka UI + Tailwind CSS v4.
 
+## Release
+
+### Install relkit and run it
+
+```fish
+cargo install relkit
+relkit
+```
+
 ## Install
 
 ```bash
