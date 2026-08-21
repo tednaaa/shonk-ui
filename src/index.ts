@@ -49,4 +49,10 @@ export * from './components/tooltip';
 
 export { downloadFile } from './lib/file';
 
+export type { PartialShonkLocale, ShonkLocale } from './locales';
+export { en, localeInjectionKey, resolveLocale, ru, useLocale } from './locales';
+
+export type { ShonkUIOptions } from './plugin';
+export { shonkUI } from './plugin';
+
 export { cn, hasSlotContent } from './utils';
