@@ -1,10 +1,12 @@
 import { ref } from 'vue';
 
-interface ConfirmOptions {
+export interface ConfirmOptions {
   message: string;
-  acceptLabel: string;
+  acceptButtonText: string;
   accept: () => void;
   reject?: () => void;
+  title?: string;
+  cancelButtonText?: string;
 }
 
 const confirmState = ref<ConfirmOptions | null>(null);

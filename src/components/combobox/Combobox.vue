@@ -4,6 +4,7 @@ import type { HTMLAttributes } from 'vue';
 import type { ComboboxOption } from './types';
 import { CheckIcon, ChevronDownIcon, XIcon } from '@lucide/vue';
 import { computed, ref, watch } from 'vue';
+import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Button } from '../button';
 import {
@@ -17,34 +18,20 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '../popover';
 import { Spinner } from '../spinner';
 
-const props = withDefaults(
-  defineProps<{
-    options: ComboboxOption<T>[];
-    placeholder?: string;
-    searchPlaceholder?: string;
-    emptyText?: string;
-    loadingText?: string;
-    disabled?: boolean;
-    /** Show a spinner in the list instead of results (e.g. while fetching). */
-    loading?: boolean;
-    /** Show an X button to reset the selection when a value is set. */
-    clearable?: boolean;
-    /**
-     * Filter `options` yourself instead of letting Command match on label text.
-     * Watch the `search` v-model, produce a filtered list (locally or from an
-     * API), and feed it back through `options`.
-     */
-    manualFilter?: boolean;
-    class?: HTMLAttributes['class'];
-    contentClass?: HTMLAttributes['class'];
-  }>(),
-  {
-    placeholder: 'Select…',
-    searchPlaceholder: 'Search…',
-    emptyText: 'No results found.',
-    loadingText: 'Loading…',
-  },
-);
+const props = defineProps<{
+  options: ComboboxOption<T>[];
+  triggerPlaceholder?: string;
+  searchPlaceholder?: string;
+  emptyText?: string;
+  loadingText?: string;
+  clearButtonAriaLabel?: string;
+  disabled?: boolean;
+  loading?: boolean;
+  clearable?: boolean;
+  manualFilter?: boolean;
+  class?: HTMLAttributes['class'];
+  contentClass?: HTMLAttributes['class'];
+}>();
 
 defineSlots<{
   option?: (props: { option: ComboboxOption<T> }) => unknown;
@@ -54,24 +41,27 @@ defineSlots<{
 const model = defineModel<T>();
 const search = defineModel<string>('search', { default: '' });
 
+const locale = useLocale();
+
 const open = ref(false);
 
-// Remember the selected label so the trigger keeps showing it even when the
-// option list changes underneath it (e.g. async results are swapped in).
-const selectedLabel = ref<string>();
+const lastSelectedLabel = ref<string>();
+
 watch(
   [model, () => props.options],
   ([value]) => {
-    const found = props.options.find(o => o.value === value);
-    if (found)
-      selectedLabel.value = found.label;
-    else if (value === undefined || value === null)
-      selectedLabel.value = undefined;
+    const selectedOption = props.options.find(option => option.value === value);
+    const cleared = value === undefined || value === null;
+
+    if (selectedOption)
+      lastSelectedLabel.value = selectedOption.label;
+    else if (cleared)
+      lastSelectedLabel.value = undefined;
   },
   { immediate: true },
 );
 
-const showClear = computed(() => props.clearable && !!selectedLabel.value && !props.disabled);
+const showClear = computed(() => props.clearable && !!lastSelectedLabel.value && !props.disabled);
 
 function onUpdate() {
   open.value = false;
@@ -79,7 +69,7 @@ function onUpdate() {
 
 function clear() {
   model.value = undefined;
-  selectedLabel.value = undefined;
+  lastSelectedLabel.value = undefined;
   search.value = '';
 }
 </script>
@@ -93,9 +83,9 @@ function clear() {
           role="combobox"
           :aria-expanded="open"
           :disabled="disabled"
-          :class="cn('w-full justify-start font-normal', showClear ? 'pr-14' : 'pr-9', !selectedLabel && 'text-text-tertiary', props.class)"
+          :class="cn('w-full justify-start font-normal', showClear ? 'pr-14' : 'pr-9', !lastSelectedLabel && 'text-text-tertiary', props.class)"
         >
-          <span class="whitespace-nowrap">{{ selectedLabel ?? placeholder }}</span>
+          <span class="whitespace-nowrap">{{ lastSelectedLabel ?? props.triggerPlaceholder ?? locale.combobox.triggerPlaceholder }}</span>
         </Button>
       </PopoverTrigger>
 
@@ -103,7 +93,7 @@ function clear() {
         <button
           v-if="showClear"
           type="button"
-          aria-label="Clear selection"
+          :aria-label="props.clearButtonAriaLabel ?? locale.combobox.clearButtonAriaLabel"
           tabindex="-1"
           class="text-text-tertiary hover:text-text-primary focus-visible:ring-border-focus/50 pointer-events-auto cursor-pointer rounded-xs outline-none transition-colors focus-visible:ring-[3px]"
           @pointerdown.stop.prevent="clear"
@@ -121,7 +111,7 @@ function clear() {
         @update:model-value="onUpdate"
       >
         <CommandInput
-          :placeholder="searchPlaceholder"
+          :placeholder="props.searchPlaceholder ?? locale.combobox.searchPlaceholder"
           @update:model-value="(v: string) => (search = v)"
         />
         <CommandList>
@@ -130,12 +120,12 @@ function clear() {
             class="text-text-tertiary flex items-center justify-center gap-2 py-6 text-sm"
           >
             <Spinner />
-            <span>{{ loadingText }}</span>
+            <span>{{ props.loadingText ?? locale.combobox.loadingText }}</span>
           </div>
           <template v-else>
             <CommandEmpty>
               <slot name="empty">
-                {{ emptyText }}
+                {{ props.emptyText ?? locale.combobox.emptyText }}
               </slot>
             </CommandEmpty>
             <CommandGroup>

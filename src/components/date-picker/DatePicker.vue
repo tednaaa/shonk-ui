@@ -5,6 +5,7 @@ import { CalendarDate } from '@internationalized/date';
 import { CalendarIcon } from '@lucide/vue';
 import { computed, ref } from 'vue';
 import { formatDate } from '@/lib/date';
+import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Button } from '../button';
 import { Calendar } from '../calendar';
@@ -15,7 +16,7 @@ import {
 } from '../popover';
 
 const props = withDefaults(defineProps<{
-  placeholder?: string;
+  triggerPlaceholder?: string;
   closeOnSelect?: boolean;
   minValue?: DateValue;
   maxValue?: DateValue;
@@ -23,13 +24,14 @@ const props = withDefaults(defineProps<{
   formatter?: (date: Date) => string;
   weekStartsOn?: WeekStartsOn;
 }>(), {
-  placeholder: 'Pick a date',
   closeOnSelect: true,
   weekStartsOn: 1,
 });
 
 const date = defineModel<Date>();
 const open = ref(false);
+
+const locale = useLocale();
 
 const calendarValue = computed<DateValue | undefined>(() => {
   const value = date.value;
@@ -62,7 +64,7 @@ defineExpose({ close });
         :class="cn('w-55 justify-start text-left font-normal', !displayValue && 'text-text-tertiary')"
       >
         <CalendarIcon :size="16" />
-        <span>{{ displayValue || props.placeholder }}</span>
+        <span>{{ displayValue || (props.triggerPlaceholder ?? locale.datePicker.triggerPlaceholder) }}</span>
       </Button>
     </PopoverTrigger>
     <PopoverContent align="start" side="top" class="w-auto overflow-hidden p-0">

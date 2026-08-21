@@ -16,7 +16,7 @@ const meta: Meta<typeof ConfirmDialog> = {
       function confirm() {
         require({
           message: 'Are you sure you want to delete this item? This action cannot be undone.',
-          acceptLabel: 'Delete',
+          acceptButtonText: 'Delete',
           accept: () => (result.value = 'Accepted'),
           reject: () => (result.value = 'Rejected'),
         });

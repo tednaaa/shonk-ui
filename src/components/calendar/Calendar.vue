@@ -6,7 +6,8 @@ import { getLocalTimeZone, today } from '@internationalized/date';
 import { createReusableTemplate, reactiveOmit, useVModel } from '@vueuse/core';
 import { CalendarRoot, useDateFormatter, useForwardPropsEmits } from 'reka-ui';
 import { createYear, createYearRange, toDate } from 'reka-ui/date';
-import { computed, toRaw } from 'vue';
+import { computed, toRaw, watch } from 'vue';
+import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { CalendarCell, CalendarCellTrigger, CalendarGrid, CalendarGridBody, CalendarGridHead, CalendarGridRow, CalendarHeadCell, CalendarHeader, CalendarHeading, CalendarNextButton, CalendarPrevButton } from '.';
 import { NativeSelect, NativeSelectOption } from '../native-select';
@@ -17,14 +18,20 @@ const props = withDefaults(defineProps<CalendarRootProps & { class?: HTMLAttribu
 });
 const emits = defineEmits<CalendarRootEmits>();
 
-const delegatedProps = reactiveOmit(props, 'class', 'layout', 'placeholder');
+const delegatedProps = reactiveOmit(props, 'class', 'layout', 'placeholder', 'locale');
 
 const placeholder = useVModel(props, 'placeholder', emits, {
   passive: true,
   defaultValue: props.defaultPlaceholder ?? today(getLocalTimeZone()),
 }) as Ref<DateValue>;
 
-const formatter = useDateFormatter(props.locale ?? 'en');
+const uiLocale = useLocale();
+
+const localeCode = computed(() => props.locale ?? uiLocale.value.intlLocale);
+
+const formatter = useDateFormatter(localeCode.value);
+
+watch(localeCode, code => formatter.setLocale(code));
 
 const yearRange = computed(() => {
   return props.yearRange ?? createYearRange({
@@ -93,6 +100,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
     #default="{ grid, weekDays, date }"
     v-bind="forwarded"
     v-model:placeholder="placeholder"
+    :locale="localeCode"
     data-slot="calendar"
     :class="cn('bg-bg-surface p-3', props.class)"
   >

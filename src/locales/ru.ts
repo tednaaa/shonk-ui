@@ -1,76 +1,76 @@
 import type { ShonkLocale } from './types';
 
 export const ru: ShonkLocale = {
-  code: 'ru-RU',
+  intlLocale: 'ru-RU',
 
   breadcrumb: {
-    label: 'хлебные крошки',
-    more: 'Ещё',
+    navAriaLabel: 'хлебные крошки',
+    ellipsisScreenReaderText: 'Ещё',
   },
 
   carousel: {
-    previous: 'Предыдущий слайд',
-    next: 'Следующий слайд',
+    previousButtonScreenReaderText: 'Предыдущий слайд',
+    nextButtonScreenReaderText: 'Следующий слайд',
   },
 
   combobox: {
-    placeholder: 'Выбрать…',
-    search: 'Найти…',
-    empty: 'Не найдено результатов.',
-    loading: 'Загрузка…',
-    clear: 'Очистить выбор',
+    triggerPlaceholder: 'Выбрать…',
+    searchPlaceholder: 'Найти…',
+    emptyText: 'Не найдено результатов.',
+    loadingText: 'Загрузка…',
+    clearButtonAriaLabel: 'Очистить выбор',
   },
 
   command: {
-    title: 'Командная палитра',
-    description: 'Найдите команду для выполнения…',
+    screenReaderTitle: 'Командная палитра',
+    screenReaderDescription: 'Найдите команду для выполнения…',
   },
 
   confirmDialog: {
     title: 'Подтверждение',
-    cancel: 'Отменить',
+    cancelButtonText: 'Отменить',
   },
 
   datePicker: {
-    placeholder: 'Выберите дату',
+    triggerPlaceholder: 'Выберите дату',
   },
 
   dialog: {
-    close: 'Закрыть',
+    closeButtonAriaLabel: 'Закрыть',
   },
 
   inputPassword: {
-    show: 'Показать пароль',
-    hide: 'Скрыть пароль',
+    showPasswordAriaLabel: 'Показать пароль',
+    hidePasswordAriaLabel: 'Скрыть пароль',
   },
 
   pagination: {
-    first: 'Первая',
-    previous: 'Назад',
-    next: 'Вперёд',
-    last: 'Последняя',
-    morePages: 'Ещё страницы',
+    firstButtonText: 'Первая',
+    previousButtonText: 'Назад',
+    nextButtonText: 'Вперёд',
+    lastButtonText: 'Последняя',
+    ellipsisScreenReaderText: 'Ещё страницы',
   },
 
   rangeDatePicker: {
-    placeholder: 'Выберите период',
+    triggerPlaceholder: 'Выберите период',
   },
 
   select: {
-    clear: 'Очистить выбор',
+    clearButtonAriaLabel: 'Очистить выбор',
   },
 
   sheet: {
-    close: 'Закрыть',
+    closeButtonScreenReaderText: 'Закрыть',
   },
 
   sidebar: {
-    toggle: 'Переключить боковую панель',
-    title: 'Боковая панель',
-    description: 'Отображает мобильную боковую панель.',
+    toggleAriaLabel: 'Переключить боковую панель',
+    mobileScreenReaderTitle: 'Боковая панель',
+    mobileScreenReaderDescription: 'Отображает мобильную боковую панель.',
   },
 
   spinner: {
-    loading: 'Загрузка',
+    ariaLabel: 'Загрузка',
   },
 };

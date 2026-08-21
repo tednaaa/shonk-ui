@@ -3,6 +3,8 @@ import type { RangeCalendarRootEmits, RangeCalendarRootProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import { reactiveOmit } from '@vueuse/core';
 import { RangeCalendarRoot, useForwardPropsEmits } from 'reka-ui';
+import { computed } from 'vue';
+import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { RangeCalendarCell, RangeCalendarCellTrigger, RangeCalendarGrid, RangeCalendarGridBody, RangeCalendarGridHead, RangeCalendarGridRow, RangeCalendarHeadCell, RangeCalendarHeader, RangeCalendarHeading, RangeCalendarNextButton, RangeCalendarPrevButton } from '.';
 
@@ -10,7 +12,11 @@ const props = defineProps<RangeCalendarRootProps & { class?: HTMLAttributes['cla
 
 const emits = defineEmits<RangeCalendarRootEmits>();
 
-const delegatedProps = reactiveOmit(props, 'class');
+const uiLocale = useLocale();
+
+const localeCode = computed(() => props.locale ?? uiLocale.value.intlLocale);
+
+const delegatedProps = reactiveOmit(props, 'class', 'locale');
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
@@ -20,6 +26,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
     #default="{ grid, weekDays }"
     data-slot="range-calendar"
     :class="cn('bg-bg-surface p-3', props.class)"
+    :locale="localeCode"
     v-bind="forwarded"
   >
     <RangeCalendarHeader>

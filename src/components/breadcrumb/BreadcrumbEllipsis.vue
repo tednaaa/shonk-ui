@@ -1,11 +1,15 @@
 <script lang="ts" setup>
 import type { HTMLAttributes } from 'vue';
 import { MoreHorizontal } from '@lucide/vue';
+import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 
 const props = defineProps<{
   class?: HTMLAttributes['class'];
+  screenReaderText?: string;
 }>();
+
+const locale = useLocale();
 </script>
 
 <template>
@@ -18,6 +22,6 @@ const props = defineProps<{
     <slot>
       <MoreHorizontal class="size-4" />
     </slot>
-    <span class="sr-only">More</span>
+    <span class="sr-only">{{ props.screenReaderText ?? locale.breadcrumb.ellipsisScreenReaderText }}</span>
   </span>
 </template>

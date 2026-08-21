@@ -1,76 +1,76 @@
 import type { ShonkLocale } from './types';
 
 export const en: ShonkLocale = {
-  code: 'en-US',
+  intlLocale: 'en-US',
 
   breadcrumb: {
-    label: 'breadcrumb',
-    more: 'More',
+    navAriaLabel: 'breadcrumb',
+    ellipsisScreenReaderText: 'More',
   },
 
   carousel: {
-    previous: 'Previous Slide',
-    next: 'Next Slide',
+    previousButtonScreenReaderText: 'Previous Slide',
+    nextButtonScreenReaderText: 'Next Slide',
   },
 
   combobox: {
-    placeholder: 'Select…',
-    search: 'Search…',
-    empty: 'No results found.',
-    loading: 'Loading…',
-    clear: 'Clear selection',
+    triggerPlaceholder: 'Select…',
+    searchPlaceholder: 'Search…',
+    emptyText: 'No results found.',
+    loadingText: 'Loading…',
+    clearButtonAriaLabel: 'Clear selection',
   },
 
   command: {
-    title: 'Command Palette',
-    description: 'Search for a command to run...',
+    screenReaderTitle: 'Command Palette',
+    screenReaderDescription: 'Search for a command to run...',
   },
 
   confirmDialog: {
     title: 'Confirm',
-    cancel: 'Cancel',
+    cancelButtonText: 'Cancel',
   },
 
   datePicker: {
-    placeholder: 'Pick a date',
+    triggerPlaceholder: 'Pick a date',
   },
 
   dialog: {
-    close: 'Close',
+    closeButtonAriaLabel: 'Close',
   },
 
   inputPassword: {
-    show: 'Show password',
-    hide: 'Hide password',
+    showPasswordAriaLabel: 'Show password',
+    hidePasswordAriaLabel: 'Hide password',
   },
 
   pagination: {
-    first: 'First',
-    previous: 'Previous',
-    next: 'Next',
-    last: 'Last',
-    morePages: 'More pages',
+    firstButtonText: 'First',
+    previousButtonText: 'Previous',
+    nextButtonText: 'Next',
+    lastButtonText: 'Last',
+    ellipsisScreenReaderText: 'More pages',
   },
 
   rangeDatePicker: {
-    placeholder: 'Pick a date range',
+    triggerPlaceholder: 'Pick a date range',
   },
 
   select: {
-    clear: 'Clear selection',
+    clearButtonAriaLabel: 'Clear selection',
   },
 
   sheet: {
-    close: 'Close',
+    closeButtonScreenReaderText: 'Close',
   },
 
   sidebar: {
-    toggle: 'Toggle Sidebar',
-    title: 'Sidebar',
-    description: 'Displays the mobile sidebar.',
+    toggleAriaLabel: 'Toggle Sidebar',
+    mobileScreenReaderTitle: 'Sidebar',
+    mobileScreenReaderDescription: 'Displays the mobile sidebar.',
   },
 
   spinner: {
-    loading: 'Loading',
+    ariaLabel: 'Loading',
   },
 };

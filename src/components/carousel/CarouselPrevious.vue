@@ -3,17 +3,21 @@ import type { WithClassAsProps } from './interface';
 import type { ButtonVariants } from '@/components/button';
 import { ArrowLeft } from '@lucide/vue';
 import { Button } from '@/components/button';
+import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { useCarousel } from './useCarousel';
 
 const props = withDefaults(defineProps<{
   variant?: ButtonVariants['variant'];
   size?: ButtonVariants['size'];
+  screenReaderText?: string;
 }
 & WithClassAsProps>(), {
   variant: 'outline',
   size: 'icon',
 });
+
+const locale = useLocale();
 
 const { orientation, canScrollPrev, scrollPrev } = useCarousel();
 </script>
@@ -35,7 +39,7 @@ const { orientation, canScrollPrev, scrollPrev } = useCarousel();
   >
     <slot>
       <ArrowLeft />
-      <span class="sr-only">Previous Slide</span>
+      <span class="sr-only">{{ props.screenReaderText ?? locale.carousel.previousButtonScreenReaderText }}</span>
     </slot>
   </Button>
 </template>

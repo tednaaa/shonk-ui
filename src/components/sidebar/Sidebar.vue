@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { SidebarProps } from '.';
+import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Sheet, SheetContent } from '../sheet';
 import SheetDescription from '../sheet/SheetDescription.vue';
@@ -16,6 +17,8 @@ const props = withDefaults(defineProps<SidebarProps>(), {
   variant: 'sidebar',
   collapsible: 'offcanvas',
 });
+
+const locale = useLocale();
 
 const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
 </script>
@@ -42,8 +45,8 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
       }"
     >
       <SheetHeader class="sr-only">
-        <SheetTitle>Sidebar</SheetTitle>
-        <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+        <SheetTitle>{{ props.mobileScreenReaderTitle ?? locale.sidebar.mobileScreenReaderTitle }}</SheetTitle>
+        <SheetDescription>{{ props.mobileScreenReaderDescription ?? locale.sidebar.mobileScreenReaderDescription }}</SheetDescription>
       </SheetHeader>
       <div class="flex h-full w-full flex-col">
         <slot />
@@ -77,7 +80,6 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
         side === 'left'
           ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'
           : 'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]',
-        // Adjust the padding for floating and inset variants.
         variant === 'floating' || variant === 'inset'
           ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]'
           : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l',

@@ -6,6 +6,8 @@ export interface SidebarProps {
   side?: 'left' | 'right';
   variant?: 'sidebar' | 'floating' | 'inset';
   collapsible?: 'offcanvas' | 'icon' | 'none';
+  mobileScreenReaderTitle?: string;
+  mobileScreenReaderDescription?: string;
   class?: HTMLAttributes['class'];
 }
 

@@ -4,16 +4,17 @@ import type { HTMLAttributes } from 'vue';
 import { MoreHorizontal } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import { PaginationEllipsis } from 'reka-ui';
+import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 
-const props = withDefaults(defineProps<PaginationEllipsisProps & {
+const props = defineProps<PaginationEllipsisProps & {
   class?: HTMLAttributes['class'];
-  label?: string;
-}>(), {
-  label: 'More pages',
-});
+  screenReaderText?: string;
+}>();
 
-const delegatedProps = reactiveOmit(props, 'class', 'label');
+const locale = useLocale();
+
+const delegatedProps = reactiveOmit(props, 'class', 'screenReaderText');
 </script>
 
 <template>
@@ -24,7 +25,7 @@ const delegatedProps = reactiveOmit(props, 'class', 'label');
   >
     <slot>
       <MoreHorizontal class="size-4" />
-      <span class="sr-only">{{ label }}</span>
+      <span class="sr-only">{{ props.screenReaderText ?? locale.pagination.ellipsisScreenReaderText }}</span>
     </slot>
   </PaginationEllipsis>
 </template>

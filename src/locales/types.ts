@@ -1,75 +1,75 @@
 export interface ShonkLocale {
-  code: string;
+  intlLocale: string;
 
   breadcrumb: {
-    label: string;
-    more: string;
+    navAriaLabel: string;
+    ellipsisScreenReaderText: string;
   };
 
   carousel: {
-    previous: string;
-    next: string;
+    previousButtonScreenReaderText: string;
+    nextButtonScreenReaderText: string;
   };
 
   combobox: {
-    placeholder: string;
-    search: string;
-    empty: string;
-    loading: string;
-    clear: string;
+    triggerPlaceholder: string;
+    searchPlaceholder: string;
+    emptyText: string;
+    loadingText: string;
+    clearButtonAriaLabel: string;
   };
 
   command: {
-    title: string;
-    description: string;
+    screenReaderTitle: string;
+    screenReaderDescription: string;
   };
 
   confirmDialog: {
     title: string;
-    cancel: string;
+    cancelButtonText: string;
   };
 
   datePicker: {
-    placeholder: string;
+    triggerPlaceholder: string;
   };
 
   dialog: {
-    close: string;
+    closeButtonAriaLabel: string;
   };
 
   inputPassword: {
-    show: string;
-    hide: string;
+    showPasswordAriaLabel: string;
+    hidePasswordAriaLabel: string;
   };
 
   pagination: {
-    first: string;
-    previous: string;
-    next: string;
-    last: string;
-    morePages: string;
+    firstButtonText: string;
+    previousButtonText: string;
+    nextButtonText: string;
+    lastButtonText: string;
+    ellipsisScreenReaderText: string;
   };
 
   rangeDatePicker: {
-    placeholder: string;
+    triggerPlaceholder: string;
   };
 
   select: {
-    clear: string;
+    clearButtonAriaLabel: string;
   };
 
   sheet: {
-    close: string;
+    closeButtonScreenReaderText: string;
   };
 
   sidebar: {
-    toggle: string;
-    title: string;
-    description: string;
+    toggleAriaLabel: string;
+    mobileScreenReaderTitle: string;
+    mobileScreenReaderDescription: string;
   };
 
   spinner: {
-    loading: string;
+    ariaLabel: string;
   };
 }
 

@@ -2,6 +2,7 @@
 import type { HTMLAttributes } from 'vue';
 import { Eye, EyeOff } from '@lucide/vue';
 import { computed, ref } from 'vue';
+import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Button } from '../button';
 import { Input } from '../input';
@@ -10,14 +11,20 @@ const props = defineProps<{
   name: string;
   invalid?: boolean;
   class?: HTMLAttributes['class'];
+  showPasswordAriaLabel?: string;
+  hidePasswordAriaLabel?: string;
 }>();
 
 const modelValue = defineModel<string>();
 
+const locale = useLocale();
+
 const visible = ref(false);
 
 const inputType = computed(() => visible.value ? 'text' : 'password');
-const buttonAriaLabel = computed(() => visible.value ? 'Hide password' : 'Show password');
+const buttonAriaLabel = computed(() => visible.value
+  ? (props.hidePasswordAriaLabel ?? locale.value.inputPassword.hidePasswordAriaLabel)
+  : (props.showPasswordAriaLabel ?? locale.value.inputPassword.showPasswordAriaLabel));
 </script>
 
 <template>

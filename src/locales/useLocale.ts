@@ -6,10 +6,10 @@ import { en } from './en';
 export const localeInjectionKey = Symbol('shonk-ui-locale') as InjectionKey<ComputedRef<ShonkLocale>>;
 
 export function resolveLocale(overrides: PartialShonkLocale = {}): ShonkLocale {
-  const resolved: ShonkLocale = { ...en, code: overrides.code ?? en.code };
+  const resolved: ShonkLocale = { ...en, intlLocale: overrides.intlLocale ?? en.intlLocale };
 
   for (const key of Object.keys(en) as Array<keyof ShonkLocale>) {
-    if (key === 'code')
+    if (key === 'intlLocale')
       continue;
 
     Object.assign(resolved, { [key]: { ...en[key], ...overrides[key] } });

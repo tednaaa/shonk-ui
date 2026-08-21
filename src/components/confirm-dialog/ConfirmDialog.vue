@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useLocale } from '@/locales';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,29 +14,39 @@ import {
 import { buttonVariants } from '../button';
 import { useConfirmState } from './useConfirm';
 
+const props = defineProps<{
+  title?: string;
+  cancelButtonText?: string;
+}>();
+
+const locale = useLocale();
+
 const state = useConfirmState();
 const open = computed(() => state.value !== null);
 
-// DialogClose (which AlertDialogAction wraps) calls onOpenChange(false) via mergeProps,
-// so handleOpenChange fires before our @click handler and nulls state first.
-// Snapshot state here while it's still set so the click handlers can call the callbacks.
-let snapshot = state.value;
+const resolvedTitle = computed(() => state.value?.title ?? props.title ?? locale.value.confirmDialog.title);
+const resolvedCancelButtonText = computed(() => state.value?.cancelButtonText ?? props.cancelButtonText ?? locale.value.confirmDialog.cancelButtonText);
+
+let closingRequest = state.value;
+
+function takeClosingRequest() {
+  const request = closingRequest;
+  closingRequest = null;
+
+  return request;
+}
 
 function handleAccept() {
-  const options = snapshot;
-  snapshot = null;
-  options?.accept();
+  takeClosingRequest()?.accept();
 }
 
 function handleReject() {
-  const options = snapshot;
-  snapshot = null;
-  options?.reject?.();
+  takeClosingRequest()?.reject?.();
 }
 
 function handleOpenChange(isOpen: boolean) {
   if (!isOpen) {
-    snapshot = state.value;
+    closingRequest = state.value;
     state.value = null;
   }
 }
@@ -46,7 +57,7 @@ function handleOpenChange(isOpen: boolean) {
     <AlertDialogContent class="p-0 gap-0 sm:max-w-lg">
       <AlertDialogHeader class="py-4 px-6 bg-bg-muted border-b border-b-border-default rounded-t-lg text-left gap-0">
         <AlertDialogTitle class="text-sm leading-none font-extrabold">
-          Confirm
+          {{ resolvedTitle }}
         </AlertDialogTitle>
       </AlertDialogHeader>
       <AlertDialogDescription class="px-6 py-4 border-b border-border-default">
@@ -54,10 +65,10 @@ function handleOpenChange(isOpen: boolean) {
       </AlertDialogDescription>
       <AlertDialogFooter class="mx-6 my-4">
         <AlertDialogCancel @click="handleReject">
-          Cancel
+          {{ resolvedCancelButtonText }}
         </AlertDialogCancel>
         <AlertDialogAction :class="buttonVariants({ variant: 'destructive' })" @click="handleAccept">
-          {{ state?.acceptLabel }}
+          {{ state?.acceptButtonText }}
         </AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>

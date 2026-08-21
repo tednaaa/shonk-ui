@@ -6,18 +6,20 @@ import { ChevronLeftIcon } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import { PaginationPrev, useForwardProps } from 'reka-ui';
 import { buttonVariants } from '@/components/button';
+import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 
 const props = withDefaults(defineProps<PaginationPrevProps & {
   size?: ButtonVariants['size'];
   class?: HTMLAttributes['class'];
-  label?: string;
+  buttonText?: string;
 }>(), {
   size: 'default',
-  label: 'Previous',
 });
 
-const delegatedProps = reactiveOmit(props, 'class', 'size', 'label');
+const locale = useLocale();
+
+const delegatedProps = reactiveOmit(props, 'class', 'size', 'buttonText');
 const forwarded = useForwardProps(delegatedProps);
 </script>
 
@@ -29,7 +31,7 @@ const forwarded = useForwardProps(delegatedProps);
   >
     <slot>
       <ChevronLeftIcon />
-      <span class="hidden sm:block">{{ label }}</span>
+      <span class="hidden sm:block">{{ props.buttonText ?? locale.pagination.previousButtonText }}</span>
     </slot>
   </PaginationPrev>
 </template>

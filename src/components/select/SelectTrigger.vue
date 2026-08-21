@@ -5,15 +5,19 @@ import { ChevronDown, X } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import { injectSelectRootContext, SelectIcon, SelectTrigger, useForwardProps } from 'reka-ui';
 import { computed } from 'vue';
+import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 
 const props = defineProps<SelectTriggerProps & {
   class?: HTMLAttributes['class'];
   size?: 'sm' | 'md';
   clearable?: boolean;
+  clearButtonAriaLabel?: string;
 }>();
 
-const delegatedProps = reactiveOmit(props, 'class', 'size', 'clearable');
+const locale = useLocale();
+
+const delegatedProps = reactiveOmit(props, 'class', 'size', 'clearable', 'clearButtonAriaLabel');
 const forwardedProps = useForwardProps(delegatedProps);
 
 const rootContext = injectSelectRootContext();
@@ -52,7 +56,7 @@ function clear() {
     <button
       v-if="showClear"
       type="button"
-      aria-label="Clear selection"
+      :aria-label="props.clearButtonAriaLabel ?? locale.select.clearButtonAriaLabel"
       tabindex="-1"
       class="cursor-pointer text-text-tertiary hover:text-text-primary absolute top-1/2 right-8 -translate-y-1/2 rounded-xs transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-border-focus/50"
       @pointerdown.stop.prevent="clear"

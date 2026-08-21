@@ -17,7 +17,7 @@ const meta: Meta<typeof Combobox> = {
   tags: ['autodocs'],
   args: {
     options: frameworks,
-    placeholder: 'Select framework…',
+    triggerPlaceholder: 'Select framework…',
     searchPlaceholder: 'Search framework…',
     emptyText: 'No framework found.',
   },

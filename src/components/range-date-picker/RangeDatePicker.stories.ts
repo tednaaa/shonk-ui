@@ -11,7 +11,7 @@ const meta: Meta<typeof RangeDatePicker> = {
   component: RangeDatePicker,
   tags: ['autodocs'],
   args: {
-    placeholder: 'Pick a date range',
+    triggerPlaceholder: 'Pick a date range',
   },
   render: render({ RangeDatePicker }, `<RangeDatePicker v-bind="args" />`),
 };
