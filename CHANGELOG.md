@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.3.0 (2026-08-21)
+
+- localize component strings through useLocale() [`c0f96f7f`](https://github.com/tednaaa/shonk-ui/commit/c0f96f7fec1dafc987ecd2772c172ac5549c1cdd)
+- add locale plugin for built-in component strings [`099640a3`](https://github.com/tednaaa/shonk-ui/commit/099640a3f23a9aee5ee6aa6a827d5b554038043e)
+
 ## v0.2.0 (2026-08-21)
 
 - unquote class*= attribute selectors so icon sizes apply [`1a4296f5`](https://github.com/tednaaa/shonk-ui/commit/1a4296f5c36add5667935426353788432f40fc8a)
