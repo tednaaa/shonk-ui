@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<PaginationPrevProps & {
   label?: string;
 }>(), {
   size: 'default',
-  label: 'Назад',
+  label: 'Previous',
 });
 
 const delegatedProps = reactiveOmit(props, 'class', 'size', 'label');

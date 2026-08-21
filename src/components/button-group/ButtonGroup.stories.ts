@@ -52,7 +52,7 @@ export const WithText: Story = {
     { ButtonGroup, Button, ButtonGroupText },
     `<ButtonGroup>
       <ButtonGroupText>https://</ButtonGroupText>
-      <Button variant="outline">shonk-ui.dev</Button>
+      <Button variant="outline">example.com</Button>
     </ButtonGroup>`,
   ),
 };

@@ -13,7 +13,7 @@ const meta: Meta<typeof Collapsible> = {
     `<div class="w-80">
       <Collapsible v-bind="args" class="space-y-2">
         <div class="flex items-center justify-between gap-4 px-1">
-          <h4 class="text-sm font-semibold">@peduarte starred 3 repositories</h4>
+          <h4 class="text-sm font-semibold">@acme starred 3 repositories</h4>
           <CollapsibleTrigger as-child>
             <Button variant="ghost" size="icon-sm">
               <ChevronsUpDownIcon />
@@ -21,10 +21,10 @@ const meta: Meta<typeof Collapsible> = {
             </Button>
           </CollapsibleTrigger>
         </div>
-        <div class="border-border-default rounded-md border px-4 py-2 font-mono text-sm">@radix-vue/primitives</div>
+        <div class="border-border-default rounded-md border px-4 py-2 font-mono text-sm">@acme/ui</div>
         <CollapsibleContent class="space-y-2">
-          <div class="border-border-default rounded-md border px-4 py-2 font-mono text-sm">@stitches/react</div>
-          <div class="border-border-default rounded-md border px-4 py-2 font-mono text-sm">@vue/reactivity</div>
+          <div class="border-border-default rounded-md border px-4 py-2 font-mono text-sm">@acme/tokens</div>
+          <div class="border-border-default rounded-md border px-4 py-2 font-mono text-sm">@acme/icons</div>
         </CollapsibleContent>
       </Collapsible>
     </div>`,
@@ -48,7 +48,7 @@ export const ShowMore: Story = {
     `<div class="w-96">
       <Collapsible class="space-y-2">
         <p class="text-text-secondary text-sm">
-          Shonk UI is a closed-source component library built on reka-ui and Tailwind.
+          A component library built on accessible primitives and Tailwind utility classes.
         </p>
         <CollapsibleContent class="space-y-2">
           <p class="text-text-secondary text-sm">

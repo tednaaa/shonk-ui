@@ -95,11 +95,11 @@ export const WithForm: Story = {
           <div class="grid auto-rows-min gap-4 px-4">
             <div class="grid gap-2">
               <Label for="sheet-name">Name</Label>
-              <Input id="sheet-name" default-value="Pedro Duarte" />
+              <Input id="sheet-name" default-value="Alex Doe" />
             </div>
             <div class="grid gap-2">
               <Label for="sheet-username">Username</Label>
-              <Input id="sheet-username" default-value="@peduarte" />
+              <Input id="sheet-username" default-value="@alexdoe" />
             </div>
           </div>
           <SheetFooter class="mt-auto">

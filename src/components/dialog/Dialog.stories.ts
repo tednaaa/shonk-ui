@@ -206,11 +206,11 @@ export const WithForm: Story = {
             <div class="grid gap-4">
               <div class="grid gap-2">
                 <Label for="name">Name</Label>
-                <Input id="name" default-value="Pedro Duarte" />
+                <Input id="name" default-value="Alex Doe" />
               </div>
               <div class="grid gap-2">
                 <Label for="username">Username</Label>
-                <Input id="username" default-value="@peduarte" />
+                <Input id="username" default-value="@alexdoe" />
               </div>
             </div>
           </DialogBody>

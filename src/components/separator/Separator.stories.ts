@@ -26,8 +26,8 @@ export const Demo: Story = {
     { Separator },
     `<div>
       <div class="space-y-1">
-        <h4 class="text-sm leading-none font-medium">Shonk UI</h4>
-        <p class="text-text-tertiary text-sm">a closed-source component library.</p>
+        <h4 class="text-sm leading-none font-medium">Acme UI</h4>
+        <p class="text-text-tertiary text-sm">A shared component library.</p>
       </div>
       <Separator class="my-4" />
       <div class="flex h-5 items-center gap-4 text-sm">

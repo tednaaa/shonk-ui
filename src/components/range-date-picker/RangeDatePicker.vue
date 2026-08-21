@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<{
   formatter?: (date: Date) => string;
   weekStartsOn?: WeekStartsOn;
 }>(), {
-  placeholder: 'Выберите дату',
+  placeholder: 'Pick a date range',
   closeOnSelect: true,
   weekStartsOn: 1,
 });

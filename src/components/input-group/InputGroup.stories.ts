@@ -77,7 +77,7 @@ export const WithButton: Story = {
     components,
     `<div class="max-w-sm">
       <InputGroup>
-        <InputGroupInput placeholder="https://shonk-ui.dev/invite/xyz" readonly />
+        <InputGroupInput placeholder="https://example.com/invite/xyz" readonly />
         <InputGroupAddon align="inline-end">
           <InputGroupButton aria-label="Copy"><CopyIcon /></InputGroupButton>
         </InputGroupAddon>

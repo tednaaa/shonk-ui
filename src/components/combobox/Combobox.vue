@@ -39,10 +39,10 @@ const props = withDefaults(
     contentClass?: HTMLAttributes['class'];
   }>(),
   {
-    placeholder: 'Выбрать…',
-    searchPlaceholder: 'Найти…',
-    emptyText: 'Не найдено результатов.',
-    loadingText: 'Загрузка…',
+    placeholder: 'Select…',
+    searchPlaceholder: 'Search…',
+    emptyText: 'No results found.',
+    loadingText: 'Loading…',
   },
 );
 

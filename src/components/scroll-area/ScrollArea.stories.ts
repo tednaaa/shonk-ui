@@ -37,7 +37,7 @@ export const Prose: Story = {
       <ScrollArea class="h-full w-full rounded-md border">
         <div class="text-text-secondary space-y-4 p-4 text-sm">
           <h4 class="text-text-primary text-sm font-medium">Changelog</h4>
-          <p>Shonk UI is a closed-source Vue component library built on reka-ui and Tailwind, shipping themeable primitives with dark mode support.</p>
+          <p>The library ships themeable primitives with dark mode support, built on accessible unstyled components and Tailwind.</p>
           <p>Every component is documented in Storybook with light and dark previews, so product teams can compose consistent interfaces quickly.</p>
           <p>Design tokens are exposed as semantic CSS variables, keeping components aligned to a single source of truth across the whole system.</p>
           <p>The library favors accessible, unstyled primitives underneath, then layers on a cohesive visual language via Tailwind utility classes.</p>

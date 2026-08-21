@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<PaginationLastProps & {
   label?: string;
 }>(), {
   size: 'default',
-  label: 'Последняя',
+  label: 'Last',
 });
 
 const delegatedProps = reactiveOmit(props, 'class', 'size', 'label');

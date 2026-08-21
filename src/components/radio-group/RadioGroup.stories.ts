@@ -13,26 +13,26 @@ const meta: Meta<typeof RadioGroup> = {
   component: RadioGroup,
   tags: ['autodocs'],
   args: {
-    defaultValue: 'spam',
+    defaultValue: 'all',
   },
   render: render(
     components,
     `<RadioGroup v-bind="args" class="max-w-sm gap-1">
       <Label class="${row}">
-        <RadioGroupItem value="spam" />
-        Спам
+        <RadioGroupItem value="all" />
+        All notifications
       </Label>
       <Label class="${row}">
-        <RadioGroupItem value="silence" />
-        Тишина не системная
+        <RadioGroupItem value="mentions" />
+        Mentions only
       </Label>
       <Label class="${row}">
-        <RadioGroupItem value="lag" />
-        Залагал автоответчик
+        <RadioGroupItem value="digest" />
+        Daily digest
       </Label>
       <Label class="${row}">
-        <RadioGroupItem value="bot" />
-        Позвонил бот
+        <RadioGroupItem value="none" />
+        Nothing
       </Label>
     </RadioGroup>`,
   ),

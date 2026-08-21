@@ -98,7 +98,7 @@ const appTemplate = `
           <SidebarMenuItem>
             <SidebarMenuButton>
               <User2Icon />
-              <span>shadcn</span>
+              <span>Account</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

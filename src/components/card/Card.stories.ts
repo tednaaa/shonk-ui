@@ -24,8 +24,8 @@ const meta: Meta<typeof Card> = {
       <StoryLabel>Header, content and footer composed together</StoryLabel>
       <Card v-bind="args">
         <CardHeader>
-          <CardTitle>Project Shonk</CardTitle>
-          <CardDescription>A closed-source component library.</CardDescription>
+          <CardTitle>Project overview</CardTitle>
+          <CardDescription>Everything your team ships, in one place.</CardDescription>
         </CardHeader>
         <CardContent>
           <p class="text-text-secondary text-sm">
@@ -85,7 +85,7 @@ export const Login: Story = {
         <CardContent class="flex flex-col gap-6">
           <div class="grid gap-2">
             <Label for="email">Email</Label>
-            <Input id="email" type="email" placeholder="m@example.com" />
+            <Input id="email" type="email" placeholder="name@example.com" />
           </div>
           <div class="grid gap-2">
             <Label for="password">Password</Label>

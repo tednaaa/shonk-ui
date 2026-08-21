@@ -46,7 +46,7 @@ function handleOpenChange(isOpen: boolean) {
     <AlertDialogContent class="p-0 gap-0 sm:max-w-lg">
       <AlertDialogHeader class="py-4 px-6 bg-bg-muted border-b border-b-border-default rounded-t-lg text-left gap-0">
         <AlertDialogTitle class="text-sm leading-none font-extrabold">
-          Потверждение
+          Confirm
         </AlertDialogTitle>
       </AlertDialogHeader>
       <AlertDialogDescription class="px-6 py-4 border-b border-border-default">
@@ -54,7 +54,7 @@ function handleOpenChange(isOpen: boolean) {
       </AlertDialogDescription>
       <AlertDialogFooter class="mx-6 my-4">
         <AlertDialogCancel @click="handleReject">
-          Отменить
+          Cancel
         </AlertDialogCancel>
         <AlertDialogAction :class="buttonVariants({ variant: 'destructive' })" @click="handleAccept">
           {{ state?.acceptLabel }}

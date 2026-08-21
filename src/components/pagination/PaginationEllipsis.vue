@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<PaginationEllipsisProps & {
   class?: HTMLAttributes['class'];
   label?: string;
 }>(), {
-  label: 'Ещё страницы',
+  label: 'More pages',
 });
 
 const delegatedProps = reactiveOmit(props, 'class', 'label');
