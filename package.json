@@ -20,6 +20,7 @@
     }
   },
   "files": [
+    "CHANGELOG.md",
     "dist",
     "src/components",
     "src/foundations",
