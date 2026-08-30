@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.0 (2026-08-30)
+
+- refactor(theme)!: adopt shadcn-vue css variable convention [`a03b03a7`](https://github.com/tednaaa/shonk-ui/commit/a03b03a7445ddb56a4a8eb981079e9a6f5f1c33b)
+
 ## v0.3.0 (2026-08-21)
 
 - localize component strings through useLocale() [`c0f96f7f`](https://github.com/tednaaa/shonk-ui/commit/c0f96f7fec1dafc987ecd2772c172ac5549c1cdd)
