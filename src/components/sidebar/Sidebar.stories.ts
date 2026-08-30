@@ -66,7 +66,7 @@ const appTemplate = `
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
-              <div class="bg-bg-brand text-text-inverse flex aspect-square size-8 items-center justify-center rounded-lg">
+              <div class="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                 <GalleryVerticalEndIcon class="size-4" />
               </div>
               <div class="grid flex-1 text-left text-sm leading-tight">
@@ -113,11 +113,11 @@ const appTemplate = `
       </header>
       <div class="flex flex-1 flex-col gap-4 p-4">
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div class="bg-bg-muted/50 aspect-video rounded-xl" />
-          <div class="bg-bg-muted/50 aspect-video rounded-xl" />
-          <div class="bg-bg-muted/50 aspect-video rounded-xl" />
+          <div class="bg-muted/50 aspect-video rounded-xl" />
+          <div class="bg-muted/50 aspect-video rounded-xl" />
+          <div class="bg-muted/50 aspect-video rounded-xl" />
         </div>
-        <div class="bg-bg-muted/50 min-h-[40vh] flex-1 rounded-xl" />
+        <div class="bg-muted/50 min-h-[40vh] flex-1 rounded-xl" />
       </div>
     </SidebarInset>
   </SidebarProvider>

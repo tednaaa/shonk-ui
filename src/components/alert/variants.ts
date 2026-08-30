@@ -1,17 +1,15 @@
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
 
-export { default as Alert } from './Alert.vue';
-
 export const alertVariants = cva(
   'flex flex-col gap-2 px-4 py-3',
   {
     variants: {
       variant: {
-        default: 'bg-bg-surface text-text-primary border-current/30',
-        success: 'text-text-success bg-current/10 border-current/30',
-        warning: 'text-text-warning bg-current/10 border-current/30',
-        destructive: 'text-text-danger bg-current/10 border-current/30',
+        default: 'bg-card text-card-foreground border-current/30',
+        success: 'text-success bg-current/10 border-current/30',
+        warning: 'text-warning bg-current/10 border-current/30',
+        destructive: 'text-destructive bg-current/10 border-current/30',
       },
       appearance: {
         default: 'border rounded-lg',

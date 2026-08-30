@@ -7,13 +7,15 @@ import { cn } from '@/utils';
 import { Button } from '../button';
 import { Input } from '../input';
 
-const props = defineProps<{
+export interface InputPasswordProps {
   name: string;
   invalid?: boolean;
   class?: HTMLAttributes['class'];
   showPasswordAriaLabel?: string;
   hidePasswordAriaLabel?: string;
-}>();
+}
+
+const props = defineProps<InputPasswordProps>();
 
 const modelValue = defineModel<string>();
 
@@ -40,7 +42,7 @@ const buttonAriaLabel = computed(() => visible.value
       type="button"
       variant="ghost"
       size="icon-sm"
-      class="absolute right-1 top-1/2 -translate-y-1/2 text-text-tertiary"
+      class="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground"
       :aria-label="buttonAriaLabel"
       @click="visible = !visible"
     >

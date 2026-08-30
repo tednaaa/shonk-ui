@@ -33,7 +33,7 @@ const meta: Meta<typeof HoverCard> = {
           <div class="space-y-1">
             <h4 class="text-sm font-semibold">@acme</h4>
             <p class="text-sm">Design system team building shared UI for the product suite.</p>
-            <div class="text-text-tertiary flex items-center pt-2 text-xs">
+            <div class="text-muted-foreground flex items-center pt-2 text-xs">
               <CalendarIcon class="mr-2 size-4 opacity-70" />
               <span>Joined December 2021</span>
             </div>
@@ -60,7 +60,7 @@ export const TextOnly: Story = {
       </HoverCardTrigger>
       <HoverCardContent class="w-72">
         <p class="text-sm font-semibold">Design tokens</p>
-        <p class="text-text-secondary pt-1 text-sm">
+        <p class="text-muted-foreground pt-1 text-sm">
           Semantic CSS variables that keep colors, spacing and radii consistent across every component.
         </p>
       </HoverCardContent>

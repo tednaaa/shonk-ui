@@ -29,10 +29,10 @@ const meta: Meta<typeof Tabs> = {
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>
         </TabsList>
-        <TabsContent value="account" class="text-text-tertiary text-sm">
+        <TabsContent value="account" class="text-muted-foreground text-sm">
           Make changes to your account here. Click save when you're done.
         </TabsContent>
-        <TabsContent value="password" class="text-text-tertiary text-sm">
+        <TabsContent value="password" class="text-muted-foreground text-sm">
           Change your password here. After saving, you'll be logged out.
         </TabsContent>
       </Tabs>
@@ -57,9 +57,9 @@ export const DisabledTab: Story = {
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
           <TabsTrigger value="reports" disabled>Reports</TabsTrigger>
         </TabsList>
-        <TabsContent value="overview" class="text-text-tertiary text-sm">Overview of your workspace.</TabsContent>
-        <TabsContent value="analytics" class="text-text-tertiary text-sm">Analytics for the last 30 days.</TabsContent>
-        <TabsContent value="reports" class="text-text-tertiary text-sm">Reports are not available on your plan.</TabsContent>
+        <TabsContent value="overview" class="text-muted-foreground text-sm">Overview of your workspace.</TabsContent>
+        <TabsContent value="analytics" class="text-muted-foreground text-sm">Analytics for the last 30 days.</TabsContent>
+        <TabsContent value="reports" class="text-muted-foreground text-sm">Reports are not available on your plan.</TabsContent>
       </Tabs>
     </div>`,
   ),

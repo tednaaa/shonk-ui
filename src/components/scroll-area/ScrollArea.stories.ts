@@ -35,8 +35,8 @@ export const Prose: Story = {
     { ScrollArea },
     `<div class="h-72 w-full max-w-md">
       <ScrollArea class="h-full w-full rounded-md border">
-        <div class="text-text-secondary space-y-4 p-4 text-sm">
-          <h4 class="text-text-primary text-sm font-medium">Changelog</h4>
+        <div class="text-muted-foreground space-y-4 p-4 text-sm">
+          <h4 class="text-foreground text-sm font-medium">Changelog</h4>
           <p>The library ships themeable primitives with dark mode support, built on accessible unstyled components and Tailwind.</p>
           <p>Every component is documented in Storybook with light and dark previews, so product teams can compose consistent interfaces quickly.</p>
           <p>Design tokens are exposed as semantic CSS variables, keeping components aligned to a single source of truth across the whole system.</p>

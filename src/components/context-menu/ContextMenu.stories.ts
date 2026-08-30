@@ -57,7 +57,7 @@ const components = {
   UsersIcon,
 };
 
-const trigger = `<ContextMenuTrigger class="border-border-default text-text-secondary flex h-37.5 w-75 items-center justify-center rounded-md border border-dashed text-sm select-none">
+const trigger = `<ContextMenuTrigger class="border-border text-muted-foreground flex h-37.5 w-75 items-center justify-center rounded-md border border-dashed text-sm select-none">
         Right click here
       </ContextMenuTrigger>`;
 

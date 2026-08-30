@@ -105,16 +105,13 @@ Skip the plugin and everything stays English.
 Override theme tokens after the import:
 
 ```css
-@theme {
-  --color-primary: oklch(0.5 0.2 250);
-}
-
 :root {
+  --primary: oklch(0.5 0.2 250);
   --radius: 0.5rem;
 }
 
 .dark {
-  --color-primary: oklch(0.6 0.2 250);
+  --primary: oklch(0.6 0.2 250);
 }
 ```
 

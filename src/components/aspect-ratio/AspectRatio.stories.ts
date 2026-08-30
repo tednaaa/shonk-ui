@@ -12,7 +12,7 @@ const meta: Meta<typeof AspectRatio> = {
     `<div class="w-100 space-y-2">
       <StoryLabel>{{ args.ratio }}</StoryLabel>
       <AspectRatio v-bind="args">
-        <div class="bg-bg-muted h-full w-full rounded-lg"></div>
+        <div class="bg-muted h-full w-full rounded-lg"></div>
       </AspectRatio>
     </div>`,
   ),
@@ -32,19 +32,19 @@ export const Ratios: Story = {
       <div class="w-40 space-y-2">
         <StoryLabel>16 / 9</StoryLabel>
         <AspectRatio :ratio="16 / 9">
-          <div class="bg-bg-muted h-full w-full rounded-lg"></div>
+          <div class="bg-muted h-full w-full rounded-lg"></div>
         </AspectRatio>
       </div>
       <div class="w-40 space-y-2">
         <StoryLabel>4 / 3</StoryLabel>
         <AspectRatio :ratio="4 / 3">
-          <div class="bg-bg-muted h-full w-full rounded-lg"></div>
+          <div class="bg-muted h-full w-full rounded-lg"></div>
         </AspectRatio>
       </div>
       <div class="w-40 space-y-2">
         <StoryLabel>1 / 1</StoryLabel>
         <AspectRatio :ratio="1">
-          <div class="bg-bg-muted h-full w-full rounded-lg"></div>
+          <div class="bg-muted h-full w-full rounded-lg"></div>
         </AspectRatio>
       </div>
     </div>`,
@@ -60,7 +60,7 @@ export const Image: Story = {
         <img
           src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
           alt="Landscape"
-          class="border-border-default h-full w-full rounded-lg border object-cover"
+          class="border-border h-full w-full rounded-lg border object-cover"
         />
       </AspectRatio>
     </div>`,

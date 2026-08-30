@@ -43,7 +43,7 @@ function clear() {
       :data-size="size"
       v-bind="forwardedProps"
       :class="cn(
-        'border-border-default data-placeholder:text-text-tertiary [&_svg:not([class*=text-])]:text-text-tertiary focus-visible:border-border-focus focus-visible:ring-border-focus/50 aria-invalid:ring-border-danger/20 dark:aria-invalid:ring-border-danger/40 aria-invalid:border-border-danger flex w-full items-center justify-between gap-2 rounded-sm border bg-bg-surface px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=md]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
+        'border-border data-placeholder:text-muted-foreground [&_svg:not([class*=text-])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive flex w-full items-center justify-between gap-2 rounded-sm border bg-background px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=md]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
         showClear && 'pr-16',
       )"
     >
@@ -58,7 +58,7 @@ function clear() {
       type="button"
       :aria-label="props.clearButtonAriaLabel ?? locale.select.clearButtonAriaLabel"
       tabindex="-1"
-      class="cursor-pointer text-text-tertiary hover:text-text-primary absolute top-1/2 right-8 -translate-y-1/2 rounded-xs transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-border-focus/50"
+      class="cursor-pointer text-muted-foreground hover:text-foreground absolute top-1/2 right-8 -translate-y-1/2 rounded-xs transition-colors outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
       @pointerdown.stop.prevent="clear"
     >
       <X class="size-4" />

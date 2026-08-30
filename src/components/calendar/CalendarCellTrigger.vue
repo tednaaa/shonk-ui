@@ -21,15 +21,15 @@ const forwardedProps = useForwardProps(delegatedProps);
     :class="cn(
       buttonVariants({ variant: 'ghost' }),
       'size-8 p-0 font-normal aria-selected:opacity-100 cursor-default',
-      '[&[data-today]:not([data-selected])]:bg-bg-brand-subtle [&[data-today]:not([data-selected])]:text-text-brand',
+      '[&[data-today]:not([data-selected])]:bg-accent [&[data-today]:not([data-selected])]:text-accent-foreground',
       // Selected
-      'data-[selected]:bg-bg-brand data-[selected]:text-text-inverse data-[selected]:opacity-100 [&[data-selected]:hover]:bg-bg-brand data-[selected]:hover:text-text-inverse data-[selected]:focus:bg-bg-brand data-[selected]:focus:text-text-inverse',
+      'data-[selected]:bg-primary data-[selected]:text-primary-foreground data-[selected]:opacity-100 [&[data-selected]:hover]:bg-primary data-[selected]:hover:text-primary-foreground data-[selected]:focus:bg-primary data-[selected]:focus:text-primary-foreground',
       // Disabled
-      'data-[disabled]:text-text-tertiary data-[disabled]:opacity-50',
+      'data-[disabled]:text-muted-foreground data-[disabled]:opacity-50',
       // Unavailable
-      'data-[unavailable]:text-text-inverse data-[unavailable]:line-through',
+      'data-[unavailable]:text-destructive-foreground data-[unavailable]:line-through',
       // Outside months
-      'data-[outside-view]:text-text-tertiary',
+      'data-[outside-view]:text-muted-foreground',
       props.class,
     )"
     v-bind="forwardedProps"

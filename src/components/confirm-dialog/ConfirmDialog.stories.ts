@@ -27,7 +27,7 @@ const meta: Meta<typeof ConfirmDialog> = {
     template: `
       <div class="flex flex-col items-start gap-3">
         <Button variant="outline" @click="confirm">Delete item</Button>
-        <p v-if="result" class="text-text-tertiary text-sm">Result: {{ result }}</p>
+        <p v-if="result" class="text-muted-foreground text-sm">Result: {{ result }}</p>
         <ConfirmDialog />
       </div>
     `,

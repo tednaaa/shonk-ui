@@ -25,6 +25,6 @@ const delegatedProps = reactiveOmit(props, 'class', 'required');
     "
   >
     <slot />
-    <span v-if="required" aria-hidden="true" class="text-text-danger">*</span>
+    <span v-if="required" aria-hidden="true" class="text-destructive">*</span>
   </Label>
 </template>

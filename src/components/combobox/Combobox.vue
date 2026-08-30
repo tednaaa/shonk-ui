@@ -83,7 +83,7 @@ function clear() {
           role="combobox"
           :aria-expanded="open"
           :disabled="disabled"
-          :class="cn('w-full justify-start font-normal', showClear ? 'pr-14' : 'pr-9', !lastSelectedLabel && 'text-text-tertiary', props.class)"
+          :class="cn('w-full justify-start font-normal', showClear ? 'pr-14' : 'pr-9', !lastSelectedLabel && 'text-muted-foreground', props.class)"
         >
           <span class="whitespace-nowrap">{{ lastSelectedLabel ?? props.triggerPlaceholder ?? locale.combobox.triggerPlaceholder }}</span>
         </Button>
@@ -95,7 +95,7 @@ function clear() {
           type="button"
           :aria-label="props.clearButtonAriaLabel ?? locale.combobox.clearButtonAriaLabel"
           tabindex="-1"
-          class="text-text-tertiary hover:text-text-primary focus-visible:ring-border-focus/50 pointer-events-auto cursor-pointer rounded-xs outline-none transition-colors focus-visible:ring-[3px]"
+          class="text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 pointer-events-auto cursor-pointer rounded-xs outline-none transition-colors focus-visible:ring-[3px]"
           @pointerdown.stop.prevent="clear"
         >
           <XIcon class="size-4" />
@@ -117,7 +117,7 @@ function clear() {
         <CommandList>
           <div
             v-if="loading"
-            class="text-text-tertiary flex items-center justify-center gap-2 py-6 text-sm"
+            class="text-muted-foreground flex items-center justify-center gap-2 py-6 text-sm"
           >
             <Spinner />
             <span>{{ props.loadingText ?? locale.combobox.loadingText }}</span>

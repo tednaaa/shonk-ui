@@ -21,10 +21,10 @@ const meta: Meta<typeof Collapsible> = {
             </Button>
           </CollapsibleTrigger>
         </div>
-        <div class="border-border-default rounded-md border px-4 py-2 font-mono text-sm">@acme/ui</div>
+        <div class="border-border rounded-md border px-4 py-2 font-mono text-sm">@acme/ui</div>
         <CollapsibleContent class="space-y-2">
-          <div class="border-border-default rounded-md border px-4 py-2 font-mono text-sm">@acme/tokens</div>
-          <div class="border-border-default rounded-md border px-4 py-2 font-mono text-sm">@acme/icons</div>
+          <div class="border-border rounded-md border px-4 py-2 font-mono text-sm">@acme/tokens</div>
+          <div class="border-border rounded-md border px-4 py-2 font-mono text-sm">@acme/icons</div>
         </CollapsibleContent>
       </Collapsible>
     </div>`,
@@ -47,11 +47,11 @@ export const ShowMore: Story = {
     { Collapsible, CollapsibleTrigger, CollapsibleContent, Button },
     `<div class="w-96">
       <Collapsible class="space-y-2">
-        <p class="text-text-secondary text-sm">
+        <p class="text-muted-foreground text-sm">
           A component library built on accessible primitives and Tailwind utility classes.
         </p>
         <CollapsibleContent class="space-y-2">
-          <p class="text-text-secondary text-sm">
+          <p class="text-muted-foreground text-sm">
             It ships themeable primitives, dark mode, and Storybook docs for every component, so
             product teams can compose consistent interfaces quickly.
           </p>

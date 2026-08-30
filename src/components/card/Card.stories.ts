@@ -28,7 +28,7 @@ const meta: Meta<typeof Card> = {
           <CardDescription>Everything your team ships, in one place.</CardDescription>
         </CardHeader>
         <CardContent>
-          <p class="text-text-secondary text-sm">
+          <p class="text-muted-foreground text-sm">
             Deploy your new project in one click. Manage components, tokens and themes from a single place.
           </p>
         </CardContent>
@@ -62,7 +62,7 @@ export const WithAction: Story = {
           </CardAction>
         </CardHeader>
         <CardContent>
-          <p class="text-text-secondary text-sm">3 members have access to this project.</p>
+          <p class="text-muted-foreground text-sm">3 members have access to this project.</p>
         </CardContent>
       </Card>
     </div>`,

@@ -17,7 +17,7 @@ const forwardedProps = useForwardProps(delegatedProps);
     #default="slotProps"
     data-slot="accordion-item"
     v-bind="forwardedProps"
-    :class="cn('bg-bg-surface data-[state=open]:text-text-primary data-[state=closed]:text-text-tertiary overflow-hidden rounded-lg border border-border-strong shadow-sm', props.class)"
+    :class="cn('bg-background data-[state=open]:text-foreground data-[state=closed]:text-muted-foreground overflow-hidden rounded-lg border border-input shadow-sm', props.class)"
   >
     <slot v-bind="slotProps" />
   </AccordionItem>

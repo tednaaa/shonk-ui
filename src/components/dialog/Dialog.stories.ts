@@ -102,7 +102,7 @@ export const WithBody: Story = {
             Review what happens before you continue.
           </DialogDescription>
         </DialogHeader>
-        <DialogBody class="text-text-secondary text-sm">
+        <DialogBody class="text-muted-foreground text-sm">
           Your changes will be applied immediately and a confirmation email will be sent to
           everyone with access to this workspace.
         </DialogBody>
@@ -131,7 +131,7 @@ export const WithoutFooter: Story = {
             A quick summary of the latest release.
           </DialogDescription>
         </DialogHeader>
-        <DialogBody class="text-text-secondary text-sm">
+        <DialogBody class="text-muted-foreground text-sm">
           Faster builds, a redesigned dialog, and a brand new scrollable body. Close this
           dialog with the button in the header.
         </DialogBody>
@@ -151,7 +151,7 @@ export const WithoutHeader: Story = {
         <VisuallyHidden>
           <DialogTitle>Notice</DialogTitle>
         </VisuallyHidden>
-        <DialogBody class="text-text-secondary text-sm">
+        <DialogBody class="text-muted-foreground text-sm">
           This dialog has no visible header — just a body and a footer divider below it.
         </DialogBody>
         <DialogFooter show-close-button />
@@ -241,7 +241,7 @@ export const Scrollable: Story = {
           </DialogDescription>
         </DialogHeader>
         <DialogBody>
-          <div class="space-y-4 text-text-secondary text-sm">
+          <div class="space-y-4 text-muted-foreground text-sm">
             <p v-for="n in 12" :key="n">
               Section {{ n }}. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -270,7 +270,7 @@ export const ScrollableWithoutFooter: Story = {
           </DialogDescription>
         </DialogHeader>
         <DialogBody>
-          <div class="space-y-4 text-text-secondary text-sm">
+          <div class="space-y-4 text-muted-foreground text-sm">
             <p v-for="n in 12" :key="n">
               Release {{ n }}. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud

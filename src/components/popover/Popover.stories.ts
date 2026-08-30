@@ -33,7 +33,7 @@ const meta: Meta<typeof Popover> = {
       <PopoverContent>
         <div class="grid gap-2">
           <h4 class="leading-none font-medium">About</h4>
-          <p class="text-text-tertiary text-sm">
+          <p class="text-muted-foreground text-sm">
             Popovers float above the page and are anchored to their trigger.
           </p>
         </div>
@@ -60,7 +60,7 @@ export const WithForm: Story = {
         <div class="grid gap-4">
           <div class="grid gap-1">
             <h4 class="leading-none font-medium">Dimensions</h4>
-            <p class="text-text-tertiary text-sm">Set the dimensions for the layer.</p>
+            <p class="text-muted-foreground text-sm">Set the dimensions for the layer.</p>
           </div>
           <div class="grid gap-2">
             <div class="grid grid-cols-3 items-center gap-4">
@@ -97,7 +97,7 @@ export const Anchored: Story = {
     components,
     `<Popover v-bind="args">
       <PopoverAnchor as-child>
-        <div class="rounded-md border border-dashed p-6 text-text-tertiary text-sm">Anchor element</div>
+        <div class="rounded-md border border-dashed p-6 text-muted-foreground text-sm">Anchor element</div>
       </PopoverAnchor>
       <PopoverTrigger as-child>
         <Button variant="outline" class="mt-4">Toggle popover</Button>

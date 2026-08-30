@@ -25,11 +25,11 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
   >
     <SliderTrack
       data-slot="slider-track"
-      class="bg-bg-muted relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5"
+      class="bg-muted relative grow overflow-hidden rounded-full data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5"
     >
       <SliderRange
         data-slot="slider-range"
-        class="bg-bg-brand absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
+        class="bg-primary absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
       />
     </SliderTrack>
 
@@ -37,7 +37,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
       v-for="(_, key) in modelValue"
       :key="key"
       data-slot="slider-thumb"
-      class="bg-bg-surface border-border-brand ring-border-focus/50 block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
+      class="bg-background border-primary ring-ring/50 block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
     />
   </SliderRoot>
 </template>

@@ -11,9 +11,9 @@ const props = defineProps<ToasterProps>();
   <Toaster
     :class="cn('toaster group', props.class)"
     :style="{
-      '--normal-bg': 'var(--color-bg-surface)',
-      '--normal-text': 'var(--color-text-primary)',
-      '--normal-border': 'var(--color-border-default)',
+      '--normal-bg': 'var(--popover)',
+      '--normal-text': 'var(--popover-foreground)',
+      '--normal-border': 'var(--border)',
       '--border-radius': 'var(--radius)',
     }"
     v-bind="props"

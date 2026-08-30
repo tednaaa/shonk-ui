@@ -31,9 +31,9 @@ export const Spacing: Story = {
     template: `
       <div class="flex flex-col gap-3">
         <div v-for="s in steps" :key="s.cls" class="flex items-center gap-4">
-          <span class="w-8 shrink-0 text-sm text-text-primary">{{ s.name }}</span>
-          <div class="h-4 rounded-sm bg-bg-brand" :class="s.cls"></div>
-          <span class="text-xs text-text-tertiary">{{ s.size }}</span>
+          <span class="w-8 shrink-0 text-sm text-foreground">{{ s.name }}</span>
+          <div class="h-4 rounded-sm bg-primary" :class="s.cls"></div>
+          <span class="text-xs text-muted-foreground">{{ s.size }}</span>
         </div>
       </div>
     `,

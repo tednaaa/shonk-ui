@@ -102,7 +102,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
     v-model:placeholder="placeholder"
     :locale="localeCode"
     data-slot="calendar"
-    :class="cn('bg-bg-surface p-3', props.class)"
+    :class="cn('bg-background p-3', props.class)"
   >
     <CalendarHeader class="pt-0">
       <nav class="flex items-center gap-1 absolute top-0 inset-x-0 justify-between">

@@ -38,29 +38,29 @@ export const Typography: Story = {
     template: `
       <div class="flex flex-col gap-10">
         <section class="flex flex-col gap-2">
-          <p class="text-sm font-medium text-text-tertiary">Font family</p>
-          <div class="rounded-lg border border-border-default bg-bg-surface p-4">
-            <p class="text-2xl text-text-primary">{{ sample }}</p>
-            <p class="mt-1 text-xs text-text-tertiary">--font-sans · system-ui, sans-serif · base 14px</p>
+          <p class="text-sm font-medium text-muted-foreground">Font family</p>
+          <div class="rounded-lg border border-border bg-background p-4">
+            <p class="text-2xl text-foreground">{{ sample }}</p>
+            <p class="mt-1 text-xs text-muted-foreground">--font-sans · system-ui, sans-serif · base 14px</p>
           </div>
         </section>
 
         <section class="flex flex-col gap-3">
-          <p class="text-sm font-medium text-text-tertiary">Sizes</p>
+          <p class="text-sm font-medium text-muted-foreground">Sizes</p>
           <div class="flex flex-col gap-4">
             <div v-for="s in sizes" :key="s.cls" class="flex items-baseline gap-4">
-              <span class="w-32 shrink-0 text-xs text-text-tertiary">{{ s.name }}</span>
-              <span class="truncate text-text-primary" :class="s.cls">{{ sample }}</span>
+              <span class="w-32 shrink-0 text-xs text-muted-foreground">{{ s.name }}</span>
+              <span class="truncate text-foreground" :class="s.cls">{{ sample }}</span>
             </div>
           </div>
         </section>
 
         <section class="flex flex-col gap-3">
-          <p class="text-sm font-medium text-text-tertiary">Weights</p>
+          <p class="text-sm font-medium text-muted-foreground">Weights</p>
           <div class="flex flex-col gap-4">
             <div v-for="w in weights" :key="w.cls" class="flex items-baseline gap-4">
-              <span class="w-36 shrink-0 text-xs text-text-tertiary">{{ w.name }}</span>
-              <span class="truncate text-lg text-text-primary" :class="w.cls">{{ sample }}</span>
+              <span class="w-36 shrink-0 text-xs text-muted-foreground">{{ w.name }}</span>
+              <span class="truncate text-lg text-foreground" :class="w.cls">{{ sample }}</span>
             </div>
           </div>
         </section>

@@ -20,7 +20,7 @@ const locale = useLocale();
 <template>
   <div
     data-slot="dialog-header"
-    :class="cn('border-border-default -mx-6 flex items-center justify-between gap-4 border-b px-6 pt-5 pb-4', props.class)"
+    :class="cn('border-border -mx-6 flex items-center justify-between gap-4 border-b px-6 pt-5 pb-4', props.class)"
   >
     <div class="flex flex-col gap-1.5 text-left">
       <slot />

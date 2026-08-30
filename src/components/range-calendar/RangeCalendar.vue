@@ -25,7 +25,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
   <RangeCalendarRoot
     #default="{ grid, weekDays }"
     data-slot="range-calendar"
-    :class="cn('bg-bg-surface p-3', props.class)"
+    :class="cn('bg-background p-3', props.class)"
     :locale="localeCode"
     v-bind="forwarded"
   >

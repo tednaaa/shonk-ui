@@ -27,7 +27,7 @@ export const Demo: Story = {
     `<div>
       <div class="space-y-1">
         <h4 class="text-sm leading-none font-medium">Acme UI</h4>
-        <p class="text-text-tertiary text-sm">A shared component library.</p>
+        <p class="text-muted-foreground text-sm">A shared component library.</p>
       </div>
       <Separator class="my-4" />
       <div class="flex h-5 items-center gap-4 text-sm">

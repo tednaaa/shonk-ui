@@ -16,7 +16,7 @@ const delegatedProps = reactiveOmit(props, 'class');
     v-bind="delegatedProps"
     class="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
   >
-    <div :class="cn('border-t border-border-strong px-4 pt-4 pb-4', props.class)">
+    <div :class="cn('border-t border-input px-4 pt-4 pb-4', props.class)">
       <slot />
     </div>
   </AccordionContent>
