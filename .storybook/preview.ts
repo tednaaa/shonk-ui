@@ -2,7 +2,10 @@ import type { Preview } from '@storybook/vue3-vite';
 import { computed, provide } from 'vue';
 import { templateSource } from '@/lib/storybook';
 import { en, localeInjectionKey, resolveLocale, ru } from '@/locales';
+import { registerVueGrammar } from './highlighting';
 import './preview.css';
+
+registerVueGrammar();
 
 const locales = { en, ru };
 
@@ -45,7 +48,10 @@ const preview: Preview = {
       },
     },
     docs: {
-      source: { transform: templateSource },
+      source: {
+        language: 'vue',
+        transform: templateSource,
+      },
     },
     backgrounds: { disable: true },
     controls: {
