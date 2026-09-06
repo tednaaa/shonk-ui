@@ -69,6 +69,7 @@
     "@types/node": "24.12.4",
     "@types/react": "19.2.18",
     "@vitejs/plugin-vue": "6.0.8",
+    "@vue/test-utils": "2.5.0",
     "@vueuse/core": "^14.4.0",
     "bumpp": "11.1.0",
     "embla-carousel-autoplay": "8.6.0",

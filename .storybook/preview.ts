@@ -40,7 +40,7 @@ const preview: Preview = {
   parameters: {
     options: {
       storySort: {
-        order: ['Changelog', 'Foundations', 'Components'],
+        order: ['Changelog', 'Foundations', 'Components', 'Mobile'],
       },
     },
     backgrounds: { disable: true },
