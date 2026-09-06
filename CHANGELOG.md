@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.5.0 (2026-09-06)
+
+- feat(storybook): show the rendered template in the code panel [`9299553c`](https://github.com/tednaaa/shonk-ui/commit/9299553ceba4aa3336ebf1a26992a7930b6857e2)
+- feat: add SwipeAction component [`5e889e3e`](https://github.com/tednaaa/shonk-ui/commit/5e889e3edca6e591ab475ec0cf4c7571ce6b556d)
+- build: emit unbundled output so consumers can tree-shake per component [`a2d59d63`](https://github.com/tednaaa/shonk-ui/commit/a2d59d632f83864057e70208734422765ec46d62)
+
 ## v0.4.0 (2026-08-30)
 
 - refactor(theme)!: adopt shadcn-vue css variable convention [`a03b03a7`](https://github.com/tednaaa/shonk-ui/commit/a03b03a7445ddb56a4a8eb981079e9a6f5f1c33b)
