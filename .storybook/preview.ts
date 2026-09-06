@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/vue3-vite';
 import { computed, provide } from 'vue';
+import { templateSource } from '@/lib/storybook';
 import { en, localeInjectionKey, resolveLocale, ru } from '@/locales';
 import './preview.css';
 
@@ -42,6 +43,9 @@ const preview: Preview = {
       storySort: {
         order: ['Changelog', 'Foundations', 'Components', 'Mobile'],
       },
+    },
+    docs: {
+      source: { transform: templateSource },
     },
     backgrounds: { disable: true },
     controls: {
