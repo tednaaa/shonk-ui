@@ -17,14 +17,6 @@ const components = {
   TagsInputItemText,
 };
 
-const items = `
-  <TagsInputItem v-for="item in modelValue" :key="item" :value="item">
-    <TagsInputItemText />
-    <TagsInputItemDelete />
-  </TagsInputItem>
-  <TagsInputInput placeholder="Add framework…" />
-`;
-
 const meta: Meta<typeof TagsInput> = {
   title: 'Components/TagsInput',
   component: TagsInput,
@@ -38,7 +30,11 @@ const meta: Meta<typeof TagsInput> = {
     template: `
       <div class="max-w-sm">
         <TagsInput v-model="modelValue" v-bind="args" class="w-full">
-          ${items}
+          <TagsInputItem v-for="item in modelValue" :key="item" :value="item">
+            <TagsInputItemText />
+            <TagsInputItemDelete />
+          </TagsInputItem>
+          <TagsInputInput placeholder="Add framework…" />
         </TagsInput>
       </div>
     `,

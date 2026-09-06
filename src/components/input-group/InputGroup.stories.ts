@@ -6,8 +6,7 @@ import {
   SearchIcon,
   SendIcon,
 } from '@lucide/vue';
-import { ref } from 'vue';
-import { render, showControls } from '@/lib/storybook';
+import { example, render, showControls } from '@/lib/storybook';
 import {
   InputGroup,
   InputGroupAddon,
@@ -16,6 +15,8 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from '.';
+import InputGroupWithTextarea from './examples/InputGroupWithTextarea.vue';
+import inputGroupWithTextareaSource from './examples/InputGroupWithTextarea.vue?raw';
 
 const components = {
   InputGroup,
@@ -101,23 +102,6 @@ export const Disabled: Story = {
 };
 
 export const WithTextarea: Story = {
-  render: () => ({
-    components,
-    setup() {
-      const value = ref('');
-      return { value };
-    },
-    template: `
-      <div class="max-w-sm">
-        <InputGroup>
-          <InputGroupTextarea v-model="value" placeholder="Ask, search, or chat…" />
-          <InputGroupAddon align="block-end">
-            <InputGroupButton size="icon-xs" aria-label="Add attachment"><PlusIcon /></InputGroupButton>
-            <InputGroupText><InfoIcon />{{ value.length }} chars</InputGroupText>
-            <InputGroupButton variant="default" size="sm" class="ml-auto">Send <SendIcon /></InputGroupButton>
-          </InputGroupAddon>
-        </InputGroup>
-      </div>
-    `,
-  }),
+  parameters: example(inputGroupWithTextareaSource),
+  render: render({ InputGroupWithTextarea }, `<div class="max-w-sm"><InputGroupWithTextarea /></div>`),
 };

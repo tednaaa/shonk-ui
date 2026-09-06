@@ -1,10 +1,12 @@
 import type { DateValue } from '@internationalized/date';
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { CalendarDate, getLocalTimeZone } from '@internationalized/date';
-import { ref } from 'vue';
-import { render, showControls, StoryLabel } from '@/lib/storybook';
+import { example, render, showControls, StoryLabel } from '@/lib/storybook';
 import { DatePicker } from '.';
-import { Button } from '../button';
+import DatePickerPreselected from './examples/DatePickerPreselected.vue';
+import datePickerPreselectedSource from './examples/DatePickerPreselected.vue?raw';
+import DatePickerWithPresets from './examples/DatePickerWithPresets.vue';
+import datePickerWithPresetsSource from './examples/DatePickerWithPresets.vue?raw';
 
 const meta: Meta<typeof DatePicker> = {
   title: 'Components/DatePicker',
@@ -24,14 +26,8 @@ export const Default: Story = {
 };
 
 export const Preselected: Story = {
-  render: args => ({
-    components: { DatePicker },
-    setup() {
-      const date = ref(new Date(2026, 5, 15));
-      return { args, date };
-    },
-    template: `<DatePicker v-bind="args" v-model="date" />`,
-  }),
+  parameters: example(datePickerPreselectedSource),
+  render: render({ DatePickerPreselected }, `<DatePickerPreselected />`),
 };
 
 export const MinValue: Story = {
@@ -75,23 +71,6 @@ export const StayOpen: Story = {
 };
 
 export const WithPresets: Story = {
-  render: args => ({
-    components: { DatePicker, Button },
-    setup() {
-      const date = ref<Date>();
-      function setDaysFromNow(days: number) {
-        date.value = new Date(2026, 5, 17 + days);
-      }
-      return { args, date, setDaysFromNow };
-    },
-    template: `
-      <DatePicker v-bind="args" v-model="date">
-        <div class="flex flex-col gap-1 border-l p-2">
-          <Button variant="ghost" class="justify-start" @click="setDaysFromNow(0)">Today</Button>
-          <Button variant="ghost" class="justify-start" @click="setDaysFromNow(1)">Tomorrow</Button>
-          <Button variant="ghost" class="justify-start" @click="setDaysFromNow(7)">In a week</Button>
-        </div>
-      </DatePicker>
-    `,
-  }),
+  parameters: example(datePickerWithPresetsSource),
+  render: render({ DatePickerWithPresets }, `<DatePickerWithPresets />`),
 };

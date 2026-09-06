@@ -9,6 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(import.meta.dirname, './src'),
+      'shonk-ui': resolve(import.meta.dirname, './src/index.ts'),
     },
   },
 

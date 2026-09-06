@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { ref } from 'vue';
-import { render, showControls } from '@/lib/storybook';
+import { example, render, showControls } from '@/lib/storybook';
 import { InputPassword } from '.';
 import { Label } from '../label';
+import InputPasswordPrefilled from './examples/InputPasswordPrefilled.vue';
+import inputPasswordPrefilledSource from './examples/InputPasswordPrefilled.vue?raw';
 
 const meta: Meta<typeof InputPassword> = {
   title: 'Components/InputPassword',
@@ -26,14 +27,8 @@ export const Invalid: Story = {
 };
 
 export const Prefilled: Story = {
-  render: () => ({
-    components: { InputPassword },
-    setup() {
-      const password = ref('super-secret');
-      return { password };
-    },
-    template: `<div class="max-w-xs"><InputPassword v-model="password" name="password" /></div>`,
-  }),
+  parameters: example(inputPasswordPrefilledSource),
+  render: render({ InputPasswordPrefilled }, `<div class="max-w-xs"><InputPasswordPrefilled /></div>`),
 };
 
 export const WithLabel: Story = {

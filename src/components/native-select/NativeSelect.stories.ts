@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { ref } from 'vue';
-import { render, showControls } from '@/lib/storybook';
+import { example, render, showControls } from '@/lib/storybook';
 import {
   NativeSelect,
   NativeSelectOptGroup,
   NativeSelectOption,
 } from '.';
 import { Label } from '../label';
+import NativeSelectPreselected from './examples/NativeSelectPreselected.vue';
+import nativeSelectPreselectedSource from './examples/NativeSelectPreselected.vue?raw';
 
 const components = {
   NativeSelect,
@@ -39,21 +40,8 @@ export const Default: Story = {
 };
 
 export const Preselected: Story = {
-  render: () => ({
-    components,
-    setup() {
-      const value = ref('banana');
-      return { value };
-    },
-    template: `
-      <NativeSelect v-model="value">
-        <NativeSelectOption value="apple">Apple</NativeSelectOption>
-        <NativeSelectOption value="banana">Banana</NativeSelectOption>
-        <NativeSelectOption value="blueberry">Blueberry</NativeSelectOption>
-        <NativeSelectOption value="grapes">Grapes</NativeSelectOption>
-      </NativeSelect>
-    `,
-  }),
+  parameters: example(nativeSelectPreselectedSource),
+  render: render({ NativeSelectPreselected }, `<NativeSelectPreselected />`),
 };
 
 export const WithOptGroups: Story = {

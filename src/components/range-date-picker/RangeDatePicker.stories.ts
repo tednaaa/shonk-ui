@@ -1,10 +1,12 @@
 import type { DateValue } from '@internationalized/date';
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { CalendarDate, getLocalTimeZone } from '@internationalized/date';
-import { ref } from 'vue';
-import { render, showControls, StoryLabel } from '@/lib/storybook';
+import { example, render, showControls, StoryLabel } from '@/lib/storybook';
 import { RangeDatePicker } from '.';
-import { Button } from '../button';
+import RangeDatePickerPreselected from './examples/RangeDatePickerPreselected.vue';
+import rangeDatePickerPreselectedSource from './examples/RangeDatePickerPreselected.vue?raw';
+import RangeDatePickerWithPresets from './examples/RangeDatePickerWithPresets.vue';
+import rangeDatePickerWithPresetsSource from './examples/RangeDatePickerWithPresets.vue?raw';
 
 const meta: Meta<typeof RangeDatePicker> = {
   title: 'Components/RangeDatePicker',
@@ -24,14 +26,8 @@ export const Default: Story = {
 };
 
 export const Preselected: Story = {
-  render: args => ({
-    components: { RangeDatePicker },
-    setup() {
-      const dates = ref([new Date(2026, 5, 1), new Date(2026, 5, 15)]);
-      return { args, dates };
-    },
-    template: `<RangeDatePicker v-bind="args" v-model="dates" />`,
-  }),
+  parameters: example(rangeDatePickerPreselectedSource),
+  render: render({ RangeDatePickerPreselected }, `<RangeDatePickerPreselected />`),
 };
 
 export const MinValue: Story = {
@@ -75,25 +71,6 @@ export const StayOpen: Story = {
 };
 
 export const WithPresets: Story = {
-  render: args => ({
-    components: { RangeDatePicker, Button },
-    setup() {
-      const dates = ref<Date[]>([]);
-      function setLastDays(days: number) {
-        const end = new Date(2026, 5, 17);
-        const start = new Date(2026, 5, 17 - days);
-        dates.value = [start, end];
-      }
-      return { args, dates, setLastDays };
-    },
-    template: `
-      <RangeDatePicker v-bind="args" v-model="dates">
-        <div class="flex flex-col gap-1 border-l p-2">
-          <Button variant="ghost" class="justify-start" @click="setLastDays(7)">Last 7 days</Button>
-          <Button variant="ghost" class="justify-start" @click="setLastDays(30)">Last 30 days</Button>
-          <Button variant="ghost" class="justify-start" @click="setLastDays(90)">Last 90 days</Button>
-        </div>
-      </RangeDatePicker>
-    `,
-  }),
+  parameters: example(rangeDatePickerWithPresetsSource),
+  render: render({ RangeDatePickerWithPresets }, `<RangeDatePickerWithPresets />`),
 };

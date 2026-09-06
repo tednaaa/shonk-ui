@@ -1,137 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import {
-  CalendarIcon,
-  GalleryVerticalEndIcon,
-  HomeIcon,
-  InboxIcon,
-  SearchIcon,
-  Settings2Icon,
-  User2Icon,
-} from '@lucide/vue';
-import { render, showControls } from '@/lib/storybook';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarInset,
-  SidebarMenu,
-  SidebarMenuBadge,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSkeleton,
-  SidebarProvider,
-  SidebarRail,
-  SidebarTrigger,
-} from '.';
-import { Separator } from '../separator';
-
-const items = [
-  { title: 'Home', icon: HomeIcon, badge: '' },
-  { title: 'Inbox', icon: InboxIcon, badge: '12' },
-  { title: 'Calendar', icon: CalendarIcon, badge: '' },
-  { title: 'Search', icon: SearchIcon, badge: '' },
-  { title: 'Settings', icon: Settings2Icon, badge: '' },
-];
-
-const components = {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarInset,
-  SidebarMenu,
-  SidebarMenuBadge,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSkeleton,
-  SidebarProvider,
-  SidebarRail,
-  SidebarTrigger,
-  Separator,
-  GalleryVerticalEndIcon,
-  User2Icon,
-};
-
-const appTemplate = `
-  <SidebarProvider>
-    <Sidebar v-bind="args">
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg">
-              <div class="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                <GalleryVerticalEndIcon class="size-4" />
-              </div>
-              <div class="grid flex-1 text-left text-sm leading-tight">
-                <span class="truncate font-medium">Acme Inc</span>
-                <span class="truncate text-xs">Enterprise</span>
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem v-for="item in items" :key="item.title">
-                <SidebarMenuButton :tooltip="item.title" :is-active="item.title === 'Home'">
-                  <component :is="item.icon" />
-                  <span>{{ item.title }}</span>
-                </SidebarMenuButton>
-                <SidebarMenuBadge v-if="item.badge">{{ item.badge }}</SidebarMenuBadge>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton>
-              <User2Icon />
-              <span>Account</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
-      <SidebarRail />
-    </Sidebar>
-    <SidebarInset>
-      <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-        <SidebarTrigger />
-        <Separator orientation="vertical" class="mr-2 h-4" />
-        <span class="font-medium">Dashboard</span>
-      </header>
-      <div class="flex flex-1 flex-col gap-4 p-4">
-        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div class="bg-muted/50 aspect-video rounded-xl" />
-          <div class="bg-muted/50 aspect-video rounded-xl" />
-          <div class="bg-muted/50 aspect-video rounded-xl" />
-        </div>
-        <div class="bg-muted/50 min-h-[40vh] flex-1 rounded-xl" />
-      </div>
-    </SidebarInset>
-  </SidebarProvider>
-`;
+import { example, render, showControls } from '@/lib/storybook';
+import { Sidebar } from '.';
+import SidebarApp from './examples/SidebarApp.vue';
+import sidebarAppSource from './examples/SidebarApp.vue?raw';
+import SidebarSkeleton from './examples/SidebarSkeleton.vue';
+import sidebarSkeletonSource from './examples/SidebarSkeleton.vue?raw';
 
 const meta: Meta<typeof Sidebar> = {
   title: 'Components/Sidebar',
   component: Sidebar,
   tags: ['autodocs'],
-  render: args => ({
-    components,
-    setup: () => ({ args, items }),
-    template: appTemplate,
-  }),
+  parameters: example(sidebarAppSource),
+  render: render({ SidebarApp }, `<SidebarApp v-bind="args" />`),
 };
 
 export default meta;
@@ -143,39 +23,32 @@ export const Default: Story = {
 
 export const IconCollapsible: Story = {
   args: { collapsible: 'icon' },
+  parameters: example(
+    sidebarAppSource,
+    'With `collapsible="icon"` the sidebar shrinks to a rail of icons rather than sliding off canvas, so the `tooltip` on each `SidebarMenuButton` becomes the only remaining label.',
+  ),
 };
 
 export const Floating: Story = {
   args: { variant: 'floating' },
+  parameters: example(
+    sidebarAppSource,
+    'The `floating` variant detaches the sidebar from the viewport edge and gives it its own rounded, bordered surface.',
+  ),
 };
 
 export const RightSide: Story = {
   args: { side: 'right' },
+  parameters: example(
+    sidebarAppSource,
+    'Setting `side="right"` anchors the sidebar to the opposite edge; `SidebarInset` and `SidebarRail` follow it without further changes.',
+  ),
 };
 
 export const Loading: Story = {
-  render: render(
-    components,
-    `<SidebarProvider>
-      <Sidebar>
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupLabel>Application</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <SidebarMenuItem v-for="i in 5" :key="i">
-                  <SidebarMenuSkeleton show-icon />
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
-      <SidebarInset>
-        <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger />
-        </header>
-      </SidebarInset>
-    </SidebarProvider>`,
+  parameters: example(
+    sidebarSkeletonSource,
+    'Fill the menu with `SidebarMenuSkeleton` while the navigation is still being fetched. `show-icon` reserves room for the icon so nothing shifts once the real items arrive.',
   ),
+  render: render({ SidebarSkeleton }, `<SidebarSkeleton />`),
 };

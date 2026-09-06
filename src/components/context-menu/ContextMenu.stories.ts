@@ -11,8 +11,7 @@ import {
   UserPlusIcon,
   UsersIcon,
 } from '@lucide/vue';
-import { ref } from 'vue';
-import { render, showControls } from '@/lib/storybook';
+import { example, render, showControls } from '@/lib/storybook';
 import {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -29,6 +28,10 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from '.';
+import ContextMenuWithCheckboxItems from './examples/ContextMenuWithCheckboxItems.vue';
+import contextMenuWithCheckboxItemsSource from './examples/ContextMenuWithCheckboxItems.vue?raw';
+import ContextMenuWithRadioItems from './examples/ContextMenuWithRadioItems.vue';
+import contextMenuWithRadioItemsSource from './examples/ContextMenuWithRadioItems.vue?raw';
 
 const components = {
   ContextMenu,
@@ -93,51 +96,13 @@ export const Default: Story = {
 };
 
 export const WithCheckboxItems: Story = {
-  render: () => ({
-    components,
-    setup() {
-      const showStatusBar = ref(true);
-      const showActivityBar = ref(false);
-      const showPanel = ref(false);
-      return { showStatusBar, showActivityBar, showPanel };
-    },
-    template: `
-      <ContextMenu>
-        ${trigger}
-        <ContextMenuContent class="w-64">
-          <ContextMenuLabel>Appearance</ContextMenuLabel>
-          <ContextMenuSeparator />
-          <ContextMenuCheckboxItem v-model="showStatusBar">Status Bar</ContextMenuCheckboxItem>
-          <ContextMenuCheckboxItem v-model="showActivityBar">Activity Bar</ContextMenuCheckboxItem>
-          <ContextMenuCheckboxItem v-model="showPanel">Panel</ContextMenuCheckboxItem>
-        </ContextMenuContent>
-      </ContextMenu>
-    `,
-  }),
+  parameters: example(contextMenuWithCheckboxItemsSource),
+  render: render({ ContextMenuWithCheckboxItems }, `<ContextMenuWithCheckboxItems />`),
 };
 
 export const WithRadioItems: Story = {
-  render: () => ({
-    components,
-    setup() {
-      const position = ref('bottom');
-      return { position };
-    },
-    template: `
-      <ContextMenu>
-        ${trigger}
-        <ContextMenuContent class="w-64">
-          <ContextMenuLabel>Panel Position</ContextMenuLabel>
-          <ContextMenuSeparator />
-          <ContextMenuRadioGroup v-model="position">
-            <ContextMenuRadioItem value="top">Top</ContextMenuRadioItem>
-            <ContextMenuRadioItem value="bottom">Bottom</ContextMenuRadioItem>
-            <ContextMenuRadioItem value="right">Right</ContextMenuRadioItem>
-          </ContextMenuRadioGroup>
-        </ContextMenuContent>
-      </ContextMenu>
-    `,
-  }),
+  parameters: example(contextMenuWithRadioItemsSource),
+  render: render({ ContextMenuWithRadioItems }, `<ContextMenuWithRadioItems />`),
 };
 
 export const WithSubmenu: Story = {

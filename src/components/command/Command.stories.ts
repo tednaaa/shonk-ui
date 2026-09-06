@@ -7,11 +7,9 @@ import {
   SmileIcon,
   UserIcon,
 } from '@lucide/vue';
-import { ref } from 'vue';
-import { render, showControls } from '@/lib/storybook';
+import { example, render, showControls } from '@/lib/storybook';
 import {
   Command,
-  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
@@ -20,7 +18,8 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from '.';
-import { Button } from '../button';
+import CommandWithDialog from './examples/CommandWithDialog.vue';
+import commandWithDialogSource from './examples/CommandWithDialog.vue?raw';
 
 const components = {
   Command,
@@ -75,15 +74,6 @@ export const Default: Story = {
 };
 
 export const Dialog: Story = {
-  render: () => ({
-    components: { ...components, CommandDialog, Button },
-    setup() {
-      const open = ref(false);
-      return { open };
-    },
-    template: `
-      <Button variant="outline" @click="open = true">Open command menu</Button>
-      <CommandDialog v-model:open="open">${items}</CommandDialog>
-    `,
-  }),
+  parameters: example(commandWithDialogSource),
+  render: render({ CommandWithDialog }, `<CommandWithDialog />`),
 };

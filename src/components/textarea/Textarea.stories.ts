@@ -1,8 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { ref } from 'vue';
-import { showControls } from '@/lib/storybook';
+import { example, render, showControls } from '@/lib/storybook';
 import { Textarea } from '.';
-import { Label } from '../label';
+import TextareaDisabled from './examples/TextareaDisabled.vue';
+import textareaDisabledSource from './examples/TextareaDisabled.vue?raw';
+import TextareaPrefilled from './examples/TextareaPrefilled.vue';
+import textareaPrefilledSource from './examples/TextareaPrefilled.vue?raw';
+import TextareaWithLabel from './examples/TextareaWithLabel.vue';
+import textareaWithLabelSource from './examples/TextareaWithLabel.vue?raw';
 
 const meta: Meta<typeof Textarea> = {
   title: 'Components/Textarea',
@@ -26,39 +31,16 @@ export const Default: Story = {
 };
 
 export const Prefilled: Story = {
-  render: () => ({
-    components: { Textarea },
-    setup() {
-      const value = ref('The quick brown fox jumps over the lazy dog.');
-      return { value };
-    },
-    template: `<div class="max-w-sm"><Textarea v-model="value" /></div>`,
-  }),
+  parameters: example(textareaPrefilledSource),
+  render: render({ TextareaPrefilled }, `<div class="max-w-sm"><TextareaPrefilled /></div>`),
 };
 
 export const Disabled: Story = {
-  render: () => ({
-    components: { Textarea },
-    setup() {
-      const value = ref('');
-      return { value };
-    },
-    template: `<div class="max-w-sm"><Textarea v-model="value" placeholder="This field is disabled." disabled /></div>`,
-  }),
+  parameters: example(textareaDisabledSource),
+  render: render({ TextareaDisabled }, `<div class="max-w-sm"><TextareaDisabled /></div>`),
 };
 
 export const WithLabel: Story = {
-  render: () => ({
-    components: { Textarea, Label },
-    setup() {
-      const value = ref('');
-      return { value };
-    },
-    template: `
-      <div class="grid max-w-sm gap-2">
-        <Label for="message">Your message</Label>
-        <Textarea id="message" v-model="value" placeholder="Type your message here." />
-      </div>
-    `,
-  }),
+  parameters: example(textareaWithLabelSource),
+  render: render({ TextareaWithLabel }, `<div class="max-w-sm"><TextareaWithLabel /></div>`),
 };

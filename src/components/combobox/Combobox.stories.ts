@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { ref } from 'vue';
-import { render, showControls } from '@/lib/storybook';
+import { example, render, showControls } from '@/lib/storybook';
 import { Combobox } from '.';
+import ComboboxPreselected from './examples/ComboboxPreselected.vue';
+import comboboxPreselectedSource from './examples/ComboboxPreselected.vue?raw';
 
 const frameworks = [
   { label: 'Next.js', value: 'next' },
@@ -32,15 +33,8 @@ export const Default: Story = {
 };
 
 export const Preselected: Story = {
-  args: { clearable: true },
-  render: args => ({
-    components: { Combobox },
-    setup() {
-      const value = ref('nuxt');
-      return { args, value };
-    },
-    template: `<div class="max-w-60"><Combobox v-bind="args" v-model="value" /></div>`,
-  }),
+  parameters: example(comboboxPreselectedSource),
+  render: render({ ComboboxPreselected }, `<div class="max-w-60"><ComboboxPreselected /></div>`),
 };
 
 export const Loading: Story = {

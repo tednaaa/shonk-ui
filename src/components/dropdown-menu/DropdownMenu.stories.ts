@@ -11,8 +11,7 @@ import {
   UserPlusIcon,
   UsersIcon,
 } from '@lucide/vue';
-import { ref } from 'vue';
-import { render, showControls } from '@/lib/storybook';
+import { example, render, showControls } from '@/lib/storybook';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -30,6 +29,10 @@ import {
   DropdownMenuTrigger,
 } from '.';
 import { Button } from '../button';
+import DropdownMenuWithCheckboxItems from './examples/DropdownMenuWithCheckboxItems.vue';
+import dropdownMenuWithCheckboxItemsSource from './examples/DropdownMenuWithCheckboxItems.vue?raw';
+import DropdownMenuWithRadioItems from './examples/DropdownMenuWithRadioItems.vue';
+import dropdownMenuWithRadioItemsSource from './examples/DropdownMenuWithRadioItems.vue?raw';
 
 const components = {
   DropdownMenu,
@@ -103,55 +106,13 @@ export const Default: Story = {
 };
 
 export const WithCheckboxItems: Story = {
-  render: () => ({
-    components,
-    setup() {
-      const showStatusBar = ref(true);
-      const showActivityBar = ref(false);
-      const showPanel = ref(false);
-      return { showStatusBar, showActivityBar, showPanel };
-    },
-    template: `
-      <DropdownMenu>
-        <DropdownMenuTrigger as-child>
-          <Button variant="outline">View options</Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent class="w-56" align="start">
-          <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem v-model="showStatusBar">Status Bar</DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem v-model="showActivityBar">Activity Bar</DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem v-model="showPanel">Panel</DropdownMenuCheckboxItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    `,
-  }),
+  parameters: example(dropdownMenuWithCheckboxItemsSource),
+  render: render({ DropdownMenuWithCheckboxItems }, `<DropdownMenuWithCheckboxItems />`),
 };
 
 export const WithRadioItems: Story = {
-  render: () => ({
-    components,
-    setup() {
-      const position = ref('bottom');
-      return { position };
-    },
-    template: `
-      <DropdownMenu>
-        <DropdownMenuTrigger as-child>
-          <Button variant="outline">Panel position</Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent class="w-56" align="start">
-          <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuRadioGroup v-model="position">
-            <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    `,
-  }),
+  parameters: example(dropdownMenuWithRadioItemsSource),
+  render: render({ DropdownMenuWithRadioItems }, `<DropdownMenuWithRadioItems />`),
 };
 
 export const WithSubmenu: Story = {
