@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.6.0 (2026-09-07)
+
+- fix(storybook): dedent story templates that open on the backtick line [`5b53b4cd`](https://github.com/tednaaa/shonk-ui/commit/5b53b4cdd780e4babaa5e2b2709bc12b7e132992)
+- docs: add examples for all components [`2733c4b8`](https://github.com/tednaaa/shonk-ui/commit/2733c4b853b60d6de154b74ee5d3ec953ee0c4d8)
+- fix(storybook): highlight source snippets with a vue grammar instead of jsx [`b4bc13a3`](https://github.com/tednaaa/shonk-ui/commit/b4bc13a3287a9e6a623def87544609bc7c295790)
+
 ## v0.5.0 (2026-09-06)
 
 - feat(storybook): show the rendered template in the code panel [`9299553c`](https://github.com/tednaaa/shonk-ui/commit/9299553ceba4aa3336ebf1a26992a7930b6857e2)
