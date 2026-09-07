@@ -125,3 +125,22 @@ it('leaves out the script block when nothing needs importing', () => {
 it('falls back to the generated code when a story has no template', () => {
   expect(templateSource('FALLBACK', context({ render: () => null }))).toBe('FALLBACK');
 });
+
+it('dedents a template that opens on the backtick line', () => {
+  const template = `<div class="h-72">
+      <Card>
+        <p>Body</p>
+      </Card>
+    </div>`;
+
+  expect(templateSource('IGNORED', context({ components: { Card: {} }, template })).split('\n').slice(4))
+    .toEqual([
+      `<template>`,
+      `  <div class="h-72">`,
+      `    <Card>`,
+      `      <p>Body</p>`,
+      `    </Card>`,
+      `  </div>`,
+      `</template>`,
+    ]);
+});

@@ -10,11 +10,16 @@ const otherSources: Record<string, string> = {
 
 const storybookOnly = new Set(['StoryLabel']);
 
-function dedent(template: string) {
-  const lines = template.replace(/^\n+/, '').trimEnd().split('\n');
-  const indents = lines.filter(line => line.trim()).map(line => line.length - line.trimStart().length);
+function indentOf(line: string) {
+  return line.length - line.trimStart().length;
+}
 
-  return lines.map(line => line.slice(Math.min(...indents))).join('\n');
+function dedent(template: string) {
+  const [opening, ...rest] = template.replace(/^\n+/, '').trimEnd().split('\n');
+  const body = rest.filter(line => line.trim());
+  const shift = body.length ? Math.min(...body.map(indentOf)) : indentOf(opening);
+
+  return [template.startsWith('\n') ? opening.slice(shift) : opening, ...rest.map(line => line.slice(shift))].join('\n');
 }
 
 function indent(template: string) {
