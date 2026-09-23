@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ButtonVariants } from '../button';
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useLocale } from '@/locales';
 import { Button } from '../button';
 import {
@@ -26,32 +26,39 @@ const locale = useLocale();
 const state = useConfirmState();
 const open = computed(() => state.value !== null);
 
-const resolvedTitle = computed(() => state.value?.title ?? props.title ?? locale.value.confirmDialog.title);
-const resolvedCancelButtonText = computed(() => state.value?.cancelButtonText ?? props.cancelButtonText ?? locale.value.confirmDialog.cancelButtonText);
-const resolvedAcceptButtonVariant = computed(() => state.value?.acceptButtonVariant ?? props.acceptButtonVariant);
+const shownRequest = ref(state.value);
+let pendingRequest = state.value;
 
-let closingRequest = state.value;
+watch(state, (request) => {
+  if (!request)
+    return;
 
-function takeClosingRequest() {
-  const request = closingRequest;
-  closingRequest = null;
+  shownRequest.value = request;
+  pendingRequest = request;
+});
+
+const resolvedTitle = computed(() => shownRequest.value?.title ?? props.title ?? locale.value.confirmDialog.title);
+const resolvedCancelButtonText = computed(() => shownRequest.value?.cancelButtonText ?? props.cancelButtonText ?? locale.value.confirmDialog.cancelButtonText);
+const resolvedAcceptButtonVariant = computed(() => shownRequest.value?.acceptButtonVariant ?? props.acceptButtonVariant);
+
+function takePendingRequest() {
+  const request = pendingRequest;
+  pendingRequest = null;
 
   return request;
 }
 
 function handleAccept() {
-  takeClosingRequest()?.accept();
+  takePendingRequest()?.accept();
 }
 
 function handleReject() {
-  takeClosingRequest()?.reject?.();
+  takePendingRequest()?.reject?.();
 }
 
 function handleOpenChange(isOpen: boolean) {
-  if (!isOpen) {
-    closingRequest = state.value;
+  if (!isOpen)
     state.value = null;
-  }
 }
 
 function preventDismiss(event: Event) {
@@ -73,7 +80,7 @@ function preventDismiss(event: Event) {
       </DialogHeader>
       <DialogBody>
         <DialogDescription>
-          {{ state?.message }}
+          {{ shownRequest?.message }}
         </DialogDescription>
       </DialogBody>
       <DialogFooter>
@@ -84,7 +91,7 @@ function preventDismiss(event: Event) {
         </DialogClose>
         <DialogClose as-child>
           <Button :variant="resolvedAcceptButtonVariant" @click="handleAccept">
-            {{ state?.acceptButtonText }}
+            {{ shownRequest?.acceptButtonText }}
           </Button>
         </DialogClose>
       </DialogFooter>
