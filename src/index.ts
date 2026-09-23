@@ -28,6 +28,7 @@ export * from './components/label';
 export * from './components/native-select';
 export * from './components/pagination';
 export * from './components/popover';
+export * from './components/progress';
 export * from './components/radio-group';
 export * from './components/range-calendar';
 export * from './components/range-date-picker';
