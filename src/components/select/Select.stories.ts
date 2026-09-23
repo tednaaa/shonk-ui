@@ -1,4 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/vue3-vite';
+import type { ComponentPropsAndSlots, Meta, StoryObj } from '@storybook/vue3-vite';
+import type { FunctionalComponent } from 'vue';
 import { render, showControls } from '@/lib/storybook';
 import {
   Select,
@@ -22,9 +23,11 @@ const components = {
   SelectValue,
 };
 
+const selectComponent: FunctionalComponent<ComponentPropsAndSlots<typeof Select>> = Select;
+
 const meta: Meta<typeof Select> = {
   title: 'Components/Select',
-  component: Select,
+  component: selectComponent,
   tags: ['autodocs'],
   render: render(
     components,
