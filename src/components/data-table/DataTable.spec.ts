@@ -151,7 +151,7 @@ describe('dataTable', () => {
       await wrapper.getElementByText('td', 'Linus').trigger('click');
 
       expect(openPerson).toHaveBeenCalledWith(people[1]);
-      expect(wrapper.get('tbody tr').classes()).toContain('cursor-pointer');
+      expect(wrapper.get('tbody tr').classes()).toEqual(expect.arrayContaining(['cursor-pointer', 'hover:bg-muted/50']));
     });
 
     it('should ignore a click on a control inside a cell', async () => {
@@ -168,10 +168,11 @@ describe('dataTable', () => {
       expect(openPerson).not.toHaveBeenCalled();
     });
 
-    it('should not look clickable without a listener', () => {
+    it('should not look clickable and leave every row background alone on hover without a listener', () => {
       const wrapper = mountTable();
 
       expect(wrapper.get('tbody tr').classes()).not.toContain('cursor-pointer');
+      expect(wrapper.findAll('tr').filter(row => row.classes().some(className => className.startsWith('hover:')))).toEqual([]);
     });
   });
 });

@@ -23,7 +23,7 @@ function handleClick(event: MouseEvent) {
 
 <template>
   <TableRow
-    :class="cn(onRowClick && 'cursor-pointer', rowClass?.(row.original))"
+    :class="cn(onRowClick && 'cursor-pointer hover:bg-muted/50', rowClass?.(row.original))"
     @click="handleClick"
   >
     <TableCell
