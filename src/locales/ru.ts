@@ -31,6 +31,10 @@ export const ru: ShonkLocale = {
     cancelButtonText: 'Отменить',
   },
 
+  dataTable: {
+    emptyText: 'Нет данных',
+  },
+
   datePicker: {
     triggerPlaceholder: 'Выберите дату',
   },

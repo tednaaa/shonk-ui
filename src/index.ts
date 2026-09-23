@@ -16,6 +16,7 @@ export * from './components/combobox';
 export * from './components/command';
 export * from './components/confirm-dialog';
 export * from './components/context-menu';
+export * from './components/data-table';
 export * from './components/date-picker';
 export * from './components/dialog';
 export * from './components/dropdown-menu';

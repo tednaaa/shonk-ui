@@ -1,0 +1,69 @@
+<script setup lang="ts" generic="TData extends object">
+import type { HTMLAttributes, VNodeChild } from 'vue';
+import type { DataTableCellContext, DataTableHeaderContext, DataTableInstance } from './types';
+import { computed } from 'vue';
+import { cn } from '@/utils';
+import { Table } from '../table';
+import DataTableBody from './DataTableBody.vue';
+import DataTableHeader from './DataTableHeader.vue';
+import { unwrapDataTable } from './lib/instance';
+
+const props = defineProps<{
+  table: DataTableInstance<TData>;
+  class?: HTMLAttributes['class'];
+  rowClass?: (row: TData) => HTMLAttributes['class'];
+  emptyText?: string;
+  loading?: boolean;
+  onRowClick?: (row: TData) => void;
+}>();
+
+const slots = defineSlots<{
+  [name: `cell-${string}`]: ((context: DataTableCellContext<TData>) => VNodeChild) | undefined;
+  [name: `header-${string}`]: ((context: DataTableHeaderContext) => VNodeChild) | undefined;
+  empty?: () => VNodeChild;
+}>();
+
+const kitTable = computed(() => unwrapDataTable(props.table));
+</script>
+
+<template>
+  <div
+    data-slot="data-table"
+    :class="cn('flex min-h-0 flex-col overflow-hidden rounded-sm border', props.class)"
+  >
+    <Table
+      table-container-class="min-h-0 flex-1"
+      :aria-busy="loading"
+    >
+      <DataTableHeader :table="kitTable">
+        <template
+          v-for="(_, name) in slots"
+          #[name]="context"
+        >
+          <slot
+            :name="name"
+            v-bind="context"
+          />
+        </template>
+      </DataTableHeader>
+
+      <DataTableBody
+        :table="kitTable"
+        :row-class="rowClass"
+        :empty-text="emptyText"
+        :loading="loading"
+        :on-row-click="onRowClick"
+      >
+        <template
+          v-for="(_, name) in slots"
+          #[name]="context"
+        >
+          <slot
+            :name="name"
+            v-bind="context"
+          />
+        </template>
+      </DataTableBody>
+    </Table>
+  </div>
+</template>

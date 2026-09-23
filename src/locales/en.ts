@@ -31,6 +31,10 @@ export const en: ShonkLocale = {
     cancelButtonText: 'Cancel',
   },
 
+  dataTable: {
+    emptyText: 'No data',
+  },
+
   datePicker: {
     triggerPlaceholder: 'Pick a date',
   },

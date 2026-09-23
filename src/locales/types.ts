@@ -29,6 +29,10 @@ export interface ShonkLocale {
     cancelButtonText: string;
   };
 
+  dataTable: {
+    emptyText: string;
+  };
+
   datePicker: {
     triggerPlaceholder: string;
   };
