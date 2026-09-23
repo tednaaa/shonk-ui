@@ -2,25 +2,15 @@
 import type { AcceptableValue } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import { ChevronDownIcon } from '@lucide/vue';
-import { reactiveOmit, useVModel } from '@vueuse/core';
 import { cn } from '@/utils';
 
 defineOptions({
   inheritAttrs: false,
 });
 
-const props = defineProps<{ modelValue?: AcceptableValue | AcceptableValue[]; class?: HTMLAttributes['class'] }>();
+const props = defineProps<{ class?: HTMLAttributes['class'] }>();
 
-const emit = defineEmits<{
-  'update:modelValue': AcceptableValue;
-}>();
-
-const modelValue = useVModel(props, 'modelValue', emit, {
-  passive: true,
-  defaultValue: '',
-});
-
-const delegatedProps = reactiveOmit(props, 'class');
+const modelValue = defineModel<AcceptableValue | AcceptableValue[]>({ default: '' });
 </script>
 
 <template>
@@ -29,7 +19,7 @@ const delegatedProps = reactiveOmit(props, 'class');
     data-slot="native-select-wrapper"
   >
     <select
-      v-bind="{ ...$attrs, ...delegatedProps }"
+      v-bind="$attrs"
       v-model="modelValue"
       data-slot="native-select"
       :class="cn(
