@@ -1,6 +1,7 @@
 import type { VueTable } from '@tanstack/vue-table';
 import type { HTMLAttributes } from 'vue';
 import {
+  cellSpanningFeature,
   columnPinningFeature,
   columnVisibilityFeature,
   createPaginatedRowModel,
@@ -34,6 +35,7 @@ export const features = tableFeatures({
   rowSelectionFeature,
   rowExpandingFeature,
   rowPinningFeature,
+  cellSpanningFeature,
   columnMeta: metaHelper<KitColumnMeta>(),
 });
 

@@ -1,8 +1,9 @@
 <script setup lang="ts" generic="TData extends object">
-import type { Row } from '@tanstack/vue-table';
+import type { Cell, Row } from '@tanstack/vue-table';
 import type { HTMLAttributes } from 'vue';
 import type { KitFeatures } from './lib/features';
 import { FlexRender } from '@tanstack/vue-table';
+import { computed } from 'vue';
 import { cn } from '@/utils';
 import { TableCell, TableRow } from '../table';
 import { injectDataTableColumnPinning } from './lib/columnPinning';
@@ -15,6 +16,14 @@ const props = defineProps<{
 }>();
 
 const { pinnedCellAttrs } = injectDataTableColumnPinning();
+
+const cells = computed(() => props.row.getVisibleCells().filter(cell => !cell.getIsCovered()));
+
+function rowSpan(cell: Cell<KitFeatures, TData>) {
+  const span = cell.getRowSpan();
+
+  return span > 1 ? span : undefined;
+}
 
 function handleClick(event: MouseEvent) {
   if (!props.onRowClick || isInteractiveClick(event))
@@ -31,9 +40,10 @@ function handleClick(event: MouseEvent) {
     @click="handleClick"
   >
     <TableCell
-      v-for="cell in row.getVisibleCells()"
+      v-for="cell in cells"
       :key="cell.id"
       v-bind="pinnedCellAttrs([cell.column.id])"
+      :rowspan="rowSpan(cell)"
       :class="cell.column.columnDef.meta?.class"
     >
       <slot

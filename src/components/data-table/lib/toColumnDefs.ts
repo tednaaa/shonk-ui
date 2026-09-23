@@ -9,6 +9,7 @@ import type {
   DataTableFooterContext,
   DataTableGroupColumn,
   DataTableSelectColumn,
+  DataTableSpanRowsContext,
 } from '../types';
 import type { KitFeatures } from './features';
 import { h } from 'vue';
@@ -81,6 +82,7 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
       ...base,
       id: column.id ?? accessorKey,
       accessorKey,
+      ...spanRowsDef<TData, TData[typeof accessorKey]>(column.spanRows, row => row[accessorKey]),
       ...cellDef<TData>(cell && (({ row }) => cell({ row: row.original, value: row.original[accessorKey] }))),
     };
   }
@@ -92,6 +94,7 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
       ...base,
       id: column.id,
       accessorFn,
+      ...spanRowsDef<TData, unknown>(column.spanRows, accessorFn),
       ...cellDef<TData>(cell && (({ row, getValue }) => cell({ row: row.original, value: getValue() }))),
     };
   }
@@ -100,6 +103,26 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
     ...base,
     id: column.id,
     ...cellDef<TData>(cell && (({ row }) => cell({ row: row.original, value: undefined }))),
+  };
+}
+
+function spanRowsDef<TData extends object, TValue>(
+  spanRows: boolean | ((context: DataTableSpanRowsContext<TData, TValue>) => boolean) | undefined,
+  value: (row: TData) => TValue,
+): Pick<KitColumnDef<TData>, 'spanRows'> {
+  if (spanRows === undefined)
+    return {};
+
+  if (typeof spanRows !== 'function')
+    return { spanRows };
+
+  return {
+    spanRows: ({ row, anchorRow }) => spanRows({
+      row: row.original,
+      value: value(row.original),
+      anchorRow: anchorRow.original,
+      anchorValue: value(anchorRow.original),
+    }),
   };
 }
 

@@ -14,6 +14,8 @@ import DataTableInfiniteLoading from './examples/DataTableInfiniteLoading.vue';
 import dataTableInfiniteLoadingSource from './examples/DataTableInfiniteLoading.vue?raw';
 import DataTableLoading from './examples/DataTableLoading.vue';
 import dataTableLoadingSource from './examples/DataTableLoading.vue?raw';
+import DataTableMergedCells from './examples/DataTableMergedCells.vue';
+import dataTableMergedCellsSource from './examples/DataTableMergedCells.vue?raw';
 import DataTablePaginationVariants from './examples/DataTablePaginationVariants.vue';
 import dataTablePaginationVariantsSource from './examples/DataTablePaginationVariants.vue?raw';
 import DataTablePinnedColumns from './examples/DataTablePinnedColumns.vue';
@@ -123,4 +125,9 @@ export const RowExpansion: Story = {
 export const PinnedRows: Story = {
   parameters: example(dataTablePinnedRowsSource),
   render: render({ DataTablePinnedRows }, `<DataTablePinnedRows />`),
+};
+
+export const MergedCells: Story = {
+  parameters: example(dataTableMergedCellsSource),
+  render: render({ DataTableMergedCells }, `<DataTableMergedCells />`),
 };

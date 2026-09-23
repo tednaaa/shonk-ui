@@ -1,5 +1,5 @@
 import type { DOMWrapper } from '@vue/test-utils';
-import type { DataTableColumn, DataTableColumnVisibilityState, DataTableExpandedState, DataTablePaginationState, DataTableRowPinningState, DataTableRowSelectionState, DataTableSortingState } from './types';
+import type { DataTableColumn, DataTableColumnVisibilityState, DataTableExpandedState, DataTablePaginationState, DataTableRowPinningState, DataTableRowSelectionState, DataTableSortingState, DataTableSpanRowsContext } from './types';
 import type { UseDataTableOptions } from './useDataTable';
 import { flushPromises, mount } from '@vue/test-utils';
 import { defineComponent, h, nextTick, ref } from 'vue';
@@ -818,6 +818,140 @@ describe('dataTable', () => {
       });
 
       expect(wrapper.get('tbody').findAll('tr').map(row => row.text())).toEqual(['Linus54', 'Linus is 54']);
+    });
+  });
+
+  describe('cell spanning', () => {
+    interface Deal {
+      id: string;
+      manager: string | null;
+      client: string;
+    }
+
+    const deals: Deal[] = [
+      { id: '1', manager: 'Ada', client: 'Alpha' },
+      { id: '2', manager: 'Ada', client: 'Beta' },
+      { id: '3', manager: 'Linus', client: 'Gamma' },
+      { id: '4', manager: 'Ada', client: 'Delta' },
+      { id: '5', manager: null, client: 'Omega' },
+      { id: '6', manager: null, client: 'Sigma' },
+    ];
+
+    function mountDealsTable(manager: DataTableColumn<Deal>, tableOptions: Omit<UseDataTableOptions<Deal>, 'data' | 'columns'> = {}) {
+      const Host = defineComponent({
+        components: { DataTable },
+        setup() {
+          const table = useDataTable({
+            data: deals,
+            columns: [manager, { accessorKey: 'client', header: 'Client' }],
+            getRowId: deal => deal.id,
+            ...tableOptions,
+          });
+
+          return { table };
+        },
+        template: '<DataTable :table="table" />',
+      });
+
+      return mount(Host);
+    }
+
+    function dealRows(wrapper: ReturnType<typeof mountDealsTable>) {
+      return wrapper.findAll('tbody tr').map(row => row.findAll('td').map(cell => cell.text()));
+    }
+
+    function spanningCells(wrapper: ReturnType<typeof mountDealsTable>) {
+      return wrapper.findAll('tbody td').filter(cell => cell.attributes('rowspan') !== undefined);
+    }
+
+    it('should merge adjacent cells with the same value into one cell spanning their rows', () => {
+      const wrapper = mountDealsTable({ accessorKey: 'manager', header: 'Manager', spanRows: true });
+
+      expect(dealRows(wrapper)).toEqual([
+        ['Ada', 'Alpha'],
+        ['Beta'],
+        ['Linus', 'Gamma'],
+        ['Ada', 'Delta'],
+        ['', 'Omega'],
+        ['', 'Sigma'],
+      ]);
+      expect(spanningCells(wrapper).map(cell => cell.attributes('rowspan'))).toEqual(['2']);
+    });
+
+    it('should keep every cell of its own when the column turns spanning off', () => {
+      const wrapper = mountDealsTable({ accessorKey: 'manager', header: 'Manager', spanRows: false });
+
+      expect(dealRows(wrapper).map(cells => cells.length)).toEqual([2, 2, 2, 2, 2, 2]);
+      expect(spanningCells(wrapper)).toEqual([]);
+    });
+
+    it('should merge by the predicate of the column, which also sees empty values', () => {
+      const contexts: DataTableSpanRowsContext<Deal, string | null>[] = [];
+      const wrapper = mountDealsTable({
+        accessorKey: 'manager',
+        header: 'Manager',
+        spanRows: (context) => {
+          contexts.push(context);
+
+          return context.value === context.anchorValue;
+        },
+      });
+
+      expect(dealRows(wrapper)).toEqual([
+        ['Ada', 'Alpha'],
+        ['Beta'],
+        ['Linus', 'Gamma'],
+        ['Ada', 'Delta'],
+        ['', 'Omega'],
+        ['Sigma'],
+      ]);
+      expect(contexts[0]).toEqual({ row: deals[1], value: 'Ada', anchorRow: deals[0], anchorValue: 'Ada' });
+    });
+
+    it('should merge by the value of an accessor function', () => {
+      const wrapper = mountDealsTable({ id: 'owner', header: 'Manager', accessorFn: deal => deal.manager ?? 'Unassigned', spanRows: true });
+
+      expect(dealRows(wrapper)).toEqual([
+        ['Ada', 'Alpha'],
+        ['Beta'],
+        ['Linus', 'Gamma'],
+        ['Ada', 'Delta'],
+        ['Unassigned', 'Omega'],
+        ['Sigma'],
+      ]);
+      expect(spanningCells(wrapper).map(cell => cell.attributes('rowspan'))).toEqual(['2', '2']);
+    });
+
+    it('should merge the rows that sorting made adjacent', async () => {
+      const sorting = ref<DataTableSortingState>([]);
+      const wrapper = mountDealsTable({ accessorKey: 'manager', header: 'Manager', sortable: true, spanRows: true }, { sorting });
+
+      sorting.value = [{ id: 'manager', desc: false }];
+      await nextTick();
+
+      expect(dealRows(wrapper)).toEqual([
+        ['', 'Omega'],
+        ['', 'Sigma'],
+        ['Ada', 'Alpha'],
+        ['Beta'],
+        ['Delta'],
+        ['Linus', 'Gamma'],
+      ]);
+      expect(spanningCells(wrapper).map(cell => cell.attributes('rowspan'))).toEqual(['3']);
+    });
+
+    it('should not merge a pinned row into the rows under it', () => {
+      const wrapper = mountDealsTable({ accessorKey: 'manager', header: 'Manager', spanRows: true }, { rowPinning: ref({ top: ['4'], bottom: [] }) });
+
+      expect(dealRows(wrapper)).toEqual([
+        ['Ada', 'Delta'],
+        ['Ada', 'Alpha'],
+        ['Beta'],
+        ['Linus', 'Gamma'],
+        ['', 'Omega'],
+        ['', 'Sigma'],
+      ]);
+      expect(spanningCells(wrapper).map(cell => cell.attributes('rowspan'))).toEqual(['2']);
     });
   });
 

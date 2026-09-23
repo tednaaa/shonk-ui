@@ -24,6 +24,7 @@ export type {
   DataTableRowSelectionState,
   DataTableSelectColumn,
   DataTableSortingState,
+  DataTableSpanRowsContext,
 } from './types';
 export { useDataTable } from './useDataTable';
 export type { UseDataTableOptions } from './useDataTable';
