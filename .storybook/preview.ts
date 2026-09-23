@@ -35,8 +35,11 @@ const preview: Preview = {
     },
     (_story, context) => ({
       setup() {
-        const locale = context.globals.locale as keyof typeof locales;
-        provide(localeInjectionKey, computed(() => resolveLocale(locales[locale] ?? en)));
+        provide(localeInjectionKey, computed(() => {
+          const locale = context.globals.locale as keyof typeof locales;
+
+          return resolveLocale(locales[locale] ?? en);
+        }));
       },
       template: '<story />',
     }),
