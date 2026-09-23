@@ -52,7 +52,7 @@ export * from './components/textarea';
 export * from './components/toast';
 export * from './components/tooltip';
 
-export { downloadFile } from './lib/file';
+export { downloadBlob } from './lib/file';
 
 export type { PartialShonkLocale, ShonkLocale } from './locales';
 export { en, localeInjectionKey, resolveLocale, ru, useLocale } from './locales';
