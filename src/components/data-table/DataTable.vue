@@ -1,7 +1,8 @@
 <script setup lang="ts" generic="TData extends object">
 import type { HTMLAttributes, VNodeChild } from 'vue';
 import type { DataTableCellContext, DataTableHeaderContext, DataTableInstance } from './types';
-import { computed } from 'vue';
+import { unrefElement, useInfiniteScroll } from '@vueuse/core';
+import { computed, useTemplateRef } from 'vue';
 import { cn } from '@/utils';
 import { Table } from '../table';
 import DataTableBody from './DataTableBody.vue';
@@ -14,7 +15,13 @@ const props = defineProps<{
   rowClass?: (row: TData) => HTMLAttributes['class'];
   emptyText?: string;
   loading?: boolean;
+  hasNextPage?: boolean;
+  loadingMore?: boolean;
   onRowClick?: (row: TData) => void;
+}>();
+
+const emit = defineEmits<{
+  loadMore: [];
 }>();
 
 const slots = defineSlots<{
@@ -24,6 +31,17 @@ const slots = defineSlots<{
 }>();
 
 const kitTable = computed(() => unwrapDataTable(props.table));
+
+const scrollTable = useTemplateRef('scrollTable');
+
+useInfiniteScroll(
+  () => unrefElement(scrollTable),
+  () => emit('loadMore'),
+  {
+    distance: 100,
+    canLoadMore: () => props.hasNextPage && !props.loading && !props.loadingMore,
+  },
+);
 </script>
 
 <template>
@@ -32,8 +50,9 @@ const kitTable = computed(() => unwrapDataTable(props.table));
     :class="cn('flex min-h-0 flex-col overflow-hidden rounded-sm border', props.class)"
   >
     <Table
+      ref="scrollTable"
       table-container-class="min-h-0 flex-1"
-      :aria-busy="loading"
+      :aria-busy="loading || loadingMore"
     >
       <DataTableHeader :table="kitTable">
         <template
@@ -52,6 +71,7 @@ const kitTable = computed(() => unwrapDataTable(props.table));
         :row-class="rowClass"
         :empty-text="emptyText"
         :loading="loading"
+        :loading-more="loadingMore"
         :on-row-click="onRowClick"
       >
         <template

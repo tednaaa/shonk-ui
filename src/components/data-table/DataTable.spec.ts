@@ -1,6 +1,6 @@
 import type { DataTableColumn, DataTableSortingState } from './types';
 import type { UseDataTableOptions } from './useDataTable';
-import { mount } from '@vue/test-utils';
+import { flushPromises, mount } from '@vue/test-utils';
 import { defineComponent, h, ref } from 'vue';
 import DataTable from './DataTable.vue';
 import { useDataTable } from './useDataTable';
@@ -250,6 +250,120 @@ describe('dataTable', () => {
     expect(wrapper.get('tbody').classes()).toEqual(expect.arrayContaining(['pointer-events-none', 'opacity-50']));
     expect(wrapper.get('[aria-busy]').attributes('aria-busy')).toBe('true');
     expect(bodyRows(wrapper)).toHaveLength(2);
+  });
+
+  describe('load more', () => {
+    const clientHeight = 400;
+    let scrollTop = 0;
+    let scrollHeight = 1000;
+
+    class VisibleIntersectionObserver implements IntersectionObserver {
+      readonly root = null;
+      readonly rootMargin = '0px';
+      readonly scrollMargin = '0px';
+      readonly thresholds = [0];
+
+      constructor(private readonly callback: IntersectionObserverCallback) {}
+
+      observe(target: Element) {
+        const rect = target.getBoundingClientRect();
+        this.callback([{ target, time: 0, isIntersecting: true, intersectionRatio: 1, boundingClientRect: rect, intersectionRect: rect, rootBounds: null }], this);
+      }
+
+      unobserve() {}
+
+      disconnect() {}
+
+      takeRecords() {
+        return [];
+      }
+    }
+
+    beforeEach(() => {
+      scrollTop = 0;
+      scrollHeight = 1000;
+      vi.stubGlobal('IntersectionObserver', VisibleIntersectionObserver);
+      vi.spyOn(Element.prototype, 'clientHeight', 'get').mockImplementation(() => clientHeight);
+      vi.spyOn(Element.prototype, 'scrollHeight', 'get').mockImplementation(() => scrollHeight);
+      vi.spyOn(Element.prototype, 'scrollTop', 'get').mockImplementation(() => scrollTop);
+    });
+
+    afterEach(() => {
+      vi.unstubAllGlobals();
+    });
+
+    function mountScrollableTable(attributes: string, bindings: Record<string, unknown> = {}) {
+      const loadMore = vi.fn();
+      const wrapper = mountTable(`<DataTable :table="table" ${attributes} @load-more="loadMore" />`, { bindings: { loadMore, ...bindings } });
+
+      return { wrapper, loadMore };
+    }
+
+    async function scrollToBottom(wrapper: ReturnType<typeof mountTable>, gap = 0) {
+      scrollTop = scrollHeight - clientHeight - gap;
+      await wrapper.get('[data-slot="table-container"]').trigger('scroll');
+      await flushPromises();
+    }
+
+    it('should ask for the next page when scrolled close to the bottom', async () => {
+      const { wrapper, loadMore } = mountScrollableTable('has-next-page');
+      await flushPromises();
+
+      expect(loadMore).not.toHaveBeenCalled();
+
+      await scrollToBottom(wrapper, 50);
+
+      expect(loadMore).toHaveBeenCalledTimes(1);
+    });
+
+    it('should ask for the next page right away when the rows do not fill the table', async () => {
+      scrollHeight = clientHeight;
+      const { loadMore } = mountScrollableTable('has-next-page');
+      await flushPromises();
+
+      expect(loadMore).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not ask for a page without a next page', async () => {
+      const { wrapper, loadMore } = mountScrollableTable('');
+
+      await scrollToBottom(wrapper);
+
+      expect(loadMore).not.toHaveBeenCalled();
+    });
+
+    it('should not ask for a page while the table is loading', async () => {
+      const { wrapper, loadMore } = mountScrollableTable('has-next-page loading');
+
+      await scrollToBottom(wrapper);
+
+      expect(loadMore).not.toHaveBeenCalled();
+    });
+
+    it('should wait for the page being loaded before asking for the next one', async () => {
+      const loadingMore = ref(true);
+      const { wrapper, loadMore } = mountScrollableTable('has-next-page :loading-more="loadingMore"', { loadingMore });
+
+      await scrollToBottom(wrapper);
+
+      expect(loadMore).not.toHaveBeenCalled();
+
+      loadingMore.value = false;
+      await flushPromises();
+
+      expect(loadMore).toHaveBeenCalledTimes(1);
+    });
+
+    it('should show a spinner row under the rows while the next page loads', () => {
+      const wrapper = mountTable('<DataTable :table="table" loading-more />');
+      const lastCell = wrapper.get('tbody tr:last-child td');
+
+      expect(lastCell.find('[role="status"]').exists()).toBe(true);
+      expect(lastCell.attributes('colspan')).toBe('2');
+      expect(wrapper.findAll('tbody tr')).toHaveLength(3);
+      expect(wrapper.get('tbody').classes()).not.toContain('opacity-50');
+      expect(wrapper.get('[aria-busy]').attributes('aria-busy')).toBe('true');
+    });
   });
 
   describe('row click', () => {

@@ -8,6 +8,8 @@ import DataTableClientSorting from './examples/DataTableClientSorting.vue';
 import dataTableClientSortingSource from './examples/DataTableClientSorting.vue?raw';
 import DataTableEmpty from './examples/DataTableEmpty.vue';
 import dataTableEmptySource from './examples/DataTableEmpty.vue?raw';
+import DataTableInfiniteLoading from './examples/DataTableInfiniteLoading.vue';
+import dataTableInfiniteLoadingSource from './examples/DataTableInfiniteLoading.vue?raw';
 import DataTableLoading from './examples/DataTableLoading.vue';
 import dataTableLoadingSource from './examples/DataTableLoading.vue?raw';
 import DataTablePaginationVariants from './examples/DataTablePaginationVariants.vue';
@@ -74,4 +76,9 @@ export const ServerPageSize: Story = {
 export const PaginationVariants: Story = {
   parameters: example(dataTablePaginationVariantsSource),
   render: render({ DataTablePaginationVariants }, `<DataTablePaginationVariants />`),
+};
+
+export const InfiniteLoading: Story = {
+  parameters: example(dataTableInfiniteLoadingSource),
+  render: render({ DataTableInfiniteLoading }, `<DataTableInfiniteLoading />`),
 };

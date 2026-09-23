@@ -5,7 +5,7 @@ import { computed } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Spinner } from '../spinner';
-import { TableBody, TableEmpty } from '../table';
+import { TableBody, TableCell, TableEmpty, TableRow } from '../table';
 import DataTableRow from './DataTableRow.vue';
 
 const props = defineProps<{
@@ -13,6 +13,7 @@ const props = defineProps<{
   rowClass?: (row: TData) => HTMLAttributes['class'];
   emptyText?: string;
   loading?: boolean;
+  loadingMore?: boolean;
   onRowClick?: (row: TData) => void;
 }>();
 
@@ -54,5 +55,14 @@ const visibleColumnCount = computed(() => props.table.getVisibleLeafColumns().le
         {{ emptyText ?? locale.dataTable.emptyText }}
       </slot>
     </TableEmpty>
+
+    <TableRow v-else-if="loadingMore">
+      <TableCell
+        :colspan="visibleColumnCount"
+        class="py-4"
+      >
+        <Spinner class="mx-auto" />
+      </TableCell>
+    </TableRow>
   </TableBody>
 </template>
