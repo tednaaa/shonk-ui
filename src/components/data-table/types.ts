@@ -66,6 +66,11 @@ export interface DataTableColumnSort {
 
 export type DataTableSortingState = DataTableColumnSort[];
 
+export interface DataTablePaginationState {
+  pageIndex: number;
+  pageSize: number;
+}
+
 declare const rowType: unique symbol;
 
 export interface DataTableInstance<TData> {

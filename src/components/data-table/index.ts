@@ -1,4 +1,7 @@
 export { default as DataTable } from './DataTable.vue';
+export { default as DataTablePagination } from './DataTablePagination.vue';
+export { default as DataTablePaginationPages } from './DataTablePaginationPages.vue';
+export { default as DataTablePaginationPageSizeSelect } from './DataTablePaginationPageSizeSelect.vue';
 export type {
   DataTableAccessorFnColumn,
   DataTableAccessorKeyColumn,
@@ -9,6 +12,7 @@ export type {
   DataTableGroupColumn,
   DataTableHeaderContext,
   DataTableInstance,
+  DataTablePaginationState,
   DataTableSortingState,
 } from './types';
 export { useDataTable } from './useDataTable';

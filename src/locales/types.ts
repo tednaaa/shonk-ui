@@ -31,6 +31,7 @@ export interface ShonkLocale {
 
   dataTable: {
     emptyText: string;
+    pageSizeLabel: string;
   };
 
   datePicker: {

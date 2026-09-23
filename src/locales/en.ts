@@ -33,6 +33,7 @@ export const en: ShonkLocale = {
 
   dataTable: {
     emptyText: 'No data',
+    pageSizeLabel: 'Rows per page',
   },
 
   datePicker: {

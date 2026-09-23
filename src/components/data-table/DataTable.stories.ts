@@ -10,10 +10,16 @@ import DataTableEmpty from './examples/DataTableEmpty.vue';
 import dataTableEmptySource from './examples/DataTableEmpty.vue?raw';
 import DataTableLoading from './examples/DataTableLoading.vue';
 import dataTableLoadingSource from './examples/DataTableLoading.vue?raw';
+import DataTablePaginationVariants from './examples/DataTablePaginationVariants.vue';
+import dataTablePaginationVariantsSource from './examples/DataTablePaginationVariants.vue?raw';
 import DataTableRowClick from './examples/DataTableRowClick.vue';
 import dataTableRowClickSource from './examples/DataTableRowClick.vue?raw';
 import DataTableServerMultiSorting from './examples/DataTableServerMultiSorting.vue';
 import dataTableServerMultiSortingSource from './examples/DataTableServerMultiSorting.vue?raw';
+import DataTableServerPageSize from './examples/DataTableServerPageSize.vue';
+import dataTableServerPageSizeSource from './examples/DataTableServerPageSize.vue?raw';
+import DataTableServerPaginationOnTop from './examples/DataTableServerPaginationOnTop.vue';
+import dataTableServerPaginationOnTopSource from './examples/DataTableServerPaginationOnTop.vue?raw';
 
 const dataTableComponent: FunctionalComponent<ComponentPropsAndSlots<typeof DataTable>> = DataTable;
 
@@ -53,4 +59,19 @@ export const ClientSorting: Story = {
 export const ServerMultiSorting: Story = {
   parameters: example(dataTableServerMultiSortingSource),
   render: render({ DataTableServerMultiSorting }, `<DataTableServerMultiSorting />`),
+};
+
+export const ServerPaginationOnTop: Story = {
+  parameters: example(dataTableServerPaginationOnTopSource),
+  render: render({ DataTableServerPaginationOnTop }, `<DataTableServerPaginationOnTop />`),
+};
+
+export const ServerPageSize: Story = {
+  parameters: example(dataTableServerPageSizeSource),
+  render: render({ DataTableServerPageSize }, `<DataTableServerPageSize />`),
+};
+
+export const PaginationVariants: Story = {
+  parameters: example(dataTablePaginationVariantsSource),
+  render: render({ DataTablePaginationVariants }, `<DataTablePaginationVariants />`),
 };

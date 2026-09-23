@@ -1,4 +1,4 @@
-import type { DataTableColumn, DataTableSortingState } from './types';
+import type { DataTableColumn, DataTablePaginationState, DataTableSortingState } from './types';
 import { nextTick, ref } from 'vue';
 import { unwrapDataTable } from './lib/instance';
 import { useDataTable } from './useDataTable';
@@ -80,6 +80,56 @@ describe('useDataTable', () => {
       });
 
       expect(rowValues(table, 'name')).toEqual(['Ada', 'Linus']);
+    });
+  });
+
+  describe('pagination', () => {
+    const people: Person[] = ['Ada', 'Alan', 'Grace', 'Linus', 'Margaret'].map(name => ({ id: name.toLowerCase(), name }));
+
+    it('should show every row without a pagination ref', () => {
+      const table = useDataTable({ data: people, columns });
+
+      expect(rowValues(table, 'name')).toEqual(['Ada', 'Alan', 'Grace', 'Linus', 'Margaret']);
+    });
+
+    it('should show the page of the passed ref and write a page change to it', async () => {
+      const pagination = ref<DataTablePaginationState>({ pageIndex: 1, pageSize: 2 });
+      const table = useDataTable({ data: people, columns, pagination });
+
+      expect(rowValues(table, 'name')).toEqual(['Grace', 'Linus']);
+
+      unwrapDataTable(table).nextPage();
+      await nextTick();
+
+      expect(pagination.value).toEqual({ pageIndex: 2, pageSize: 2 });
+      expect(rowValues(table, 'name')).toEqual(['Margaret']);
+    });
+
+    it('should keep the rows that come from the server and count the pages from the total', () => {
+      const table = useDataTable({
+        data: people.slice(0, 2),
+        columns,
+        serverSide: true,
+        totalRowCount: () => 5,
+        pagination: ref({ pageIndex: 1, pageSize: 2 }),
+      });
+
+      expect(rowValues(table, 'name')).toEqual(['Ada', 'Alan']);
+      expect(unwrapDataTable(table).getPageCount()).toBe(3);
+    });
+
+    it('should go to the first page when the sorting changes', () => {
+      const pagination = ref<DataTablePaginationState>({ pageIndex: 2, pageSize: 2 });
+      const table = useDataTable({
+        data: people,
+        columns: [{ accessorKey: 'name', sortable: true }],
+        serverSide: true,
+        pagination,
+      });
+
+      unwrapDataTable(table).getColumn('name')?.toggleSorting();
+
+      expect(pagination.value).toEqual({ pageIndex: 0, pageSize: 2 });
     });
   });
 

@@ -2,8 +2,10 @@ import type { VueTable } from '@tanstack/vue-table';
 import type { HTMLAttributes } from 'vue';
 import {
   columnVisibilityFeature,
+  createPaginatedRowModel,
   createSortedRowModel,
   metaHelper,
+  rowPaginationFeature,
   rowSortingFeature,
   sortFn_alphanumeric,
   sortFn_datetime,
@@ -21,6 +23,8 @@ export const features = tableFeatures({
   rowSortingFeature,
   sortedRowModel: createSortedRowModel(),
   sortFns: { alphanumeric: sortFn_alphanumeric, datetime: sortFn_datetime, text: sortFn_text },
+  rowPaginationFeature,
+  paginatedRowModel: createPaginatedRowModel(),
   columnMeta: metaHelper<KitColumnMeta>(),
 });
 
