@@ -30,22 +30,47 @@ function kebab(name: string) {
   return name.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`);
 }
 
-function quoted(json: string) {
-  return json.replaceAll('"', '\'').replace(/'([a-z_]\w*)':/gi, '$1:');
+function scalar(value: unknown) {
+  if (typeof value !== 'string')
+    return String(value);
+
+  return `'${value.replace(/\\/g, '\\\\').replace(/'/g, '\\\'')}'`;
+}
+
+function inline(value: unknown): string {
+  if (Array.isArray(value))
+    return value.length ? `[${value.map(inline).join(', ')}]` : '[]';
+
+  if (value && typeof value === 'object') {
+    const entries = Object.entries(value).map(([key, item]) => `${key}: ${inline(item)}`);
+
+    return entries.length ? `{ ${entries.join(', ')} }` : '{}';
+  }
+
+  return scalar(value);
+}
+
+function nested(block: string) {
+  return block.split('\n').map(line => `  ${line}`).join('\n');
+}
+
+function isRecord(value: unknown) {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
 }
 
 function literal(value: unknown): string {
-  if (Array.isArray(value)) {
-    const items = value.map(item => literal(item));
-    const single = `[${items.join(', ')}]`;
+  if (Array.isArray(value) && value.some(isRecord))
+    return `[\n${value.map(item => nested(literal(item))).join(',\n')},\n]`;
 
-    return single.length <= INLINE_WIDTH ? single : `[\n  ${items.join(',\n  ')},\n]`;
-  }
+  const single = inline(value);
 
-  const pretty = JSON.stringify(value, null, 2);
-  const single = pretty.replace(/\n\s*/g, ' ').replace(/\[ /g, '[').replace(/ \]/g, ']');
+  if (single.length <= INLINE_WIDTH)
+    return single;
 
-  return quoted(single.length <= INLINE_WIDTH ? single : pretty);
+  if (value && typeof value === 'object')
+    return `{\n${Object.entries(value).map(([key, item]) => nested(`${key}: ${literal(item)}`)).join(',\n')},\n}`;
+
+  return single;
 }
 
 function serialisable(value: unknown): boolean {
@@ -68,7 +93,7 @@ function attribute(name: string, value: unknown) {
   if (typeof value === 'string')
     return ` ${kebab(name)}="${value}"`;
 
-  return ` :${kebab(name)}="${JSON.stringify(value).replaceAll('"', '\'')}"`;
+  return ` :${kebab(name)}="${inline(value)}"`;
 }
 
 function attributes(args: StoryContext['args']) {

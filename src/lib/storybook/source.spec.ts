@@ -92,6 +92,34 @@ it('puts one entry per line once a list outgrows the inline width', () => {
   ].join('\n'));
 });
 
+it('gives every entry of a list of objects its own line', () => {
+  const definitions = [
+    { key: 'title', label: 'Title', operators: [{ value: 'contains', label: 'contains' }, { value: 'equals', label: 'exactly equals' }] },
+    { key: 'assignee', label: 'Assignee', operators: [{ value: 'equals', label: 'is' }, { value: 'notEquals', label: 'is not' }] },
+  ];
+
+  expect(templateSource('IGNORED', context({ setup: () => ({ definitions }), template: `<p />` }))).toContain([
+    `const definitions = [`,
+    `  {`,
+    `    key: 'title',`,
+    `    label: 'Title',`,
+    `    operators: [`,
+    `      { value: 'contains', label: 'contains' },`,
+    `      { value: 'equals', label: 'exactly equals' },`,
+    `    ],`,
+    `  },`,
+    `  {`,
+    `    key: 'assignee',`,
+    `    label: 'Assignee',`,
+    `    operators: [`,
+    `      { value: 'equals', label: 'is' },`,
+    `      { value: 'notEquals', label: 'is not' },`,
+    `    ],`,
+    `  },`,
+    `];`,
+  ].join('\n'));
+});
+
 it('omits the state rather than silently dropping values it cannot write out', () => {
   const items = [{ title: 'Home', icon: () => null }];
   const story = { components: { Sidebar: {} }, setup: () => ({ items }), template: `<Sidebar />` };
@@ -113,7 +141,7 @@ it('serialises non-string args as bindings', () => {
   const args = { options: ['a', 'b'], openThreshold: 0.9, disabled: false, onSelect: () => {} };
 
   expect(templateSource('IGNORED', context(story, args)))
-    .toContain(`<Combobox :options="['a','b']" :open-threshold="0.9" :disabled="false" />`);
+    .toContain(`<Combobox :options="['a', 'b']" :open-threshold="0.9" :disabled="false" />`);
 });
 
 it('leaves out the script block when nothing needs importing', () => {
