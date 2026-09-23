@@ -3,6 +3,7 @@ import { render, showControls } from '@/lib/storybook';
 import {
   Popover,
   PopoverAnchor,
+  PopoverClose,
   PopoverContent,
   PopoverTrigger,
 } from '.';
@@ -13,6 +14,7 @@ import { Label } from '../label';
 const components = {
   Popover,
   PopoverAnchor,
+  PopoverClose,
   PopoverContent,
   PopoverTrigger,
   Button,
@@ -104,6 +106,25 @@ export const Anchored: Story = {
       </PopoverTrigger>
       <PopoverContent class="w-60">
         <p class="text-sm">This content is positioned against the anchor, not the trigger.</p>
+      </PopoverContent>
+    </Popover>`,
+  ),
+};
+
+export const WithCloseButton: Story = {
+  render: render(
+    components,
+    `<Popover v-bind="args">
+      <PopoverTrigger as-child>
+        <Button variant="outline">Open popover</Button>
+      </PopoverTrigger>
+      <PopoverContent>
+        <div class="grid gap-4">
+          <p class="text-sm">PopoverClose dismisses the popover from inside its content.</p>
+          <PopoverClose as-child>
+            <Button variant="outline" size="sm" class="justify-self-end">Close</Button>
+          </PopoverClose>
+        </div>
       </PopoverContent>
     </Popover>`,
   ),
