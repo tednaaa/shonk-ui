@@ -71,7 +71,6 @@
     "@vitejs/plugin-vue": "6.0.8",
     "@vue/test-utils": "2.5.0",
     "@vueuse/core": "^14.4.0",
-    "bumpp": "11.1.0",
     "embla-carousel-autoplay": "8.6.0",
     "eslint": "10.8.1",
     "eslint-plugin-storybook": "10.5.7",
