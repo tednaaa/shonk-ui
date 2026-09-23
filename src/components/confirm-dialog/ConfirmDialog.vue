@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useLocale } from '@/locales';
+import { Button } from '../button';
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '../alert-dialog';
-import { buttonVariants } from '../button';
+  Dialog,
+  DialogBody,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '../dialog';
 import { useConfirmState } from './useConfirm';
 
 const props = defineProps<{
@@ -50,27 +50,41 @@ function handleOpenChange(isOpen: boolean) {
     state.value = null;
   }
 }
+
+function preventDismiss(event: Event) {
+  event.preventDefault();
+}
 </script>
 
 <template>
-  <AlertDialog :open="open" @update:open="handleOpenChange">
-    <AlertDialogContent class="gap-0 p-0 sm:max-w-lg">
-      <AlertDialogHeader class="gap-0 rounded-t-lg border-b border-b-border bg-muted px-6 py-4 text-left">
-        <AlertDialogTitle class="text-sm leading-none font-extrabold">
+  <Dialog :open="open" @update:open="handleOpenChange">
+    <DialogContent
+      role="alertdialog"
+      @pointer-down-outside="preventDismiss"
+      @interact-outside="preventDismiss"
+    >
+      <DialogHeader :show-close-button="false">
+        <DialogTitle>
           {{ resolvedTitle }}
-        </AlertDialogTitle>
-      </AlertDialogHeader>
-      <AlertDialogDescription class="border-b border-border px-6 py-4">
-        {{ state?.message }}
-      </AlertDialogDescription>
-      <AlertDialogFooter class="mx-6 my-4">
-        <AlertDialogCancel @click="handleReject">
-          {{ resolvedCancelButtonText }}
-        </AlertDialogCancel>
-        <AlertDialogAction :class="buttonVariants({ variant: 'destructive' })" @click="handleAccept">
-          {{ state?.acceptButtonText }}
-        </AlertDialogAction>
-      </AlertDialogFooter>
-    </AlertDialogContent>
-  </AlertDialog>
+        </DialogTitle>
+      </DialogHeader>
+      <DialogBody>
+        <DialogDescription>
+          {{ state?.message }}
+        </DialogDescription>
+      </DialogBody>
+      <DialogFooter>
+        <DialogClose as-child>
+          <Button variant="secondary" @click="handleReject">
+            {{ resolvedCancelButtonText }}
+          </Button>
+        </DialogClose>
+        <DialogClose as-child>
+          <Button variant="destructive" @click="handleAccept">
+            {{ state?.acceptButtonText }}
+          </Button>
+        </DialogClose>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
 </template>
