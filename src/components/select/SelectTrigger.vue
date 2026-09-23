@@ -4,10 +4,12 @@ import type { HTMLAttributes } from 'vue';
 import { ChevronDown, X } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import { injectSelectRootContext, SelectIcon, SelectTrigger, useForwardProps } from 'reka-ui';
-import { computed } from 'vue';
+import { computed, useAttrs } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { selectTriggerIconVariants, selectTriggerVariants } from './variants';
+
+defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(defineProps<SelectTriggerProps & {
   class?: HTMLAttributes['class'];
@@ -18,6 +20,7 @@ const props = withDefaults(defineProps<SelectTriggerProps & {
   size: 'md',
 });
 
+const attrs = useAttrs();
 const locale = useLocale();
 
 const delegatedProps = reactiveOmit(props, 'class', 'size', 'clearable', 'clearButtonAriaLabel');
@@ -42,9 +45,9 @@ function clear() {
 <template>
   <div :class="cn('relative w-fit', props.class)">
     <SelectTrigger
+      v-bind="{ ...attrs, ...forwardedProps }"
       data-slot="select-trigger"
       :data-size="size"
-      v-bind="forwardedProps"
       :class="selectTriggerVariants({ size, showClear })"
     >
       <slot />
