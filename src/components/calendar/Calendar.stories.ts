@@ -21,7 +21,7 @@ export const Default: Story = {
 };
 
 export const Selected: Story = {
-  args: { defaultValue: new CalendarDate(2026, 6, 17) },
+  args: { defaultValue: new CalendarDate(2026, 6, 17), defaultPlaceholder: new CalendarDate(2026, 6, 1) },
 };
 
 export const WithDropdowns: Story = {

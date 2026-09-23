@@ -26,6 +26,7 @@ export const Selected: Story = {
       start: new CalendarDate(2026, 6, 8),
       end: new CalendarDate(2026, 6, 14),
     },
+    defaultPlaceholder: new CalendarDate(2026, 6, 1),
   },
 };
 
