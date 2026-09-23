@@ -24,7 +24,6 @@ export const Variants: Story = {
       <Badge>Default</Badge>
       <Badge variant="secondary">Secondary</Badge>
       <Badge variant="destructive">Destructive</Badge>
-      <Badge variant="outline">Outline</Badge>
     </div>`,
   ),
 };
@@ -35,7 +34,7 @@ export const WithIcon: Story = {
     `<div class="flex flex-wrap items-center gap-2">
       <Badge><CheckIcon />Verified</Badge>
       <Badge variant="secondary"><CheckIcon />Active</Badge>
-      <Badge variant="outline">99+</Badge>
+      <Badge variant="secondary">99+</Badge>
     </div>`,
   ),
 };
