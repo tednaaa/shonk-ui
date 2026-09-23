@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Component, HTMLAttributes } from 'vue';
 import type { AlertAppearance, AlertVariant } from './variants';
-import { CheckCircle2Icon, CircleAlertIcon, TriangleAlertIcon } from '@lucide/vue';
+import { CheckCircle2Icon, CircleAlertIcon, InfoIcon, TriangleAlertIcon } from '@lucide/vue';
 import { computed, useSlots } from 'vue';
 import { cn, hasSlotContent } from '@/utils';
 import { alertVariants } from './variants';
@@ -18,6 +18,7 @@ const props = withDefaults(defineProps<{
 
 const icons: Record<AlertVariant, Component | null> = {
   default: null,
+  info: InfoIcon,
   warning: TriangleAlertIcon,
   destructive: CircleAlertIcon,
   success: CheckCircle2Icon,

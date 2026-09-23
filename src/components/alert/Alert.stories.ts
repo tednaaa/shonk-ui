@@ -29,6 +29,7 @@ export const Variants: Story = {
       <div class="flex max-w-md flex-col gap-6">
         <StorybookLabel>With title</StorybookLabel>
         <Alert title="Default">This is a default alert with neutral styling.</Alert>
+        <Alert variant="info" title="Info">A new version is available for your workspace.</Alert>
         <Alert variant="success" title="Success">Your changes have been saved successfully.</Alert>
         <Alert variant="warning" title="Warning">Your subscription is about to expire.</Alert>
         <Alert variant="destructive" title="Error">Something went wrong while saving your changes.</Alert>
@@ -36,6 +37,7 @@ export const Variants: Story = {
       <div class="flex max-w-md flex-col gap-6">
         <StorybookLabel>Without title</StorybookLabel>
         <Alert>A neutral message with body content only — no title or icon.</Alert>
+        <Alert variant="info">A new version is available.</Alert>
         <Alert variant="success">Your changes have been saved.</Alert>
         <Alert variant="warning">Your subscription is about to expire.</Alert>
         <Alert variant="destructive">Something went wrong while saving.</Alert>
