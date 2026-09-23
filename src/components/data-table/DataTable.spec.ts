@@ -1,6 +1,7 @@
-import type { DataTableColumn } from './types';
+import type { DataTableColumn, DataTableSortingState } from './types';
+import type { UseDataTableOptions } from './useDataTable';
 import { mount } from '@vue/test-utils';
-import { defineComponent, h } from 'vue';
+import { defineComponent, h, ref } from 'vue';
 import DataTable from './DataTable.vue';
 import { useDataTable } from './useDataTable';
 
@@ -23,6 +24,7 @@ const columns: DataTableColumn<Person>[] = [
 interface MountOptions {
   data?: Person[];
   columns?: DataTableColumn<Person>[];
+  tableOptions?: Omit<UseDataTableOptions<Person>, 'data' | 'columns'>;
   bindings?: Record<string, unknown>;
 }
 
@@ -30,7 +32,11 @@ function mountTable(template = '<DataTable :table="table" />', options: MountOpt
   const Host = defineComponent({
     components: { DataTable },
     setup() {
-      const table = useDataTable({ data: options.data ?? people, columns: options.columns ?? columns });
+      const table = useDataTable({
+        data: options.data ?? people,
+        columns: options.columns ?? columns,
+        ...options.tableOptions,
+      });
 
       return { table, ...options.bindings };
     },
@@ -95,6 +101,109 @@ describe('dataTable', () => {
     expect(wrapper.get('th').classes()).toContain('w-20');
     expect(wrapper.findAll('td').map(cell => cell.classes('text-right'))).toEqual([true, true]);
     expect(wrapper.findAll('tbody tr').map(row => row.classes('font-semibold'))).toEqual([false, true]);
+  });
+
+  describe('sorting', () => {
+    const crew: Person[] = [
+      { id: 'linus', name: 'Linus', age: 54 },
+      { id: 'ada', name: 'Ada', age: 54 },
+      { id: 'grace', name: 'Grace', age: 36 },
+    ];
+
+    const sortableColumns: DataTableColumn<Person>[] = [
+      { accessorKey: 'id', header: 'Code' },
+      { accessorKey: 'name', header: 'Name', sortable: true },
+      { accessorKey: 'age', header: 'Age', sortable: true },
+    ];
+
+    function mountSortable(template?: string, tableOptions?: MountOptions['tableOptions']) {
+      return mountTable(template, { data: crew, columns: sortableColumns, tableOptions });
+    }
+
+    function rowIds(wrapper: ReturnType<typeof mountTable>) {
+      return bodyRows(wrapper).map(([id]) => id);
+    }
+
+    it('should not sort by a column without the sortable flag', async () => {
+      const wrapper = mountSortable();
+      const idHeader = wrapper.getElementByText('th', 'Code');
+
+      await idHeader.trigger('click');
+
+      expect(rowIds(wrapper)).toEqual(['linus', 'ada', 'grace']);
+      expect(idHeader.attributes()).not.toHaveProperty('aria-sort');
+      expect(idHeader.attributes()).not.toHaveProperty('tabindex');
+    });
+
+    it('should cycle a column from ascending to descending to unsorted', async () => {
+      const wrapper = mountSortable();
+      const ageHeader = wrapper.getElementByText('th', 'Age');
+
+      expect(ageHeader.attributes('aria-sort')).toBe('none');
+
+      await ageHeader.trigger('click');
+
+      expect(ageHeader.attributes('aria-sort')).toBe('ascending');
+      expect(rowIds(wrapper)).toEqual(['grace', 'linus', 'ada']);
+
+      await ageHeader.trigger('click');
+
+      expect(ageHeader.attributes('aria-sort')).toBe('descending');
+      expect(rowIds(wrapper)).toEqual(['linus', 'ada', 'grace']);
+
+      await ageHeader.trigger('click');
+
+      expect(ageHeader.attributes('aria-sort')).toBe('none');
+      expect(rowIds(wrapper)).toEqual(['linus', 'ada', 'grace']);
+    });
+
+    it('should sort from the keyboard', async () => {
+      const wrapper = mountSortable();
+      const ageHeader = wrapper.getElementByText('th', 'Age');
+
+      await ageHeader.trigger('keydown', { key: 'Enter' });
+
+      expect(ageHeader.attributes('aria-sort')).toBe('ascending');
+
+      await ageHeader.trigger('keydown', { key: ' ' });
+
+      expect(ageHeader.attributes('aria-sort')).toBe('descending');
+    });
+
+    it('should add a column to the sorting on shift click and number the sorted columns', async () => {
+      const sorting = ref<DataTableSortingState>([]);
+      const wrapper = mountSortable(undefined, { sorting, enableMultiSort: true });
+
+      await wrapper.getElementByText('th', 'Age').trigger('click');
+      await wrapper.getElementByText('th', 'Name').trigger('click', { shiftKey: true });
+
+      expect(sorting.value).toEqual([{ id: 'age', desc: false }, { id: 'name', desc: false }]);
+      expect(rowIds(wrapper)).toEqual(['grace', 'ada', 'linus']);
+      expect(wrapper.findAll('th').map(header => header.text())).toEqual(['Code', 'Name 2', 'Age 1']);
+    });
+
+    it('should replace the sorting on shift click without multi-sort', async () => {
+      const sorting = ref<DataTableSortingState>([]);
+      const wrapper = mountSortable(undefined, { sorting });
+
+      await wrapper.getElementByText('th', 'Age').trigger('click');
+      await wrapper.getElementByText('th', 'Name').trigger('click', { shiftKey: true });
+
+      expect(sorting.value).toEqual([{ id: 'name', desc: false }]);
+    });
+
+    it('should ignore a click and a key press on a link inside the header', async () => {
+      const wrapper = mountSortable(
+        `<DataTable :table="table">
+          <template #header-age="{ label }"><a href="#age">{{ label }}</a></template>
+        </DataTable>`,
+      );
+
+      await wrapper.get('th a').trigger('click');
+      await wrapper.get('th a').trigger('keydown', { key: 'Enter' });
+
+      expect(wrapper.getElementByText('th', 'Age').attributes('aria-sort')).toBe('none');
+    });
   });
 
   describe('without rows', () => {

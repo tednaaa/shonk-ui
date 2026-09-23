@@ -67,6 +67,20 @@ describe('toColumnDefs', () => {
     expect(leafRow?.headers.map(header => header.column.id)).toEqual(['id', 'name', 'age']);
   });
 
+  it('should let only the sortable columns sort', () => {
+    const table = buildTable([
+      { accessorKey: 'name', sortable: true },
+      { accessorKey: 'age' },
+      { id: 'nextAge', accessorFn: person => person.age + 1, sortable: true },
+    ]);
+
+    expect(table.getAllLeafColumns().map(column => [column.id, column.getCanSort()])).toEqual([
+      ['name', true],
+      ['age', false],
+      ['nextAge', true],
+    ]);
+  });
+
   it('should keep the column classes for the renderer', () => {
     const table = buildTable([
       { accessorKey: 'age', class: 'text-right', headerClass: 'w-20' },

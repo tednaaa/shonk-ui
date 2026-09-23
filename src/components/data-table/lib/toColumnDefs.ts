@@ -35,6 +35,7 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
 
   const base = {
     header: column.header,
+    enableSorting: column.sortable ?? false,
     meta: { class: column.class, headerClass: column.headerClass },
   };
 

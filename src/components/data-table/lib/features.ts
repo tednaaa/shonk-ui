@@ -1,6 +1,15 @@
 import type { VueTable } from '@tanstack/vue-table';
 import type { HTMLAttributes } from 'vue';
-import { columnVisibilityFeature, metaHelper, tableFeatures } from '@tanstack/vue-table';
+import {
+  columnVisibilityFeature,
+  createSortedRowModel,
+  metaHelper,
+  rowSortingFeature,
+  sortFn_alphanumeric,
+  sortFn_datetime,
+  sortFn_text,
+  tableFeatures,
+} from '@tanstack/vue-table';
 
 export interface KitColumnMeta {
   class?: HTMLAttributes['class'];
@@ -9,6 +18,9 @@ export interface KitColumnMeta {
 
 export const features = tableFeatures({
   columnVisibilityFeature,
+  rowSortingFeature,
+  sortedRowModel: createSortedRowModel(),
+  sortFns: { alphanumeric: sortFn_alphanumeric, datetime: sortFn_datetime, text: sortFn_text },
   columnMeta: metaHelper<KitColumnMeta>(),
 });
 

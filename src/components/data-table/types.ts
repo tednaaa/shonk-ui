@@ -20,6 +20,7 @@ export type DataTableAccessorKeyColumn<TData, TKey extends keyof TData & string>
   accessorKey: TKey;
   accessorFn?: undefined;
   columns?: undefined;
+  sortable?: boolean;
   cell?: (context: DataTableCellContext<TData, TData[TKey]>) => VNodeChild;
 };
 
@@ -28,6 +29,7 @@ export type DataTableAccessorFnColumn<TData> = DataTableColumnBase & {
   accessorKey?: undefined;
   accessorFn: (row: TData) => unknown;
   columns?: undefined;
+  sortable?: boolean;
   cell?: (context: DataTableCellContext<TData>) => VNodeChild;
 };
 
@@ -36,6 +38,7 @@ export type DataTableDisplayColumn<TData> = DataTableColumnBase & {
   accessorKey?: undefined;
   accessorFn?: undefined;
   columns?: undefined;
+  sortable?: undefined;
   cell?: (context: DataTableCellContext<TData>) => VNodeChild;
 };
 
@@ -46,6 +49,7 @@ export interface DataTableGroupColumn<TData> {
   accessorKey?: undefined;
   accessorFn?: undefined;
   columns: DataTableColumn<TData>[];
+  sortable?: undefined;
   cell?: undefined;
 }
 
@@ -54,6 +58,13 @@ export type DataTableColumn<TData>
     | DataTableAccessorFnColumn<TData>
     | DataTableDisplayColumn<TData>
     | DataTableGroupColumn<TData>;
+
+export interface DataTableColumnSort {
+  id: string;
+  desc: boolean;
+}
+
+export type DataTableSortingState = DataTableColumnSort[];
 
 declare const rowType: unique symbol;
 
