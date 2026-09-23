@@ -17,6 +17,7 @@ import {
 } from '../command';
 import { Popover, PopoverContent, PopoverTrigger } from '../popover';
 import { Spinner } from '../spinner';
+import { comboboxTriggerVariants } from './variants';
 
 const props = defineProps<{
   options: ComboboxOption<T>[];
@@ -83,7 +84,7 @@ function clear() {
           role="combobox"
           :aria-expanded="open"
           :disabled="disabled"
-          :class="cn('w-full justify-start font-normal', showClear ? 'pr-14' : 'pr-9', !lastSelectedLabel && 'text-muted-foreground', props.class)"
+          :class="cn(comboboxTriggerVariants({ showClear, placeholder: !lastSelectedLabel }), props.class)"
         >
           <span class="whitespace-nowrap">{{ lastSelectedLabel ?? props.triggerPlaceholder ?? locale.combobox.triggerPlaceholder }}</span>
         </Button>

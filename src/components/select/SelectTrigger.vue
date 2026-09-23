@@ -7,6 +7,7 @@ import { injectSelectRootContext, SelectIcon, SelectTrigger, useForwardProps } f
 import { computed } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
+import { selectTriggerIconVariants, selectTriggerVariants } from './variants';
 
 const props = withDefaults(defineProps<SelectTriggerProps & {
   class?: HTMLAttributes['class'];
@@ -44,14 +45,11 @@ function clear() {
       data-slot="select-trigger"
       :data-size="size"
       v-bind="forwardedProps"
-      :class="cn(
-        'flex w-full items-center justify-between gap-2 rounded-sm border border-border bg-background px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground data-[size=md]:h-10 data-[size=sm]:h-9 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4 [&_svg:not([class*=text-])]:text-muted-foreground',
-        showClear && 'pr-16',
-      )"
+      :class="selectTriggerVariants({ size, showClear })"
     >
       <slot />
       <SelectIcon as-child>
-        <ChevronDown :class="cn('size-4 opacity-50', showClear && 'absolute top-1/2 right-3 -translate-y-1/2')" />
+        <ChevronDown :class="selectTriggerIconVariants({ showClear })" />
       </SelectIcon>
     </SelectTrigger>
 

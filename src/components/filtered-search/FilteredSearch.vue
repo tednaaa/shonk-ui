@@ -9,6 +9,7 @@ import { cn } from '@/utils';
 import { Button } from '../button';
 import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from '../popover';
 import FilterToken from './FilterToken.vue';
+import { filteredSearchTokenListVariants, filteredSearchVariants, searchTokenVariants } from './variants';
 
 const props = withDefaults(defineProps<{
   definitions: FilterDefinition[];
@@ -356,26 +357,13 @@ watch(isOpen, (open) => {
   <Popover v-model:open="isOpen">
     <div
       ref="anchorRef"
-      :class="cn(
-        'flex w-full items-center gap-1.5 overflow-hidden rounded-md border border-border bg-background px-3 text-sm shadow-xs transition-[color,box-shadow] outline-none',
-        wrap ? 'min-h-10 py-1' : 'h-10',
-        viewOnly ? 'text-muted-foreground' : 'cursor-text',
-        isOpen && 'border-ring ring-[3px] ring-ring/50',
-        !viewOnly && !isOpen && 'hover:border-ring/50',
-        props.class,
-      )"
+      :class="cn(filteredSearchVariants({ wrap, viewOnly, open: isOpen }), props.class)"
       @click="inputRef?.focus()"
     >
-      <div
-        :class="cn(
-          'flex min-w-0 flex-1 items-center gap-1.5',
-          wrap ? 'flex-wrap' : 'scrollbar-none overflow-x-auto [&::-webkit-scrollbar]:hidden',
-        )"
-      >
+      <div :class="filteredSearchTokenListVariants({ wrap })">
         <span
           v-if="searchText"
-          class="inline-flex h-6 shrink-0 items-center gap-1 rounded-md border border-border bg-accent/50 pl-1.5 text-xs text-accent-foreground"
-          :class="viewOnly ? 'pr-1.5' : 'pr-1'"
+          :class="searchTokenVariants({ removable: !viewOnly })"
         >
           <SearchIcon class="size-3 shrink-0 opacity-60" />
           <span>{{ searchText }}</span>

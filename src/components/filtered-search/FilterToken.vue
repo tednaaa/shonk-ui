@@ -2,7 +2,7 @@
 import type { ActiveFilter } from './types';
 import { XIcon } from '@lucide/vue';
 import { useLocale } from '@/locales';
-import { cn } from '@/utils';
+import { filterTokenVariants } from './variants';
 
 withDefaults(defineProps<{ filter: ActiveFilter; removable?: boolean }>(), { removable: true });
 
@@ -12,12 +12,7 @@ const locale = useLocale();
 </script>
 
 <template>
-  <span
-    :class="cn(
-      'inline-flex h-6 shrink-0 items-center gap-1 rounded-md border border-border bg-accent/50 pl-2 text-xs text-accent-foreground',
-      removable ? 'pr-1' : 'pr-2',
-    )"
-  >
+  <span :class="filterTokenVariants({ removable })">
     <span class="shrink-0 truncate font-medium">{{ filter.keyLabel }}</span>
     <span class="shrink-0 text-muted-foreground">{{ filter.operatorLabel }}</span>
     <span class="truncate">{{ filter.valueLabel }}</span>

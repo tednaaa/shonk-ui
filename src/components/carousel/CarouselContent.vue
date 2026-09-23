@@ -3,6 +3,7 @@ import type { ComponentPublicInstance } from 'vue';
 import type { WithClassAsProps } from './interface';
 import { cn } from '@/utils';
 import { useCarousel } from './useCarousel';
+import { carouselContentVariants } from './variants';
 
 defineOptions({
   inheritAttrs: false,
@@ -24,12 +25,7 @@ function setViewport(el: Element | ComponentPublicInstance | null) {
     class="overflow-hidden"
   >
     <div
-      :class="
-        cn(
-          'flex',
-          orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col',
-          props.class,
-        )"
+      :class="cn(carouselContentVariants({ orientation }), props.class)"
       v-bind="$attrs"
     >
       <slot />

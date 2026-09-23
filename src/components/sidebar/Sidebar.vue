@@ -7,6 +7,7 @@ import SheetDescription from '../sheet/SheetDescription.vue';
 import SheetHeader from '../sheet/SheetHeader.vue';
 import SheetTitle from '../sheet/SheetTitle.vue';
 import { SIDEBAR_WIDTH_MOBILE, useSidebar } from './utils';
+import { sidebarContainerVariants, sidebarGapVariants } from './variants';
 
 export interface SidebarProps {
   side?: 'left' | 'right';
@@ -74,26 +75,10 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
   >
     <!-- This is what handles the sidebar gap on desktop  -->
     <div
-      :class="cn(
-        'relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear',
-        'group-data-[collapsible=offcanvas]:w-0',
-        'group-data-[side=right]:rotate-180',
-        variant === 'floating' || variant === 'inset'
-          ? 'group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]'
-          : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
-      )"
+      :class="sidebarGapVariants({ variant })"
     />
     <div
-      :class="cn(
-        'fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex',
-        side === 'left'
-          ? 'left-0 group-data-[collapsible=offcanvas]:-left-(--sidebar-width)'
-          : 'right-0 group-data-[collapsible=offcanvas]:-right-(--sidebar-width)',
-        variant === 'floating' || variant === 'inset'
-          ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]'
-          : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l',
-        props.class,
-      )"
+      :class="cn(sidebarContainerVariants({ side, variant }), props.class)"
       v-bind="$attrs"
     >
       <div

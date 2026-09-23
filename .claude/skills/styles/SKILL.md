@@ -30,3 +30,39 @@ Radius: `rounded-sm|md|lg|xl|2xl|3xl|4xl`, all derived from `--radius`.
 ## Adding a token
 
 Add the raw value to both `:root` and `.dark` in `src/styles/theme.css`, then map it in `@theme inline` as `--color-<name>: var(--<name>)`. Give it a `-foreground` partner if anything will sit on top of it. `--success` and `--warning` follow this pattern.
+
+## Branching on classes
+
+A class list that branches on a named axis of the component is a `cva` in the group's `variants.ts`, not a stack of conditionals inside `cn()`.
+
+An axis is something the component is configured or put into — `orientation`, `side`, `size`, `variant`, `position`, and flags it exposes or computes such as `wrap`, `viewOnly`, `showClear`, `removable`.
+
+```ts
+export const barVariants = cva('flex w-full items-center rounded-md border', {
+  variants: {
+    wrap: { true: 'min-h-10 py-1', false: 'h-10' },
+    viewOnly: { true: 'text-muted-foreground', false: 'cursor-text' },
+    open: { true: 'border-ring ring-[3px] ring-ring/50', false: '' },
+  },
+  compoundVariants: [
+    { viewOnly: false, open: false, class: 'hover:border-ring/50' },
+  ],
+});
+```
+
+```
+:class="cn(barVariants({ wrap, viewOnly, open: isOpen }), props.class)"
+```
+
+- A condition built from two flags is a `compoundVariants` entry, never a `&&` chain.
+- `props.class` stays an argument to `cn()`, so tailwind-merge still lets a consumer override.
+- The `variants.ts` is re-exported from `index.ts` only when the component has a public variant prop. Otherwise it stays internal, as `src/components/input-group/variants.ts` does.
+
+A single class toggled by per-item or transient state stays inline. It names no axis, and a `cva` would cost a second file and a jump to read.
+
+```
+:class="cn('size-4', model === option.value ? 'opacity-100' : 'opacity-0')"
+```
+
+- Per item inside a `v-for` — `index === highlightedIndex`, `isSelected(option)`.
+- Transient interaction state — a gesture in flight, a value not yet picked.
