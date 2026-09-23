@@ -8,6 +8,7 @@ import {
   metaHelper,
   rowExpandingFeature,
   rowPaginationFeature,
+  rowPinningFeature,
   rowSelectionFeature,
   rowSortingFeature,
   sortFn_alphanumeric,
@@ -32,6 +33,7 @@ export const features = tableFeatures({
   paginatedRowModel: createPaginatedRowModel(),
   rowSelectionFeature,
   rowExpandingFeature,
+  rowPinningFeature,
   columnMeta: metaHelper<KitColumnMeta>(),
 });
 

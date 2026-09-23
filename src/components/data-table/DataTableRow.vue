@@ -45,4 +45,19 @@ function handleClick(event: MouseEvent) {
       </slot>
     </TableCell>
   </TableRow>
+
+  <TableRow
+    v-if="$slots.expanded && row.getIsExpanded() && row.getCanExpand()"
+    class="bg-secondary"
+  >
+    <TableCell
+      :colspan="row.getVisibleCells().length"
+      class="whitespace-normal"
+    >
+      <slot
+        name="expanded"
+        :row="row.original"
+      />
+    </TableCell>
+  </TableRow>
 </template>

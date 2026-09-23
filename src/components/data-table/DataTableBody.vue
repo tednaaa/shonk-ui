@@ -7,6 +7,7 @@ import { cn } from '@/utils';
 import { Spinner } from '../spinner';
 import { TableBody, TableCell, TableEmpty, TableRow } from '../table';
 import DataTableRow from './DataTableRow.vue';
+import { injectDataTableRowPinning } from './lib/rowPinning';
 
 const props = defineProps<{
   table: KitTable<TData>;
@@ -19,50 +20,70 @@ const props = defineProps<{
 
 const locale = useLocale();
 
-const rows = computed(() => props.table.getRowModel().rows);
+const pinnedRowsInsets = injectDataTableRowPinning();
+
+const topRows = computed(() => props.table.getTopRows());
+const centerRows = computed(() => props.table.getCenterRows());
+const bottomRows = computed(() => props.table.getBottomRows());
+const hasRows = computed(() => topRows.value.length + centerRows.value.length + bottomRows.value.length > 0);
 const visibleColumnCount = computed(() => props.table.getVisibleLeafColumns().length);
+
+const topRowsClass = 'shadow-[0_6px_8px_-6px_rgb(0_0_0/0.25)] dark:shadow-[0_6px_10px_-6px_rgb(0_0_0/0.8)] [&>tr>td]:pb-[calc(--spacing(2)+1px)] [&>tr>td]:shadow-[inset_0_-1px_0_var(--border)]';
+
+const bottomRowsClass = 'shadow-[0_-6px_8px_-6px_rgb(0_0_0/0.25)] dark:shadow-[0_-6px_10px_-6px_rgb(0_0_0/0.8)] [&>tr>td]:pt-[calc(--spacing(2)+1px)] [&>tr>td]:shadow-[inset_0_1px_0_var(--border)]';
+
+const pinnedRowsClass = computed(() => cn(
+  'sticky z-2 bg-background [&>tr]:border-b-0',
+  props.loading && 'pointer-events-none [&>tr]:opacity-50',
+));
 </script>
 
 <template>
-  <TableBody :class="cn('transition-opacity', loading && rows.length > 0 && 'pointer-events-none opacity-50')">
-    <template
-      v-for="row in rows"
+  <TableBody
+    v-if="topRows.length > 0"
+    :class="cn(pinnedRowsClass, topRowsClass)"
+    :style="{ top: `${pinnedRowsInsets.top}px` }"
+  >
+    <DataTableRow
+      v-for="row in topRows"
       :key="row.id"
+      :row="row"
+      :row-class="rowClass"
+      :on-row-click="onRowClick"
     >
-      <DataTableRow
-        :row="row"
-        :row-class="rowClass"
-        :on-row-click="onRowClick"
+      <template
+        v-for="(_, name) in $slots"
+        #[name]="context"
       >
-        <template
-          v-for="(_, name) in $slots"
-          #[name]="context"
-        >
-          <slot
-            :name="name"
-            v-bind="context"
-          />
-        </template>
-      </DataTableRow>
+        <slot
+          :name="name"
+          v-bind="context"
+        />
+      </template>
+    </DataTableRow>
+  </TableBody>
 
-      <TableRow
-        v-if="$slots.expanded && row.getIsExpanded() && row.getCanExpand()"
-        class="bg-secondary"
+  <TableBody :class="cn('transition-opacity', loading && hasRows && 'pointer-events-none opacity-50')">
+    <DataTableRow
+      v-for="row in centerRows"
+      :key="row.id"
+      :row="row"
+      :row-class="rowClass"
+      :on-row-click="onRowClick"
+    >
+      <template
+        v-for="(_, name) in $slots"
+        #[name]="context"
       >
-        <TableCell
-          :colspan="visibleColumnCount"
-          class="whitespace-normal"
-        >
-          <slot
-            name="expanded"
-            :row="row.original"
-          />
-        </TableCell>
-      </TableRow>
-    </template>
+        <slot
+          :name="name"
+          v-bind="context"
+        />
+      </template>
+    </DataTableRow>
 
     <TableEmpty
-      v-if="rows.length === 0"
+      v-if="!hasRows"
       :colspan="visibleColumnCount"
     >
       <Spinner v-if="loading" />
@@ -82,5 +103,29 @@ const visibleColumnCount = computed(() => props.table.getVisibleLeafColumns().le
         <Spinner class="mx-auto" />
       </TableCell>
     </TableRow>
+  </TableBody>
+
+  <TableBody
+    v-if="bottomRows.length > 0"
+    :class="cn(pinnedRowsClass, bottomRowsClass)"
+    :style="{ bottom: `${pinnedRowsInsets.bottom}px` }"
+  >
+    <DataTableRow
+      v-for="row in bottomRows"
+      :key="row.id"
+      :row="row"
+      :row-class="rowClass"
+      :on-row-click="onRowClick"
+    >
+      <template
+        v-for="(_, name) in $slots"
+        #[name]="context"
+      >
+        <slot
+          :name="name"
+          v-bind="context"
+        />
+      </template>
+    </DataTableRow>
   </TableBody>
 </template>

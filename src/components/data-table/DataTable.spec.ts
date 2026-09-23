@@ -1,5 +1,5 @@
 import type { DOMWrapper } from '@vue/test-utils';
-import type { DataTableColumn, DataTableColumnVisibilityState, DataTableExpandedState, DataTablePaginationState, DataTableRowSelectionState, DataTableSortingState } from './types';
+import type { DataTableColumn, DataTableColumnVisibilityState, DataTableExpandedState, DataTablePaginationState, DataTableRowPinningState, DataTableRowSelectionState, DataTableSortingState } from './types';
 import type { UseDataTableOptions } from './useDataTable';
 import { flushPromises, mount } from '@vue/test-utils';
 import { defineComponent, h, nextTick, ref } from 'vue';
@@ -682,6 +682,142 @@ describe('dataTable', () => {
 
       expect(expanded.value).toEqual({ ada: true });
       expect(bodyRows(wrapper)[1]).toEqual(['Ada is 37']);
+    });
+  });
+
+  describe('row pinning', () => {
+    const team: Person[] = [
+      { id: 'ada', name: 'Ada', age: 36 },
+      { id: 'linus', name: 'Linus', age: 54 },
+      { id: 'grace', name: 'Grace', age: 45 },
+      { id: 'ken', name: 'Ken', age: 60 },
+    ];
+
+    const namedColumns: DataTableColumn<Person>[] = [
+      { accessorKey: 'name', header: 'Name', sortable: true, footer: ({ rows }) => rows.map(person => person.name).join(', ') },
+      { accessorKey: 'age', header: 'Age' },
+    ];
+
+    function mountPinnedRowsTable(rowPinning: DataTableRowPinningState, { data = team, columns = namedColumns, tableOptions = {}, template }: MountOptions & { template?: string } = {}) {
+      return mountTable(template, {
+        data,
+        columns,
+        tableOptions: { getRowId: person => person.id, rowPinning: ref(rowPinning), ...tableOptions },
+      });
+    }
+
+    function rowNamesByBody(wrapper: ReturnType<typeof mountTable>) {
+      return wrapper.findAll('tbody').map(body => body.findAll('tr').map(row => row.get('td').text()));
+    }
+
+    it('should render a pinned row once above the other rows and keep it there after a page change and sorting', async () => {
+      const pagination = ref<DataTablePaginationState>({ pageIndex: 0, pageSize: 2 });
+      const sorting = ref<DataTableSortingState>([]);
+      const wrapper = mountPinnedRowsTable({ top: ['linus'], bottom: [] }, { tableOptions: { pagination, sorting } });
+
+      expect(rowNamesByBody(wrapper)).toEqual([['Linus'], ['Ada']]);
+
+      pagination.value = { pageIndex: 1, pageSize: 2 };
+      await nextTick();
+
+      expect(rowNamesByBody(wrapper)).toEqual([['Linus'], ['Grace', 'Ken']]);
+
+      sorting.value = [{ id: 'name', desc: true }];
+      await nextTick();
+
+      expect(rowNamesByBody(wrapper)).toEqual([['Linus'], ['Grace', 'Ada']]);
+    });
+
+    it('should pin rows to the top and to the bottom in the pinning order', () => {
+      const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: ['grace', 'ada'] });
+
+      expect(rowNamesByBody(wrapper)).toEqual([['Ken'], ['Linus'], ['Grace', 'Ada']]);
+    });
+
+    describe('sticky offsets', () => {
+      const sectionHeights: Record<string, number> = { THEAD: 81, TFOOT: 37 };
+
+      class SectionResizeObserver implements ResizeObserver {
+        constructor(private readonly callback: ResizeObserverCallback) {}
+
+        observe(target: Element) {
+          this.callback([{
+            target,
+            borderBoxSize: [{ inlineSize: 0, blockSize: sectionHeights[target.tagName] ?? 0 }],
+            contentBoxSize: [],
+            devicePixelContentBoxSize: [],
+            contentRect: target.getBoundingClientRect(),
+          }], this);
+        }
+
+        unobserve() {}
+
+        disconnect() {}
+      }
+
+      beforeEach(() => {
+        vi.stubGlobal('ResizeObserver', SectionResizeObserver);
+      });
+
+      afterEach(() => {
+        vi.unstubAllGlobals();
+      });
+
+      it('should stick the top rows under the header and the bottom rows above the footer', async () => {
+        const columnVisibility = ref<DataTableColumnVisibilityState>({});
+        const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: ['ada'] }, { tableOptions: { columnVisibility } });
+        await flushPromises();
+
+        const [topRows, , bottomRows] = wrapper.findAll('tbody');
+
+        expect(topRows?.attributes('style')).toBe('top: 81px;');
+        expect(bottomRows?.attributes('style')).toBe('bottom: 37px;');
+
+        columnVisibility.value = { name: false };
+        await flushPromises();
+
+        expect(wrapper.find('tfoot').exists()).toBe(false);
+        expect(bottomRows?.attributes('style')).toBe('bottom: 0px;');
+      });
+    });
+
+    it('should total the pinned rows shown on the page in the footer', async () => {
+      const pagination = ref<DataTablePaginationState>({ pageIndex: 0, pageSize: 2 });
+      const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: [] }, { tableOptions: { pagination } });
+
+      expect(wrapper.get('tfoot td').text()).toBe('Ken, Ada, Linus');
+
+      pagination.value = { pageIndex: 1, pageSize: 2 };
+      await nextTick();
+
+      expect(wrapper.get('tfoot td').text()).toBe('Ken, Grace');
+    });
+
+    it('should show the table without the empty text on a page past the rows when a pinned row is shown', () => {
+      const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: [] }, { tableOptions: { pagination: ref({ pageIndex: 2, pageSize: 2 }) } });
+
+      expect(rowNamesByBody(wrapper)).toEqual([['Ken'], []]);
+      expect(wrapper.text()).not.toContain('No data');
+      expect(wrapper.get('tfoot td').text()).toBe('Ken');
+    });
+
+    it('should dim the pinned rows while loading and keep the pinned rows background opaque', () => {
+      const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: [] }, { template: '<DataTable :table="table" loading />' });
+      const [topRows, centerRows] = wrapper.findAll('tbody');
+
+      expect(topRows?.classes()).toEqual(expect.arrayContaining(['pointer-events-none', '[&>tr]:opacity-50']));
+      expect(topRows?.classes()).not.toContain('opacity-50');
+      expect(centerRows?.classes()).toEqual(expect.arrayContaining(['pointer-events-none', 'opacity-50']));
+    });
+
+    it('should expand a pinned row inside the pinned rows', () => {
+      const wrapper = mountPinnedRowsTable({ top: ['linus'], bottom: [] }, {
+        columns: [expandColumn(), ...namedColumns],
+        tableOptions: { expanded: ref<DataTableExpandedState>({ linus: true }) },
+        template: '<DataTable :table="table"><template #expanded="{ row }">{{ row.name }} is {{ row.age }}</template></DataTable>',
+      });
+
+      expect(wrapper.get('tbody').findAll('tr').map(row => row.text())).toEqual(['Linus54', 'Linus is 54']);
     });
   });
 

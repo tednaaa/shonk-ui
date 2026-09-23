@@ -10,6 +10,7 @@ import DataTableFooter from './DataTableFooter.vue';
 import DataTableHeader from './DataTableHeader.vue';
 import { useColumnPinning } from './lib/columnPinning';
 import { unwrapDataTable } from './lib/instance';
+import { useRowPinning } from './lib/rowPinning';
 
 const props = defineProps<{
   table: DataTableInstance<TData>;
@@ -36,6 +37,7 @@ const slots = defineSlots<{
 const kitTable = computed(() => unwrapDataTable(props.table));
 
 useColumnPinning(kitTable);
+useRowPinning();
 
 const scrollTable = useTemplateRef('scrollTable');
 

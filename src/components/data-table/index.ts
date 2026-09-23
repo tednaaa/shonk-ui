@@ -20,6 +20,7 @@ export type {
   DataTableHeaderContext,
   DataTableInstance,
   DataTablePaginationState,
+  DataTableRowPinningState,
   DataTableRowSelectionState,
   DataTableSelectColumn,
   DataTableSortingState,

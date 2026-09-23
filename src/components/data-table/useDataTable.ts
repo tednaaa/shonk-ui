@@ -1,6 +1,6 @@
 import type { ExpandedState } from '@tanstack/vue-table';
 import type { MaybeRefOrGetter, Ref } from 'vue';
-import type { DataTableColumn, DataTableColumnVisibilityState, DataTableExpandedState, DataTableInstance, DataTablePaginationState, DataTableRowSelectionState, DataTableSortingState } from './types';
+import type { DataTableColumn, DataTableColumnVisibilityState, DataTableExpandedState, DataTableInstance, DataTablePaginationState, DataTableRowPinningState, DataTableRowSelectionState, DataTableSortingState } from './types';
 import { functionalUpdate, useTable } from '@tanstack/vue-table';
 import { computed, ref, toValue } from 'vue';
 import { features } from './lib/features';
@@ -23,6 +23,7 @@ export interface UseDataTableOptions<TData extends object> {
   columnVisibility?: Ref<DataTableColumnVisibilityState>;
   expanded?: Ref<DataTableExpandedState>;
   getRowCanExpand?: (row: TData) => boolean;
+  rowPinning?: Ref<DataTableRowPinningState>;
 }
 
 export function useDataTable<TData extends object>(options: UseDataTableOptions<TData>): DataTableInstance<TData> {
@@ -33,6 +34,7 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
   const rowSelection = options.rowSelection ?? ref<DataTableRowSelectionState>({});
   const columnVisibility = options.columnVisibility ?? ref<DataTableColumnVisibilityState>({});
   const expanded = options.expanded ?? ref<DataTableExpandedState>({});
+  const rowPinning = options.rowPinning ?? ref<DataTableRowPinningState>({ top: [], bottom: [] });
   const columnPinning = computed(() => toColumnPinning(toValue(options.columns)));
 
   const getRowId = options.getRowId ?? ((row: TData, index: number) => String(index));
@@ -63,6 +65,7 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
       columnVisibility: columnVisibility.value,
       columnPinning: columnPinning.value,
       expanded: expanded.value,
+      rowPinning: rowPinning.value,
     })),
     onSortingChange: (updater) => {
       sorting.value = functionalUpdate(updater, sorting.value);
@@ -88,6 +91,7 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
     enableRowSelection: enableRowSelection === undefined ? undefined : row => enableRowSelection(row.original),
     getRowCanExpand: row => getRowCanExpand?.(row.original) ?? true,
     autoResetExpanded: false,
+    keepPinnedRows: true,
   });
 
   function toExpandedState(state: ExpandedState): DataTableExpandedState {

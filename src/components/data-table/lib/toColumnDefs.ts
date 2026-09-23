@@ -16,6 +16,7 @@ import DataTableExpandAllRowsButton from '../DataTableExpandAllRowsButton.vue';
 import DataTableExpandRowButton from '../DataTableExpandRowButton.vue';
 import DataTableSelectPageRowsCheckbox from '../DataTableSelectPageRowsCheckbox.vue';
 import DataTableSelectRowCheckbox from '../DataTableSelectRowCheckbox.vue';
+import { getDisplayedRows } from './rowPinning';
 
 type KitColumnDef<TData extends object> = ColumnDef<KitFeatures, TData>;
 
@@ -128,7 +129,7 @@ function footerDef<TData extends object>(footer: DataTableColumnFooter<TData> | 
   if (typeof footer !== 'function')
     return footer;
 
-  return ({ table }) => footer({ rows: table.getRowModel().rows.map(row => row.original) });
+  return ({ table }) => footer({ rows: getDisplayedRows(table).map(row => row.original) });
 }
 
 export function hideableColumnIds<TData extends object>(columns: readonly DataTableColumn<TData>[]): string[] {

@@ -18,6 +18,8 @@ import DataTablePaginationVariants from './examples/DataTablePaginationVariants.
 import dataTablePaginationVariantsSource from './examples/DataTablePaginationVariants.vue?raw';
 import DataTablePinnedColumns from './examples/DataTablePinnedColumns.vue';
 import dataTablePinnedColumnsSource from './examples/DataTablePinnedColumns.vue?raw';
+import DataTablePinnedRows from './examples/DataTablePinnedRows.vue';
+import dataTablePinnedRowsSource from './examples/DataTablePinnedRows.vue?raw';
 import DataTableRowClick from './examples/DataTableRowClick.vue';
 import dataTableRowClickSource from './examples/DataTableRowClick.vue?raw';
 import DataTableRowExpansion from './examples/DataTableRowExpansion.vue';
@@ -116,4 +118,9 @@ export const PinnedColumns: Story = {
 export const RowExpansion: Story = {
   parameters: example(dataTableRowExpansionSource),
   render: render({ DataTableRowExpansion }, `<DataTableRowExpansion />`),
+};
+
+export const PinnedRows: Story = {
+  parameters: example(dataTablePinnedRowsSource),
+  render: render({ DataTablePinnedRows }, `<DataTablePinnedRows />`),
 };

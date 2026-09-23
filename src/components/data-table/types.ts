@@ -121,6 +121,11 @@ export type DataTableColumnVisibilityState = Record<string, boolean>;
 
 export type DataTableExpandedState = Record<string, true>;
 
+export interface DataTableRowPinningState {
+  top: string[];
+  bottom: string[];
+}
+
 declare const rowType: unique symbol;
 
 export interface DataTableInstance<TData> {
