@@ -6,6 +6,7 @@ import {
   createPaginatedRowModel,
   createSortedRowModel,
   metaHelper,
+  rowExpandingFeature,
   rowPaginationFeature,
   rowSelectionFeature,
   rowSortingFeature,
@@ -30,6 +31,7 @@ export const features = tableFeatures({
   rowPaginationFeature,
   paginatedRowModel: createPaginatedRowModel(),
   rowSelectionFeature,
+  rowExpandingFeature,
   columnMeta: metaHelper<KitColumnMeta>(),
 });
 

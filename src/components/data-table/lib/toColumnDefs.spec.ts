@@ -1,5 +1,6 @@
 import type { DataTableColumn } from '../types';
 import { flexRender, useTable } from '@tanstack/vue-table';
+import { expandColumn } from '../columns/expandColumn';
 import { selectColumn } from '../columns/selectColumn';
 import { features } from './features';
 import { toColumnDefs, toColumnPinning } from './toColumnDefs';
@@ -110,6 +111,13 @@ describe('toColumnDefs', () => {
 
   it('should keep the select column from sorting and hiding', () => {
     const column = buildTable([selectColumn(), { accessorKey: 'name' }]).getColumn('select');
+
+    expect(column?.getCanSort()).toBe(false);
+    expect(column?.getCanHide()).toBe(false);
+  });
+
+  it('should keep the expand column from sorting and hiding', () => {
+    const column = buildTable([expandColumn(), { accessorKey: 'name' }]).getColumn('expand');
 
     expect(column?.getCanSort()).toBe(false);
     expect(column?.getCanHide()).toBe(false);

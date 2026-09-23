@@ -34,6 +34,9 @@ export interface ShonkLocale {
     pageSizeLabel: string;
     selectPageRowsLabel: string;
     selectRowLabel: string;
+    expandAllRowsLabel: string;
+    collapseAllRowsLabel: string;
+    expandRowLabel: string;
     columnToggleButtonText: string;
     columnToggleSearchPlaceholder: string;
     columnToggleEmptyText: string;

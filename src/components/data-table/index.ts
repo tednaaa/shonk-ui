@@ -1,3 +1,4 @@
+export { expandColumn } from './columns/expandColumn';
 export { selectColumn } from './columns/selectColumn';
 export { default as DataTable } from './DataTable.vue';
 export { default as DataTableColumnToggle } from './DataTableColumnToggle.vue';
@@ -12,6 +13,8 @@ export type {
   DataTableColumnSort,
   DataTableColumnVisibilityState,
   DataTableDisplayColumn,
+  DataTableExpandColumn,
+  DataTableExpandedState,
   DataTableFooterContext,
   DataTableGroupColumn,
   DataTableHeaderContext,

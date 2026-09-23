@@ -5,12 +5,15 @@ import type {
   DataTableAccessorKeyColumn,
   DataTableColumn,
   DataTableDisplayColumn,
+  DataTableExpandColumn,
   DataTableFooterContext,
   DataTableGroupColumn,
   DataTableSelectColumn,
 } from '../types';
 import type { KitFeatures } from './features';
 import { h } from 'vue';
+import DataTableExpandAllRowsButton from '../DataTableExpandAllRowsButton.vue';
+import DataTableExpandRowButton from '../DataTableExpandRowButton.vue';
 import DataTableSelectPageRowsCheckbox from '../DataTableSelectPageRowsCheckbox.vue';
 import DataTableSelectRowCheckbox from '../DataTableSelectRowCheckbox.vue';
 
@@ -25,7 +28,8 @@ type AnyDataTableColumn<TData>
     | DataTableAccessorFnColumn<TData>
     | DataTableDisplayColumn<TData>
     | DataTableGroupColumn<TData>
-    | DataTableSelectColumn;
+    | DataTableSelectColumn
+    | DataTableExpandColumn;
 
 export function toColumnDefs<TData extends object>(columns: readonly DataTableColumn<TData>[]): KitColumnDef<TData>[] {
   return columns.map(toColumnDef);
@@ -39,6 +43,16 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
       meta: { class: 'w-px', headerClass: 'w-px' },
       header: ({ table }) => h(DataTableSelectPageRowsCheckbox<TData>, { table }),
       cell: ({ row }) => h(DataTableSelectRowCheckbox<TData>, { row }),
+    };
+  }
+
+  if (column.kind === 'expand') {
+    return {
+      id: column.id,
+      enableHiding: false,
+      meta: { class: 'w-px', headerClass: 'w-px' },
+      header: ({ table }) => h(DataTableExpandAllRowsButton<TData>, { table }),
+      cell: ({ row }) => h(DataTableExpandRowButton<TData>, { row }),
     };
   }
 

@@ -81,12 +81,27 @@ export interface DataTableSelectColumn {
   cell?: undefined;
 }
 
+export interface DataTableExpandColumn {
+  kind: 'expand';
+  id: string;
+  label?: undefined;
+  footer?: undefined;
+  hideable?: undefined;
+  pinned?: undefined;
+  accessorKey?: undefined;
+  accessorFn?: undefined;
+  columns?: undefined;
+  sortable?: undefined;
+  cell?: undefined;
+}
+
 export type DataTableColumn<TData>
   = | { [TKey in keyof TData & string]: DataTableAccessorKeyColumn<TData, TKey> }[keyof TData & string]
     | DataTableAccessorFnColumn<TData>
     | DataTableDisplayColumn<TData>
     | DataTableGroupColumn<TData>
-    | DataTableSelectColumn;
+    | DataTableSelectColumn
+    | DataTableExpandColumn;
 
 export interface DataTableColumnSort {
   id: string;
@@ -103,6 +118,8 @@ export interface DataTablePaginationState {
 export type DataTableRowSelectionState = Record<string, true>;
 
 export type DataTableColumnVisibilityState = Record<string, boolean>;
+
+export type DataTableExpandedState = Record<string, true>;
 
 declare const rowType: unique symbol;
 

@@ -25,23 +25,41 @@ const visibleColumnCount = computed(() => props.table.getVisibleLeafColumns().le
 
 <template>
   <TableBody :class="cn('transition-opacity', loading && rows.length > 0 && 'pointer-events-none opacity-50')">
-    <DataTableRow
+    <template
       v-for="row in rows"
       :key="row.id"
-      :row="row"
-      :row-class="rowClass"
-      :on-row-click="onRowClick"
     >
-      <template
-        v-for="(_, name) in $slots"
-        #[name]="context"
+      <DataTableRow
+        :row="row"
+        :row-class="rowClass"
+        :on-row-click="onRowClick"
       >
-        <slot
-          :name="name"
-          v-bind="context"
-        />
-      </template>
-    </DataTableRow>
+        <template
+          v-for="(_, name) in $slots"
+          #[name]="context"
+        >
+          <slot
+            :name="name"
+            v-bind="context"
+          />
+        </template>
+      </DataTableRow>
+
+      <TableRow
+        v-if="$slots.expanded && row.getIsExpanded() && row.getCanExpand()"
+        class="bg-secondary"
+      >
+        <TableCell
+          :colspan="visibleColumnCount"
+          class="whitespace-normal"
+        >
+          <slot
+            name="expanded"
+            :row="row.original"
+          />
+        </TableCell>
+      </TableRow>
+    </template>
 
     <TableEmpty
       v-if="rows.length === 0"

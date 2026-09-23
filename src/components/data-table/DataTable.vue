@@ -29,6 +29,7 @@ const emit = defineEmits<{
 const slots = defineSlots<{
   [name: `cell-${string}`]: ((context: DataTableCellContext<TData>) => VNodeChild) | undefined;
   [name: `header-${string}`]: ((context: DataTableHeaderContext) => VNodeChild) | undefined;
+  expanded?: (context: { row: TData }) => VNodeChild;
   empty?: () => VNodeChild;
 }>();
 

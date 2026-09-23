@@ -1,8 +1,9 @@
 import type { DOMWrapper } from '@vue/test-utils';
-import type { DataTableColumn, DataTableColumnVisibilityState, DataTablePaginationState, DataTableRowSelectionState, DataTableSortingState } from './types';
+import type { DataTableColumn, DataTableColumnVisibilityState, DataTableExpandedState, DataTablePaginationState, DataTableRowSelectionState, DataTableSortingState } from './types';
 import type { UseDataTableOptions } from './useDataTable';
 import { flushPromises, mount } from '@vue/test-utils';
 import { defineComponent, h, nextTick, ref } from 'vue';
+import { expandColumn } from './columns/expandColumn';
 import { selectColumn } from './columns/selectColumn';
 import DataTable from './DataTable.vue';
 import { useDataTable } from './useDataTable';
@@ -556,6 +557,131 @@ describe('dataTable', () => {
       const { wrapper } = mountSelectableTable({ enableRowSelection: () => false });
 
       expect(pageCheckbox(wrapper).attributes()).toHaveProperty('disabled');
+    });
+  });
+
+  describe('row expansion', () => {
+    const team: Person[] = [
+      { id: 'ada', name: 'Ada', age: 36 },
+      { id: 'linus', name: 'Linus', age: 54 },
+      { id: 'grace', name: 'Grace', age: 45 },
+    ];
+
+    const expandedSlot = '<template #expanded="{ row }"><p>{{ row.name }} is {{ row.age }}</p></template>';
+
+    function mountExpandableTable(tableOptions: MountOptions['tableOptions'] = {}, { data = team, slots = expandedSlot }: { data?: MountOptions['data']; slots?: string } = {}) {
+      const expanded = ref<DataTableExpandedState>({});
+      const openPerson = vi.fn();
+      const wrapper = mountTable(`<DataTable :table="table" @row-click="openPerson">${slots}</DataTable>`, {
+        data,
+        columns: [expandColumn(), ...columns],
+        tableOptions: { getRowId: person => person.id, expanded, ...tableOptions },
+        bindings: { openPerson },
+      });
+
+      return { wrapper, expanded, openPerson };
+    }
+
+    function rowButton(wrapper: ReturnType<typeof mountTable>, name: string) {
+      const row = wrapper.findAll('tbody tr').find(tableRow => tableRow.findAll('td')[1]?.text() === name);
+
+      if (!row)
+        throw new Error(`rowButton: no row of "${name}"`);
+
+      return row.find('button');
+    }
+
+    function headerButton(wrapper: ReturnType<typeof mountTable>) {
+      return wrapper.get('th button');
+    }
+
+    it('should expand a row under itself through its button without clicking the row', async () => {
+      const { wrapper, expanded, openPerson } = mountExpandableTable();
+
+      await rowButton(wrapper, 'Linus').trigger('click');
+
+      expect(expanded.value).toEqual({ linus: true });
+      expect(bodyRows(wrapper)).toEqual([['', 'Ada', '36'], ['', 'Linus', '54'], ['Linus is 54'], ['', 'Grace', '45']]);
+      expect(wrapper.get('td[colspan]').attributes('colspan')).toBe('3');
+      expect(rowButton(wrapper, 'Linus').attributes()).toMatchObject({ 'aria-label': 'Expand row', 'aria-expanded': 'true' });
+      expect(rowButton(wrapper, 'Ada').attributes('aria-expanded')).toBe('false');
+      expect(headerButton(wrapper).attributes('aria-label')).toBe('Expand all rows');
+      expect(openPerson).not.toHaveBeenCalled();
+
+      await rowButton(wrapper, 'Linus').trigger('click');
+
+      expect(expanded.value).toEqual({});
+      expect(bodyRows(wrapper)).toHaveLength(3);
+      expect(rowButton(wrapper, 'Linus').attributes('aria-expanded')).toBe('false');
+    });
+
+    it('should span the expanded row over the visible columns only', async () => {
+      const { wrapper, expanded } = mountExpandableTable({ columnVisibility: ref({ age: false }) });
+
+      expanded.value = { ada: true };
+      await nextTick();
+
+      expect(wrapper.get('td[colspan]').attributes('colspan')).toBe('2');
+    });
+
+    it('should not render an expanded row without the expanded slot', async () => {
+      const { wrapper, expanded } = mountExpandableTable({}, { slots: '' });
+
+      await rowButton(wrapper, 'Ada').trigger('click');
+
+      expect(expanded.value).toEqual({ ada: true });
+      expect(bodyRows(wrapper)).toHaveLength(3);
+    });
+
+    it('should not let a row that getRowCanExpand rejects expand', async () => {
+      const { wrapper, expanded } = mountExpandableTable({ getRowCanExpand: person => person.age < 50 });
+
+      expect(rowButton(wrapper, 'Linus').exists()).toBe(false);
+      expect(rowButton(wrapper, 'Grace').exists()).toBe(true);
+
+      expanded.value = { linus: true };
+      await nextTick();
+
+      expect(bodyRows(wrapper)).toHaveLength(3);
+    });
+
+    it('should expand every row that can expand from the header and collapse them back', async () => {
+      const { wrapper, expanded } = mountExpandableTable({
+        getRowCanExpand: person => person.age < 50,
+        pagination: ref({ pageIndex: 0, pageSize: 2 }),
+      });
+
+      expect(headerButton(wrapper).attributes('aria-label')).toBe('Expand all rows');
+
+      await headerButton(wrapper).trigger('click');
+
+      expect(expanded.value).toEqual({ ada: true, grace: true });
+      expect(bodyRows(wrapper)).toEqual([['', 'Ada', '36'], ['Ada is 36'], ['', 'Linus', '54']]);
+      expect(headerButton(wrapper).attributes('aria-label')).toBe('Collapse all rows');
+
+      await headerButton(wrapper).trigger('click');
+
+      expect(expanded.value).toEqual({});
+      expect(headerButton(wrapper).attributes('aria-label')).toBe('Expand all rows');
+    });
+
+    it('should disable the header button when no row can expand', () => {
+      const { wrapper } = mountExpandableTable({ getRowCanExpand: () => false });
+
+      expect(headerButton(wrapper).attributes()).toHaveProperty('disabled');
+      expect(wrapper.findAll('tbody button')).toHaveLength(0);
+    });
+
+    it('should keep a row expanded when the data is replaced by new objects', async () => {
+      const data = ref(team);
+      const { wrapper, expanded } = mountExpandableTable({}, { data });
+
+      await rowButton(wrapper, 'Ada').trigger('click');
+      data.value = team.map(person => ({ ...person, age: person.age + 1 }));
+      await flushPromises();
+
+      expect(expanded.value).toEqual({ ada: true });
+      expect(bodyRows(wrapper)[1]).toEqual(['Ada is 37']);
     });
   });
 

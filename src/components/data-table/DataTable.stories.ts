@@ -20,6 +20,8 @@ import DataTablePinnedColumns from './examples/DataTablePinnedColumns.vue';
 import dataTablePinnedColumnsSource from './examples/DataTablePinnedColumns.vue?raw';
 import DataTableRowClick from './examples/DataTableRowClick.vue';
 import dataTableRowClickSource from './examples/DataTableRowClick.vue?raw';
+import DataTableRowExpansion from './examples/DataTableRowExpansion.vue';
+import dataTableRowExpansionSource from './examples/DataTableRowExpansion.vue?raw';
 import DataTableRowSelection from './examples/DataTableRowSelection.vue';
 import dataTableRowSelectionSource from './examples/DataTableRowSelection.vue?raw';
 import DataTableServerMultiSorting from './examples/DataTableServerMultiSorting.vue';
@@ -109,4 +111,9 @@ export const StoredColumns: Story = {
 export const PinnedColumns: Story = {
   parameters: example(dataTablePinnedColumnsSource),
   render: render({ DataTablePinnedColumns }, `<DataTablePinnedColumns />`),
+};
+
+export const RowExpansion: Story = {
+  parameters: example(dataTableRowExpansionSource),
+  render: render({ DataTableRowExpansion }, `<DataTableRowExpansion />`),
 };
