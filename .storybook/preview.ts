@@ -9,12 +9,30 @@ registerVueGrammar();
 
 const locales = { en, ru };
 
+const presetItems = [
+  { value: 'atlas', title: 'Atlas' },
+  { value: 'graphite', title: 'Graphite' },
+  { value: 'nocturne', title: 'Nocturne' },
+  { value: 'orchid', title: 'Orchid' },
+];
+
+const defaultPreset = presetItems[0].value;
+
 const preview: Preview = {
   initialGlobals: {
     theme: 'light',
     locale: 'en',
+    preset: defaultPreset,
   },
   globalTypes: {
+    preset: {
+      description: 'Theme preset, over both light and dark',
+      toolbar: {
+        icon: 'paintbrush',
+        items: presetItems,
+        dynamicTitle: true,
+      },
+    },
     locale: {
       description: 'Locale for text baked into components',
       toolbar: {
@@ -30,7 +48,15 @@ const preview: Preview = {
   decorators: [
     (_story, context) => {
       const theme = context.globals.theme ?? 'light';
-      document.documentElement.classList.toggle('dark', theme === 'dark');
+      const preset = context.globals.preset ?? defaultPreset;
+      const root = document.documentElement;
+
+      root.classList.toggle('dark', theme === 'dark');
+      delete root.dataset.theme;
+
+      if (preset !== defaultPreset)
+        root.dataset.theme = preset as string;
+
       return { template: '<story />' };
     },
     (_story, context) => ({

@@ -17,7 +17,8 @@
       "style": "./src/styles/main.css",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
-    }
+    },
+    "./themes/*.css": "./src/styles/themes/*.css"
   },
   "files": [
     "CHANGELOG.md",
@@ -28,6 +29,7 @@
     "src/lib",
     "src/styles/main.css",
     "src/styles/theme.css",
+    "src/styles/themes",
     "src/utils"
   ],
   "scripts": {

@@ -2,6 +2,10 @@
 @import "tw-animate-css";
 @import "../src/styles/theme.css";
 @import "vue-sonner/style.css";
+@import "../src/styles/themes/atlas.css";
+@import "../src/styles/themes/graphite.css";
+@import "../src/styles/themes/nocturne.css";
+@import "../src/styles/themes/orchid.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -12,11 +16,3 @@
   --font-size: 14px;
 }
 
-body {
-  color: var(--foreground);
-  background-color: #f0f2f5;
-}
-
-.dark body {
-  background-color: #0f1218;
-}
