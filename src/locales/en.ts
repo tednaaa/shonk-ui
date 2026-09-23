@@ -34,6 +34,8 @@ export const en: ShonkLocale = {
   dataTable: {
     emptyText: 'No data',
     pageSizeLabel: 'Rows per page',
+    selectPageRowsLabel: 'Select all rows on the page',
+    selectRowLabel: 'Select row',
   },
 
   datePicker: {

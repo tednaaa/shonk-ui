@@ -2,6 +2,7 @@
 import type { Header, SortDirection } from '@tanstack/vue-table';
 import type { KitFeatures } from './lib/features';
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from '@lucide/vue';
+import { FlexRender } from '@tanstack/vue-table';
 import { computed } from 'vue';
 import { cn } from '@/utils';
 import { TableHead } from '../table';
@@ -64,7 +65,7 @@ function handleClick(event: MouseEvent) {
         :name="`header-${header.column.id}`"
         :label="label"
       >
-        {{ label }}
+        <FlexRender :header="header" />
       </slot>
       <span
         aria-hidden="true"
@@ -88,7 +89,7 @@ function handleClick(event: MouseEvent) {
       :name="`header-${header.column.id}`"
       :label="label"
     >
-      {{ label }}
+      <FlexRender :header="header" />
     </slot>
   </TableHead>
 </template>

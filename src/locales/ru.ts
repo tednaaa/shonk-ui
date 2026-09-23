@@ -34,6 +34,8 @@ export const ru: ShonkLocale = {
   dataTable: {
     emptyText: 'Нет данных',
     pageSizeLabel: 'Строк на странице',
+    selectPageRowsLabel: 'Выбрать все строки на странице',
+    selectRowLabel: 'Выбрать строку',
   },
 
   datePicker: {

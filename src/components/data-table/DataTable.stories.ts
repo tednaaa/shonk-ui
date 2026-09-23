@@ -16,6 +16,8 @@ import DataTablePaginationVariants from './examples/DataTablePaginationVariants.
 import dataTablePaginationVariantsSource from './examples/DataTablePaginationVariants.vue?raw';
 import DataTableRowClick from './examples/DataTableRowClick.vue';
 import dataTableRowClickSource from './examples/DataTableRowClick.vue?raw';
+import DataTableRowSelection from './examples/DataTableRowSelection.vue';
+import dataTableRowSelectionSource from './examples/DataTableRowSelection.vue?raw';
 import DataTableServerMultiSorting from './examples/DataTableServerMultiSorting.vue';
 import dataTableServerMultiSortingSource from './examples/DataTableServerMultiSorting.vue?raw';
 import DataTableServerPageSize from './examples/DataTableServerPageSize.vue';
@@ -81,4 +83,9 @@ export const PaginationVariants: Story = {
 export const InfiniteLoading: Story = {
   parameters: example(dataTableInfiniteLoadingSource),
   render: render({ DataTableInfiniteLoading }, `<DataTableInfiniteLoading />`),
+};
+
+export const RowSelection: Story = {
+  parameters: example(dataTableRowSelectionSource),
+  render: render({ DataTableRowSelection }, `<DataTableRowSelection />`),
 };

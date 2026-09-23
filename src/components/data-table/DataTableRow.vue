@@ -23,6 +23,7 @@ function handleClick(event: MouseEvent) {
 
 <template>
   <TableRow
+    :data-state="row.getIsSelected() ? 'selected' : undefined"
     :class="cn(onRowClick && 'cursor-pointer hover:bg-muted/50', rowClass?.(row.original))"
     @click="handleClick"
   >

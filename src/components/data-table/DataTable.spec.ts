@@ -1,7 +1,8 @@
-import type { DataTableColumn, DataTableSortingState } from './types';
+import type { DataTableColumn, DataTableRowSelectionState, DataTableSortingState } from './types';
 import type { UseDataTableOptions } from './useDataTable';
 import { flushPromises, mount } from '@vue/test-utils';
-import { defineComponent, h, ref } from 'vue';
+import { defineComponent, h, nextTick, ref } from 'vue';
+import { selectColumn } from './columns/selectColumn';
 import DataTable from './DataTable.vue';
 import { useDataTable } from './useDataTable';
 
@@ -22,7 +23,7 @@ const columns: DataTableColumn<Person>[] = [
 ];
 
 interface MountOptions {
-  data?: Person[];
+  data?: UseDataTableOptions<Person>['data'];
   columns?: DataTableColumn<Person>[];
   tableOptions?: Omit<UseDataTableOptions<Person>, 'data' | 'columns'>;
   bindings?: Record<string, unknown>;
@@ -250,6 +251,130 @@ describe('dataTable', () => {
     expect(wrapper.get('tbody').classes()).toEqual(expect.arrayContaining(['pointer-events-none', 'opacity-50']));
     expect(wrapper.get('[aria-busy]').attributes('aria-busy')).toBe('true');
     expect(bodyRows(wrapper)).toHaveLength(2);
+  });
+
+  describe('row selection', () => {
+    const team: Person[] = [
+      { id: 'ada', name: 'Ada', age: 36 },
+      { id: 'linus', name: 'Linus', age: 54 },
+      { id: 'grace', name: 'Grace', age: 45 },
+    ];
+
+    function mountSelectableTable(tableOptions: MountOptions['tableOptions'] = {}, data: MountOptions['data'] = team) {
+      const rowSelection = ref<DataTableRowSelectionState>({});
+      const openPerson = vi.fn();
+      const wrapper = mountTable('<DataTable :table="table" @row-click="openPerson" />', {
+        data,
+        columns: [selectColumn(), ...columns],
+        tableOptions: { getRowId: person => person.id, rowSelection, ...tableOptions },
+        bindings: { openPerson },
+      });
+
+      return { wrapper, rowSelection, openPerson };
+    }
+
+    function rowCheckbox(wrapper: ReturnType<typeof mountTable>, name: string) {
+      const row = wrapper.findAll('tbody tr').find(tableRow => tableRow.text().startsWith(name));
+
+      if (!row)
+        throw new Error(`rowCheckbox: no row starts with "${name}"`);
+
+      return row.get('[role="checkbox"]');
+    }
+
+    function pageCheckbox(wrapper: ReturnType<typeof mountTable>) {
+      return wrapper.get('[aria-label="Select all rows on the page"]');
+    }
+
+    it('should select a row through its checkbox without clicking the row', async () => {
+      const { wrapper, rowSelection, openPerson } = mountSelectableTable();
+
+      await rowCheckbox(wrapper, 'Linus').trigger('click');
+
+      expect(rowSelection.value).toEqual({ linus: true });
+      expect(rowCheckbox(wrapper, 'Linus').attributes('aria-label')).toBe('Select row');
+      expect(wrapper.findAll('tbody tr').map(row => row.attributes('data-state'))).toEqual([undefined, 'selected', undefined]);
+      expect(openPerson).not.toHaveBeenCalled();
+    });
+
+    it('should select and deselect the rows between the last clicked row and a shift-clicked one', async () => {
+      const { wrapper, rowSelection } = mountSelectableTable();
+
+      await rowCheckbox(wrapper, 'Ada').trigger('click');
+      await rowCheckbox(wrapper, 'Grace').trigger('click', { shiftKey: true });
+
+      expect(rowSelection.value).toEqual({ ada: true, linus: true, grace: true });
+
+      await rowCheckbox(wrapper, 'Linus').trigger('click');
+      await rowCheckbox(wrapper, 'Grace').trigger('click', { shiftKey: true });
+
+      expect(rowSelection.value).toEqual({ ada: true });
+    });
+
+    it('should skip a row that enableRowSelection rejects inside a shift range', async () => {
+      const { wrapper, rowSelection } = mountSelectableTable(
+        { enableRowSelection: person => person.age < 50 },
+        [...team, { id: 'alan', name: 'Alan', age: 41 }],
+      );
+
+      await rowCheckbox(wrapper, 'Ada').trigger('click');
+      await rowCheckbox(wrapper, 'Alan').trigger('click', { shiftKey: true });
+
+      expect(rowSelection.value).toEqual({ ada: true, grace: true, alan: true });
+    });
+
+    it('should select only the rows of the current page from the header', async () => {
+      const { wrapper, rowSelection } = mountSelectableTable({ pagination: ref({ pageIndex: 0, pageSize: 2 }) });
+      rowSelection.value = { grace: true };
+
+      await rowCheckbox(wrapper, 'Ada').trigger('click');
+
+      expect(pageCheckbox(wrapper).attributes('aria-checked')).toBe('mixed');
+
+      await pageCheckbox(wrapper).trigger('click');
+
+      expect(rowSelection.value).toEqual({ grace: true, ada: true, linus: true });
+      expect(pageCheckbox(wrapper).attributes('aria-checked')).toBe('true');
+
+      await pageCheckbox(wrapper).trigger('click');
+
+      expect(rowSelection.value).toEqual({ grace: true });
+      expect(pageCheckbox(wrapper).attributes('aria-checked')).toBe('false');
+    });
+
+    it('should keep the selection of a row that leaves the data and comes back', async () => {
+      const data = ref(team.slice(0, 2));
+      const { wrapper, rowSelection } = mountSelectableTable({}, data);
+
+      await rowCheckbox(wrapper, 'Ada').trigger('click');
+      data.value = team.slice(2);
+      await nextTick();
+
+      expect(bodyRows(wrapper)).toEqual([['', 'Grace', '45']]);
+
+      data.value = team.map(person => ({ ...person }));
+      await nextTick();
+
+      expect(rowSelection.value).toEqual({ ada: true });
+      expect(rowCheckbox(wrapper, 'Ada').attributes('aria-checked')).toBe('true');
+    });
+
+    it('should not select a row that enableRowSelection rejects', async () => {
+      const { wrapper, rowSelection } = mountSelectableTable({ enableRowSelection: person => person.age < 50 });
+
+      expect(rowCheckbox(wrapper, 'Linus').attributes()).toHaveProperty('disabled');
+
+      await pageCheckbox(wrapper).trigger('click');
+
+      expect(rowSelection.value).toEqual({ ada: true, grace: true });
+      expect(pageCheckbox(wrapper).attributes('aria-checked')).toBe('true');
+    });
+
+    it('should disable the header checkbox when no row on the page can be selected', () => {
+      const { wrapper } = mountSelectableTable({ enableRowSelection: () => false });
+
+      expect(pageCheckbox(wrapper).attributes()).toHaveProperty('disabled');
+    });
   });
 
   describe('load more', () => {

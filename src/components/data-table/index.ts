@@ -1,3 +1,4 @@
+export { selectColumn } from './columns/selectColumn';
 export { default as DataTable } from './DataTable.vue';
 export { default as DataTablePagination } from './DataTablePagination.vue';
 export { default as DataTablePaginationPages } from './DataTablePaginationPages.vue';
@@ -13,6 +14,8 @@ export type {
   DataTableHeaderContext,
   DataTableInstance,
   DataTablePaginationState,
+  DataTableRowSelectionState,
+  DataTableSelectColumn,
   DataTableSortingState,
 } from './types';
 export { useDataTable } from './useDataTable';

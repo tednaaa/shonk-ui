@@ -6,8 +6,12 @@ import type {
   DataTableColumn,
   DataTableDisplayColumn,
   DataTableGroupColumn,
+  DataTableSelectColumn,
 } from '../types';
 import type { KitFeatures } from './features';
+import { h } from 'vue';
+import DataTableSelectPageRowsCheckbox from '../DataTableSelectPageRowsCheckbox.vue';
+import DataTableSelectRowCheckbox from '../DataTableSelectRowCheckbox.vue';
 
 type KitColumnDef<TData extends object> = ColumnDef<KitFeatures, TData>;
 
@@ -17,13 +21,24 @@ type AnyDataTableColumn<TData>
   = | DataTableAccessorKeyColumn<TData, keyof TData & string>
     | DataTableAccessorFnColumn<TData>
     | DataTableDisplayColumn<TData>
-    | DataTableGroupColumn<TData>;
+    | DataTableGroupColumn<TData>
+    | DataTableSelectColumn;
 
 export function toColumnDefs<TData extends object>(columns: readonly DataTableColumn<TData>[]): KitColumnDef<TData>[] {
   return columns.map(toColumnDef);
 }
 
 function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): KitColumnDef<TData> {
+  if (column.kind === 'select') {
+    return {
+      id: column.id,
+      enableHiding: false,
+      meta: { class: 'w-px', headerClass: 'w-px' },
+      header: ({ table }) => h(DataTableSelectPageRowsCheckbox<TData>, { table }),
+      cell: ({ row }) => h(DataTableSelectRowCheckbox<TData>, { row }),
+    };
+  }
+
   if (column.columns) {
     return {
       id: column.id,

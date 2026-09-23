@@ -6,6 +6,7 @@ import {
   createSortedRowModel,
   metaHelper,
   rowPaginationFeature,
+  rowSelectionFeature,
   rowSortingFeature,
   sortFn_alphanumeric,
   sortFn_datetime,
@@ -25,6 +26,7 @@ export const features = tableFeatures({
   sortFns: { alphanumeric: sortFn_alphanumeric, datetime: sortFn_datetime, text: sortFn_text },
   rowPaginationFeature,
   paginatedRowModel: createPaginatedRowModel(),
+  rowSelectionFeature,
   columnMeta: metaHelper<KitColumnMeta>(),
 });
 

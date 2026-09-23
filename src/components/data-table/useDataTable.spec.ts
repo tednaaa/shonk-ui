@@ -1,4 +1,5 @@
-import type { DataTableColumn, DataTablePaginationState, DataTableSortingState } from './types';
+import type { MaybeRefOrGetter, Ref } from 'vue';
+import type { DataTableColumn, DataTablePaginationState, DataTableRowSelectionState, DataTableSortingState } from './types';
 import { nextTick, ref } from 'vue';
 import { unwrapDataTable } from './lib/instance';
 import { useDataTable } from './useDataTable';
@@ -130,6 +131,72 @@ describe('useDataTable', () => {
       unwrapDataTable(table).getColumn('name')?.toggleSorting();
 
       expect(pagination.value).toEqual({ pageIndex: 0, pageSize: 2 });
+    });
+  });
+
+  describe('selected rows', () => {
+    const people: Person[] = ['Ada', 'Alan', 'Grace', 'Linus'].map(name => ({ id: name.toLowerCase(), name }));
+
+    function selectableTable(selectedRows: Ref<Person[]>, data: MaybeRefOrGetter<readonly Person[]> = people) {
+      const rowSelection = ref<DataTableRowSelectionState>({});
+
+      return {
+        rowSelection,
+        table: useDataTable({ data, columns, getRowId: person => person.id, rowSelection, selectedRows }),
+      };
+    }
+
+    it('should select the rows the ref starts with', () => {
+      const { rowSelection } = selectableTable(ref([people[1]]));
+
+      expect(rowSelection.value).toEqual({ alan: true });
+    });
+
+    it('should write the whole row selected through the table into the ref', async () => {
+      const selectedRows = ref<Person[]>([]);
+      const { table } = selectableTable(selectedRows);
+
+      unwrapDataTable(table).getRow('grace').toggleSelected(true);
+      await nextTick();
+
+      expect(selectedRows.value).toEqual([{ id: 'grace', name: 'Grace' }]);
+    });
+
+    it('should keep a selected row that the data no longer holds', async () => {
+      const data = ref<Person[]>(people);
+      const selectedRows = ref<Person[]>([]);
+      const { table } = selectableTable(selectedRows, data);
+
+      unwrapDataTable(table).getRow('ada').toggleSelected(true);
+      await nextTick();
+
+      data.value = [people[3]];
+      await nextTick();
+      unwrapDataTable(table).getRow('linus').toggleSelected(true);
+      await nextTick();
+
+      expect(selectedRows.value).toEqual([{ id: 'ada', name: 'Ada' }, { id: 'linus', name: 'Linus' }]);
+    });
+
+    it('should clear the selection when the ref is emptied', async () => {
+      const selectedRows = ref<Person[]>([people[0]]);
+      const { rowSelection } = selectableTable(selectedRows);
+
+      selectedRows.value = [];
+      await nextTick();
+
+      expect(rowSelection.value).toEqual({});
+    });
+
+    it('should leave the selection alone when the ref is rewritten with the same rows', async () => {
+      const selectedRows = ref<Person[]>([people[0]]);
+      const { rowSelection } = selectableTable(selectedRows);
+      const selection = rowSelection.value;
+
+      selectedRows.value = [{ ...people[0] }];
+      await nextTick();
+
+      expect(rowSelection.value).toBe(selection);
     });
   });
 

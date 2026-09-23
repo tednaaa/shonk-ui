@@ -1,5 +1,6 @@
 import type { DataTableColumn } from '../types';
 import { flexRender, useTable } from '@tanstack/vue-table';
+import { selectColumn } from '../columns/selectColumn';
 import { features } from './features';
 import { toColumnDefs } from './toColumnDefs';
 
@@ -79,6 +80,13 @@ describe('toColumnDefs', () => {
       ['age', false],
       ['nextAge', true],
     ]);
+  });
+
+  it('should keep the select column from sorting and hiding', () => {
+    const column = buildTable([selectColumn(), { accessorKey: 'name' }]).getColumn('select');
+
+    expect(column?.getCanSort()).toBe(false);
+    expect(column?.getCanHide()).toBe(false);
   });
 
   it('should keep the column classes for the renderer', () => {

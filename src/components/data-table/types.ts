@@ -10,6 +10,7 @@ export interface DataTableHeaderContext {
 }
 
 interface DataTableColumnBase {
+  kind?: undefined;
   header?: string;
   class?: HTMLAttributes['class'];
   headerClass?: HTMLAttributes['class'];
@@ -43,6 +44,7 @@ export type DataTableDisplayColumn<TData> = DataTableColumnBase & {
 };
 
 export interface DataTableGroupColumn<TData> {
+  kind?: undefined;
   id: string;
   header?: string;
   headerClass?: HTMLAttributes['class'];
@@ -53,11 +55,22 @@ export interface DataTableGroupColumn<TData> {
   cell?: undefined;
 }
 
+export interface DataTableSelectColumn {
+  kind: 'select';
+  id: string;
+  accessorKey?: undefined;
+  accessorFn?: undefined;
+  columns?: undefined;
+  sortable?: undefined;
+  cell?: undefined;
+}
+
 export type DataTableColumn<TData>
   = | { [TKey in keyof TData & string]: DataTableAccessorKeyColumn<TData, TKey> }[keyof TData & string]
     | DataTableAccessorFnColumn<TData>
     | DataTableDisplayColumn<TData>
-    | DataTableGroupColumn<TData>;
+    | DataTableGroupColumn<TData>
+    | DataTableSelectColumn;
 
 export interface DataTableColumnSort {
   id: string;
@@ -70,6 +83,8 @@ export interface DataTablePaginationState {
   pageIndex: number;
   pageSize: number;
 }
+
+export type DataTableRowSelectionState = Record<string, true>;
 
 declare const rowType: unique symbol;
 
