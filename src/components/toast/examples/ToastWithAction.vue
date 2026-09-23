@@ -13,6 +13,6 @@ function show() {
 </script>
 
 <template>
-  <Button variant="outline" @click="show">Show toast with action</Button>
+  <Button variant="secondary" @click="show">Show toast with action</Button>
   <Toaster />
 </template>

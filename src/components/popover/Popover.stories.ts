@@ -30,7 +30,7 @@ const meta: Meta<typeof Popover> = {
     components,
     `<Popover v-bind="args">
       <PopoverTrigger as-child>
-        <Button variant="outline">Open popover</Button>
+        <Button variant="secondary">Open popover</Button>
       </PopoverTrigger>
       <PopoverContent>
         <div class="grid gap-2">
@@ -56,7 +56,7 @@ export const WithForm: Story = {
     components,
     `<Popover v-bind="args">
       <PopoverTrigger as-child>
-        <Button variant="outline">Dimensions</Button>
+        <Button variant="secondary">Dimensions</Button>
       </PopoverTrigger>
       <PopoverContent class="w-80">
         <div class="grid gap-4">
@@ -85,7 +85,7 @@ export const Placement: Story = {
     components,
     `<Popover v-bind="args">
       <PopoverTrigger as-child>
-        <Button variant="outline">Open to the right</Button>
+        <Button variant="secondary">Open to the right</Button>
       </PopoverTrigger>
       <PopoverContent side="right" align="start" class="w-60">
         <p class="text-sm">Use <code>side</code> and <code>align</code> on PopoverContent to control placement.</p>
@@ -102,7 +102,7 @@ export const Anchored: Story = {
         <div class="rounded-md border border-dashed p-6 text-muted-foreground text-sm">Anchor element</div>
       </PopoverAnchor>
       <PopoverTrigger as-child>
-        <Button variant="outline" class="mt-4">Toggle popover</Button>
+        <Button variant="secondary" class="mt-4">Toggle popover</Button>
       </PopoverTrigger>
       <PopoverContent class="w-60">
         <p class="text-sm">This content is positioned against the anchor, not the trigger.</p>
@@ -116,13 +116,13 @@ export const WithCloseButton: Story = {
     components,
     `<Popover v-bind="args">
       <PopoverTrigger as-child>
-        <Button variant="outline">Open popover</Button>
+        <Button variant="secondary">Open popover</Button>
       </PopoverTrigger>
       <PopoverContent>
         <div class="grid gap-4">
           <p class="text-sm">PopoverClose dismisses the popover from inside its content.</p>
           <PopoverClose as-child>
-            <Button variant="outline" size="sm" class="justify-self-end">Close</Button>
+            <Button variant="secondary" size="sm" class="justify-self-end">Close</Button>
           </PopoverClose>
         </div>
       </PopoverContent>

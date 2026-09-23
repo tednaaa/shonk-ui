@@ -80,7 +80,7 @@ function clear() {
     <div class="relative w-full">
       <PopoverTrigger as-child>
         <Button
-          variant="outline"
+          variant="secondary"
           role="combobox"
           :aria-expanded="open"
           :disabled="disabled"

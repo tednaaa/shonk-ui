@@ -36,7 +36,7 @@ const meta: Meta<typeof Sheet> = {
     components,
     `<Sheet v-bind="args">
       <SheetTrigger as-child>
-        <Button variant="outline">Open sheet</Button>
+        <Button variant="secondary">Open sheet</Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
@@ -66,7 +66,7 @@ export const Sides: Story = {
     `<div class="flex flex-wrap gap-2">
       <Sheet v-for="side in ['top', 'right', 'bottom', 'left']" :key="side">
         <SheetTrigger as-child>
-          <Button variant="outline" class="capitalize">{{ side }}</Button>
+          <Button variant="secondary" class="capitalize">{{ side }}</Button>
         </SheetTrigger>
         <SheetContent :side="side">
           <SheetHeader>
@@ -84,7 +84,7 @@ export const WithForm: Story = {
     components,
     `<Sheet v-bind="args">
       <SheetTrigger as-child>
-        <Button variant="outline">Edit profile</Button>
+        <Button variant="secondary">Edit profile</Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
@@ -105,7 +105,7 @@ export const WithForm: Story = {
           <SheetFooter class="mt-auto">
             <Button type="submit">Save changes</Button>
             <SheetClose as-child>
-              <Button type="button" variant="outline">Cancel</Button>
+              <Button type="button" variant="secondary">Cancel</Button>
             </SheetClose>
           </SheetFooter>
         </form>

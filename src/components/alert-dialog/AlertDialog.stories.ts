@@ -34,7 +34,7 @@ const meta: Meta<typeof AlertDialog> = {
     components,
     `<AlertDialog v-bind="args">
       <AlertDialogTrigger as-child>
-        <Button variant="outline">Open dialog</Button>
+        <Button variant="secondary">Open dialog</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

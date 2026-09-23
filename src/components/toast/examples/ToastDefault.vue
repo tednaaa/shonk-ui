@@ -9,6 +9,6 @@ function show() {
 </script>
 
 <template>
-  <Button variant="outline" @click="show">Show toast</Button>
+  <Button variant="secondary" @click="show">Show toast</Button>
   <Toaster />
 </template>

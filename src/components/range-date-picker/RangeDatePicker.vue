@@ -73,7 +73,7 @@ defineExpose({ close });
   <Popover v-model:open="open">
     <PopoverTrigger as-child>
       <Button
-        variant="outline"
+        variant="secondary"
         :class="cn('w-55 justify-start text-left font-normal', !displayValue && 'text-muted-foreground')"
       >
         <CalendarIcon :size="16" />

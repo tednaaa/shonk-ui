@@ -28,7 +28,7 @@ const delegatedProps = reactiveOmit(props, 'class', 'size', 'isActive');
     :aria-label="locale.pagination.pageButtonAriaLabel(value)"
     :class="cn(
       buttonVariants({
-        variant: isActive ? 'outline' : 'ghost',
+        variant: isActive ? 'secondary' : 'ghost',
         size,
       }),
       props.class)"

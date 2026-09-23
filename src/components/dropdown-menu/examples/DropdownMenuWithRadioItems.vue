@@ -17,7 +17,7 @@ const position = ref('bottom');
 <template>
   <DropdownMenu>
     <DropdownMenuTrigger as-child>
-      <Button variant="outline">Panel position</Button>
+      <Button variant="secondary">Panel position</Button>
     </DropdownMenuTrigger>
 
     <DropdownMenuContent class="w-56" align="start">

@@ -33,7 +33,7 @@ const meta: Meta<typeof Card> = {
           </p>
         </CardContent>
         <CardFooter class="justify-end gap-2">
-          <Button variant="outline">Cancel</Button>
+          <Button variant="secondary">Cancel</Button>
           <Button>Deploy</Button>
         </CardFooter>
       </Card>
@@ -94,7 +94,7 @@ export const Login: Story = {
         </CardContent>
         <CardFooter class="flex-col gap-2">
           <Button class="w-full">Login</Button>
-          <Button variant="outline" class="w-full">Login with Google</Button>
+          <Button variant="secondary" class="w-full">Login with Google</Button>
         </CardFooter>
       </Card>
     </div>`,

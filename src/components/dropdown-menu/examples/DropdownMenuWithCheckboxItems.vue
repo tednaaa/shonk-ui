@@ -18,7 +18,7 @@ const showPanel = ref(false);
 <template>
   <DropdownMenu>
     <DropdownMenuTrigger as-child>
-      <Button variant="outline">View options</Button>
+      <Button variant="secondary">View options</Button>
     </DropdownMenuTrigger>
 
     <DropdownMenuContent class="w-56" align="start">

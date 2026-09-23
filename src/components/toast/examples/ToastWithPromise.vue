@@ -13,6 +13,6 @@ function show() {
 </script>
 
 <template>
-  <Button variant="outline" @click="show">Run promise</Button>
+  <Button variant="secondary" @click="show">Run promise</Button>
   <Toaster />
 </template>

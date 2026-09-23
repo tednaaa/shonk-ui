@@ -40,7 +40,7 @@ const meta: Meta<typeof Dialog> = {
     components,
     `<Dialog v-bind="args">
       <DialogTrigger as-child>
-        <Button variant="outline">Open dialog</Button>
+        <Button variant="secondary">Open dialog</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -67,7 +67,7 @@ export const TitleOnly: Story = {
     components,
     `<Dialog v-bind="args">
       <DialogTrigger as-child>
-        <Button variant="outline">Delete project</Button>
+        <Button variant="secondary">Delete project</Button>
       </DialogTrigger>
       <DialogContent :aria-describedby="undefined">
         <DialogHeader>
@@ -75,7 +75,7 @@ export const TitleOnly: Story = {
         </DialogHeader>
         <DialogFooter>
           <DialogClose as-child>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="secondary">Cancel</Button>
           </DialogClose>
           <DialogClose as-child>
             <Button>Delete</Button>
@@ -91,7 +91,7 @@ export const WithBody: Story = {
     components,
     `<Dialog v-bind="args">
       <DialogTrigger as-child>
-        <Button variant="outline">Publish changes</Button>
+        <Button variant="secondary">Publish changes</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -106,7 +106,7 @@ export const WithBody: Story = {
         </DialogBody>
         <DialogFooter>
           <DialogClose as-child>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="secondary">Cancel</Button>
           </DialogClose>
           <Button>Publish</Button>
         </DialogFooter>
@@ -120,7 +120,7 @@ export const WithoutFooter: Story = {
     components,
     `<Dialog v-bind="args">
       <DialogTrigger as-child>
-        <Button variant="outline">What's new</Button>
+        <Button variant="secondary">What's new</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -143,7 +143,7 @@ export const WithoutHeader: Story = {
     components,
     `<Dialog v-bind="args">
       <DialogTrigger as-child>
-        <Button variant="outline">Show notice</Button>
+        <Button variant="secondary">Show notice</Button>
       </DialogTrigger>
       <DialogContent :aria-describedby="undefined">
         <DialogTitle class="sr-only">Notice</DialogTitle>
@@ -161,7 +161,7 @@ export const NoCloseButton: Story = {
     components,
     `<Dialog v-bind="args">
       <DialogTrigger as-child>
-        <Button variant="outline">Confirm subscription</Button>
+        <Button variant="secondary">Confirm subscription</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader :show-close-button="false">
@@ -172,7 +172,7 @@ export const NoCloseButton: Story = {
         </DialogHeader>
         <DialogFooter>
           <DialogClose as-child>
-            <Button variant="outline">Not now</Button>
+            <Button variant="secondary">Not now</Button>
           </DialogClose>
           <DialogClose as-child>
             <Button>Subscribe</Button>
@@ -188,7 +188,7 @@ export const WithForm: Story = {
     components,
     `<Dialog v-bind="args">
       <DialogTrigger as-child>
-        <Button variant="outline">Edit profile</Button>
+        <Button variant="secondary">Edit profile</Button>
       </DialogTrigger>
       <DialogContent>
         <form @submit.prevent>
@@ -212,7 +212,7 @@ export const WithForm: Story = {
           </DialogBody>
           <DialogFooter>
             <DialogClose as-child>
-              <Button type="button" variant="outline">Cancel</Button>
+              <Button type="button" variant="secondary">Cancel</Button>
             </DialogClose>
             <Button type="submit">Save changes</Button>
           </DialogFooter>
@@ -227,7 +227,7 @@ export const Scrollable: Story = {
     components,
     `<Dialog v-bind="args">
       <DialogTrigger as-child>
-        <Button variant="outline">Terms of service</Button>
+        <Button variant="secondary">Terms of service</Button>
       </DialogTrigger>
       <DialogScrollContent>
         <DialogHeader>
@@ -256,7 +256,7 @@ export const ScrollableWithoutFooter: Story = {
     components,
     `<Dialog v-bind="args">
       <DialogTrigger as-child>
-        <Button variant="outline">Changelog</Button>
+        <Button variant="secondary">Changelog</Button>
       </DialogTrigger>
       <DialogScrollContent>
         <DialogHeader>

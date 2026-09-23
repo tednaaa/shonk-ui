@@ -25,7 +25,7 @@ const meta: Meta<typeof Tooltip> = {
     `<TooltipProvider>
       <Tooltip v-bind="args">
         <TooltipTrigger as-child>
-          <Button variant="outline">Hover me</Button>
+          <Button variant="secondary">Hover me</Button>
         </TooltipTrigger>
         <TooltipContent>
           <p>Add to library</p>
@@ -49,7 +49,7 @@ export const Sides: Story = {
       <div class="flex flex-wrap gap-2">
         <Tooltip v-for="side in ['top', 'right', 'bottom', 'left']" :key="side">
           <TooltipTrigger as-child>
-            <Button variant="outline" class="capitalize">{{ side }}</Button>
+            <Button variant="secondary" class="capitalize">{{ side }}</Button>
           </TooltipTrigger>
           <TooltipContent :side="side">
             <p class="capitalize">{{ side }} tooltip</p>

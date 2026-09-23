@@ -45,7 +45,7 @@ const current = ref(1);
     </Stepper>
 
     <div class="flex justify-between">
-      <Button variant="outline" :disabled="current === 1" @click="current--">Back</Button>
+      <Button variant="secondary" :disabled="current === 1" @click="current--">Back</Button>
       <Button :disabled="current === steps.length" @click="current++">Next</Button>
     </div>
   </div>

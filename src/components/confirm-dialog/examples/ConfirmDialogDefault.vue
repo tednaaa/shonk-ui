@@ -17,7 +17,7 @@ function confirm() {
 
 <template>
   <div class="flex flex-col items-start gap-3">
-    <Button variant="outline" @click="confirm">Delete item</Button>
+    <Button variant="secondary" @click="confirm">Delete item</Button>
     <p v-if="result" class="text-sm text-muted-foreground">Result: {{ result }}</p>
     <ConfirmDialog />
   </div>

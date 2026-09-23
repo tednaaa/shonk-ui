@@ -11,9 +11,9 @@ const meta: Meta<typeof ButtonGroup> = {
   render: render(
     { ButtonGroup, Button },
     `<ButtonGroup v-bind="args">
-      <Button variant="outline">One</Button>
-      <Button variant="outline">Two</Button>
-      <Button variant="outline">Three</Button>
+      <Button variant="secondary">One</Button>
+      <Button variant="secondary">Two</Button>
+      <Button variant="secondary">Three</Button>
     </ButtonGroup>`,
   ),
 };
@@ -29,9 +29,9 @@ export const Vertical: Story = {
   render: render(
     { ButtonGroup, Button },
     `<ButtonGroup orientation="vertical">
-      <Button variant="outline">Top</Button>
-      <Button variant="outline">Middle</Button>
-      <Button variant="outline">Bottom</Button>
+      <Button variant="secondary">Top</Button>
+      <Button variant="secondary">Middle</Button>
+      <Button variant="secondary">Bottom</Button>
     </ButtonGroup>`,
   ),
 };
@@ -40,9 +40,9 @@ export const WithSeparator: Story = {
   render: render(
     { ButtonGroup, Button, ButtonGroupSeparator },
     `<ButtonGroup>
-      <Button variant="outline">Copy</Button>
+      <Button variant="secondary">Copy</Button>
       <ButtonGroupSeparator />
-      <Button variant="outline">Paste</Button>
+      <Button variant="secondary">Paste</Button>
     </ButtonGroup>`,
   ),
 };
@@ -52,7 +52,7 @@ export const WithText: Story = {
     { ButtonGroup, Button, ButtonGroupText },
     `<ButtonGroup>
       <ButtonGroupText>https://</ButtonGroupText>
-      <Button variant="outline">example.com</Button>
+      <Button variant="secondary">example.com</Button>
     </ButtonGroup>`,
   ),
 };
@@ -61,9 +61,9 @@ export const Toolbar: Story = {
   render: render(
     { ButtonGroup, Button, BoldIcon, ItalicIcon, UnderlineIcon },
     `<ButtonGroup>
-      <Button variant="outline" size="icon"><BoldIcon /></Button>
-      <Button variant="outline" size="icon"><ItalicIcon /></Button>
-      <Button variant="outline" size="icon"><UnderlineIcon /></Button>
+      <Button variant="secondary" size="icon"><BoldIcon /></Button>
+      <Button variant="secondary" size="icon"><ItalicIcon /></Button>
+      <Button variant="secondary" size="icon"><UnderlineIcon /></Button>
     </ButtonGroup>`,
   ),
 };

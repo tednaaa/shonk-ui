@@ -70,7 +70,7 @@ const meta: Meta<typeof DropdownMenu> = {
     components,
     `<DropdownMenu v-bind="args">
       <DropdownMenuTrigger as-child>
-        <Button variant="outline">Open</Button>
+        <Button variant="secondary">Open</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent class="w-56" align="start">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -120,7 +120,7 @@ export const WithSubmenu: Story = {
     components,
     `<DropdownMenu v-bind="args">
       <DropdownMenuTrigger as-child>
-        <Button variant="outline">Open</Button>
+        <Button variant="secondary">Open</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent class="w-56" align="start">
         <DropdownMenuLabel>Team</DropdownMenuLabel>
@@ -145,7 +145,7 @@ export const Disabled: Story = {
     components,
     `<DropdownMenu v-bind="args">
       <DropdownMenuTrigger as-child>
-        <Button variant="outline">Open</Button>
+        <Button variant="secondary">Open</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent class="w-56" align="start">
         <DropdownMenuItem><UserIcon />Profile</DropdownMenuItem>

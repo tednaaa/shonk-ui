@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<{
   screenReaderText?: string;
 }
 & WithClassAsProps>(), {
-  variant: 'outline',
+  variant: 'secondary',
   size: 'icon',
 });
 

@@ -24,7 +24,7 @@ const open = ref(false);
 </script>
 
 <template>
-  <Button variant="outline" @click="open = true">Open command menu</Button>
+  <Button variant="secondary" @click="open = true">Open command menu</Button>
 
   <CommandDialog v-model:open="open">
     <CommandInput placeholder="Type a command or search…" />

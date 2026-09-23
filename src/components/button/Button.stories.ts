@@ -23,7 +23,6 @@ export const Variants: Story = {
       <Button variant="default">Default</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="destructive">Destructive</Button>
-      <Button variant="outline">Outline</Button>
       <Button variant="ghost">Ghost</Button>
       <Button variant="link">Link</Button>
     </div>
@@ -43,6 +42,7 @@ export const Sizes: Story = {
 export const IconButtons: Story = {
   render: render({ Button, SearchIcon }, `
     <div class="flex items-center gap-3">
+      <Button size="icon-xs" aria-label="Search"><SearchIcon /></Button>
       <Button size="icon-sm" aria-label="Search"><SearchIcon /></Button>
       <Button size="icon" aria-label="Search"><SearchIcon /></Button>
       <Button size="icon-lg" aria-label="Search"><SearchIcon /></Button>
