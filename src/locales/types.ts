@@ -62,6 +62,8 @@ export interface ShonkLocale {
   };
 
   pagination: {
+    navAriaLabel: string;
+    pageButtonAriaLabel: (page: number) => string;
     firstButtonText: string;
     previousButtonText: string;
     nextButtonText: string;

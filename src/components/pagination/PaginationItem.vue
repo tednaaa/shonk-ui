@@ -5,6 +5,7 @@ import type { ButtonVariants } from '@/components/button';
 import { reactiveOmit } from '@vueuse/core';
 import { PaginationListItem } from 'reka-ui';
 import { buttonVariants } from '@/components/button';
+import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 
 const props = withDefaults(defineProps<PaginationListItemProps & {
@@ -15,6 +16,8 @@ const props = withDefaults(defineProps<PaginationListItemProps & {
   size: 'icon',
 });
 
+const locale = useLocale();
+
 const delegatedProps = reactiveOmit(props, 'class', 'size', 'isActive');
 </script>
 
@@ -22,6 +25,7 @@ const delegatedProps = reactiveOmit(props, 'class', 'size', 'isActive');
   <PaginationListItem
     data-slot="pagination-item"
     v-bind="delegatedProps"
+    :aria-label="locale.pagination.pageButtonAriaLabel(value)"
     :class="cn(
       buttonVariants({
         variant: isActive ? 'outline' : 'ghost',

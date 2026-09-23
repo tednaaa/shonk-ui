@@ -64,6 +64,8 @@ export const en: ShonkLocale = {
   },
 
   pagination: {
+    navAriaLabel: 'Pages',
+    pageButtonAriaLabel: page => `Page ${page}`,
     firstButtonText: 'First',
     previousButtonText: 'Previous',
     nextButtonText: 'Next',

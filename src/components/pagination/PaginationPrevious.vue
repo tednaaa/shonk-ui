@@ -5,6 +5,7 @@ import type { ButtonVariants } from '@/components/button';
 import { ChevronLeftIcon } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import { PaginationPrev, useForwardProps } from 'reka-ui';
+import { computed } from 'vue';
 import { buttonVariants } from '@/components/button';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
@@ -19,6 +20,8 @@ const props = withDefaults(defineProps<PaginationPrevProps & {
 
 const locale = useLocale();
 
+const resolvedButtonText = computed(() => props.buttonText ?? locale.value.pagination.previousButtonText);
+
 const delegatedProps = reactiveOmit(props, 'class', 'size', 'buttonText');
 const forwarded = useForwardProps(delegatedProps);
 </script>
@@ -28,10 +31,11 @@ const forwarded = useForwardProps(delegatedProps);
     data-slot="pagination-previous"
     :class="cn(buttonVariants({ variant: 'ghost', size }), 'gap-1 px-2.5 sm:pr-2.5', props.class)"
     v-bind="forwarded"
+    :aria-label="resolvedButtonText"
   >
     <slot>
       <ChevronLeftIcon />
-      <span class="hidden sm:block">{{ props.buttonText ?? locale.pagination.previousButtonText }}</span>
+      <span class="hidden sm:block">{{ resolvedButtonText }}</span>
     </slot>
   </PaginationPrev>
 </template>
