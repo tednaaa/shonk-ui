@@ -12,7 +12,11 @@ const meta: Meta<typeof InputPassword> = {
   args: {
     name: 'password',
   },
-  render: render({ InputPassword }, `<div class="max-w-xs"><InputPassword v-bind="args" /></div>`),
+  render: render({ InputPassword }, `
+    <div class="max-w-xs">
+      <InputPassword v-bind="args" />
+    </div>
+  `),
 };
 
 export default meta;
@@ -28,7 +32,11 @@ export const Invalid: Story = {
 
 export const Prefilled: Story = {
   parameters: example(inputPasswordPrefilledSource),
-  render: render({ InputPasswordPrefilled }, `<div class="max-w-xs"><InputPasswordPrefilled /></div>`),
+  render: render({ InputPasswordPrefilled }, `
+    <div class="max-w-xs">
+      <InputPasswordPrefilled />
+    </div>
+  `),
 };
 
 export const WithLabel: Story = {

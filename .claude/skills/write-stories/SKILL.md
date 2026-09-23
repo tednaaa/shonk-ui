@@ -40,9 +40,51 @@ export const Checked: Story = { args: { defaultValue: true } };
 
 ## Helpers (`@/lib/storybook`)
 
-- `render(components, template)` — one-line render; `args` is exposed (`v-bind="args"`).
-- `StoryLabel` — muted caption for labelling groups (register it in the render's components).
+- `render(components, template)` — render from a template string; `args` is exposed (`v-bind="args"`).
+- `example(source, description?)` — `parameters` preset that shows a `?raw` import verbatim in the code panel.
+- `StorybookLabel` — muted caption for labelling groups (register it in the render's components).
 - `showControls` / `hideControls` — `parameters` presets.
+
+## Template strings
+
+A template with a wrapper opens on the backtick line and gives every element its own line. `dedent` strips the common indent, so the code panel shows it the way it is written here.
+
+```ts
+render: render({ Input }, `
+  <div class="max-w-xs">
+    <Input v-bind="args" placeholder="Email" />
+  </div>
+`),
+```
+
+Only a lone element with no wrapper stays inline — `` `<Switch v-bind="args" />` ``.
+
+## The code panel is generated, not read from the story file
+
+`templateSource` rebuilds an SFC out of the story's template, components and `setup()` bindings, so what a reader copies is never quite what is authored.
+
+- A `setup()` binding that is not plain data — a component, a class instance — drops the whole script block, leaving the template referring to names that appear nowhere.
+- A large object handed through `args` is stringified into the tag, unreadable past a few keys.
+- Type annotations are gone either way, since only runtime values survive.
+
+#### Reach for an example file when any of those bite
+
+- Put it in `src/components/<group>/examples/<Group><Case>.vue`, importing from `'shonk-ui'`.
+- Import it twice in the story — the component, and its source with `?raw`.
+- `parameters: example(<case>Source)` then prints the real file, `<script setup>` and all.
+
+```ts
+export const WithIcons: Story = {
+  parameters: example(filteredSearchIconsSource),
+  render: render({ FilteredSearchIcons }, `
+    <div class="max-w-xl">
+      <FilteredSearchIcons />
+    </div>
+  `),
+};
+```
+
+A component configured by a large array — data-table columns, filtered-search definitions — becomes an example file for every story but `Default`, which stays arg-driven for its controls.
 
 ## Coverage
 
@@ -53,8 +95,8 @@ export const Checked: Story = { args: { defaultValue: true } };
 - Stateful (v-model): prefer uncontrolled `defaultValue`/`defaultOpen`; for live state use an inline render with `setup()` returning a `ref`.
 - Compound: compose all sub-components. Providers: wrap (Tooltip→TooltipProvider, Sidebar→SidebarProvider, toast→Toaster). Overlays: add a trigger.
 - Sizing: constrain wide controls with a `max-w` **div wrapper** around the component — never a `max-w`/fixed-`w-[…]` class on the component itself.
-  - Full-width components (`Input`, `InputGroup`, `InputPassword`, `Textarea`, `Combobox`, …): just wrap — `<div class="max-w-xs"><Input v-bind="args" /></div>`.
-  - `w-fit` components whose trigger you want to fill the wrapper (`Select`, …): wrap **and** set the control to `w-full` — `<div class="max-w-xs"><Select v-bind="args"><SelectTrigger class="w-full">…</SelectTrigger>…</Select></div>`.
+  - Full-width components (`Input`, `InputGroup`, `InputPassword`, `Textarea`, `Combobox`, …): just wrap.
+  - `w-fit` components whose trigger you want to fill the wrapper (`Select`, …): wrap **and** set the control to `w-full`.
   - Naturally-sized components (`NativeSelect` is `w-fit`, buttons, badges, `Calendar`/`RangeCalendar`) need no wrapper; size showcase rows with their own layout div.
 
 ## Verify

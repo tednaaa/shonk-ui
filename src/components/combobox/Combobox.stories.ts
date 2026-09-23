@@ -25,7 +25,11 @@ const meta: Meta<typeof Combobox> = {
     searchPlaceholder: 'Search framework…',
     emptyText: 'No framework found.',
   },
-  render: render({ Combobox }, `<div class="max-w-60"><Combobox v-bind="args" /></div>`),
+  render: render({ Combobox }, `
+    <div class="max-w-60">
+      <Combobox v-bind="args" />
+    </div>
+  `),
 };
 
 export default meta;
@@ -37,7 +41,11 @@ export const Default: Story = {
 
 export const Preselected: Story = {
   parameters: example(comboboxPreselectedSource),
-  render: render({ ComboboxPreselected }, `<div class="max-w-60"><ComboboxPreselected /></div>`),
+  render: render({ ComboboxPreselected }, `
+    <div class="max-w-60">
+      <ComboboxPreselected />
+    </div>
+  `),
 };
 
 export const Loading: Story = {

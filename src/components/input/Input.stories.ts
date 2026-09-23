@@ -7,7 +7,11 @@ const meta: Meta<typeof Input> = {
   title: 'Components/Input',
   component: Input,
   tags: ['autodocs'],
-  render: render({ Input }, `<div class="max-w-xs"><Input v-bind="args" placeholder="Email" /></div>`),
+  render: render({ Input }, `
+    <div class="max-w-xs">
+      <Input v-bind="args" placeholder="Email" />
+    </div>
+  `),
 };
 
 export default meta;
@@ -26,11 +30,19 @@ export const Invalid: Story = {
 };
 
 export const Disabled: Story = {
-  render: render({ Input }, `<div class="max-w-xs"><Input placeholder="Disabled" disabled /></div>`),
+  render: render({ Input }, `
+    <div class="max-w-xs">
+      <Input placeholder="Disabled" disabled />
+    </div>
+  `),
 };
 
 export const Readonly: Story = {
-  render: render({ Input }, `<div class="max-w-xs"><Input model-value="hello@example.com" readonly /></div>`),
+  render: render({ Input }, `
+    <div class="max-w-xs">
+      <Input model-value="hello@example.com" readonly />
+    </div>
+  `),
 };
 
 export const WithLabel: Story = {

@@ -56,7 +56,11 @@ const meta: Meta<typeof FilteredSearch> = {
   render: args => ({
     components: { FilteredSearch },
     setup: () => ({ args, definitions }),
-    template: `<div class="max-w-xl"><FilteredSearch v-bind="args" :definitions="definitions" /></div>`,
+    template: `
+      <div class="max-w-xl">
+        <FilteredSearch v-bind="args" :definitions="definitions" />
+      </div>
+    `,
   }),
 };
 
@@ -73,50 +77,90 @@ export const NotSearchable: Story = {
 
 export const WithIcons: Story = {
   parameters: example(filteredSearchIconsSource),
-  render: render({ FilteredSearchIcons }, `<div class="max-w-xl"><FilteredSearchIcons /></div>`),
+  render: render({ FilteredSearchIcons }, `
+    <div class="max-w-xl">
+      <FilteredSearchIcons />
+    </div>
+  `),
 };
 
 export const WithOptions: Story = {
   parameters: example(filteredSearchOptionsSource),
-  render: render({ FilteredSearchOptions }, `<div class="max-w-xl"><FilteredSearchOptions /></div>`),
+  render: render({ FilteredSearchOptions }, `
+    <div class="max-w-xl">
+      <FilteredSearchOptions />
+    </div>
+  `),
 };
 
 export const WithMultiSelect: Story = {
   parameters: example(filteredSearchMultiSelectSource),
-  render: render({ FilteredSearchMultiSelect }, `<div class="max-w-xl"><FilteredSearchMultiSelect /></div>`),
+  render: render({ FilteredSearchMultiSelect }, `
+    <div class="max-w-xl">
+      <FilteredSearchMultiSelect />
+    </div>
+  `),
 };
 
 export const WithHistoryItems: Story = {
   parameters: example(filteredSearchHistorySource),
-  render: render({ FilteredSearchHistory }, `<div class="max-w-xl"><FilteredSearchHistory /></div>`),
+  render: render({ FilteredSearchHistory }, `
+    <div class="max-w-xl">
+      <FilteredSearchHistory />
+    </div>
+  `),
 };
 
 export const ViewOnly: Story = {
   parameters: example(filteredSearchViewOnlySource),
-  render: render({ FilteredSearchViewOnly }, `<div class="max-w-xl"><FilteredSearchViewOnly /></div>`),
+  render: render({ FilteredSearchViewOnly }, `
+    <div class="max-w-xl">
+      <FilteredSearchViewOnly />
+    </div>
+  `),
 };
 
 export const Unique: Story = {
   parameters: example(filteredSearchUniqueSource),
-  render: render({ FilteredSearchUnique }, `<div class="max-w-xl"><FilteredSearchUnique /></div>`),
+  render: render({ FilteredSearchUnique }, `
+    <div class="max-w-xl">
+      <FilteredSearchUnique />
+    </div>
+  `),
 };
 
 export const CustomEditor: Story = {
   parameters: example(filteredSearchCustomEditorSource),
-  render: render({ FilteredSearchCustomEditor }, `<div class="max-w-xl"><FilteredSearchCustomEditor /></div>`),
+  render: render({ FilteredSearchCustomEditor }, `
+    <div class="max-w-xl">
+      <FilteredSearchCustomEditor />
+    </div>
+  `),
 };
 
 export const Wrapped: Story = {
   parameters: example(filteredSearchWrappedSource),
-  render: render({ FilteredSearchWrapped }, `<div class="max-w-md"><FilteredSearchWrapped /></div>`),
+  render: render({ FilteredSearchWrapped }, `
+    <div class="max-w-md">
+      <FilteredSearchWrapped />
+    </div>
+  `),
 };
 
 export const WithSuffix: Story = {
   parameters: example(filteredSearchSuffixSource),
-  render: render({ FilteredSearchSuffix }, `<div class="max-w-xl"><FilteredSearchSuffix /></div>`),
+  render: render({ FilteredSearchSuffix }, `
+    <div class="max-w-xl">
+      <FilteredSearchSuffix />
+    </div>
+  `),
 };
 
 export const Controlled: Story = {
   parameters: example(filteredSearchControlledSource),
-  render: render({ FilteredSearchControlled }, `<div class="max-w-xl"><FilteredSearchControlled /></div>`),
+  render: render({ FilteredSearchControlled }, `
+    <div class="max-w-xl">
+      <FilteredSearchControlled />
+    </div>
+  `),
 };

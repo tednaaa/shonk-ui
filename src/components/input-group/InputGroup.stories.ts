@@ -103,5 +103,9 @@ export const Disabled: Story = {
 
 export const WithTextarea: Story = {
   parameters: example(inputGroupWithTextareaSource),
-  render: render({ InputGroupWithTextarea }, `<div class="max-w-sm"><InputGroupWithTextarea /></div>`),
+  render: render({ InputGroupWithTextarea }, `
+    <div class="max-w-sm">
+      <InputGroupWithTextarea />
+    </div>
+  `),
 };

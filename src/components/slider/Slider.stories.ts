@@ -7,7 +7,11 @@ const meta: Meta<typeof Slider> = {
   component: Slider,
   tags: ['autodocs'],
   args: { defaultValue: [50], min: 0, max: 100, step: 1 },
-  render: render({ Slider }, `<div class="max-w-sm"><Slider v-bind="args" /></div>`),
+  render: render({ Slider }, `
+    <div class="max-w-sm">
+      <Slider v-bind="args" />
+    </div>
+  `),
 };
 
 export default meta;

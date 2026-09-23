@@ -34,7 +34,12 @@ export const MinValue: Story = {
   args: { minValue: new CalendarDate(2026, 6, 17) },
   render: render(
     { DatePicker, StorybookLabel },
-    `<div class="grid gap-2"><StorybookLabel>Dates before Jun 17 are disabled</StorybookLabel><DatePicker v-bind="args" /></div>`,
+    `
+      <div class="grid gap-2">
+        <StorybookLabel>Dates before Jun 17 are disabled</StorybookLabel>
+        <DatePicker v-bind="args" />
+      </div>
+    `,
   ),
 };
 
@@ -42,7 +47,12 @@ export const MaxValue: Story = {
   args: { maxValue: new CalendarDate(2026, 6, 17) },
   render: render(
     { DatePicker, StorybookLabel },
-    `<div class="grid gap-2"><StorybookLabel>Dates after Jun 17 are disabled</StorybookLabel><DatePicker v-bind="args" /></div>`,
+    `
+      <div class="grid gap-2">
+        <StorybookLabel>Dates after Jun 17 are disabled</StorybookLabel>
+        <DatePicker v-bind="args" />
+      </div>
+    `,
   ),
 };
 
@@ -55,7 +65,12 @@ export const DisabledWeekends: Story = {
   },
   render: render(
     { DatePicker, StorybookLabel },
-    `<div class="grid gap-2"><StorybookLabel>Weekends are disabled</StorybookLabel><DatePicker v-bind="args" /></div>`,
+    `
+      <div class="grid gap-2">
+        <StorybookLabel>Weekends are disabled</StorybookLabel>
+        <DatePicker v-bind="args" />
+      </div>
+    `,
   ),
 };
 

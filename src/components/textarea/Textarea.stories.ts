@@ -19,7 +19,11 @@ const meta: Meta<typeof Textarea> = {
       const value = ref('');
       return { args, value };
     },
-    template: `<div class="max-w-sm"><Textarea v-bind="args" v-model="value" placeholder="Type your message here." /></div>`,
+    template: `
+      <div class="max-w-sm">
+        <Textarea v-bind="args" v-model="value" placeholder="Type your message here." />
+      </div>
+    `,
   }),
 };
 
@@ -32,15 +36,27 @@ export const Default: Story = {
 
 export const Prefilled: Story = {
   parameters: example(textareaPrefilledSource),
-  render: render({ TextareaPrefilled }, `<div class="max-w-sm"><TextareaPrefilled /></div>`),
+  render: render({ TextareaPrefilled }, `
+    <div class="max-w-sm">
+      <TextareaPrefilled />
+    </div>
+  `),
 };
 
 export const Disabled: Story = {
   parameters: example(textareaDisabledSource),
-  render: render({ TextareaDisabled }, `<div class="max-w-sm"><TextareaDisabled /></div>`),
+  render: render({ TextareaDisabled }, `
+    <div class="max-w-sm">
+      <TextareaDisabled />
+    </div>
+  `),
 };
 
 export const WithLabel: Story = {
   parameters: example(textareaWithLabelSource),
-  render: render({ TextareaWithLabel }, `<div class="max-w-sm"><TextareaWithLabel /></div>`),
+  render: render({ TextareaWithLabel }, `
+    <div class="max-w-sm">
+      <TextareaWithLabel />
+    </div>
+  `),
 };

@@ -76,5 +76,9 @@ export const Default: Story = {
 
 export const Controlled: Story = {
   parameters: example(stepperControlledSource),
-  render: render({ StepperControlled }, `<div class="w-full max-w-xl"><StepperControlled /></div>`),
+  render: render({ StepperControlled }, `
+    <div class="w-full max-w-xl">
+      <StepperControlled />
+    </div>
+  `),
 };
