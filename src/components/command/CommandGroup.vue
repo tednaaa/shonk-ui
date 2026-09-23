@@ -5,7 +5,7 @@ import { reactiveOmit } from '@vueuse/core';
 import { ListboxGroup, ListboxGroupLabel, useId } from 'reka-ui';
 import { computed, onMounted, onUnmounted } from 'vue';
 import { cn } from '@/utils';
-import { provideCommandGroupContext, useCommand } from '.';
+import { provideCommandGroupContext, useCommand } from './utils';
 
 const props = defineProps<ListboxGroupProps & {
   class?: HTMLAttributes['class'];

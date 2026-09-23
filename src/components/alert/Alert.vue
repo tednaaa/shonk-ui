@@ -4,7 +4,7 @@ import type { AlertAppearance, AlertVariant } from './variants';
 import { CheckCircle2Icon, CircleAlertIcon, TriangleAlertIcon } from '@lucide/vue';
 import { computed, useSlots } from 'vue';
 import { cn, hasSlotContent } from '@/utils';
-import { alertVariants } from '.';
+import { alertVariants } from './variants';
 
 const props = withDefaults(defineProps<{
   class?: HTMLAttributes['class'];

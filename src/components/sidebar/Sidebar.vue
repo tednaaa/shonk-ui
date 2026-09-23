@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SidebarProps } from '.';
+import type { HTMLAttributes } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Sheet, SheetContent } from '../sheet';
@@ -7,6 +7,15 @@ import SheetDescription from '../sheet/SheetDescription.vue';
 import SheetHeader from '../sheet/SheetHeader.vue';
 import SheetTitle from '../sheet/SheetTitle.vue';
 import { SIDEBAR_WIDTH_MOBILE, useSidebar } from './utils';
+
+export interface SidebarProps {
+  side?: 'left' | 'right';
+  variant?: 'sidebar' | 'floating' | 'inset';
+  collapsible?: 'offcanvas' | 'icon' | 'none';
+  mobileScreenReaderTitle?: string;
+  mobileScreenReaderDescription?: string;
+  class?: HTMLAttributes['class'];
+}
 
 defineOptions({
   inheritAttrs: false,

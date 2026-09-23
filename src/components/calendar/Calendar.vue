@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { CalendarRootEmits, CalendarRootProps, DateValue } from 'reka-ui';
 import type { HTMLAttributes, Ref } from 'vue';
-import type { LayoutTypes } from '.';
 import { getLocalTimeZone, today } from '@internationalized/date';
 import { createReusableTemplate, reactiveOmit, useVModel } from '@vueuse/core';
 import { CalendarRoot, useDateFormatter, useForwardPropsEmits } from 'reka-ui';
@@ -9,8 +8,20 @@ import { createYear, createYearRange, toDate } from 'reka-ui/date';
 import { computed, toRaw, watch } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
-import { CalendarCell, CalendarCellTrigger, CalendarGrid, CalendarGridBody, CalendarGridHead, CalendarGridRow, CalendarHeadCell, CalendarHeader, CalendarHeading, CalendarNextButton, CalendarPrevButton } from '.';
 import { NativeSelect, NativeSelectOption } from '../native-select';
+import CalendarCell from './CalendarCell.vue';
+import CalendarCellTrigger from './CalendarCellTrigger.vue';
+import CalendarGrid from './CalendarGrid.vue';
+import CalendarGridBody from './CalendarGridBody.vue';
+import CalendarGridHead from './CalendarGridHead.vue';
+import CalendarGridRow from './CalendarGridRow.vue';
+import CalendarHeadCell from './CalendarHeadCell.vue';
+import CalendarHeader from './CalendarHeader.vue';
+import CalendarHeading from './CalendarHeading.vue';
+import CalendarNextButton from './CalendarNextButton.vue';
+import CalendarPrevButton from './CalendarPrevButton.vue';
+
+export type LayoutTypes = 'month-and-year' | 'month-only' | 'year-only' | undefined;
 
 const props = withDefaults(defineProps<CalendarRootProps & { class?: HTMLAttributes['class']; layout?: LayoutTypes; yearRange?: DateValue[] }>(), {
   modelValue: undefined,

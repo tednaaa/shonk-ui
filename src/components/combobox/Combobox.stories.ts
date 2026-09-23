@@ -1,4 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/vue3-vite';
+import type { ComponentPropsAndSlots, Meta, StoryObj } from '@storybook/vue3-vite';
+import type { FunctionalComponent } from 'vue';
 import { example, render, showControls } from '@/lib/storybook';
 import { Combobox } from '.';
 import ComboboxPreselected from './examples/ComboboxPreselected.vue';
@@ -12,9 +13,11 @@ const frameworks = [
   { label: 'Astro', value: 'astro' },
 ];
 
+const comboboxComponent: FunctionalComponent<ComponentPropsAndSlots<typeof Combobox>> = Combobox;
+
 const meta: Meta<typeof Combobox> = {
   title: 'Components/Combobox',
-  component: Combobox as unknown as Meta<typeof Combobox>['component'],
+  component: comboboxComponent,
   tags: ['autodocs'],
   args: {
     options: frameworks,
