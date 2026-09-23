@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ButtonVariants } from '../button';
 import { computed } from 'vue';
 import { useLocale } from '@/locales';
 import { Button } from '../button';
@@ -17,6 +18,7 @@ import { useConfirmState } from './useConfirm';
 const props = defineProps<{
   title?: string;
   cancelButtonText?: string;
+  acceptButtonVariant?: ButtonVariants['variant'];
 }>();
 
 const locale = useLocale();
@@ -26,6 +28,7 @@ const open = computed(() => state.value !== null);
 
 const resolvedTitle = computed(() => state.value?.title ?? props.title ?? locale.value.confirmDialog.title);
 const resolvedCancelButtonText = computed(() => state.value?.cancelButtonText ?? props.cancelButtonText ?? locale.value.confirmDialog.cancelButtonText);
+const resolvedAcceptButtonVariant = computed(() => state.value?.acceptButtonVariant ?? props.acceptButtonVariant);
 
 let closingRequest = state.value;
 
@@ -80,7 +83,7 @@ function preventDismiss(event: Event) {
           </Button>
         </DialogClose>
         <DialogClose as-child>
-          <Button variant="destructive" @click="handleAccept">
+          <Button :variant="resolvedAcceptButtonVariant" @click="handleAccept">
             {{ state?.acceptButtonText }}
           </Button>
         </DialogClose>

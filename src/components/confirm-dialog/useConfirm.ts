@@ -1,3 +1,4 @@
+import type { ButtonVariants } from '../button';
 import { ref } from 'vue';
 
 export interface ConfirmOptions {
@@ -7,6 +8,7 @@ export interface ConfirmOptions {
   reject?: () => void;
   title?: string;
   cancelButtonText?: string;
+  acceptButtonVariant?: ButtonVariants['variant'];
 }
 
 const confirmState = ref<ConfirmOptions | null>(null);
