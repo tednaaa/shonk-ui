@@ -2,7 +2,7 @@
 import type { ListboxItemEmits, ListboxItemProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import { reactiveOmit, useCurrentElement } from '@vueuse/core';
-import { ListboxItem, useForwardPropsEmits, useId } from 'reka-ui';
+import { injectListboxRootContext, ListboxItem, useForwardPropsEmits, useId } from 'reka-ui';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { cn } from '@/utils';
 import { useCommand, useCommandGroup } from './utils';
@@ -17,6 +17,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 const id = useId();
 const { filterState, allItems, allGroups } = useCommand();
 const groupContext = useCommandGroup();
+const listboxRoot = injectListboxRootContext();
 
 const isRender = computed(() => {
   if (!filterState.search) {
@@ -57,6 +58,11 @@ onMounted(() => {
 onUnmounted(() => {
   allItems.value.delete(id);
 });
+
+function onSelect() {
+  if (!listboxRoot.multiple.value)
+    filterState.search = '';
+}
 </script>
 
 <template>
@@ -67,9 +73,7 @@ onUnmounted(() => {
     ref="itemRef"
     data-slot="command-item"
     :class="cn('relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 data-highlighted:bg-accent data-highlighted:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4 [&_svg:not([class*=text-])]:text-muted-foreground', props.class)"
-    @select="() => {
-      filterState.search = ''
-    }"
+    @select="onSelect"
   >
     <slot />
   </ListboxItem>
