@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority';
 
 export const filteredSearchVariants = cva(
-  'flex w-full items-center gap-1.5 overflow-hidden rounded-md border border-border bg-background px-3 text-sm shadow-xs transition-[color,box-shadow] outline-none',
+  'flex w-full items-center gap-1.5 overflow-hidden rounded-md border border-border bg-background px-3 text-sm shadow-xs transition-[color,box-shadow] outline-none dark:bg-input/30',
   {
     variants: {
       wrap: {
