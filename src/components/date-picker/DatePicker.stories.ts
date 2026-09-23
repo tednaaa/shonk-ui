@@ -1,7 +1,7 @@
 import type { DateValue } from '@internationalized/date';
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { CalendarDate, getLocalTimeZone } from '@internationalized/date';
-import { example, render, showControls, StoryLabel } from '@/lib/storybook';
+import { example, render, showControls, StorybookLabel } from '@/lib/storybook';
 import { DatePicker } from '.';
 import DatePickerPreselected from './examples/DatePickerPreselected.vue';
 import datePickerPreselectedSource from './examples/DatePickerPreselected.vue?raw';
@@ -33,16 +33,16 @@ export const Preselected: Story = {
 export const MinValue: Story = {
   args: { minValue: new CalendarDate(2026, 6, 17) },
   render: render(
-    { DatePicker, StoryLabel },
-    `<div class="grid gap-2"><StoryLabel>Dates before Jun 17 are disabled</StoryLabel><DatePicker v-bind="args" /></div>`,
+    { DatePicker, StorybookLabel },
+    `<div class="grid gap-2"><StorybookLabel>Dates before Jun 17 are disabled</StorybookLabel><DatePicker v-bind="args" /></div>`,
   ),
 };
 
 export const MaxValue: Story = {
   args: { maxValue: new CalendarDate(2026, 6, 17) },
   render: render(
-    { DatePicker, StoryLabel },
-    `<div class="grid gap-2"><StoryLabel>Dates after Jun 17 are disabled</StoryLabel><DatePicker v-bind="args" /></div>`,
+    { DatePicker, StorybookLabel },
+    `<div class="grid gap-2"><StorybookLabel>Dates after Jun 17 are disabled</StorybookLabel><DatePicker v-bind="args" /></div>`,
   ),
 };
 
@@ -54,8 +54,8 @@ export const DisabledWeekends: Story = {
     },
   },
   render: render(
-    { DatePicker, StoryLabel },
-    `<div class="grid gap-2"><StoryLabel>Weekends are disabled</StoryLabel><DatePicker v-bind="args" /></div>`,
+    { DatePicker, StorybookLabel },
+    `<div class="grid gap-2"><StorybookLabel>Weekends are disabled</StorybookLabel><DatePicker v-bind="args" /></div>`,
   ),
 };
 

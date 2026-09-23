@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { render, showControls, StoryLabel } from '@/lib/storybook';
+import { render, showControls, StorybookLabel } from '@/lib/storybook';
 import { Alert } from '.';
 
 const meta: Meta<typeof Alert> = {
@@ -24,17 +24,17 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: render(
-    { Alert, StoryLabel },
+    { Alert, StorybookLabel },
     `<div class="flex gap-12">
       <div class="flex max-w-md flex-col gap-6">
-        <StoryLabel>With title</StoryLabel>
+        <StorybookLabel>With title</StorybookLabel>
         <Alert title="Default">This is a default alert with neutral styling.</Alert>
         <Alert variant="success" title="Success">Your changes have been saved successfully.</Alert>
         <Alert variant="warning" title="Warning">Your subscription is about to expire.</Alert>
         <Alert variant="destructive" title="Error">Something went wrong while saving your changes.</Alert>
       </div>
       <div class="flex max-w-md flex-col gap-6">
-        <StoryLabel>Without title</StoryLabel>
+        <StorybookLabel>Without title</StorybookLabel>
         <Alert>A neutral message with body content only — no title or icon.</Alert>
         <Alert variant="success">Your changes have been saved.</Alert>
         <Alert variant="warning">Your subscription is about to expire.</Alert>
@@ -46,16 +46,16 @@ export const Variants: Story = {
 
 export const Appearances: Story = {
   render: render(
-    { Alert, StoryLabel },
+    { Alert, StorybookLabel },
     `<div class="flex gap-12">
       <div class="flex max-w-md flex-col gap-6">
-        <StoryLabel>With title</StoryLabel>
+        <StorybookLabel>With title</StorybookLabel>
         <Alert variant="success" appearance="default" title="Default">Bordered, rounded container.</Alert>
         <Alert variant="success" appearance="simple" title="Simple">No border and no radius.</Alert>
         <Alert variant="success" appearance="text" title="Text">Transparent with no padding.</Alert>
       </div>
       <div class="flex max-w-md flex-col gap-6">
-        <StoryLabel>Without title</StoryLabel>
+        <StorybookLabel>Without title</StorybookLabel>
         <Alert variant="success" appearance="default">Default appearance with body content only.</Alert>
         <Alert variant="success" appearance="simple">Simple appearance with body content only.</Alert>
         <Alert variant="success" appearance="text">Text appearance with body content only.</Alert>

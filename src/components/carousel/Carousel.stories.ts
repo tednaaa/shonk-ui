@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { example, render, showControls, StoryLabel } from '@/lib/storybook';
+import { example, render, showControls, StorybookLabel } from '@/lib/storybook';
 import {
   Carousel,
   CarouselContent,
@@ -18,10 +18,10 @@ const meta: Meta<typeof Carousel> = {
   component: Carousel,
   tags: ['autodocs'],
   render: render(
-    { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, Card, CardContent, StoryLabel },
+    { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, Card, CardContent, StorybookLabel },
     `<div class="px-12">
       <div class="mx-auto max-w-sm space-y-2">
-        <StoryLabel>Arrow keys or the buttons scroll one slide at a time</StoryLabel>
+        <StorybookLabel>Arrow keys or the buttons scroll one slide at a time</StorybookLabel>
         <Carousel v-bind="args">
           <CarouselContent>
             <CarouselItem v-for="n in 5" :key="n">
@@ -49,10 +49,10 @@ export const Default: Story = {
 
 export const MultipleItems: Story = {
   render: render(
-    { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, Card, CardContent, StoryLabel },
+    { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, Card, CardContent, StorybookLabel },
     `<div class="px-12">
       <div class="mx-auto max-w-sm space-y-2">
-        <StoryLabel>Set each item's basis to show several slides per view</StoryLabel>
+        <StorybookLabel>Set each item's basis to show several slides per view</StorybookLabel>
         <Carousel :opts="{ align: 'start' }">
           <CarouselContent>
             <CarouselItem v-for="n in 6" :key="n" class="basis-1/3">
@@ -73,10 +73,10 @@ export const MultipleItems: Story = {
 
 export const Autoplay: Story = {
   parameters: example(carouselAutoplaySource),
-  render: render({ CarouselAutoplay, StoryLabel }, `
+  render: render({ CarouselAutoplay, StorybookLabel }, `
     <div class="px-12">
       <div class="mx-auto max-w-xs space-y-2">
-        <StoryLabel>Autoplay plugin advances every 2s and pauses on hover</StoryLabel>
+        <StorybookLabel>Autoplay plugin advances every 2s and pauses on hover</StorybookLabel>
         <CarouselAutoplay />
       </div>
     </div>
@@ -97,10 +97,10 @@ export const CustomPlugin: Story = {
 
 export const Vertical: Story = {
   render: render(
-    { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, Card, CardContent, StoryLabel },
+    { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, Card, CardContent, StorybookLabel },
     `<div class="py-12">
       <div class="mx-auto max-w-xs space-y-2">
-        <StoryLabel>Vertical orientation scrolls up and down</StoryLabel>
+        <StorybookLabel>Vertical orientation scrolls up and down</StorybookLabel>
         <Carousel orientation="vertical" :opts="{ align: 'start' }">
           <CarouselContent class="h-75">
             <CarouselItem v-for="n in 5" :key="n" class="basis-1/2">

@@ -8,7 +8,7 @@ const otherSources: Record<string, string> = {
   VisuallyHidden: 'reka-ui',
 };
 
-const storybookOnly = new Set(['StoryLabel']);
+const storybookOnly = new Set(['StorybookLabel']);
 
 function indentOf(line: string) {
   return line.length - line.trimStart().length;
@@ -145,10 +145,10 @@ function stateFor(setup: (() => unknown) | undefined) {
   };
 }
 
-function withoutStoryLabels(template: string) {
+function withoutStorybookLabels(template: string) {
   return template
-    .replace(/^[ \t]*<StoryLabel>.*?<\/StoryLabel>[ \t]*\n/gm, '')
-    .replace(/<StoryLabel>.*?<\/StoryLabel>/g, '');
+    .replace(/^[ \t]*<StorybookLabel>.*?<\/StorybookLabel>[ \t]*\n/gm, '')
+    .replace(/<StorybookLabel>.*?<\/StorybookLabel>/g, '');
 }
 
 export function templateSource(code: string, context: StoryContext) {
@@ -161,7 +161,7 @@ export function templateSource(code: string, context: StoryContext) {
   if (!story?.template)
     return code;
 
-  const markup = indent(dedent(withoutStoryLabels(story.template)).replaceAll(' v-bind="args"', attributes(context.args)));
+  const markup = indent(dedent(withoutStorybookLabels(story.template)).replaceAll(' v-bind="args"', attributes(context.args)));
   const template = `<template>\n${markup}\n</template>`;
 
   const { declarations, usesRef } = stateFor(story.setup);

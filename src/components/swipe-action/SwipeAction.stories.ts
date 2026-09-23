@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { example, render, StoryLabel } from '@/lib/storybook';
+import { example, render, StorybookLabel } from '@/lib/storybook';
 import { SwipeAction } from '.';
 import SwipeBothSides from './examples/SwipeBothSides.vue';
 import swipeBothSidesSource from './examples/SwipeBothSides.vue?raw';
@@ -30,9 +30,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   parameters: example(swipeToDeleteSource),
-  render: render({ SwipeToDelete, StoryLabel }, `
+  render: render({ SwipeToDelete, StorybookLabel }, `
     <div class="mx-auto max-w-sm space-y-2">
-      <StoryLabel>Swipe left a little to reveal delete, or keep going to delete outright</StoryLabel>
+      <StorybookLabel>Swipe left a little to reveal delete, or keep going to delete outright</StorybookLabel>
       <SwipeToDelete />
     </div>
   `),
@@ -43,9 +43,9 @@ export const LeftAction: Story = {
     swipeToArchiveSource,
     'Filling only `left-action` puts the action on the left edge, revealed by swiping right. A swipe the other way does nothing.',
   ),
-  render: render({ SwipeToArchive, StoryLabel }, `
+  render: render({ SwipeToArchive, StorybookLabel }, `
     <div class="mx-auto max-w-sm space-y-2">
-      <StoryLabel>Swipe right</StoryLabel>
+      <StorybookLabel>Swipe right</StorybookLabel>
       <SwipeToArchive />
     </div>
   `),
@@ -56,9 +56,9 @@ export const BothSides: Story = {
     swipeBothSidesSource,
     'With both slots filled the row drags either way, and `trigger` reports which side fired. Dragging past the middle hands the row over to the opposite action.',
   ),
-  render: render({ SwipeBothSides, StoryLabel }, `
+  render: render({ SwipeBothSides, StorybookLabel }, `
     <div class="mx-auto max-w-sm space-y-2">
-      <StoryLabel>Swipe right to archive, left to delete</StoryLabel>
+      <StorybookLabel>Swipe right to archive, left to delete</StorybookLabel>
       <SwipeBothSides />
     </div>
   `),
@@ -69,9 +69,9 @@ export const Thresholds: Story = {
     swipeThresholdsSource,
     'Both thresholds are fractions, but of different widths. `triggerThreshold` is a fraction of the whole row and defaults to `0.6`: swipe the same distance down both lists and the eager one deletes where the deliberate one only snaps open. `openThreshold` is a fraction of the action button instead, defaulting to `0.5`, and decides how far you must drag before a released row stays open rather than springing shut.',
   ),
-  render: render({ SwipeThresholds, StoryLabel }, `
+  render: render({ SwipeThresholds, StorybookLabel }, `
     <div class="mx-auto max-w-sm space-y-2">
-      <StoryLabel>The same swipe deletes in the first list and only opens in the second</StoryLabel>
+      <StorybookLabel>The same swipe deletes in the first list and only opens in the second</StorybookLabel>
       <SwipeThresholds />
     </div>
   `),
@@ -79,9 +79,9 @@ export const Thresholds: Story = {
 
 export const Disabled: Story = {
   parameters: example(swipeDisabledSource),
-  render: render({ SwipeDisabled, StoryLabel }, `
+  render: render({ SwipeDisabled, StorybookLabel }, `
     <div class="mx-auto max-w-sm space-y-2">
-      <StoryLabel>Rows stay put and the action is not focusable</StoryLabel>
+      <StorybookLabel>Rows stay put and the action is not focusable</StorybookLabel>
       <SwipeDisabled />
     </div>
   `),

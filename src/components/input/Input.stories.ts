@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { render, showControls, StoryLabel } from '@/lib/storybook';
+import { render, showControls, StorybookLabel } from '@/lib/storybook';
 import { Input } from '.';
 import { Label } from '../label';
 
@@ -45,12 +45,12 @@ export const WithLabel: Story = {
 
 export const Types: Story = {
   render: render(
-    { Input, StoryLabel },
+    { Input, StorybookLabel },
     `<div class="flex max-w-xs flex-col gap-4">
-      <div class="grid gap-2"><StoryLabel>Text</StoryLabel><Input type="text" placeholder="Text" /></div>
-      <div class="grid gap-2"><StoryLabel>Email</StoryLabel><Input type="email" placeholder="email@example.com" /></div>
-      <div class="grid gap-2"><StoryLabel>Number</StoryLabel><Input type="number" placeholder="0" /></div>
-      <div class="grid gap-2"><StoryLabel>File</StoryLabel><Input type="file" /></div>
+      <div class="grid gap-2"><StorybookLabel>Text</StorybookLabel><Input type="text" placeholder="Text" /></div>
+      <div class="grid gap-2"><StorybookLabel>Email</StorybookLabel><Input type="email" placeholder="email@example.com" /></div>
+      <div class="grid gap-2"><StorybookLabel>Number</StorybookLabel><Input type="number" placeholder="0" /></div>
+      <div class="grid gap-2"><StorybookLabel>File</StorybookLabel><Input type="file" /></div>
     </div>`,
   ),
 };

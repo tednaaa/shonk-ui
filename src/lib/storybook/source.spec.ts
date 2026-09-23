@@ -28,7 +28,7 @@ it('wraps the story template in an sfc and imports what it renders', () => {
 
 it('groups imports by where each component comes from', () => {
   const story = {
-    components: { Button: {}, Input: {}, StoryLabel: {}, Trash2Icon: {}, VisuallyHidden: {} },
+    components: { Button: {}, Input: {}, StorybookLabel: {}, Trash2Icon: {}, VisuallyHidden: {} },
     template: `<Button><Trash2Icon /></Button>`,
   };
 
@@ -101,8 +101,8 @@ it('omits the state rather than silently dropping values it cannot write out', (
 
 it('drops storybook-only labels from the markup', () => {
   const story = {
-    components: { Input: {}, StoryLabel: {} },
-    template: `<div class="grid gap-2"><StoryLabel>Email</StoryLabel><Input type="email" /></div>`,
+    components: { Input: {}, StorybookLabel: {} },
+    template: `<div class="grid gap-2"><StorybookLabel>Email</StorybookLabel><Input type="email" /></div>`,
   };
 
   expect(templateSource('IGNORED', context(story))).toContain('<div class="grid gap-2"><Input type="email" /></div>');
@@ -117,7 +117,7 @@ it('serialises non-string args as bindings', () => {
 });
 
 it('leaves out the script block when nothing needs importing', () => {
-  const story = { components: { StoryLabel: {} }, template: `<p>plain</p>` };
+  const story = { components: { StorybookLabel: {} }, template: `<p>plain</p>` };
 
   expect(templateSource('IGNORED', context(story))).toBe('<template>\n  <p>plain</p>\n</template>');
 });

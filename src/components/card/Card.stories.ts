@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { EllipsisIcon } from '@lucide/vue';
-import { render, showControls, StoryLabel } from '@/lib/storybook';
+import { render, showControls, StorybookLabel } from '@/lib/storybook';
 import {
   Card,
   CardAction,
@@ -19,9 +19,9 @@ const meta: Meta<typeof Card> = {
   component: Card,
   tags: ['autodocs'],
   render: render(
-    { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Button, StoryLabel },
+    { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Button, StorybookLabel },
     `<div class="w-96 space-y-2">
-      <StoryLabel>Header, content and footer composed together</StoryLabel>
+      <StorybookLabel>Header, content and footer composed together</StorybookLabel>
       <Card v-bind="args">
         <CardHeader>
           <CardTitle>Project overview</CardTitle>
@@ -50,9 +50,9 @@ export const Default: Story = {
 
 export const WithAction: Story = {
   render: render(
-    { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, Button, EllipsisIcon, StoryLabel },
+    { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, Button, EllipsisIcon, StorybookLabel },
     `<div class="w-96 space-y-2">
-      <StoryLabel>CardAction pins a control to the header's top-right</StoryLabel>
+      <StorybookLabel>CardAction pins a control to the header's top-right</StorybookLabel>
       <Card>
         <CardHeader>
           <CardTitle>Team members</CardTitle>
@@ -71,9 +71,9 @@ export const WithAction: Story = {
 
 export const Login: Story = {
   render: render(
-    { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter, Button, Input, Label, StoryLabel },
+    { Card, CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter, Button, Input, Label, StorybookLabel },
     `<div class="w-96 space-y-2">
-      <StoryLabel>Realistic form composed inside a card</StoryLabel>
+      <StorybookLabel>Realistic form composed inside a card</StorybookLabel>
       <Card>
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
