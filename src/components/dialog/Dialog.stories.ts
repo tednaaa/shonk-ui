@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { VisuallyHidden } from 'reka-ui';
 import { render, showControls } from '@/lib/storybook';
 import {
   Dialog,
@@ -31,7 +30,6 @@ const components = {
   Button,
   Input,
   Label,
-  VisuallyHidden,
 };
 
 const meta: Meta<typeof Dialog> = {
@@ -148,9 +146,7 @@ export const WithoutHeader: Story = {
         <Button variant="outline">Show notice</Button>
       </DialogTrigger>
       <DialogContent :aria-describedby="undefined">
-        <VisuallyHidden>
-          <DialogTitle>Notice</DialogTitle>
-        </VisuallyHidden>
+        <DialogTitle class="sr-only">Notice</DialogTitle>
         <DialogBody class="text-muted-foreground text-sm">
           This dialog has no visible header — just a body and a footer divider below it.
         </DialogBody>

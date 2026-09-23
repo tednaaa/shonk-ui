@@ -4,10 +4,6 @@ import { isRef } from 'vue';
 const INLINE_WIDTH = 72;
 const IMPORT_WIDTH = 100;
 
-const otherSources: Record<string, string> = {
-  VisuallyHidden: 'reka-ui',
-};
-
 const storybookOnly = new Set(['StorybookLabel']);
 
 function indentOf(line: string) {
@@ -104,10 +100,7 @@ function attributes(args: StoryContext['args']) {
 }
 
 function sourceOf(component: string) {
-  if (component.endsWith('Icon'))
-    return '@lucide/vue';
-
-  return otherSources[component] ?? 'shonk-ui';
+  return component.endsWith('Icon') ? '@lucide/vue' : 'shonk-ui';
 }
 
 function importLine(source: string, names: string[]) {

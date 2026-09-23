@@ -28,13 +28,12 @@ it('wraps the story template in an sfc and imports what it renders', () => {
 
 it('groups imports by where each component comes from', () => {
   const story = {
-    components: { Button: {}, Input: {}, StorybookLabel: {}, Trash2Icon: {}, VisuallyHidden: {} },
+    components: { Button: {}, Input: {}, StorybookLabel: {}, Trash2Icon: {} },
     template: `<Button><Trash2Icon /></Button>`,
   };
 
-  expect(templateSource('IGNORED', context(story)).split('\n').slice(1, 4)).toEqual([
+  expect(templateSource('IGNORED', context(story)).split('\n').slice(1, 3)).toEqual([
     `import { Trash2Icon } from '@lucide/vue';`,
-    `import { VisuallyHidden } from 'reka-ui';`,
     `import { Button, Input } from 'shonk-ui';`,
   ]);
 });
