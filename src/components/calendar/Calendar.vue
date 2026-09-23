@@ -26,6 +26,7 @@ export type LayoutTypes = 'month-and-year' | 'month-only' | 'year-only' | undefi
 const props = withDefaults(defineProps<CalendarRootProps & { class?: HTMLAttributes['class']; layout?: LayoutTypes; yearRange?: DateValue[] }>(), {
   modelValue: undefined,
   layout: undefined,
+  weekdayFormat: 'short',
 });
 const emits = defineEmits<CalendarRootEmits>();
 

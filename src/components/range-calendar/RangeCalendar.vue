@@ -18,7 +18,9 @@ import RangeCalendarHeading from './RangeCalendarHeading.vue';
 import RangeCalendarNextButton from './RangeCalendarNextButton.vue';
 import RangeCalendarPrevButton from './RangeCalendarPrevButton.vue';
 
-const props = defineProps<RangeCalendarRootProps & { class?: HTMLAttributes['class'] }>();
+const props = withDefaults(defineProps<RangeCalendarRootProps & { class?: HTMLAttributes['class'] }>(), {
+  weekdayFormat: 'short',
+});
 
 const emits = defineEmits<RangeCalendarRootEmits>();
 

@@ -2,6 +2,8 @@ import type { Component } from 'vue';
 import type { ShonkUIOptions } from '../plugin';
 import { createApp, defineComponent, h, nextTick, ref } from 'vue';
 import Breadcrumb from '../components/breadcrumb/Breadcrumb.vue';
+import Calendar from '../components/calendar/Calendar.vue';
+import RangeCalendar from '../components/range-calendar/RangeCalendar.vue';
 import Spinner from '../components/spinner/Spinner.vue';
 import { shonkUI } from '../plugin';
 import { en } from './en';
@@ -118,5 +120,23 @@ describe('localized components', () => {
     const host = mount(Breadcrumb, { ariaLabel: 'Навигация' });
 
     expect(host.querySelector('nav')?.getAttribute('aria-label')).toBe('Навигация');
+  });
+});
+
+describe('calendar weekdays', () => {
+  function weekdays(component: Component, options: ShonkUIOptions) {
+    const host = document.createElement('div');
+    createApp(component).use(shonkUI, options).mount(host);
+
+    return [...host.querySelectorAll('[data-slot$="head-cell"]')].map(cell => cell.textContent?.trim());
+  }
+
+  it('should abbreviate Russian weekdays so none of them collide', () => {
+    expect(weekdays(Calendar, { locale: ru })).toEqual(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
+    expect(weekdays(RangeCalendar, { locale: ru })).toEqual(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
+  });
+
+  it('should abbreviate weekdays in the default locale', () => {
+    expect(weekdays(Calendar, {})).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
   });
 });
