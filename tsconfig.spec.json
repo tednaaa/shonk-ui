@@ -5,6 +5,6 @@
     "types": ["node", "vitest/globals"],
     "noUnusedLocals": false
   },
-  "include": ["src/**/*.spec.ts"],
+  "include": ["src/**/*.spec.ts", "vitest.setup.ts"],
   "exclude": []
 }

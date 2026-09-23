@@ -27,6 +27,7 @@ export default defineConfig({
         root: import.meta.dirname,
         test: {
           include: ['src/**/*.spec.ts'],
+          setupFiles: ['./vitest.setup.ts'],
           name: 'unit',
           environment: 'jsdom',
         },
