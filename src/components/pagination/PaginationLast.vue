@@ -2,7 +2,7 @@
 import type { PaginationLastProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ButtonVariants } from '@/components/button';
-import { ChevronRightIcon } from '@lucide/vue';
+import { ChevronsRightIcon } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import { PaginationLast, useForwardProps } from 'reka-ui';
 import { buttonVariants } from '@/components/button';
@@ -31,7 +31,7 @@ const forwarded = useForwardProps(delegatedProps);
   >
     <slot>
       <span class="hidden sm:block">{{ props.buttonText ?? locale.pagination.lastButtonText }}</span>
-      <ChevronRightIcon />
+      <ChevronsRightIcon />
     </slot>
   </PaginationLast>
 </template>
