@@ -9,9 +9,7 @@ const meta: Meta<typeof RangeCalendar> = {
   tags: ['autodocs'],
   render: render(
     { RangeCalendar },
-    `<div class="max-w-fit rounded-lg border">
-      <RangeCalendar v-bind="args" />
-    </div>`,
+    `<RangeCalendar v-bind="args" class="w-fit rounded-lg border" />`,
   ),
 };
 
