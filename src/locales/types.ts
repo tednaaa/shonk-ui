@@ -37,6 +37,25 @@ export interface ShonkLocale {
     closeButtonAriaLabel: string;
   };
 
+  filteredSearch: {
+    placeholder: string;
+    addFilterPlaceholder: string;
+    selectOperatorPlaceholder: string;
+    enterValuePlaceholder: string;
+    emptyText: string;
+    valueHintText: string;
+    applyButtonText: string;
+    historyButtonAriaLabel: string;
+    historyHeaderText: string;
+    historyEmptyText: string;
+    historyItemAriaLabel: (search: string) => string;
+    clearHistoryButtonText: string;
+    backButtonAriaLabel: string;
+    clearButtonAriaLabel: string;
+    removeSearchButtonAriaLabel: string;
+    removeFilterButtonAriaLabel: (filter: string) => string;
+  };
+
   inputPassword: {
     showPasswordAriaLabel: string;
     hidePasswordAriaLabel: string;

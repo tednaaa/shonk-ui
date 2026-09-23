@@ -39,6 +39,25 @@ export const en: ShonkLocale = {
     closeButtonAriaLabel: 'Close',
   },
 
+  filteredSearch: {
+    placeholder: 'Search or filter…',
+    addFilterPlaceholder: 'Add filter…',
+    selectOperatorPlaceholder: 'Select operator…',
+    enterValuePlaceholder: 'Enter value…',
+    emptyText: 'No filters found.',
+    valueHintText: 'Type a value and press Enter to confirm',
+    applyButtonText: 'Apply',
+    historyButtonAriaLabel: 'Toggle search history',
+    historyHeaderText: 'Recent searches',
+    historyEmptyText: 'You don\'t have any recent searches',
+    historyItemAriaLabel: search => `Select recent search: ${search}`,
+    clearHistoryButtonText: 'Clear recent searches',
+    backButtonAriaLabel: 'Go back',
+    clearButtonAriaLabel: 'Clear all filters',
+    removeSearchButtonAriaLabel: 'Remove search',
+    removeFilterButtonAriaLabel: filter => `Remove ${filter} filter`,
+  },
+
   inputPassword: {
     showPasswordAriaLabel: 'Show password',
     hidePasswordAriaLabel: 'Hide password',

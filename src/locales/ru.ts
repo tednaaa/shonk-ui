@@ -39,6 +39,25 @@ export const ru: ShonkLocale = {
     closeButtonAriaLabel: 'Закрыть',
   },
 
+  filteredSearch: {
+    placeholder: 'Поиск или фильтр…',
+    addFilterPlaceholder: 'Добавить фильтр…',
+    selectOperatorPlaceholder: 'Выберите условие…',
+    enterValuePlaceholder: 'Введите значение…',
+    emptyText: 'Фильтры не найдены.',
+    valueHintText: 'Введите значение и нажмите Enter',
+    applyButtonText: 'Применить',
+    historyButtonAriaLabel: 'Показать историю поиска',
+    historyHeaderText: 'Недавние запросы',
+    historyEmptyText: 'Недавних запросов пока нет',
+    historyItemAriaLabel: search => `Выбрать недавний запрос: ${search}`,
+    clearHistoryButtonText: 'Очистить историю',
+    backButtonAriaLabel: 'Назад',
+    clearButtonAriaLabel: 'Очистить все фильтры',
+    removeSearchButtonAriaLabel: 'Убрать поиск',
+    removeFilterButtonAriaLabel: filter => `Убрать фильтр «${filter}»`,
+  },
+
   inputPassword: {
     showPasswordAriaLabel: 'Показать пароль',
     hidePasswordAriaLabel: 'Скрыть пароль',

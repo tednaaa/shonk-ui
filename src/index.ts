@@ -19,6 +19,7 @@ export * from './components/context-menu';
 export * from './components/date-picker';
 export * from './components/dialog';
 export * from './components/dropdown-menu';
+export * from './components/filtered-search';
 export * from './components/hover-card';
 export * from './components/input';
 export * from './components/input-group';
