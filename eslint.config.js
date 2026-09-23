@@ -1,5 +1,6 @@
 import antfu from '@antfu/eslint-config';
 import storybook from 'eslint-plugin-storybook';
+import tailwindcss from 'eslint-plugin-tailwindcss';
 
 export default antfu(
   {
@@ -32,4 +33,17 @@ export default antfu(
     },
   },
   ...storybook.configs['flat/recommended'],
+  {
+    ...tailwindcss.configs.recommended,
+    settings: {
+      tailwindcss: {
+        cssConfigPath: '.storybook/preview.css',
+        functions: ['cn', 'cva'],
+      },
+    },
+    rules: {
+      ...tailwindcss.configs.recommended.rules,
+      'tailwindcss/no-custom-classname': ['warn', { whitelist: ['toaster'] }],
+    },
+  },
 );

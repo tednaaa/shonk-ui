@@ -14,16 +14,16 @@ const locale = useLocale();
 <template>
   <span
     :class="cn(
-      'inline-flex items-center gap-1 rounded-md border border-border bg-accent/50 text-accent-foreground text-xs h-6 pl-2 shrink-0',
+      'inline-flex h-6 shrink-0 items-center gap-1 rounded-md border border-border bg-accent/50 pl-2 text-xs text-accent-foreground',
       removable ? 'pr-1' : 'pr-2',
     )"
   >
-    <span class="font-medium truncate shrink-0">{{ filter.keyLabel }}</span>
-    <span class="text-muted-foreground shrink-0">{{ filter.operatorLabel }}</span>
+    <span class="shrink-0 truncate font-medium">{{ filter.keyLabel }}</span>
+    <span class="shrink-0 text-muted-foreground">{{ filter.operatorLabel }}</span>
     <span class="truncate">{{ filter.valueLabel }}</span>
     <button
       v-if="removable"
-      class="ml-0.5 rounded p-0.5 opacity-60 hover:opacity-100 hover:bg-accent transition-opacity focus:outline-none focus-visible:ring-1 focus-visible:ring-ring shrink-0"
+      class="ml-0.5 shrink-0 rounded p-0.5 opacity-60 transition-opacity hover:bg-accent hover:opacity-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
       :aria-label="locale.filteredSearch.removeFilterButtonAriaLabel(filter.keyLabel)"
       @click.stop="emit('remove', filter.id)"
     >

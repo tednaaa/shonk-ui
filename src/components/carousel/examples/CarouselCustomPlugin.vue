@@ -41,7 +41,7 @@ const plugin = selectPlugin(index => current.value = index);
 
 <template>
   <div class="space-y-2">
-    <p class="text-muted-foreground text-sm">Showing {{ current + 1 }} of 5</p>
+    <p class="text-sm text-muted-foreground">Showing {{ current + 1 }} of 5</p>
 
     <Carousel :plugins="[plugin]">
       <CarouselContent>

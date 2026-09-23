@@ -54,13 +54,13 @@ function handleOpenChange(isOpen: boolean) {
 
 <template>
   <AlertDialog :open="open" @update:open="handleOpenChange">
-    <AlertDialogContent class="p-0 gap-0 sm:max-w-lg">
-      <AlertDialogHeader class="py-4 px-6 bg-muted border-b border-b-border rounded-t-lg text-left gap-0">
+    <AlertDialogContent class="gap-0 p-0 sm:max-w-lg">
+      <AlertDialogHeader class="gap-0 rounded-t-lg border-b border-b-border bg-muted px-6 py-4 text-left">
         <AlertDialogTitle class="text-sm leading-none font-extrabold">
           {{ resolvedTitle }}
         </AlertDialogTitle>
       </AlertDialogHeader>
-      <AlertDialogDescription class="px-6 py-4 border-b border-border">
+      <AlertDialogDescription class="border-b border-border px-6 py-4">
         {{ state?.message }}
       </AlertDialogDescription>
       <AlertDialogFooter class="mx-6 my-4">

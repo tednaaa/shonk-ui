@@ -38,7 +38,7 @@ const hasDefaultContent = computed(() => hasSlotContent(slots.default));
     <div v-if="props.title" class="flex items-center gap-2">
       <component :is="icon" v-if="icon" class="size-5" />
 
-      <h4 v-if="props.title" class="font-semibold text-base">{{ props.title }}</h4>
+      <h4 v-if="props.title" class="text-base font-semibold">{{ props.title }}</h4>
       <slot v-else-if="$slots.title" name="title" />
     </div>
 

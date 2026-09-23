@@ -6,15 +6,15 @@ export const alertVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-card text-card-foreground border-current/30',
-        success: 'text-success bg-current/10 border-current/30',
-        warning: 'text-warning bg-current/10 border-current/30',
-        destructive: 'text-destructive bg-current/10 border-current/30',
+        default: 'border-current/30 bg-card text-card-foreground',
+        success: 'border-current/30 bg-current/10 text-success',
+        warning: 'border-current/30 bg-current/10 text-warning',
+        destructive: 'border-current/30 bg-current/10 text-destructive',
       },
       appearance: {
-        default: 'border rounded-lg',
-        simple: 'border-none rounded-none',
-        text: 'p-0 bg-transparent',
+        default: 'rounded-lg border',
+        simple: 'rounded-none border-none',
+        text: 'bg-transparent p-0',
       },
     },
   },

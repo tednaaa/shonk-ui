@@ -10,7 +10,7 @@ const props = defineProps<{
 <template>
   <div
     data-slot="dialog-body"
-    :class="cn('-mx-6 px-6 py-5 scrollbar-thin [scrollbar-color:var(--input)_transparent]', props.class)"
+    :class="cn('-mx-6 scrollbar-thin [scrollbar-color:var(--input)_transparent] px-6 py-5', props.class)"
   >
     <slot />
   </div>

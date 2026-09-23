@@ -357,10 +357,10 @@ watch(isOpen, (open) => {
     <div
       ref="anchorRef"
       :class="cn(
-        'flex items-center gap-1.5 w-full overflow-hidden rounded-md border border-border bg-background px-3 text-sm shadow-xs transition-[color,box-shadow] outline-none',
+        'flex w-full items-center gap-1.5 overflow-hidden rounded-md border border-border bg-background px-3 text-sm shadow-xs transition-[color,box-shadow] outline-none',
         wrap ? 'min-h-10 py-1' : 'h-10',
         viewOnly ? 'text-muted-foreground' : 'cursor-text',
-        isOpen && 'border-ring ring-ring/50 ring-[3px]',
+        isOpen && 'border-ring ring-[3px] ring-ring/50',
         !viewOnly && !isOpen && 'hover:border-ring/50',
         props.class,
       )"
@@ -368,13 +368,13 @@ watch(isOpen, (open) => {
     >
       <div
         :class="cn(
-          'flex items-center gap-1.5 flex-1 min-w-0',
-          wrap ? 'flex-wrap' : 'overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+          'flex min-w-0 flex-1 items-center gap-1.5',
+          wrap ? 'flex-wrap' : 'scrollbar-none overflow-x-auto [&::-webkit-scrollbar]:hidden',
         )"
       >
         <span
           v-if="searchText"
-          class="inline-flex items-center gap-1 rounded-md border border-border bg-accent/50 text-accent-foreground text-xs h-6 pl-1.5 shrink-0"
+          class="inline-flex h-6 shrink-0 items-center gap-1 rounded-md border border-border bg-accent/50 pl-1.5 text-xs text-accent-foreground"
           :class="viewOnly ? 'pr-1.5' : 'pr-1'"
         >
           <SearchIcon class="size-3 shrink-0 opacity-60" />
@@ -399,7 +399,7 @@ watch(isOpen, (open) => {
 
         <span
           v-if="stepLabel"
-          class="text-xs text-muted-foreground bg-muted rounded px-1.5 py-0.5 shrink-0"
+          class="shrink-0 rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground"
         >
           {{ stepLabel }}
         </span>
@@ -410,7 +410,7 @@ watch(isOpen, (open) => {
             v-model="inputText"
             :placeholder="inputPlaceholder"
             :readonly="step.phase === 'operator'"
-            class="flex-1 min-w-20 outline-none bg-transparent placeholder:text-muted-foreground text-sm"
+            class="min-w-20 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
             @focus="isOpen = true"
             @keydown="handleKeydown"
           >
@@ -424,7 +424,7 @@ watch(isOpen, (open) => {
           <Button
             variant="ghost"
             size="icon-sm"
-            class="my-1 h-7 w-7 shrink-0"
+            class="my-1 size-7 shrink-0"
             :aria-label="locale.filteredSearch.historyButtonAriaLabel"
             @click.stop
           >
@@ -432,7 +432,7 @@ watch(isOpen, (open) => {
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent class="p-0 overflow-hidden min-w-70" align="end" :side-offset="12">
+        <PopoverContent class="min-w-70 overflow-hidden p-0" align="end" :side-offset="12">
           <p class="border-b px-3 py-2 text-xs text-muted-foreground">
             {{ locale.filteredSearch.historyHeaderText }}
           </p>
@@ -441,11 +441,11 @@ watch(isOpen, (open) => {
             {{ locale.filteredSearch.historyEmptyText }}
           </p>
 
-          <div v-else class="py-1 max-h-60 overflow-y-auto">
+          <div v-else class="max-h-60 overflow-y-auto py-1">
             <button
               v-for="(item, index) in historyItems"
               :key="index"
-              class="w-full text-left px-3 py-1.5 transition-colors hover:bg-accent hover:text-accent-foreground"
+              class="w-full px-3 py-1.5 text-left transition-colors hover:bg-accent hover:text-accent-foreground"
               :aria-label="locale.filteredSearch.historyItemAriaLabel(historyItemLabel(item))"
               @click="selectHistoryItem(item)"
             >
@@ -473,19 +473,19 @@ watch(isOpen, (open) => {
         v-if="hasActiveFilters && !viewOnly"
         variant="ghost"
         size="icon-sm"
-        class="ml-1 my-1 h-7 w-7 shrink-0"
+        class="my-1 ml-1 size-7 shrink-0"
         :aria-label="locale.filteredSearch.clearButtonAriaLabel"
         @click.stop="clearAll"
       >
         <CircleXIcon class="size-4" />
       </Button>
 
-      <SearchIcon v-else-if="!viewOnly" class="size-4 text-muted-foreground shrink-0 ml-1" />
+      <SearchIcon v-else-if="!viewOnly" class="ml-1 size-4 shrink-0 text-muted-foreground" />
     </div>
 
     <PopoverContent
       v-if="!viewOnly"
-      class="p-0 overflow-hidden min-w-70"
+      class="min-w-70 overflow-hidden p-0"
       align="start"
       :side-offset="12"
       @open-auto-focus="(e: Event) => e.preventDefault()"
@@ -494,7 +494,7 @@ watch(isOpen, (open) => {
     >
       <div v-if="stepLabel" class="flex items-center gap-1.5 border-b px-3 py-2">
         <button
-          class="rounded p-0.5 -ml-0.5 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          class="-ml-0.5 rounded p-0.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           :aria-label="locale.filteredSearch.backButtonAriaLabel"
           @click="goBack"
         >
@@ -503,7 +503,7 @@ watch(isOpen, (open) => {
         <span class="text-xs text-muted-foreground">{{ stepLabel }}</span>
       </div>
 
-      <div v-if="step.phase === 'key'" role="listbox" class="py-1 max-h-60 overflow-y-auto" @mouseleave="highlightedIndex = -1">
+      <div v-if="step.phase === 'key'" role="listbox" class="max-h-60 overflow-y-auto py-1" @mouseleave="highlightedIndex = -1">
         <p v-if="filteredDefinitions.length === 0" class="px-3 py-2 text-sm text-muted-foreground">
           {{ locale.filteredSearch.emptyText }}
         </p>
@@ -513,7 +513,7 @@ watch(isOpen, (open) => {
           role="option"
           :aria-selected="index === highlightedIndex"
           :class="cn(
-            'w-full text-left px-3 py-1.5 text-sm transition-colors flex items-center gap-2',
+            'flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm transition-colors',
             index === highlightedIndex
               ? 'bg-accent text-accent-foreground'
               : 'hover:bg-accent hover:text-accent-foreground',
@@ -533,7 +533,7 @@ watch(isOpen, (open) => {
           role="option"
           :aria-selected="index === highlightedIndex"
           :class="cn(
-            'w-full text-left px-3 py-1.5 text-sm transition-colors',
+            'w-full px-3 py-1.5 text-left text-sm transition-colors',
             index === highlightedIndex
               ? 'bg-accent text-accent-foreground'
               : 'hover:bg-accent hover:text-accent-foreground',
@@ -555,7 +555,7 @@ watch(isOpen, (open) => {
       />
 
       <template v-else-if="suggestsOptions">
-        <div role="listbox" class="py-1 max-h-60 overflow-y-auto" @mouseleave="highlightedIndex = -1">
+        <div role="listbox" class="max-h-60 overflow-y-auto py-1" @mouseleave="highlightedIndex = -1">
           <p v-if="valueOptions.length === 0" class="px-3 py-2 text-sm text-muted-foreground">
             {{ locale.filteredSearch.emptyText }}
           </p>
@@ -565,7 +565,7 @@ watch(isOpen, (open) => {
             role="option"
             :aria-selected="index === highlightedIndex"
             :class="cn(
-              'w-full text-left px-3 py-1.5 text-sm transition-colors flex items-center gap-2',
+              'flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm transition-colors',
               index === highlightedIndex
                 ? 'bg-accent text-accent-foreground'
                 : 'hover:bg-accent hover:text-accent-foreground',

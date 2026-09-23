@@ -15,7 +15,7 @@ const position = ref('bottom');
 
 <template>
   <ContextMenu>
-    <ContextMenuTrigger class="border-border text-muted-foreground flex h-37.5 w-75 items-center justify-center rounded-md border border-dashed text-sm select-none">
+    <ContextMenuTrigger class="flex h-37.5 w-75 items-center justify-center rounded-md border border-dashed border-border text-sm text-muted-foreground select-none">
       Right click here
     </ContextMenuTrigger>
 

@@ -95,7 +95,7 @@ function clear() {
           type="button"
           :aria-label="props.clearButtonAriaLabel ?? locale.combobox.clearButtonAriaLabel"
           tabindex="-1"
-          class="text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 pointer-events-auto cursor-pointer rounded-xs outline-none transition-colors focus-visible:ring-[3px]"
+          class="pointer-events-auto cursor-pointer rounded-xs text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
           @pointerdown.stop.prevent="clear"
         >
           <XIcon class="size-4" />
@@ -117,7 +117,7 @@ function clear() {
         <CommandList>
           <div
             v-if="loading"
-            class="text-muted-foreground flex items-center justify-center gap-2 py-6 text-sm"
+            class="flex items-center justify-center gap-2 py-6 text-sm text-muted-foreground"
           >
             <Spinner />
             <span>{{ props.loadingText ?? locale.combobox.loadingText }}</span>

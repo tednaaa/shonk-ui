@@ -39,7 +39,7 @@ const current = ref(1);
         </StepperTrigger>
         <StepperSeparator
           v-if="step.step < steps.length"
-          class="absolute top-4 left-[calc(50%+1.5rem)] right-[calc(-50%+1.5rem)] h-0.5 rounded-full"
+          class="absolute top-4 right-[calc(-50%+1.5rem)] left-[calc(50%+1.5rem)] h-0.5 rounded-full"
         />
       </StepperItem>
     </Stepper>

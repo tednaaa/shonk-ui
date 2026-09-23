@@ -42,7 +42,7 @@ const buttonAriaLabel = computed(() => visible.value
       type="button"
       variant="ghost"
       size="icon-sm"
-      class="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground"
+      class="absolute top-1/2 right-1 -translate-y-1/2 text-muted-foreground"
       :aria-label="buttonAriaLabel"
       @click="visible = !visible"
     >

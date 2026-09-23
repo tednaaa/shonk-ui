@@ -46,7 +46,7 @@ const items = [
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
-              <div class="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+              <div class="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                 <GalleryVerticalEndIcon class="size-4" />
               </div>
               <div class="grid flex-1 text-left text-sm leading-tight">
@@ -93,11 +93,11 @@ const items = [
       </header>
       <div class="flex flex-1 flex-col gap-4 p-4">
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div class="bg-muted/50 aspect-video rounded-xl" />
-          <div class="bg-muted/50 aspect-video rounded-xl" />
-          <div class="bg-muted/50 aspect-video rounded-xl" />
+          <div class="aspect-video rounded-xl bg-muted/50" />
+          <div class="aspect-video rounded-xl bg-muted/50" />
+          <div class="aspect-video rounded-xl bg-muted/50" />
         </div>
-        <div class="bg-muted/50 min-h-[40vh] flex-1 rounded-xl" />
+        <div class="min-h-[40vh] flex-1 rounded-xl bg-muted/50" />
       </div>
     </SidebarInset>
   </SidebarProvider>
