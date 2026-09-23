@@ -15,6 +15,7 @@ import {
 } from '@tanstack/vue-table';
 
 export interface KitColumnMeta {
+  label?: string;
   class?: HTMLAttributes['class'];
   headerClass?: HTMLAttributes['class'];
 }

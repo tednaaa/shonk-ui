@@ -36,6 +36,11 @@ export const en: ShonkLocale = {
     pageSizeLabel: 'Rows per page',
     selectPageRowsLabel: 'Select all rows on the page',
     selectRowLabel: 'Select row',
+    columnToggleButtonText: 'Columns',
+    columnToggleSearchPlaceholder: 'Find a column…',
+    columnToggleEmptyText: 'No columns found',
+    columnToggleShowAllButtonText: 'Show all',
+    columnToggleVisibleCountText: (visible, total) => `${visible} of ${total}`,
   },
 
   datePicker: {

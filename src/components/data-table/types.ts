@@ -12,6 +12,8 @@ export interface DataTableHeaderContext {
 interface DataTableColumnBase {
   kind?: undefined;
   header?: string;
+  label?: string;
+  hideable?: boolean;
   class?: HTMLAttributes['class'];
   headerClass?: HTMLAttributes['class'];
 }
@@ -47,6 +49,8 @@ export interface DataTableGroupColumn<TData> {
   kind?: undefined;
   id: string;
   header?: string;
+  label?: undefined;
+  hideable?: undefined;
   headerClass?: HTMLAttributes['class'];
   accessorKey?: undefined;
   accessorFn?: undefined;
@@ -58,6 +62,8 @@ export interface DataTableGroupColumn<TData> {
 export interface DataTableSelectColumn {
   kind: 'select';
   id: string;
+  label?: undefined;
+  hideable?: undefined;
   accessorKey?: undefined;
   accessorFn?: undefined;
   columns?: undefined;
@@ -85,6 +91,8 @@ export interface DataTablePaginationState {
 }
 
 export type DataTableRowSelectionState = Record<string, true>;
+
+export type DataTableColumnVisibilityState = Record<string, boolean>;
 
 declare const rowType: unique symbol;
 

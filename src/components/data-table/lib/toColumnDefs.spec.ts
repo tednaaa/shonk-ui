@@ -82,6 +82,24 @@ describe('toColumnDefs', () => {
     ]);
   });
 
+  it('should name a column by its label and fall back to its header', () => {
+    const table = buildTable([
+      { accessorKey: 'name', header: 'Name', label: 'Employee name' },
+      { accessorKey: 'age', header: 'Age' },
+    ]);
+
+    expect(table.getAllLeafColumns().map(column => column.columnDef.meta?.label)).toEqual(['Employee name', 'Age']);
+  });
+
+  it('should let a column opt out of hiding', () => {
+    const table = buildTable([{ accessorKey: 'name', hideable: false }, { accessorKey: 'age' }]);
+
+    expect(table.getAllLeafColumns().map(column => [column.id, column.getCanHide()])).toEqual([
+      ['name', false],
+      ['age', true],
+    ]);
+  });
+
   it('should keep the select column from sorting and hiding', () => {
     const column = buildTable([selectColumn(), { accessorKey: 'name' }]).getColumn('select');
 

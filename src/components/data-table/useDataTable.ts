@@ -1,5 +1,5 @@
 import type { MaybeRefOrGetter, Ref } from 'vue';
-import type { DataTableColumn, DataTableInstance, DataTablePaginationState, DataTableRowSelectionState, DataTableSortingState } from './types';
+import type { DataTableColumn, DataTableColumnVisibilityState, DataTableInstance, DataTablePaginationState, DataTableRowSelectionState, DataTableSortingState } from './types';
 import { functionalUpdate, useTable } from '@tanstack/vue-table';
 import { computed, ref, toValue } from 'vue';
 import { features } from './lib/features';
@@ -19,6 +19,7 @@ export interface UseDataTableOptions<TData extends object> {
   rowSelection?: Ref<DataTableRowSelectionState>;
   selectedRows?: Ref<TData[]>;
   enableRowSelection?: (row: TData) => boolean;
+  columnVisibility?: Ref<DataTableColumnVisibilityState>;
 }
 
 export function useDataTable<TData extends object>(options: UseDataTableOptions<TData>): DataTableInstance<TData> {
@@ -27,6 +28,7 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
   const sorting = options.sorting ?? ref<DataTableSortingState>([]);
   const pagination = options.pagination ?? ref<DataTablePaginationState>({ pageIndex: 0, pageSize: Infinity });
   const rowSelection = options.rowSelection ?? ref<DataTableRowSelectionState>({});
+  const columnVisibility = options.columnVisibility ?? ref<DataTableColumnVisibilityState>({});
 
   const getRowId = options.getRowId ?? ((row: TData, index: number) => String(index));
 
@@ -49,7 +51,12 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
     data: computed(() => toValue(options.data)),
     columns: computed(() => toColumnDefs(toValue(options.columns))),
     getRowId: options.getRowId,
-    state: computed(() => ({ sorting: sorting.value, pagination: pagination.value, rowSelection: rowSelection.value })),
+    state: computed(() => ({
+      sorting: sorting.value,
+      pagination: pagination.value,
+      rowSelection: rowSelection.value,
+      columnVisibility: columnVisibility.value,
+    })),
     onSortingChange: (updater) => {
       sorting.value = functionalUpdate(updater, sorting.value);
       goToFirstPage();
@@ -59,6 +66,9 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
     },
     onRowSelectionChange: (updater) => {
       rowSelection.value = functionalUpdate(updater, rowSelection.value);
+    },
+    onColumnVisibilityChange: (updater) => {
+      columnVisibility.value = functionalUpdate(updater, columnVisibility.value);
     },
     manualSorting: serverSide,
     manualPagination: serverSide,

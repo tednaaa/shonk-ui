@@ -51,7 +51,8 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
   const base = {
     header: column.header,
     enableSorting: column.sortable ?? false,
-    meta: { class: column.class, headerClass: column.headerClass },
+    enableHiding: column.hideable ?? true,
+    meta: { label: column.label ?? column.header, class: column.class, headerClass: column.headerClass },
   };
 
   if (isAccessorKeyColumn(column)) {
@@ -89,4 +90,22 @@ function cellDef<TData extends object>(render: KitCellRender<TData> | undefined)
 
 function isAccessorKeyColumn<TData>(column: AnyDataTableColumn<TData>): column is DataTableAccessorKeyColumn<TData, keyof TData & string> {
   return column.accessorKey !== undefined;
+}
+
+export function hideableColumnIds<TData extends object>(columns: readonly DataTableColumn<TData>[]): string[] {
+  return columns.flatMap(hideableIds);
+}
+
+function hideableIds<TData extends object>(column: AnyDataTableColumn<TData>): string[] {
+  if (column.columns)
+    return hideableColumnIds(column.columns);
+
+  if (column.kind !== undefined || column.hideable === false)
+    return [];
+
+  return [columnId(column)];
+}
+
+function columnId<TData>(column: AnyDataTableColumn<TData>): string {
+  return isAccessorKeyColumn(column) ? column.id ?? column.accessorKey : column.id;
 }

@@ -34,6 +34,11 @@ export interface ShonkLocale {
     pageSizeLabel: string;
     selectPageRowsLabel: string;
     selectRowLabel: string;
+    columnToggleButtonText: string;
+    columnToggleSearchPlaceholder: string;
+    columnToggleEmptyText: string;
+    columnToggleShowAllButtonText: string;
+    columnToggleVisibleCountText: (visible: number, total: number) => string;
   };
 
   datePicker: {

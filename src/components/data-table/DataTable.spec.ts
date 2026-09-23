@@ -1,4 +1,4 @@
-import type { DataTableColumn, DataTableRowSelectionState, DataTableSortingState } from './types';
+import type { DataTableColumn, DataTableColumnVisibilityState, DataTableRowSelectionState, DataTableSortingState } from './types';
 import type { UseDataTableOptions } from './useDataTable';
 import { flushPromises, mount } from '@vue/test-utils';
 import { defineComponent, h, nextTick, ref } from 'vue';
@@ -242,6 +242,23 @@ describe('dataTable', () => {
 
       expect(wrapper.find('tbody [role="status"]').exists()).toBe(true);
       expect(wrapper.text()).not.toContain('No data');
+    });
+  });
+
+  describe('column visibility', () => {
+    it('should leave a hidden column out of the header and the rows', () => {
+      const columnVisibility = ref<DataTableColumnVisibilityState>({ age: false });
+      const wrapper = mountTable(undefined, { tableOptions: { columnVisibility } });
+
+      expect(wrapper.findAll('th').map(header => header.text())).toEqual(['Name']);
+      expect(bodyRows(wrapper)).toEqual([['Ada'], ['Linus']]);
+    });
+
+    it('should span the empty text over the visible columns only', () => {
+      const columnVisibility = ref<DataTableColumnVisibilityState>({ age: false });
+      const wrapper = mountTable(undefined, { data: [], tableOptions: { columnVisibility } });
+
+      expect(wrapper.get('tbody td').attributes('colspan')).toBe('1');
     });
   });
 

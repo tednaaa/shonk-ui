@@ -36,6 +36,11 @@ export const ru: ShonkLocale = {
     pageSizeLabel: 'Строк на странице',
     selectPageRowsLabel: 'Выбрать все строки на странице',
     selectRowLabel: 'Выбрать строку',
+    columnToggleButtonText: 'Поля',
+    columnToggleSearchPlaceholder: 'Найти поле…',
+    columnToggleEmptyText: 'Поле не найдено',
+    columnToggleShowAllButtonText: 'Показать все',
+    columnToggleVisibleCountText: (visible, total) => `${visible} из ${total}`,
   },
 
   datePicker: {

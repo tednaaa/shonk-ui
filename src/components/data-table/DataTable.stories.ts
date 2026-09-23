@@ -6,6 +6,8 @@ import DataTableBasic from './examples/DataTableBasic.vue';
 import dataTableBasicSource from './examples/DataTableBasic.vue?raw';
 import DataTableClientSorting from './examples/DataTableClientSorting.vue';
 import dataTableClientSortingSource from './examples/DataTableClientSorting.vue?raw';
+import DataTableColumnToggle from './examples/DataTableColumnToggle.vue';
+import dataTableColumnToggleSource from './examples/DataTableColumnToggle.vue?raw';
 import DataTableEmpty from './examples/DataTableEmpty.vue';
 import dataTableEmptySource from './examples/DataTableEmpty.vue?raw';
 import DataTableInfiniteLoading from './examples/DataTableInfiniteLoading.vue';
@@ -24,6 +26,8 @@ import DataTableServerPageSize from './examples/DataTableServerPageSize.vue';
 import dataTableServerPageSizeSource from './examples/DataTableServerPageSize.vue?raw';
 import DataTableServerPaginationOnTop from './examples/DataTableServerPaginationOnTop.vue';
 import dataTableServerPaginationOnTopSource from './examples/DataTableServerPaginationOnTop.vue?raw';
+import DataTableStoredColumns from './examples/DataTableStoredColumns.vue';
+import dataTableStoredColumnsSource from './examples/DataTableStoredColumns.vue?raw';
 
 const dataTableComponent: FunctionalComponent<ComponentPropsAndSlots<typeof DataTable>> = DataTable;
 
@@ -88,4 +92,14 @@ export const InfiniteLoading: Story = {
 export const RowSelection: Story = {
   parameters: example(dataTableRowSelectionSource),
   render: render({ DataTableRowSelection }, `<DataTableRowSelection />`),
+};
+
+export const ColumnToggle: Story = {
+  parameters: example(dataTableColumnToggleSource),
+  render: render({ DataTableColumnToggle }, `<DataTableColumnToggle />`),
+};
+
+export const StoredColumns: Story = {
+  parameters: example(dataTableStoredColumnsSource),
+  render: render({ DataTableStoredColumns }, `<DataTableStoredColumns />`),
 };
