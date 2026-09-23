@@ -8,12 +8,14 @@ import { computed } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 
-const props = defineProps<SelectTriggerProps & {
+const props = withDefaults(defineProps<SelectTriggerProps & {
   class?: HTMLAttributes['class'];
   size?: 'sm' | 'md';
   clearable?: boolean;
   clearButtonAriaLabel?: string;
-}>();
+}>(), {
+  size: 'md',
+});
 
 const locale = useLocale();
 
