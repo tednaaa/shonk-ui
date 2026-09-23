@@ -10,6 +10,8 @@ import DataTableColumnToggle from './examples/DataTableColumnToggle.vue';
 import dataTableColumnToggleSource from './examples/DataTableColumnToggle.vue?raw';
 import DataTableEmpty from './examples/DataTableEmpty.vue';
 import dataTableEmptySource from './examples/DataTableEmpty.vue?raw';
+import DataTableExport from './examples/DataTableExport.vue';
+import dataTableExportSource from './examples/DataTableExport.vue?raw';
 import DataTableInfiniteLoading from './examples/DataTableInfiniteLoading.vue';
 import dataTableInfiniteLoadingSource from './examples/DataTableInfiniteLoading.vue?raw';
 import DataTableLoading from './examples/DataTableLoading.vue';
@@ -130,4 +132,9 @@ export const PinnedRows: Story = {
 export const MergedCells: Story = {
   parameters: example(dataTableMergedCellsSource),
   render: render({ DataTableMergedCells }, `<DataTableMergedCells />`),
+};
+
+export const Export: Story = {
+  parameters: example(dataTableExportSource),
+  render: render({ DataTableExport }, `<DataTableExport />`),
 };

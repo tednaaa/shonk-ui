@@ -42,6 +42,8 @@ export interface ShonkLocale {
     columnToggleEmptyText: string;
     columnToggleShowAllButtonText: string;
     columnToggleVisibleCountText: (visible: number, total: number) => string;
+    exportButtonText: string;
+    exportFileName: string;
   };
 
   datePicker: {

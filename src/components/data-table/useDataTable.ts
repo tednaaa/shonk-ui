@@ -6,7 +6,7 @@ import { computed, ref, toValue } from 'vue';
 import { features } from './lib/features';
 import { createDataTableInstance } from './lib/instance';
 import { syncSelectedRows } from './lib/selectedRows';
-import { toColumnDefs, toColumnPinning } from './lib/toColumnDefs';
+import { toColumnDefs, toColumnPinning, toExportValues } from './lib/toColumnDefs';
 
 export interface UseDataTableOptions<TData extends object> {
   data: MaybeRefOrGetter<readonly TData[]>;
@@ -102,5 +102,5 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
     return Object.fromEntries(rowIds.map((rowId): [string, true] => [rowId, true]));
   }
 
-  return createDataTableInstance(table);
+  return createDataTableInstance(table, () => toExportValues(toValue(options.columns)));
 }

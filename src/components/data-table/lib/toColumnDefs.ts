@@ -6,6 +6,7 @@ import type {
   DataTableColumn,
   DataTableDisplayColumn,
   DataTableExpandColumn,
+  DataTableExportValue,
   DataTableFooterContext,
   DataTableGroupColumn,
   DataTableSelectColumn,
@@ -24,6 +25,8 @@ type KitColumnDef<TData extends object> = ColumnDef<KitFeatures, TData>;
 type KitCellRender<TData extends object> = (context: CellContext<KitFeatures, TData>) => VNodeChild;
 
 type DataTableColumnFooter<TData> = string | ((context: DataTableFooterContext<TData>) => VNodeChild);
+
+export type DataTableExportValues<TData> = Map<string, (row: TData) => DataTableExportValue>;
 
 type AnyDataTableColumn<TData>
   = | DataTableAccessorKeyColumn<TData, keyof TData & string>
@@ -80,7 +83,7 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
 
     return {
       ...base,
-      id: column.id ?? accessorKey,
+      id: columnId(column),
       accessorKey,
       ...spanRowsDef<TData, TData[typeof accessorKey]>(column.spanRows, row => row[accessorKey]),
       ...cellDef<TData>(cell && (({ row }) => cell({ row: row.original, value: row.original[accessorKey] }))),
@@ -146,6 +149,25 @@ function pinnedColumnIds<TData extends object>(column: AnyDataTableColumn<TData>
     return [];
 
   return [columnId(column)];
+}
+
+export function toExportValues<TData extends object>(columns: readonly DataTableColumn<TData>[]): DataTableExportValues<TData> {
+  return new Map(columns.flatMap(columnExportValue));
+}
+
+function columnExportValue<TData extends object>(column: AnyDataTableColumn<TData>): [string, (row: TData) => DataTableExportValue][] {
+  if (column.columns)
+    return [...toExportValues(column.columns)];
+
+  if (isAccessorKeyColumn(column)) {
+    const { accessorKey, exportValue } = column;
+
+    return exportValue ? [[columnId(column), row => exportValue({ row, value: row[accessorKey] })]] : [];
+  }
+
+  const { accessorFn, exportValue } = column;
+
+  return exportValue ? [[columnId(column), row => exportValue({ row, value: accessorFn?.(row) })]] : [];
 }
 
 function footerDef<TData extends object>(footer: DataTableColumnFooter<TData> | undefined): KitColumnDef<TData>['footer'] {

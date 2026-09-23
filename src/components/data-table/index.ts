@@ -2,6 +2,7 @@ export { expandColumn } from './columns/expandColumn';
 export { selectColumn } from './columns/selectColumn';
 export { default as DataTable } from './DataTable.vue';
 export { default as DataTableColumnToggle } from './DataTableColumnToggle.vue';
+export { default as DataTableExport } from './DataTableExport.vue';
 export { default as DataTablePagination } from './DataTablePagination.vue';
 export { default as DataTablePaginationPages } from './DataTablePaginationPages.vue';
 export { default as DataTablePaginationPageSizeSelect } from './DataTablePaginationPageSizeSelect.vue';
@@ -15,6 +16,8 @@ export type {
   DataTableDisplayColumn,
   DataTableExpandColumn,
   DataTableExpandedState,
+  DataTableExportFormat,
+  DataTableExportValue,
   DataTableFooterContext,
   DataTableGroupColumn,
   DataTableHeaderContext,
@@ -28,4 +31,6 @@ export type {
 } from './types';
 export { useDataTable } from './useDataTable';
 export type { UseDataTableOptions } from './useDataTable';
+export { useDataTableExport } from './useDataTableExport';
+export type { UseDataTableExportOptions } from './useDataTableExport';
 export { useStoredColumnVisibility } from './useStoredColumnVisibility';

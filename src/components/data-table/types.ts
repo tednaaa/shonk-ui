@@ -13,6 +13,10 @@ export interface DataTableFooterContext<TData> {
   rows: TData[];
 }
 
+export type DataTableExportValue = string | number | null | undefined;
+
+export type DataTableExportFormat = 'csv' | 'xlsx';
+
 export interface DataTableSpanRowsContext<TData, TValue = unknown> {
   row: TData;
   value: TValue;
@@ -39,6 +43,7 @@ export type DataTableAccessorKeyColumn<TData, TKey extends keyof TData & string>
   sortable?: boolean;
   spanRows?: boolean | ((context: DataTableSpanRowsContext<TData, TData[TKey]>) => boolean);
   cell?: (context: DataTableCellContext<TData, TData[TKey]>) => VNodeChild;
+  exportValue?: (context: DataTableCellContext<TData, TData[TKey]>) => DataTableExportValue;
 };
 
 export type DataTableAccessorFnColumn<TData> = DataTableColumnBase<TData> & {
@@ -49,6 +54,7 @@ export type DataTableAccessorFnColumn<TData> = DataTableColumnBase<TData> & {
   sortable?: boolean;
   spanRows?: boolean | ((context: DataTableSpanRowsContext<TData>) => boolean);
   cell?: (context: DataTableCellContext<TData>) => VNodeChild;
+  exportValue?: (context: DataTableCellContext<TData>) => DataTableExportValue;
 };
 
 export type DataTableDisplayColumn<TData> = DataTableColumnBase<TData> & {
@@ -59,6 +65,7 @@ export type DataTableDisplayColumn<TData> = DataTableColumnBase<TData> & {
   sortable?: undefined;
   spanRows?: undefined;
   cell?: (context: DataTableCellContext<TData>) => VNodeChild;
+  exportValue?: (context: DataTableCellContext<TData>) => DataTableExportValue;
 };
 
 export interface DataTableGroupColumn<TData> {
@@ -76,6 +83,7 @@ export interface DataTableGroupColumn<TData> {
   sortable?: undefined;
   spanRows?: undefined;
   cell?: undefined;
+  exportValue?: undefined;
 }
 
 export interface DataTableSelectColumn {
@@ -91,6 +99,7 @@ export interface DataTableSelectColumn {
   sortable?: undefined;
   spanRows?: undefined;
   cell?: undefined;
+  exportValue?: undefined;
 }
 
 export interface DataTableExpandColumn {
@@ -106,6 +115,7 @@ export interface DataTableExpandColumn {
   sortable?: undefined;
   spanRows?: undefined;
   cell?: undefined;
+  exportValue?: undefined;
 }
 
 export type DataTableColumn<TData>
