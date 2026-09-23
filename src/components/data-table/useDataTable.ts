@@ -5,7 +5,7 @@ import { computed, ref, toValue } from 'vue';
 import { features } from './lib/features';
 import { createDataTableInstance } from './lib/instance';
 import { syncSelectedRows } from './lib/selectedRows';
-import { toColumnDefs } from './lib/toColumnDefs';
+import { toColumnDefs, toColumnPinning } from './lib/toColumnDefs';
 
 export interface UseDataTableOptions<TData extends object> {
   data: MaybeRefOrGetter<readonly TData[]>;
@@ -29,6 +29,7 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
   const pagination = options.pagination ?? ref<DataTablePaginationState>({ pageIndex: 0, pageSize: Infinity });
   const rowSelection = options.rowSelection ?? ref<DataTableRowSelectionState>({});
   const columnVisibility = options.columnVisibility ?? ref<DataTableColumnVisibilityState>({});
+  const columnPinning = computed(() => toColumnPinning(toValue(options.columns)));
 
   const getRowId = options.getRowId ?? ((row: TData, index: number) => String(index));
 
@@ -56,6 +57,7 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
       pagination: pagination.value,
       rowSelection: rowSelection.value,
       columnVisibility: columnVisibility.value,
+      columnPinning: columnPinning.value,
     })),
     onSortingChange: (updater) => {
       sorting.value = functionalUpdate(updater, sorting.value);

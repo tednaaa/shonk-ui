@@ -9,16 +9,22 @@ export interface DataTableHeaderContext {
   label: string;
 }
 
-interface DataTableColumnBase {
+export interface DataTableFooterContext<TData> {
+  rows: TData[];
+}
+
+interface DataTableColumnBase<TData> {
   kind?: undefined;
   header?: string;
   label?: string;
+  footer?: string | ((context: DataTableFooterContext<TData>) => VNodeChild);
   hideable?: boolean;
+  pinned?: boolean;
   class?: HTMLAttributes['class'];
   headerClass?: HTMLAttributes['class'];
 }
 
-export type DataTableAccessorKeyColumn<TData, TKey extends keyof TData & string> = DataTableColumnBase & {
+export type DataTableAccessorKeyColumn<TData, TKey extends keyof TData & string> = DataTableColumnBase<TData> & {
   id?: string;
   accessorKey: TKey;
   accessorFn?: undefined;
@@ -27,7 +33,7 @@ export type DataTableAccessorKeyColumn<TData, TKey extends keyof TData & string>
   cell?: (context: DataTableCellContext<TData, TData[TKey]>) => VNodeChild;
 };
 
-export type DataTableAccessorFnColumn<TData> = DataTableColumnBase & {
+export type DataTableAccessorFnColumn<TData> = DataTableColumnBase<TData> & {
   id: string;
   accessorKey?: undefined;
   accessorFn: (row: TData) => unknown;
@@ -36,7 +42,7 @@ export type DataTableAccessorFnColumn<TData> = DataTableColumnBase & {
   cell?: (context: DataTableCellContext<TData>) => VNodeChild;
 };
 
-export type DataTableDisplayColumn<TData> = DataTableColumnBase & {
+export type DataTableDisplayColumn<TData> = DataTableColumnBase<TData> & {
   id: string;
   accessorKey?: undefined;
   accessorFn?: undefined;
@@ -50,7 +56,9 @@ export interface DataTableGroupColumn<TData> {
   id: string;
   header?: string;
   label?: undefined;
+  footer?: undefined;
   hideable?: undefined;
+  pinned?: undefined;
   headerClass?: HTMLAttributes['class'];
   accessorKey?: undefined;
   accessorFn?: undefined;
@@ -63,7 +71,9 @@ export interface DataTableSelectColumn {
   kind: 'select';
   id: string;
   label?: undefined;
+  footer?: undefined;
   hideable?: undefined;
+  pinned?: undefined;
   accessorKey?: undefined;
   accessorFn?: undefined;
   columns?: undefined;

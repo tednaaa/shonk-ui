@@ -3,9 +3,10 @@ import type { Header, SortDirection } from '@tanstack/vue-table';
 import type { KitFeatures } from './lib/features';
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from '@lucide/vue';
 import { FlexRender } from '@tanstack/vue-table';
-import { computed } from 'vue';
+import { computed, useTemplateRef } from 'vue';
 import { cn } from '@/utils';
 import { TableHead } from '../table';
+import { injectDataTableColumnPinning, usePinnedColumnWidth } from './lib/columnPinning';
 import { isInteractiveClick } from './lib/isInteractiveClick';
 
 const props = defineProps<{
@@ -28,7 +29,23 @@ const label = computed(() => {
   return typeof columnDef.header === 'string' ? columnDef.header : '';
 });
 
-const sortable = computed(() => !props.header.isPlaceholder && props.header.column.getCanSort());
+const { pinnedCellAttrs } = injectDataTableColumnPinning();
+
+const pinnedCell = computed(() => pinnedCellAttrs(
+  props.header.getLeafHeaders()
+    .filter(leafHeader => leafHeader.subHeaders.length === 0)
+    .map(leafHeader => leafHeader.column.id),
+));
+
+usePinnedColumnWidth(() => props.header.column, useTemplateRef('headCell'));
+
+const headCellClass = computed(() => cn(
+  'shadow-[inset_0_-1px_0_var(--border)]',
+  props.header.column.columnDef.meta?.headerClass,
+  pinnedCell.value?.class,
+));
+
+const sortable = computed(() => props.header.column.getCanSort());
 
 const direction = computed(() => props.header.column.getIsSorted());
 
@@ -52,10 +69,13 @@ function handleClick(event: MouseEvent) {
 <template>
   <TableHead
     v-if="sortable"
+    ref="headCell"
     :colspan="header.colSpan"
+    :rowspan="header.rowSpan"
     :aria-sort="direction ? ariaSortByDirection[direction] : 'none'"
     tabindex="0"
-    :class="cn('cursor-pointer outline-none select-none hover:bg-muted/50 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-inset', header.column.columnDef.meta?.headerClass)"
+    :class="cn('cursor-pointer outline-none select-none hover:bg-muted/50 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-inset', headCellClass)"
+    :style="pinnedCell?.style"
     @click="handleClick"
     @keydown.enter.self.prevent="toggleSorting"
     @keydown.space.self.prevent="toggleSorting"
@@ -81,11 +101,13 @@ function handleClick(event: MouseEvent) {
   </TableHead>
   <TableHead
     v-else
+    ref="headCell"
     :colspan="header.colSpan"
-    :class="header.column.columnDef.meta?.headerClass"
+    :rowspan="header.rowSpan"
+    :class="headCellClass"
+    :style="pinnedCell?.style"
   >
     <slot
-      v-if="!header.isPlaceholder"
       :name="`header-${header.column.id}`"
       :label="label"
     >

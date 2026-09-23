@@ -1,6 +1,7 @@
 import type { VueTable } from '@tanstack/vue-table';
 import type { HTMLAttributes } from 'vue';
 import {
+  columnPinningFeature,
   columnVisibilityFeature,
   createPaginatedRowModel,
   createSortedRowModel,
@@ -22,6 +23,7 @@ export interface KitColumnMeta {
 
 export const features = tableFeatures({
   columnVisibilityFeature,
+  columnPinningFeature,
   rowSortingFeature,
   sortedRowModel: createSortedRowModel(),
   sortFns: { alphanumeric: sortFn_alphanumeric, datetime: sortFn_datetime, text: sortFn_text },

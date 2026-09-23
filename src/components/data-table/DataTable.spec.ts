@@ -1,4 +1,5 @@
-import type { DataTableColumn, DataTableColumnVisibilityState, DataTableRowSelectionState, DataTableSortingState } from './types';
+import type { DOMWrapper } from '@vue/test-utils';
+import type { DataTableColumn, DataTableColumnVisibilityState, DataTablePaginationState, DataTableRowSelectionState, DataTableSortingState } from './types';
 import type { UseDataTableOptions } from './useDataTable';
 import { flushPromises, mount } from '@vue/test-utils';
 import { defineComponent, h, nextTick, ref } from 'vue';
@@ -91,6 +92,31 @@ describe('dataTable', () => {
     });
 
     expect(wrapper.getElementByText('th', 'Person').attributes('colspan')).toBe('2');
+  });
+
+  it('should merge the header of a column outside the groups over every header row', () => {
+    const wrapper = mountTable(undefined, {
+      columns: [
+        { accessorKey: 'name', header: 'Name' },
+        { id: 'details', header: 'Details', columns: [{ accessorKey: 'age', header: 'Age' }, { accessorKey: 'id', header: 'Code' }] },
+      ],
+    });
+
+    expect(wrapper.findAll('thead tr').map(row => row.findAll('th').map(header => header.text()))).toEqual([['Name', 'Details'], ['Age', 'Code']]);
+    expect(wrapper.getElementByText('th', 'Name').attributes('rowspan')).toBe('2');
+  });
+
+  it('should sort by a column whose header spans every header row', async () => {
+    const wrapper = mountTable(undefined, {
+      columns: [
+        { accessorKey: 'name', header: 'Name', sortable: true },
+        { id: 'details', header: 'Details', columns: [{ accessorKey: 'age', header: 'Age' }] },
+      ],
+    });
+
+    await wrapper.getElementByText('th', 'Name').trigger('click');
+
+    expect(wrapper.getElementByText('th', 'Name').attributes()).toMatchObject({ 'rowspan': '2', 'aria-sort': 'ascending' });
   });
 
   it('should apply the column classes and the row class', () => {
@@ -259,6 +285,145 @@ describe('dataTable', () => {
       const wrapper = mountTable(undefined, { data: [], tableOptions: { columnVisibility } });
 
       expect(wrapper.get('tbody td').attributes('colspan')).toBe('1');
+    });
+  });
+
+  describe('column pinning', () => {
+    const headerWidths: Record<string, number> = { Name: 120, Code: 64 };
+
+    class BorderBoxResizeObserver implements ResizeObserver {
+      constructor(private readonly callback: ResizeObserverCallback) {}
+
+      observe(target: Element) {
+        const inlineSize = headerWidths[target.textContent.trim()] ?? 0;
+
+        this.callback([{
+          target,
+          borderBoxSize: [{ inlineSize, blockSize: 40 }],
+          contentBoxSize: [],
+          devicePixelContentBoxSize: [],
+          contentRect: target.getBoundingClientRect(),
+        }], this);
+      }
+
+      unobserve() {}
+
+      disconnect() {}
+    }
+
+    const pinnedColumns: DataTableColumn<Person>[] = [
+      { accessorKey: 'age', header: 'Age' },
+      { accessorKey: 'name', header: 'Name', footer: 'Total', pinned: true, sortable: true },
+      { id: 'code', accessorKey: 'id', header: 'Code', pinned: true },
+    ];
+
+    beforeEach(() => {
+      vi.stubGlobal('ResizeObserver', BorderBoxResizeObserver);
+    });
+
+    afterEach(() => {
+      vi.unstubAllGlobals();
+    });
+
+    async function mountPinnedTable(options: MountOptions = {}) {
+      const wrapper = mountTable(undefined, { columns: pinnedColumns, ...options });
+      await flushPromises();
+
+      return wrapper;
+    }
+
+    function offsets<TElement extends Element>(cells: DOMWrapper<TElement>[]) {
+      return cells.map(cell => cell.attributes('style'));
+    }
+
+    it('should move the pinned columns to the start and offset each by the widths of the pinned columns before it', async () => {
+      const wrapper = await mountPinnedTable();
+      const stickyOffsets = ['inset-inline-start: 0px;', 'inset-inline-start: 120px;', undefined];
+
+      expect(wrapper.findAll('th').map(header => header.text())).toEqual(['Name', 'Code', 'Age']);
+      expect(offsets(wrapper.findAll('th'))).toEqual(stickyOffsets);
+      expect(offsets(wrapper.get('tbody tr').findAll('td'))).toEqual(stickyOffsets);
+      expect(offsets(wrapper.get('tfoot tr').findAll('td'))).toEqual(stickyOffsets);
+      expect(wrapper.findAll('th').map(header => header.classes('sticky'))).toEqual([true, true, false]);
+    });
+
+    it('should draw the edge after the last pinned column only', async () => {
+      const wrapper = await mountPinnedTable();
+
+      expect(wrapper.findAll('th').map(header => header.classes('after:border-e'))).toEqual([false, true, false]);
+      expect(wrapper.get('tbody tr').findAll('td').map(cell => cell.classes('after:border-e'))).toEqual([false, true, false]);
+    });
+
+    it('should offset the pinned columns by the visible ones only', async () => {
+      const columnVisibility = ref<DataTableColumnVisibilityState>({});
+      const wrapper = await mountPinnedTable({ tableOptions: { columnVisibility } });
+
+      columnVisibility.value = { name: false };
+      await flushPromises();
+
+      expect(offsets(wrapper.findAll('th'))).toEqual(['inset-inline-start: 0px;', undefined]);
+    });
+
+    it('should measure a pinned header that spans every header row and pin a group header over pinned columns', async () => {
+      const wrapper = await mountPinnedTable({
+        columns: [
+          { accessorKey: 'age', header: 'Age' },
+          { accessorKey: 'name', header: 'Name', pinned: true },
+          { id: 'details', header: 'Details', columns: [{ id: 'code', accessorKey: 'id', header: 'Code', pinned: true }] },
+        ],
+      });
+
+      expect(wrapper.findAll('thead tr').map(row => row.findAll('th').map(header => header.text()))).toEqual([['Name', 'Details', 'Age'], ['Code']]);
+      expect(offsets(wrapper.findAll('th'))).toEqual(['inset-inline-start: 0px;', 'inset-inline-start: 120px;', undefined, 'inset-inline-start: 120px;']);
+    });
+
+    it('should leave in place a group header over pinned and unpinned columns', async () => {
+      const wrapper = await mountPinnedTable({
+        columns: [
+          { id: 'details', header: 'Details', columns: [{ accessorKey: 'name', header: 'Name', pinned: true }, { accessorKey: 'age', header: 'Age' }] },
+        ],
+      });
+
+      expect(wrapper.getElementByText('th', 'Details').attributes('style')).toBeUndefined();
+      expect(wrapper.getElementByText('th', 'Name').attributes('style')).toBe('inset-inline-start: 0px;');
+    });
+  });
+
+  describe('footer', () => {
+    const totalColumns: DataTableColumn<Person>[] = [
+      { accessorKey: 'name', header: 'Name', footer: 'Total' },
+      { accessorKey: 'age', header: 'Age', footer: ({ rows }) => h('b', rows.reduce((total, person) => total + person.age, 0)) },
+    ];
+
+    function footerCells(wrapper: ReturnType<typeof mountTable>) {
+      return wrapper.findAll('tfoot td').map(cell => cell.text());
+    }
+
+    it('should total the rows of the current page', async () => {
+      const pagination = ref<DataTablePaginationState>({ pageIndex: 0, pageSize: 1 });
+      const wrapper = mountTable(undefined, { columns: totalColumns, tableOptions: { pagination } });
+
+      expect(footerCells(wrapper)).toEqual(['Total', '36']);
+
+      pagination.value = { pageIndex: 1, pageSize: 1 };
+      await nextTick();
+
+      expect(footerCells(wrapper)).toEqual(['Total', '54']);
+    });
+
+    it('should not render a footer when no visible column has one', () => {
+      const wrapper = mountTable(undefined, {
+        columns: [{ accessorKey: 'name', header: 'Name' }, { accessorKey: 'age', header: 'Age', footer: 'Sum' }],
+        tableOptions: { columnVisibility: ref({ age: false }) },
+      });
+
+      expect(wrapper.find('tfoot').exists()).toBe(false);
+    });
+
+    it('should not render the footer without rows', () => {
+      const wrapper = mountTable(undefined, { data: [], columns: totalColumns });
+
+      expect(wrapper.find('tfoot').exists()).toBe(false);
     });
   });
 

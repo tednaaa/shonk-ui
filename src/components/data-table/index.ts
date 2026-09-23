@@ -12,6 +12,7 @@ export type {
   DataTableColumnSort,
   DataTableColumnVisibilityState,
   DataTableDisplayColumn,
+  DataTableFooterContext,
   DataTableGroupColumn,
   DataTableHeaderContext,
   DataTableInstance,

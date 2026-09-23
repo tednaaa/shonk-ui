@@ -5,6 +5,7 @@ import type { KitFeatures } from './lib/features';
 import { FlexRender } from '@tanstack/vue-table';
 import { cn } from '@/utils';
 import { TableCell, TableRow } from '../table';
+import { injectDataTableColumnPinning } from './lib/columnPinning';
 import { isInteractiveClick } from './lib/isInteractiveClick';
 
 const props = defineProps<{
@@ -12,6 +13,8 @@ const props = defineProps<{
   rowClass?: (row: TData) => HTMLAttributes['class'];
   onRowClick?: (row: TData) => void;
 }>();
+
+const { pinnedCellAttrs } = injectDataTableColumnPinning();
 
 function handleClick(event: MouseEvent) {
   if (!props.onRowClick || isInteractiveClick(event))
@@ -30,6 +33,7 @@ function handleClick(event: MouseEvent) {
     <TableCell
       v-for="cell in row.getVisibleCells()"
       :key="cell.id"
+      v-bind="pinnedCellAttrs([cell.column.id])"
       :class="cell.column.columnDef.meta?.class"
     >
       <slot

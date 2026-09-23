@@ -6,7 +6,9 @@ import { computed, useTemplateRef } from 'vue';
 import { cn } from '@/utils';
 import { Table } from '../table';
 import DataTableBody from './DataTableBody.vue';
+import DataTableFooter from './DataTableFooter.vue';
 import DataTableHeader from './DataTableHeader.vue';
+import { useColumnPinning } from './lib/columnPinning';
 import { unwrapDataTable } from './lib/instance';
 
 const props = defineProps<{
@@ -31,6 +33,8 @@ const slots = defineSlots<{
 }>();
 
 const kitTable = computed(() => unwrapDataTable(props.table));
+
+useColumnPinning(kitTable);
 
 const scrollTable = useTemplateRef('scrollTable');
 
@@ -84,6 +88,8 @@ useInfiniteScroll(
           />
         </template>
       </DataTableBody>
+
+      <DataTableFooter :table="kitTable" />
     </Table>
   </div>
 </template>

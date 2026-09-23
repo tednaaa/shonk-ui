@@ -16,6 +16,8 @@ import DataTableLoading from './examples/DataTableLoading.vue';
 import dataTableLoadingSource from './examples/DataTableLoading.vue?raw';
 import DataTablePaginationVariants from './examples/DataTablePaginationVariants.vue';
 import dataTablePaginationVariantsSource from './examples/DataTablePaginationVariants.vue?raw';
+import DataTablePinnedColumns from './examples/DataTablePinnedColumns.vue';
+import dataTablePinnedColumnsSource from './examples/DataTablePinnedColumns.vue?raw';
 import DataTableRowClick from './examples/DataTableRowClick.vue';
 import dataTableRowClickSource from './examples/DataTableRowClick.vue?raw';
 import DataTableRowSelection from './examples/DataTableRowSelection.vue';
@@ -102,4 +104,9 @@ export const ColumnToggle: Story = {
 export const StoredColumns: Story = {
   parameters: example(dataTableStoredColumnsSource),
   render: render({ DataTableStoredColumns }, `<DataTableStoredColumns />`),
+};
+
+export const PinnedColumns: Story = {
+  parameters: example(dataTablePinnedColumnsSource),
+  render: render({ DataTablePinnedColumns }, `<DataTablePinnedColumns />`),
 };

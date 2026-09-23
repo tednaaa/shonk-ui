@@ -1,10 +1,11 @@
-import type { CellContext, ColumnDef } from '@tanstack/vue-table';
+import type { CellContext, ColumnDef, ColumnPinningState } from '@tanstack/vue-table';
 import type { VNodeChild } from 'vue';
 import type {
   DataTableAccessorFnColumn,
   DataTableAccessorKeyColumn,
   DataTableColumn,
   DataTableDisplayColumn,
+  DataTableFooterContext,
   DataTableGroupColumn,
   DataTableSelectColumn,
 } from '../types';
@@ -16,6 +17,8 @@ import DataTableSelectRowCheckbox from '../DataTableSelectRowCheckbox.vue';
 type KitColumnDef<TData extends object> = ColumnDef<KitFeatures, TData>;
 
 type KitCellRender<TData extends object> = (context: CellContext<KitFeatures, TData>) => VNodeChild;
+
+type DataTableColumnFooter<TData> = string | ((context: DataTableFooterContext<TData>) => VNodeChild);
 
 type AnyDataTableColumn<TData>
   = | DataTableAccessorKeyColumn<TData, keyof TData & string>
@@ -50,6 +53,7 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
 
   const base = {
     header: column.header,
+    footer: footerDef<TData>(column.footer),
     enableSorting: column.sortable ?? false,
     enableHiding: column.hideable ?? true,
     meta: { label: column.label ?? column.header, class: column.class, headerClass: column.headerClass },
@@ -90,6 +94,27 @@ function cellDef<TData extends object>(render: KitCellRender<TData> | undefined)
 
 function isAccessorKeyColumn<TData>(column: AnyDataTableColumn<TData>): column is DataTableAccessorKeyColumn<TData, keyof TData & string> {
   return column.accessorKey !== undefined;
+}
+
+export function toColumnPinning<TData extends object>(columns: readonly DataTableColumn<TData>[]): ColumnPinningState {
+  return { start: columns.flatMap(pinnedColumnIds), end: [] };
+}
+
+function pinnedColumnIds<TData extends object>(column: AnyDataTableColumn<TData>): string[] {
+  if (column.columns)
+    return toColumnPinning(column.columns).start;
+
+  if (!column.pinned)
+    return [];
+
+  return [columnId(column)];
+}
+
+function footerDef<TData extends object>(footer: DataTableColumnFooter<TData> | undefined): KitColumnDef<TData>['footer'] {
+  if (typeof footer !== 'function')
+    return footer;
+
+  return ({ table }) => footer({ rows: table.getRowModel().rows.map(row => row.original) });
 }
 
 export function hideableColumnIds<TData extends object>(columns: readonly DataTableColumn<TData>[]): string[] {

@@ -2,7 +2,7 @@ import type { DataTableColumn } from '../types';
 import { flexRender, useTable } from '@tanstack/vue-table';
 import { selectColumn } from '../columns/selectColumn';
 import { features } from './features';
-import { toColumnDefs } from './toColumnDefs';
+import { toColumnDefs, toColumnPinning } from './toColumnDefs';
 
 interface Person {
   id: string;
@@ -98,6 +98,14 @@ describe('toColumnDefs', () => {
       ['name', false],
       ['age', true],
     ]);
+  });
+
+  it('should pin the pinned leaf columns to the start by their ids, inside groups too', () => {
+    expect(toColumnPinning([
+      selectColumn(),
+      { accessorKey: 'name', pinned: true },
+      { id: 'details', columns: [{ id: 'years', accessorKey: 'age', pinned: true }, { accessorKey: 'id' }] },
+    ])).toEqual({ start: ['name', 'years'], end: [] });
   });
 
   it('should keep the select column from sorting and hiding', () => {
