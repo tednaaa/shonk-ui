@@ -23,6 +23,23 @@
 	--color-info-foreground: var(--info-foreground);
 	--color-border: var(--border);
 	--color-input: var(--input);
+	--color-field: var(--field);
+	--color-field-foreground: var(--field-foreground);
+	--color-destructive-ring: var(--destructive-ring);
+	--color-destructive-fill: var(--destructive-fill);
+	--color-destructive-fill-foreground: var(--destructive-fill-foreground);
+	--color-destructive-fill-hover: var(--destructive-fill-hover);
+	--color-destructive-subtle: var(--destructive-subtle);
+	--color-destructive-subtle-foreground: var(--destructive-subtle-foreground);
+	--color-button-secondary: var(--button-secondary);
+	--color-button-secondary-foreground: var(--button-secondary-foreground);
+	--color-button-secondary-accent: var(--button-secondary-accent);
+	--color-button-secondary-accent-foreground: var(--button-secondary-accent-foreground);
+	--color-button-ghost-accent: var(--button-ghost-accent);
+	--color-switch-thumb: var(--switch-thumb);
+	--color-switch-thumb-checked: var(--switch-thumb-checked);
+	--shadow-pinned-top: var(--pinned-top-shadow);
+	--shadow-pinned-bottom: var(--pinned-bottom-shadow);
 	--color-ring: var(--ring);
 	--color-chart-1: var(--chart-1);
 	--color-chart-2: var(--chart-2);
@@ -131,6 +148,48 @@
 	--sidebar-accent-foreground: oklch(0.9094 0.0058 264.53);
 	--sidebar-border: oklch(0.328 0.0098 260.72);
 	--sidebar-ring: oklch(0.6182 0.1831 262.5);
+}
+
+:root,
+[data-theme] {
+	--field: var(--muted);
+	--field-foreground: var(--foreground);
+	--destructive-ring: color-mix(in oklab, var(--destructive) 20%, transparent);
+	--destructive-fill: var(--destructive);
+	--destructive-fill-foreground: oklch(1 0 0);
+	--destructive-fill-hover: color-mix(in oklab, var(--destructive) 90%, transparent);
+	--destructive-subtle: color-mix(in oklab, var(--destructive) 10%, transparent);
+	--destructive-subtle-foreground: var(--destructive);
+	--button-secondary: var(--background);
+	--button-secondary-foreground: var(--foreground);
+	--button-secondary-accent: var(--accent);
+	--button-secondary-accent-foreground: var(--accent-foreground);
+	--button-ghost-accent: var(--accent);
+	--switch-thumb: var(--background);
+	--switch-thumb-checked: var(--background);
+	--pinned-top-shadow: 0 6px 8px -6px rgb(0 0 0 / 0.25);
+	--pinned-bottom-shadow: 0 -6px 8px -6px rgb(0 0 0 / 0.25);
+}
+
+.dark,
+.dark [data-theme] {
+	--field: color-mix(in oklab, var(--input) 30%, transparent);
+	--field-foreground: var(--foreground);
+	--destructive-ring: color-mix(in oklab, var(--destructive) 40%, transparent);
+	--destructive-fill: color-mix(in oklab, var(--destructive) 60%, transparent);
+	--destructive-fill-foreground: oklch(1 0 0);
+	--destructive-fill-hover: var(--destructive-fill);
+	--destructive-subtle: color-mix(in oklab, var(--destructive) 20%, transparent);
+	--destructive-subtle-foreground: var(--destructive);
+	--button-secondary: color-mix(in oklab, var(--muted) 30%, transparent);
+	--button-secondary-foreground: var(--foreground);
+	--button-secondary-accent: color-mix(in oklab, var(--muted) 50%, transparent);
+	--button-secondary-accent-foreground: var(--accent-foreground);
+	--button-ghost-accent: color-mix(in oklab, var(--accent) 50%, transparent);
+	--switch-thumb: var(--foreground);
+	--switch-thumb-checked: var(--primary-foreground);
+	--pinned-top-shadow: 0 6px 10px -6px rgb(0 0 0 / 0.8);
+	--pinned-bottom-shadow: 0 -6px 10px -6px rgb(0 0 0 / 0.8);
 }
 
 @layer base {

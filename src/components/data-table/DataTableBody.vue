@@ -28,9 +28,9 @@ const bottomRows = computed(() => props.table.getBottomRows());
 const hasRows = computed(() => topRows.value.length + centerRows.value.length + bottomRows.value.length > 0);
 const visibleColumnCount = computed(() => props.table.getVisibleLeafColumns().length);
 
-const topRowsClass = 'shadow-[0_6px_8px_-6px_rgb(0_0_0/0.25)] dark:shadow-[0_6px_10px_-6px_rgb(0_0_0/0.8)] [&>tr>td]:pb-[calc(--spacing(2)+1px)] [&>tr>td]:shadow-[inset_0_-1px_0_var(--border)]';
+const topRowsClass = 'shadow-pinned-top [&>tr>td]:pb-[calc(--spacing(2)+1px)] [&>tr>td]:shadow-[inset_0_-1px_0_var(--border)]';
 
-const bottomRowsClass = 'shadow-[0_-6px_8px_-6px_rgb(0_0_0/0.25)] dark:shadow-[0_-6px_10px_-6px_rgb(0_0_0/0.8)] [&>tr>td]:pt-[calc(--spacing(2)+1px)] [&>tr>td]:shadow-[inset_0_1px_0_var(--border)]';
+const bottomRowsClass = 'shadow-pinned-bottom [&>tr>td]:pt-[calc(--spacing(2)+1px)] [&>tr>td]:shadow-[inset_0_1px_0_var(--border)]';
 
 const pinnedRowsClass = computed(() => cn(
   'sticky z-2 bg-background [&>tr]:border-b-0',

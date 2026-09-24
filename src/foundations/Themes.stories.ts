@@ -60,7 +60,7 @@ export const Themes: Story = {
                   <span class="size-6 rounded-md bg-info"></span>
                 </div>
 
-                <div class="h-8 rounded-md border border-input bg-background"></div>
+                <div class="h-8 rounded-md border border-input bg-field text-field-foreground"></div>
               </div>
             </div>
           </div>

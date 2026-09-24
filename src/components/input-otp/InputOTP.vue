@@ -195,9 +195,9 @@ function handleKeydown(event: KeyboardEvent, index: number) {
           :required="required"
           :aria-invalid="invalid || undefined"
           :class="cn(
-            'relative size-10 border-y border-r border-border bg-background text-center text-sm text-foreground shadow-xs transition-all outline-none placeholder:text-muted-foreground first:rounded-l-md first:border-l last:rounded-r-md disabled:cursor-not-allowed dark:bg-input/30',
+            'relative size-10 border-y border-r border-border bg-field text-center text-sm text-field-foreground shadow-xs transition-all outline-none placeholder:text-muted-foreground first:rounded-l-md first:border-l last:rounded-r-md disabled:cursor-not-allowed',
             'focus-visible:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50',
-            'aria-invalid:border-destructive focus-visible:aria-invalid:ring-destructive/20 dark:focus-visible:aria-invalid:ring-destructive/40',
+            'aria-invalid:border-destructive focus-visible:aria-invalid:ring-destructive-ring',
           )"
           @input="handleInput($event, index)"
           @keydown="handleKeydown($event, index)"
