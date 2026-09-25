@@ -84,7 +84,7 @@ function clear() {
           role="combobox"
           :aria-expanded="open"
           :disabled="disabled"
-          :class="cn(comboboxTriggerVariants({ showClear, placeholder: !lastSelectedLabel }), props.class)"
+          :class="cn('bg-field text-field-foreground', comboboxTriggerVariants({ showClear, placeholder: !lastSelectedLabel }), props.class)"
         >
           <span class="whitespace-nowrap">{{ lastSelectedLabel ?? props.triggerPlaceholder ?? locale.combobox.triggerPlaceholder }}</span>
         </Button>

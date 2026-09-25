@@ -61,7 +61,7 @@ defineExpose({ close });
     <PopoverTrigger as-child>
       <Button
         variant="secondary"
-        :class="cn('w-55 justify-start text-left font-normal', !displayValue && 'text-muted-foreground')"
+        :class="cn('w-55 justify-start bg-field text-left font-normal text-field-foreground', !displayValue && 'text-muted-foreground')"
       >
         <CalendarIcon :size="16" />
         <span>{{ displayValue || (props.triggerPlaceholder ?? locale.datePicker.triggerPlaceholder) }}</span>
