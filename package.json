@@ -18,7 +18,15 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
-    "./themes/*.css": "./src/styles/themes/*.css"
+    "./themes/*.css": "./src/styles/themes/*.css",
+    "./theme-validator": {
+      "types": "./dist/theme-validator.d.ts",
+      "import": "./dist/theme-validator.js",
+      "default": "./dist/theme-validator.js"
+    }
+  },
+  "bin": {
+    "shonk-ui-validate-themes": "./dist/validate-themes.js"
   },
   "files": [
     "CHANGELOG.md",
@@ -41,7 +49,8 @@
     "dev": "tsdown --watch",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
-    "test:unit": "vitest run --project=unit",
+    "test:unit": "vitest run --project=unit --project=theme-validator",
+    "validate:themes": "node dist/validate-themes.js",
     "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {

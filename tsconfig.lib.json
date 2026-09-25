@@ -21,6 +21,6 @@
     "verbatimModuleSyntax": true,
     "skipLibCheck": true
   },
-  "include": ["src"],
-  "exclude": ["src/**/*.spec.ts", "src/**/*.tsx"]
+  "include": ["src", "scripts/*.ts"],
+  "exclude": ["src/**/*.spec.ts", "src/**/*.tsx", "scripts/**/*.spec.ts"]
 }

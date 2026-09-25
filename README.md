@@ -47,7 +47,7 @@ Every colour is a CSS variable, so a theme is a set of values and nothing else. 
 ```
 
 ```html
-<html data-theme="nocturne">
+<html data-theme="nocturne"></html>
 ```
 
 Shipped presets:
@@ -60,14 +60,17 @@ Shipped presets:
 Every preset carries a light side and a dark side, so the attribute and the `dark` class are independent:
 
 ```html
-<html class="dark" data-theme="nocturne">
+<html class="dark" data-theme="nocturne"></html>
 ```
 
 Change the attribute at runtime and everything repaints. Put it on any element instead of `<html>` to theme one subtree.
 
 ### Build your own
 
-Set the variables yourself, scoped to an attribute of your own so the default stays intact:
+Copy a preset from `src/styles/themes/atlas.css:1`, rename its `data-theme` value, and edit its palette.
+Keep every palette variable in both modes and both dark selectors.
+
+An abbreviated example:
 
 ```css
 [data-theme="mine"] {
@@ -88,7 +91,53 @@ Set the variables yourself, scoped to an attribute of your own so the default st
 }
 ```
 
-`src/styles/theme.css` lists every variable a theme sets. One left out is inherited from a default it was not designed against, so set them all.
+The example omits most palette variables; use the complete preset as your starting point.
+Shared component tokens such as `--field` and `--button-ghost-accent` derive from your palette automatically.
+Those tokens and `--radius` are optional overrides.
+
+### Validate a theme
+
+Requires Node.js 20 or newer.
+
+```bash
+pnpm exec shonk-ui-validate-themes ./my-theme.css
+```
+
+- Accepts one or more standalone CSS files.
+- With no paths, checks the packaged default and all presets.
+- Requires every palette variable in light, dark-on-the-theme-element, and dark-on-an-ancestor scopes.
+- Reports missing scopes, missing or empty variables, reset keywords, unresolved references, and cycles.
+- Returns exit code `1` when a file fails validation or cannot be read.
+
+Validation supports `:root` / `.dark` themes and the named-theme selectors shown above.
+Grouped selectors, comments, helper variables, nested color functions, `var()` fallbacks, and `!important` are supported.
+Keep theme definitions at the top level; imports, conditional rules, nesting, and escaped identifiers are unsupported and produce diagnostics.
+
+> This checks variable definitions and references, not CSS color validity, contrast, or browser rendering.
+
+The Node API returns structured diagnostics without printing or setting an exit code:
+
+```ts
+import { readFileSync } from 'node:fs';
+import { validateThemeCss } from 'shonk-ui/theme-validator';
+
+const result = validateThemeCss(readFileSync('./my-theme.css', 'utf8'), {
+  file: 'my-theme.css',
+});
+
+if (!result.valid) {
+  for (const diagnostic of result.diagnostics) {
+    process.stderr.write(`${diagnostic.file}: ${diagnostic.message}\n`);
+  }
+}
+```
+
+For development in this repository:
+
+```bash
+pnpm build
+pnpm validate:themes
+```
 
 ## Usage
 
@@ -112,9 +161,7 @@ import { ru, shonkUI } from 'shonk-ui';
 import { createApp } from 'vue';
 import App from './App.vue';
 
-createApp(App)
-  .use(shonkUI, { locale: ru })
-  .mount('#app');
+createApp(App).use(shonkUI, { locale: ru }).mount('#app');
 ```
 
 `en` and `ru` ship with the library. Any object of the same shape works, and a partial one falls

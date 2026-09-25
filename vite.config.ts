@@ -32,6 +32,15 @@ export default defineConfig({
           environment: 'jsdom',
         },
       },
+      {
+        extends: true,
+        root: import.meta.dirname,
+        test: {
+          include: ['scripts/**/*.spec.ts'],
+          name: 'theme-validator',
+          environment: 'node',
+        },
+      },
     ],
   },
 });
