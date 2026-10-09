@@ -26,6 +26,8 @@ type KitCellRender<TData extends object> = (context: CellContext<KitFeatures, TD
 
 type DataTableColumnFooter<TData> = string | ((context: DataTableFooterContext<TData>) => VNodeChild);
 
+const defaultMinSize = 64;
+
 export type DataTableExportValues<TData> = Map<string, (row: TData) => DataTableExportValue>;
 
 type AnyDataTableColumn<TData>
@@ -45,6 +47,8 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
     return {
       id: column.id,
       enableHiding: false,
+      enableResizing: false,
+      minSize: 0,
       meta: { class: 'relative w-px', headerClass: 'relative w-px' },
       header: ({ table }) => h(DataTableSelectPageRowsCheckbox<TData>, { table }),
       cell: ({ row }) => h(DataTableSelectRowCheckbox<TData>, { row }),
@@ -55,6 +59,8 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
     return {
       id: column.id,
       enableHiding: false,
+      enableResizing: false,
+      minSize: 0,
       meta: { class: 'w-px', headerClass: 'w-px' },
       header: ({ table }) => h(DataTableExpandAllRowsButton<TData>, { table }),
       cell: ({ row }) => h(DataTableExpandRowButton<TData>, { row }),
@@ -70,12 +76,18 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
     };
   }
 
+  const resizable = column.resizable ?? true;
+
   const base = {
     header: column.header,
     footer: footerDef<TData>(column.footer),
     enableSorting: column.sortable ?? false,
     enableHiding: column.hideable ?? true,
-    meta: { label: column.label ?? column.header, class: column.class, headerClass: column.headerClass },
+    enableResizing: resizable,
+    size: column.size,
+    minSize: column.minSize ?? (resizable ? Math.min(defaultMinSize, column.size ?? defaultMinSize) : 0),
+    maxSize: column.maxSize,
+    meta: { label: column.label ?? column.header, class: column.class, headerClass: column.headerClass, sized: column.size !== undefined },
   };
 
   if (isAccessorKeyColumn(column)) {

@@ -9,6 +9,7 @@ import DataTableBody from './DataTableBody.vue';
 import DataTableFooter from './DataTableFooter.vue';
 import DataTableHeader from './DataTableHeader.vue';
 import { useColumnPinning } from './lib/columnPinning';
+import { useColumnSizing } from './lib/columnSizing';
 import { unwrapDataTable } from './lib/instance';
 import { useRowPinning } from './lib/rowPinning';
 
@@ -36,7 +37,9 @@ const slots = defineSlots<{
 
 const kitTable = computed(() => unwrapDataTable(props.table));
 
-useColumnPinning(kitTable);
+const { enabled: resizable, columns: sizedColumns, tableAttrs, fixedColumnWidth } = useColumnSizing(kitTable);
+
+useColumnPinning(kitTable, fixedColumnWidth);
 useRowPinning();
 
 const scrollTable = useTemplateRef('scrollTable');
@@ -59,8 +62,18 @@ useInfiniteScroll(
     <Table
       ref="scrollTable"
       table-container-class="min-h-0 flex-1"
+      :class="tableAttrs?.class"
+      :table-style="tableAttrs?.style"
       :aria-busy="loading || loadingMore"
     >
+      <colgroup v-if="resizable">
+        <col
+          v-for="column in sizedColumns"
+          :key="column.id"
+          :style="column.width === undefined ? undefined : { width: `${column.width}px` }"
+        >
+      </colgroup>
+
       <DataTableHeader :table="kitTable">
         <template
           v-for="(_, name) in slots"

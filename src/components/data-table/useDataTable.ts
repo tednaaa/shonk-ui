@@ -1,6 +1,6 @@
 import type { ExpandedState } from '@tanstack/vue-table';
 import type { MaybeRefOrGetter, Ref } from 'vue';
-import type { DataTableColumn, DataTableColumnVisibilityState, DataTableExpandedState, DataTableInstance, DataTablePaginationState, DataTableRowPinningState, DataTableRowSelectionState, DataTableSortingState } from './types';
+import type { DataTableColumn, DataTableColumnSizingState, DataTableColumnVisibilityState, DataTableExpandedState, DataTableInstance, DataTablePaginationState, DataTableRowPinningState, DataTableRowSelectionState, DataTableSortingState } from './types';
 import { functionalUpdate, useTable } from '@tanstack/vue-table';
 import { computed, ref, toValue } from 'vue';
 import { features } from './lib/features';
@@ -21,6 +21,7 @@ export interface UseDataTableOptions<TData extends object> {
   selectedRows?: Ref<TData[]>;
   enableRowSelection?: (row: TData) => boolean;
   columnVisibility?: Ref<DataTableColumnVisibilityState>;
+  columnSizing?: Ref<DataTableColumnSizingState>;
   expanded?: Ref<DataTableExpandedState>;
   getRowCanExpand?: (row: TData) => boolean;
   rowPinning?: Ref<DataTableRowPinningState>;
@@ -33,6 +34,7 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
   const pagination = options.pagination ?? ref<DataTablePaginationState>({ pageIndex: 0, pageSize: Infinity });
   const rowSelection = options.rowSelection ?? ref<DataTableRowSelectionState>({});
   const columnVisibility = options.columnVisibility ?? ref<DataTableColumnVisibilityState>({});
+  const columnSizing = options.columnSizing ?? ref<DataTableColumnSizingState>({});
   const expanded = options.expanded ?? ref<DataTableExpandedState>({});
   const rowPinning = options.rowPinning ?? ref<DataTableRowPinningState>({ top: [], bottom: [] });
   const columnPinning = computed(() => toColumnPinning(toValue(options.columns)));
@@ -63,6 +65,7 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
       pagination: pagination.value,
       rowSelection: rowSelection.value,
       columnVisibility: columnVisibility.value,
+      columnSizing: columnSizing.value,
       columnPinning: columnPinning.value,
       expanded: expanded.value,
       rowPinning: rowPinning.value,
@@ -80,6 +83,9 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
     onColumnVisibilityChange: (updater) => {
       columnVisibility.value = functionalUpdate(updater, columnVisibility.value);
     },
+    onColumnSizingChange: (updater) => {
+      columnSizing.value = functionalUpdate(updater, columnSizing.value);
+    },
     onExpandedChange: (updater) => {
       expanded.value = toExpandedState(functionalUpdate(updater, expanded.value));
     },
@@ -90,6 +96,8 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
     sortDescFirst: false,
     enableRowSelection: enableRowSelection === undefined ? undefined : row => enableRowSelection(row.original),
     getRowCanExpand: row => getRowCanExpand?.(row.original) ?? true,
+    enableColumnResizing: options.columnSizing !== undefined,
+    columnResizeMode: 'onChange',
     autoResetExpanded: false,
     keepPinnedRows: true,
   });

@@ -136,13 +136,40 @@ describe('toColumnDefs', () => {
     expect(column?.getCanHide()).toBe(false);
   });
 
+  it('should never resize the select and expand columns', () => {
+    const table = buildTable([selectColumn(), expandColumn(), { accessorKey: 'name' }]);
+
+    expect(table.getColumn('select')?.getCanResize()).toBe(false);
+    expect(table.getColumn('expand')?.getCanResize()).toBe(false);
+    expect(table.getColumn('name')?.getCanResize()).toBe(true);
+  });
+
+  it('should let a column opt out of resizing', () => {
+    const table = buildTable([{ accessorKey: 'name', resizable: false }]);
+
+    expect(table.getColumn('name')?.getCanResize()).toBe(false);
+  });
+
+  it('should take the column size and its limits', () => {
+    const table = buildTable([
+      { accessorKey: 'name', size: 128 },
+      { accessorKey: 'age', size: 40 },
+      { id: 'note', minSize: 100, maxSize: 200 },
+    ]);
+
+    expect(table.getColumn('name')?.getSize()).toBe(128);
+    expect(table.getColumn('name')?.columnDef.minSize).toBe(64);
+    expect(table.getColumn('age')?.columnDef.minSize).toBe(40);
+    expect(table.getColumn('note')?.columnDef).toMatchObject({ minSize: 100, maxSize: 200 });
+  });
+
   it('should keep the column classes for the renderer', () => {
     const table = buildTable([
       { accessorKey: 'age', class: 'text-right', headerClass: 'w-20' },
       { id: 'person', headerClass: 'text-center', columns: [{ accessorKey: 'name' }] },
     ]);
 
-    expect(table.getColumn('age')?.columnDef.meta).toEqual({ class: 'text-right', headerClass: 'w-20' });
+    expect(table.getColumn('age')?.columnDef.meta).toEqual({ class: 'text-right', headerClass: 'w-20', sized: false });
     expect(table.getColumn('person')?.columnDef.meta).toEqual({ headerClass: 'text-center' });
   });
 });

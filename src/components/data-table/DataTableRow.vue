@@ -6,6 +6,7 @@ import { FlexRender } from '@tanstack/vue-table';
 import { computed } from 'vue';
 import { cn } from '@/utils';
 import { TableCell, TableRow } from '../table';
+import DataTableCellContent from './DataTableCellContent.vue';
 import { injectDataTableColumnPinning } from './lib/columnPinning';
 import { isInteractiveClick } from './lib/isInteractiveClick';
 
@@ -51,13 +52,15 @@ function handleClick(event: MouseEvent) {
       v-bind="cellAttrs(cell)"
       :rowspan="rowSpan(cell)"
     >
-      <slot
-        :name="`cell-${cell.column.id}`"
-        :row="row.original"
-        :value="cell.getValue()"
-      >
-        <FlexRender :cell="cell" />
-      </slot>
+      <DataTableCellContent :column="cell.column">
+        <slot
+          :name="`cell-${cell.column.id}`"
+          :row="row.original"
+          :value="cell.getValue()"
+        >
+          <FlexRender :cell="cell" />
+        </slot>
+      </DataTableCellContent>
     </TableCell>
   </TableRow>
 

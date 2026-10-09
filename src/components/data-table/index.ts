@@ -11,6 +11,7 @@ export type {
   DataTableAccessorKeyColumn,
   DataTableCellContext,
   DataTableColumn,
+  DataTableColumnSizingState,
   DataTableColumnSort,
   DataTableColumnVisibilityState,
   DataTableDisplayColumn,

@@ -5,6 +5,7 @@ import { FlexRender } from '@tanstack/vue-table';
 import { computed, useTemplateRef } from 'vue';
 import { cn } from '@/utils';
 import { TableCell, TableFooter, TableRow } from '../table';
+import DataTableCellContent from './DataTableCellContent.vue';
 import { injectDataTableColumnPinning } from './lib/columnPinning';
 import { getDisplayedRows, usePinnedRowsInset } from './lib/rowPinning';
 
@@ -43,7 +44,9 @@ const visible = computed(() => getDisplayedRows(props.table).length > 0
         :key="header.id"
         v-bind="cellAttrs(header)"
       >
-        <FlexRender :footer="header" />
+        <DataTableCellContent :column="header.column">
+          <FlexRender :footer="header" />
+        </DataTableCellContent>
       </TableCell>
     </TableRow>
   </TableFooter>

@@ -31,6 +31,10 @@ interface DataTableColumnBase<TData> {
   footer?: string | ((context: DataTableFooterContext<TData>) => VNodeChild);
   hideable?: boolean;
   pinned?: boolean;
+  size?: number;
+  minSize?: number;
+  maxSize?: number;
+  resizable?: boolean;
   class?: HTMLAttributes['class'];
   headerClass?: HTMLAttributes['class'];
 }
@@ -76,6 +80,10 @@ export interface DataTableGroupColumn<TData> {
   footer?: undefined;
   hideable?: undefined;
   pinned?: undefined;
+  size?: undefined;
+  minSize?: undefined;
+  maxSize?: undefined;
+  resizable?: undefined;
   headerClass?: HTMLAttributes['class'];
   accessorKey?: undefined;
   accessorFn?: undefined;
@@ -93,6 +101,10 @@ export interface DataTableSelectColumn {
   footer?: undefined;
   hideable?: undefined;
   pinned?: undefined;
+  size?: undefined;
+  minSize?: undefined;
+  maxSize?: undefined;
+  resizable?: undefined;
   accessorKey?: undefined;
   accessorFn?: undefined;
   columns?: undefined;
@@ -109,6 +121,10 @@ export interface DataTableExpandColumn {
   footer?: undefined;
   hideable?: undefined;
   pinned?: undefined;
+  size?: undefined;
+  minSize?: undefined;
+  maxSize?: undefined;
+  resizable?: undefined;
   accessorKey?: undefined;
   accessorFn?: undefined;
   columns?: undefined;
@@ -141,6 +157,8 @@ export interface DataTablePaginationState {
 export type DataTableRowSelectionState = Record<string, true>;
 
 export type DataTableColumnVisibilityState = Record<string, boolean>;
+
+export type DataTableColumnSizingState = Record<string, number>;
 
 export type DataTableExpandedState = Record<string, true>;
 

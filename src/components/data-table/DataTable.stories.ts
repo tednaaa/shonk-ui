@@ -6,6 +6,8 @@ import DataTableBasic from './examples/DataTableBasic.vue';
 import dataTableBasicSource from './examples/DataTableBasic.vue?raw';
 import DataTableClientSorting from './examples/DataTableClientSorting.vue';
 import dataTableClientSortingSource from './examples/DataTableClientSorting.vue?raw';
+import DataTableColumnResizing from './examples/DataTableColumnResizing.vue';
+import dataTableColumnResizingSource from './examples/DataTableColumnResizing.vue?raw';
 import DataTableColumnToggle from './examples/DataTableColumnToggle.vue';
 import dataTableColumnToggleSource from './examples/DataTableColumnToggle.vue?raw';
 import DataTableEmpty from './examples/DataTableEmpty.vue';
@@ -117,6 +119,11 @@ export const StoredColumns: Story = {
 export const PinnedColumns: Story = {
   parameters: example(dataTablePinnedColumnsSource),
   render: render({ DataTablePinnedColumns }, `<DataTablePinnedColumns />`),
+};
+
+export const ColumnResizing: Story = {
+  parameters: example(dataTableColumnResizingSource),
+  render: render({ DataTableColumnResizing }, `<DataTableColumnResizing />`),
 };
 
 export const RowExpansion: Story = {

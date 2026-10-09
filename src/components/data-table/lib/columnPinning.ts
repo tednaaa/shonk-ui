@@ -20,7 +20,10 @@ export const [injectDataTableColumnPinning, provideDataTableColumnPinning] = cre
   setColumnWidth: (columnId: string, width: number) => void;
 }>('DataTable');
 
-export function useColumnPinning<TData extends object>(table: MaybeRefOrGetter<KitTable<TData>>) {
+export function useColumnPinning<TData extends object>(
+  table: MaybeRefOrGetter<KitTable<TData>>,
+  fixedColumnWidth: (columnId: string) => number | undefined,
+) {
   const columnWidths = ref<Record<string, number>>({});
 
   const startPinnedColumnIds = computed(() => toValue(table).getStartVisibleLeafColumns().map(column => column.id));
@@ -31,7 +34,7 @@ export function useColumnPinning<TData extends object>(table: MaybeRefOrGetter<K
 
     for (const columnId of startPinnedColumnIds.value) {
       offsets.set(columnId, offset);
-      offset += columnWidths.value[columnId] ?? 0;
+      offset += fixedColumnWidth(columnId) ?? columnWidths.value[columnId] ?? 0;
     }
 
     return offsets;

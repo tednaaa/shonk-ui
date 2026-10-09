@@ -6,7 +6,10 @@ import { FlexRender } from '@tanstack/vue-table';
 import { computed, useTemplateRef } from 'vue';
 import { cn } from '@/utils';
 import { TableHead } from '../table';
+import DataTableCellContent from './DataTableCellContent.vue';
+import DataTableResizeHandle from './DataTableResizeHandle.vue';
 import { injectDataTableColumnPinning, usePinnedColumnWidth } from './lib/columnPinning';
+import { injectDataTableColumnSizing } from './lib/columnSizing';
 import { isInteractiveClick } from './lib/isInteractiveClick';
 
 const props = defineProps<{
@@ -31,16 +34,28 @@ const label = computed(() => {
 
 const { pinnedCellAttrs } = injectDataTableColumnPinning();
 
+const { contentStyle, registerHeadCell } = injectDataTableColumnSizing();
+
 const pinnedCell = computed(() => pinnedCellAttrs(
   props.header.getLeafHeaders()
     .filter(leafHeader => leafHeader.subHeaders.length === 0)
     .map(leafHeader => leafHeader.column.id),
 ));
 
-usePinnedColumnWidth(() => props.header.column, useTemplateRef('headCell'));
+const headCell = useTemplateRef('headCell');
+
+usePinnedColumnWidth(() => props.header.column, headCell);
+
+if (props.header.column.columns.length === 0)
+  registerHeadCell(props.header.column.id, headCell);
+
+const resizable = computed(() => props.header.column.columns.length === 0 && props.header.column.getCanResize());
+
+const labelStyle = computed(() => resizable.value ? contentStyle(props.header.column.id) : undefined);
 
 const headCellClass = computed(() => cn(
   'shadow-[inset_0_-1px_0_var(--border)]',
+  resizable.value && 'relative',
   props.header.column.columnDef.meta?.headerClass,
   pinnedCell.value?.class,
 ));
@@ -56,12 +71,22 @@ const sortPosition = computed(() => {
   return sortedColumnCount > 1 && sortIndex >= 0 ? sortIndex + 1 : undefined;
 });
 
+let resizeStarted = false;
+
 function toggleSorting(event: MouseEvent | KeyboardEvent) {
   props.header.column.toggleSorting(undefined, event.shiftKey);
 }
 
+function handleMouseDown() {
+  resizeStarted = false;
+}
+
+function handleResizeStart() {
+  resizeStarted = true;
+}
+
 function handleClick(event: MouseEvent) {
-  if (sortable.value && !isInteractiveClick(event))
+  if (sortable.value && !resizeStarted && !isInteractiveClick(event))
     toggleSorting(event);
 }
 </script>
@@ -76,20 +101,26 @@ function handleClick(event: MouseEvent) {
     tabindex="0"
     :class="cn('cursor-pointer outline-none select-none hover:bg-muted/50 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-inset', headCellClass)"
     :style="pinnedCell?.style"
+    @mousedown="handleMouseDown"
     @click="handleClick"
     @keydown.enter.self.prevent="toggleSorting"
     @keydown.space.self.prevent="toggleSorting"
   >
-    <span class="inline-flex items-center gap-1.5">
-      <slot
-        :name="`header-${header.column.id}`"
-        :label="label"
-      >
-        <FlexRender :header="header" />
-      </slot>
+    <span
+      class="inline-flex max-w-full items-center gap-1.5"
+      :style="labelStyle"
+    >
+      <span :class="resizable && 'truncate'">
+        <slot
+          :name="`header-${header.column.id}`"
+          :label="label"
+        >
+          <FlexRender :header="header" />
+        </slot>
+      </span>
       <span
         aria-hidden="true"
-        :class="cn('inline-flex items-center gap-0.5 text-xs tabular-nums', direction ? 'text-foreground' : 'text-muted-foreground')"
+        :class="cn('inline-flex shrink-0 items-center gap-0.5 text-xs tabular-nums', direction ? 'text-foreground' : 'text-muted-foreground')"
       >
         <component
           :is="direction ? sortIconByDirection[direction] : ArrowUpDownIcon"
@@ -98,6 +129,11 @@ function handleClick(event: MouseEvent) {
         {{ sortPosition }}
       </span>
     </span>
+    <DataTableResizeHandle
+      v-if="resizable"
+      :header="header"
+      @resize-start="handleResizeStart"
+    />
   </TableHead>
   <TableHead
     v-else
@@ -107,11 +143,18 @@ function handleClick(event: MouseEvent) {
     :class="headCellClass"
     :style="pinnedCell?.style"
   >
-    <slot
-      :name="`header-${header.column.id}`"
-      :label="label"
-    >
-      <FlexRender :header="header" />
-    </slot>
+    <DataTableCellContent :column="header.column">
+      <slot
+        :name="`header-${header.column.id}`"
+        :label="label"
+      >
+        <FlexRender :header="header" />
+      </slot>
+    </DataTableCellContent>
+    <DataTableResizeHandle
+      v-if="resizable"
+      :header="header"
+      @resize-start="handleResizeStart"
+    />
   </TableHead>
 </template>

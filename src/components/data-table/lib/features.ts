@@ -3,6 +3,8 @@ import type { HTMLAttributes } from 'vue';
 import {
   cellSpanningFeature,
   columnPinningFeature,
+  columnResizingFeature,
+  columnSizingFeature,
   columnVisibilityFeature,
   createPaginatedRowModel,
   createSortedRowModel,
@@ -22,11 +24,14 @@ export interface KitColumnMeta {
   label?: string;
   class?: HTMLAttributes['class'];
   headerClass?: HTMLAttributes['class'];
+  sized?: boolean;
 }
 
 export const features = tableFeatures({
   columnVisibilityFeature,
   columnPinningFeature,
+  columnSizingFeature,
+  columnResizingFeature,
   rowSortingFeature,
   sortedRowModel: createSortedRowModel(),
   sortFns: { alphanumeric: sortFn_alphanumeric, datetime: sortFn_datetime, text: sortFn_text },

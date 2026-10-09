@@ -1,5 +1,5 @@
 import type { DOMWrapper } from '@vue/test-utils';
-import type { DataTableColumn, DataTableColumnVisibilityState, DataTableExpandedState, DataTablePaginationState, DataTableRowPinningState, DataTableRowSelectionState, DataTableSortingState, DataTableSpanRowsContext } from './types';
+import type { DataTableColumn, DataTableColumnSizingState, DataTableColumnVisibilityState, DataTableExpandedState, DataTablePaginationState, DataTableRowPinningState, DataTableRowSelectionState, DataTableSortingState, DataTableSpanRowsContext } from './types';
 import type { UseDataTableOptions } from './useDataTable';
 import { flushPromises, mount } from '@vue/test-utils';
 import { defineComponent, h, nextTick, ref } from 'vue';
@@ -395,6 +395,159 @@ describe('dataTable', () => {
 
       expect(wrapper.getElementByText('th', 'Details').attributes('style')).toBeUndefined();
       expect(wrapper.getElementByText('th', 'Name').attributes('style')).toBe('inset-inline-start: 0px;');
+    });
+  });
+
+  describe('column resizing', () => {
+    const headerWidths: Record<string, number> = { Name: 120, Age: 80, Code: 64 };
+
+    beforeEach(() => {
+      vi.spyOn(HTMLTableCellElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLTableCellElement) {
+        return DOMRect.fromRect({ width: headerWidths[this.textContent.trim()] ?? 0, height: 40 });
+      });
+    });
+
+    afterEach(() => {
+      vi.restoreAllMocks();
+    });
+
+    function mountResizableTable(columnSizing: DataTableColumnSizingState = {}, options: MountOptions = {}) {
+      const sizing = ref(columnSizing);
+      const wrapper = mountTable(undefined, { ...options, tableOptions: { columnSizing: sizing, ...options.tableOptions } });
+
+      return { wrapper, sizing };
+    }
+
+    function resizeHandle(wrapper: ReturnType<typeof mountTable>, header: string) {
+      return wrapper.getElementByText('th', header).get('[data-slot="data-table-resize-handle"]');
+    }
+
+    async function drag(wrapper: ReturnType<typeof mountTable>, header: string, distance: number) {
+      await resizeHandle(wrapper, header).trigger('mousedown', { clientX: 0 });
+      await flushPromises();
+      document.dispatchEvent(new MouseEvent('mousemove', { clientX: distance }));
+      document.dispatchEvent(new MouseEvent('mouseup', { clientX: distance }));
+      await flushPromises();
+    }
+
+    function columnWidths(wrapper: ReturnType<typeof mountTable>) {
+      return wrapper.findAll('col').map(column => column.attributes('style'));
+    }
+
+    it('should keep the table as it was without columnSizing', () => {
+      const wrapper = mountTable();
+
+      expect(wrapper.find('[data-slot="data-table-resize-handle"]').exists()).toBe(false);
+      expect(wrapper.find('colgroup').exists()).toBe(false);
+      expect(wrapper.get('table').classes()).not.toContain('table-fixed');
+    });
+
+    it('should lay the columns out by their content until the first drag', () => {
+      const { wrapper } = mountResizableTable();
+
+      expect(columnWidths(wrapper)).toEqual([undefined, undefined]);
+      expect(wrapper.get('table').classes()).not.toContain('table-fixed');
+    });
+
+    it('should fix the measured widths on the first drag and change only the dragged column', async () => {
+      const { wrapper, sizing } = mountResizableTable();
+
+      await drag(wrapper, 'Name', 30);
+
+      expect(sizing.value).toEqual({ name: 150, age: 80 });
+      expect(columnWidths(wrapper)).toEqual(['width: 150px;', 'width: 80px;']);
+      expect(wrapper.get('table').classes()).toContain('table-fixed');
+      expect(wrapper.get('table').attributes('style')).toBe('width: 230px;');
+    });
+
+    it('should not narrow a column past its minimum width', async () => {
+      const { wrapper } = mountResizableTable();
+
+      await drag(wrapper, 'Name', -200);
+
+      expect(columnWidths(wrapper)).toEqual(['width: 64px;', 'width: 80px;']);
+    });
+
+    it('should sort by a click on the header but not by a click on its handle', async () => {
+      const { wrapper } = mountResizableTable({}, {
+        columns: [{ accessorKey: 'name', header: 'Name', sortable: true }, { accessorKey: 'age', header: 'Age' }],
+      });
+      const header = wrapper.getElementByText('th', 'Name');
+
+      await drag(wrapper, 'Name', 10);
+      await header.trigger('click');
+
+      expect(header.attributes('aria-sort')).toBe('none');
+
+      await header.trigger('mousedown');
+      await header.trigger('click');
+
+      expect(header.attributes('aria-sort')).toBe('ascending');
+    });
+
+    it('should not offer a handle on the select column and on a column that opts out', () => {
+      const { wrapper } = mountResizableTable({}, {
+        columns: [selectColumn(), { accessorKey: 'name', header: 'Name', resizable: false }, { accessorKey: 'age', header: 'Age' }],
+      });
+
+      expect(wrapper.findAll('th').map(header => header.find('[data-slot="data-table-resize-handle"]').exists())).toEqual([false, false, true]);
+    });
+
+    it('should give a column its size right away and cut its content to that width', () => {
+      const { wrapper } = mountResizableTable({}, {
+        columns: [{ accessorKey: 'name', header: 'Name', size: 128 }, { accessorKey: 'age', header: 'Age' }],
+      });
+
+      expect(columnWidths(wrapper)).toEqual(['width: 128px;', undefined]);
+      expect(wrapper.get('td div').attributes('style')).toBe('max-width: calc(128px - var(--spacing) * 4);');
+      expect(wrapper.get('table').classes()).not.toContain('table-fixed');
+    });
+
+    it('should apply the passed widths right away', () => {
+      const { wrapper } = mountResizableTable({ name: 200, age: 90 });
+
+      expect(columnWidths(wrapper)).toEqual(['width: 200px;', 'width: 90px;']);
+      expect(wrapper.get('table').attributes('style')).toBe('width: 290px;');
+      expect(wrapper.get('td div').attributes('style')).toBeUndefined();
+    });
+
+    it('should let a column fit its content again on a double click of its handle', async () => {
+      const { wrapper, sizing } = mountResizableTable({ name: 200, age: 90 });
+
+      await resizeHandle(wrapper, 'Name').trigger('dblclick');
+
+      expect(sizing.value).toEqual({ age: 90 });
+      expect(columnWidths(wrapper)).toEqual([undefined, 'width: 90px;']);
+      expect(wrapper.get('table').classes()).not.toContain('table-fixed');
+    });
+
+    it('should move the pinned columns after a resize of a pinned column before them', async () => {
+      const { wrapper } = mountResizableTable({ name: 120, code: 64, age: 80 }, {
+        columns: [
+          { accessorKey: 'age', header: 'Age' },
+          { accessorKey: 'name', header: 'Name', pinned: true },
+          { id: 'code', accessorKey: 'id', header: 'Code', pinned: true },
+        ],
+      });
+
+      expect(wrapper.getElementByText('th', 'Code').attributes('style')).toBe('inset-inline-start: 120px;');
+
+      await drag(wrapper, 'Name', 30);
+
+      expect(wrapper.getElementByText('th', 'Code').attributes('style')).toBe('inset-inline-start: 150px;');
+      expect(wrapper.get('tbody tr').findAll('td')[1]?.attributes('style')).toBe('inset-inline-start: 150px;');
+    });
+
+    it('should resize the columns under a group header', async () => {
+      const { wrapper, sizing } = mountResizableTable({}, {
+        columns: [{ id: 'person', header: 'Person', columns }],
+      });
+
+      expect(wrapper.getElementByText('th', 'Person').find('[data-slot="data-table-resize-handle"]').exists()).toBe(false);
+
+      await drag(wrapper, 'Age', 20);
+
+      expect(sizing.value).toEqual({ name: 120, age: 100 });
     });
   });
 
