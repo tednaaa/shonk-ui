@@ -1,5 +1,6 @@
 allowBuilds:
   esbuild: false
+  lefthook: false
   vue-demi: false
 
 minimumReleaseAgeExclude:
