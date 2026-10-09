@@ -4,8 +4,8 @@ import type { HTMLAttributes } from 'vue';
 import { ChevronDown } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import {
-  AccordionHeader,
-  AccordionTrigger,
+	AccordionHeader,
+	AccordionTrigger,
 } from 'reka-ui';
 import { cn } from '@/utils';
 
@@ -15,23 +15,23 @@ const delegatedProps = reactiveOmit(props, 'class');
 </script>
 
 <template>
-  <AccordionHeader class="flex">
-    <AccordionTrigger
-      data-slot="accordion-trigger"
-      v-bind="delegatedProps"
-      :class="
-        cn(
-          'flex flex-1 items-start justify-between gap-4 p-4 text-left text-sm font-medium transition-all outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180',
-          props.class,
-        )
-      "
-    >
-      <slot />
-      <slot name="icon">
-        <ChevronDown
-          class="pointer-events-none size-4 shrink-0 translate-y-0.5 text-muted-foreground transition-transform duration-200"
-        />
-      </slot>
-    </AccordionTrigger>
-  </AccordionHeader>
+	<AccordionHeader class="flex">
+		<AccordionTrigger
+			data-slot="accordion-trigger"
+			v-bind="delegatedProps"
+			:class="
+				cn(
+					'flex flex-1 items-start justify-between gap-4 p-4 text-left text-sm font-medium transition-all outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180',
+					props.class,
+				)
+			"
+		>
+			<slot />
+			<slot name="icon">
+				<ChevronDown
+					class="pointer-events-none size-4 shrink-0 translate-y-0.5 text-muted-foreground transition-transform duration-200"
+				/>
+			</slot>
+		</AccordionTrigger>
+	</AccordionHeader>
 </template>

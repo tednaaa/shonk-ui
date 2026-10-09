@@ -1,116 +1,116 @@
 export interface ShonkLocale {
-  intlLocale: string;
+	intlLocale: string;
 
-  breadcrumb: {
-    navAriaLabel: string;
-    ellipsisScreenReaderText: string;
-  };
+	breadcrumb: {
+		navAriaLabel: string;
+		ellipsisScreenReaderText: string;
+	};
 
-  carousel: {
-    previousButtonScreenReaderText: string;
-    nextButtonScreenReaderText: string;
-  };
+	carousel: {
+		previousButtonScreenReaderText: string;
+		nextButtonScreenReaderText: string;
+	};
 
-  combobox: {
-    triggerPlaceholder: string;
-    searchPlaceholder: string;
-    emptyText: string;
-    loadingText: string;
-    clearButtonAriaLabel: string;
-  };
+	combobox: {
+		triggerPlaceholder: string;
+		searchPlaceholder: string;
+		emptyText: string;
+		loadingText: string;
+		clearButtonAriaLabel: string;
+	};
 
-  command: {
-    screenReaderTitle: string;
-    screenReaderDescription: string;
-  };
+	command: {
+		screenReaderTitle: string;
+		screenReaderDescription: string;
+	};
 
-  confirmDialog: {
-    title: string;
-    cancelButtonText: string;
-  };
+	confirmDialog: {
+		title: string;
+		cancelButtonText: string;
+	};
 
-  dataTable: {
-    emptyText: string;
-    pageSizeLabel: string;
-    selectPageRowsLabel: string;
-    selectRowLabel: string;
-    expandAllRowsLabel: string;
-    collapseAllRowsLabel: string;
-    expandRowLabel: string;
-    columnToggleButtonText: string;
-    columnToggleSearchPlaceholder: string;
-    columnToggleEmptyText: string;
-    columnToggleShowAllButtonText: string;
-    columnToggleVisibleCountText: (visible: number, total: number) => string;
-    exportButtonText: string;
-    exportFileName: string;
-  };
+	dataTable: {
+		emptyText: string;
+		pageSizeLabel: string;
+		selectPageRowsLabel: string;
+		selectRowLabel: string;
+		expandAllRowsLabel: string;
+		collapseAllRowsLabel: string;
+		expandRowLabel: string;
+		columnToggleButtonText: string;
+		columnToggleSearchPlaceholder: string;
+		columnToggleEmptyText: string;
+		columnToggleShowAllButtonText: string;
+		columnToggleVisibleCountText: (visible: number, total: number) => string;
+		exportButtonText: string;
+		exportFileName: string;
+	};
 
-  datePicker: {
-    triggerPlaceholder: string;
-  };
+	datePicker: {
+		triggerPlaceholder: string;
+	};
 
-  dialog: {
-    closeButtonAriaLabel: string;
-  };
+	dialog: {
+		closeButtonAriaLabel: string;
+	};
 
-  filteredSearch: {
-    placeholder: string;
-    addFilterPlaceholder: string;
-    selectOperatorPlaceholder: string;
-    enterValuePlaceholder: string;
-    emptyText: string;
-    valueHintText: string;
-    applyButtonText: string;
-    historyButtonAriaLabel: string;
-    historyHeaderText: string;
-    historyEmptyText: string;
-    historyItemAriaLabel: (search: string) => string;
-    clearHistoryButtonText: string;
-    backButtonAriaLabel: string;
-    clearButtonAriaLabel: string;
-    removeSearchButtonAriaLabel: string;
-    removeFilterButtonAriaLabel: (filter: string) => string;
-  };
+	filteredSearch: {
+		placeholder: string;
+		addFilterPlaceholder: string;
+		selectOperatorPlaceholder: string;
+		enterValuePlaceholder: string;
+		emptyText: string;
+		valueHintText: string;
+		applyButtonText: string;
+		historyButtonAriaLabel: string;
+		historyHeaderText: string;
+		historyEmptyText: string;
+		historyItemAriaLabel: (search: string) => string;
+		clearHistoryButtonText: string;
+		backButtonAriaLabel: string;
+		clearButtonAriaLabel: string;
+		removeSearchButtonAriaLabel: string;
+		removeFilterButtonAriaLabel: (filter: string) => string;
+	};
 
-  inputPassword: {
-    showPasswordAriaLabel: string;
-    hidePasswordAriaLabel: string;
-  };
+	inputPassword: {
+		showPasswordAriaLabel: string;
+		hidePasswordAriaLabel: string;
+	};
 
-  pagination: {
-    navAriaLabel: string;
-    pageButtonAriaLabel: (page: number) => string;
-    firstButtonText: string;
-    previousButtonText: string;
-    nextButtonText: string;
-    lastButtonText: string;
-    ellipsisScreenReaderText: string;
-  };
+	pagination: {
+		navAriaLabel: string;
+		pageButtonAriaLabel: (page: number) => string;
+		firstButtonText: string;
+		previousButtonText: string;
+		nextButtonText: string;
+		lastButtonText: string;
+		ellipsisScreenReaderText: string;
+	};
 
-  rangeDatePicker: {
-    triggerPlaceholder: string;
-  };
+	rangeDatePicker: {
+		triggerPlaceholder: string;
+	};
 
-  select: {
-    clearButtonAriaLabel: string;
-  };
+	select: {
+		clearButtonAriaLabel: string;
+	};
 
-  sheet: {
-    closeButtonScreenReaderText: string;
-  };
+	sheet: {
+		closeButtonScreenReaderText: string;
+	};
 
-  sidebar: {
-    toggleAriaLabel: string;
-    mobileScreenReaderTitle: string;
-    mobileScreenReaderDescription: string;
-  };
+	sidebar: {
+		toggleAriaLabel: string;
+		mobileScreenReaderTitle: string;
+		mobileScreenReaderDescription: string;
+	};
 
-  spinner: {
-    ariaLabel: string;
-  };
+	spinner: {
+		ariaLabel: string;
+	};
 }
 
 export type PartialShonkLocale = {
-  [K in keyof ShonkLocale]?: ShonkLocale[K] extends string ? ShonkLocale[K] : Partial<ShonkLocale[K]>;
+	[K in keyof ShonkLocale]?: ShonkLocale[K] extends string ? ShonkLocale[K] : Partial<ShonkLocale[K]>;
 };

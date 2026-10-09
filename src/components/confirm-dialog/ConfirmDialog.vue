@@ -4,21 +4,21 @@ import { computed, ref, watch } from 'vue';
 import { useLocale } from '@/locales';
 import { Button } from '../button';
 import {
-  Dialog,
-  DialogBody,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+	Dialog,
+	DialogBody,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
 } from '../dialog';
 import { useConfirmState } from './useConfirm';
 
 const props = defineProps<{
-  title?: string;
-  cancelButtonText?: string;
-  acceptButtonVariant?: ButtonVariants['variant'];
+	title?: string;
+	cancelButtonText?: string;
+	acceptButtonVariant?: ButtonVariants['variant'];
 }>();
 
 const locale = useLocale();
@@ -30,11 +30,11 @@ const shownRequest = ref(state.value);
 let pendingRequest = state.value;
 
 watch(state, (request) => {
-  if (!request)
-    return;
+	if (!request)
+		return;
 
-  shownRequest.value = request;
-  pendingRequest = request;
+	shownRequest.value = request;
+	pendingRequest = request;
 });
 
 const resolvedTitle = computed(() => shownRequest.value?.title ?? props.title ?? locale.value.confirmDialog.title);
@@ -42,59 +42,59 @@ const resolvedCancelButtonText = computed(() => shownRequest.value?.cancelButton
 const resolvedAcceptButtonVariant = computed(() => shownRequest.value?.acceptButtonVariant ?? props.acceptButtonVariant);
 
 function takePendingRequest() {
-  const request = pendingRequest;
-  pendingRequest = null;
+	const request = pendingRequest;
+	pendingRequest = null;
 
-  return request;
+	return request;
 }
 
 function handleAccept() {
-  takePendingRequest()?.accept();
+	takePendingRequest()?.accept();
 }
 
 function handleReject() {
-  takePendingRequest()?.reject?.();
+	takePendingRequest()?.reject?.();
 }
 
 function handleOpenChange(isOpen: boolean) {
-  if (!isOpen)
-    state.value = null;
+	if (!isOpen)
+		state.value = null;
 }
 
 function preventDismiss(event: Event) {
-  event.preventDefault();
+	event.preventDefault();
 }
 </script>
 
 <template>
-  <Dialog :open="open" @update:open="handleOpenChange">
-    <DialogContent
-      role="alertdialog"
-      @pointer-down-outside="preventDismiss"
-      @interact-outside="preventDismiss"
-    >
-      <DialogHeader :show-close-button="false">
-        <DialogTitle>
-          {{ resolvedTitle }}
-        </DialogTitle>
-      </DialogHeader>
-      <DialogBody>
-        <DialogDescription>
-          {{ shownRequest?.message }}
-        </DialogDescription>
-      </DialogBody>
-      <DialogFooter>
-        <DialogClose as-child>
-          <Button variant="secondary" @click="handleReject">
-            {{ resolvedCancelButtonText }}
-          </Button>
-        </DialogClose>
-        <DialogClose as-child>
-          <Button :variant="resolvedAcceptButtonVariant" @click="handleAccept">
-            {{ shownRequest?.acceptButtonText }}
-          </Button>
-        </DialogClose>
-      </DialogFooter>
-    </DialogContent>
-  </Dialog>
+	<Dialog :open="open" @update:open="handleOpenChange">
+		<DialogContent
+			role="alertdialog"
+			@pointer-down-outside="preventDismiss"
+			@interact-outside="preventDismiss"
+		>
+			<DialogHeader :show-close-button="false">
+				<DialogTitle>
+					{{ resolvedTitle }}
+				</DialogTitle>
+			</DialogHeader>
+			<DialogBody>
+				<DialogDescription>
+					{{ shownRequest?.message }}
+				</DialogDescription>
+			</DialogBody>
+			<DialogFooter>
+				<DialogClose as-child>
+					<Button variant="secondary" @click="handleReject">
+						{{ resolvedCancelButtonText }}
+					</Button>
+				</DialogClose>
+				<DialogClose as-child>
+					<Button :variant="resolvedAcceptButtonVariant" @click="handleAccept">
+						{{ shownRequest?.acceptButtonText }}
+					</Button>
+				</DialogClose>
+			</DialogFooter>
+		</DialogContent>
+	</Dialog>
 </template>

@@ -1,32 +1,32 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { render, showControls } from '@/lib/storybook';
 import {
-  Breadcrumb,
-  BreadcrumbEllipsis,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
+	Breadcrumb,
+	BreadcrumbEllipsis,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
 } from '.';
 
 const components = {
-  Breadcrumb,
-  BreadcrumbEllipsis,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
+	Breadcrumb,
+	BreadcrumbEllipsis,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
 };
 
 const meta: Meta<typeof Breadcrumb> = {
-  title: 'Components/Breadcrumb',
-  component: Breadcrumb,
-  tags: ['autodocs'],
-  render: render(
-    components,
-    `<Breadcrumb v-bind="args">
+	title: 'Components/Breadcrumb',
+	component: Breadcrumb,
+	tags: ['autodocs'],
+	render: render(
+		components,
+		`<Breadcrumb v-bind="args">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="#">Home</BreadcrumbLink>
@@ -41,20 +41,20 @@ const meta: Meta<typeof Breadcrumb> = {
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const WithEllipsis: Story = {
-  render: render(
-    components,
-    `<Breadcrumb v-bind="args">
+	render: render(
+		components,
+		`<Breadcrumb v-bind="args">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="#">Home</BreadcrumbLink>
@@ -73,13 +73,13 @@ export const WithEllipsis: Story = {
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>`,
-  ),
+	),
 };
 
 export const CustomSeparator: Story = {
-  render: render(
-    components,
-    `<Breadcrumb v-bind="args">
+	render: render(
+		components,
+		`<Breadcrumb v-bind="args">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="#">Home</BreadcrumbLink>
@@ -94,5 +94,5 @@ export const CustomSeparator: Story = {
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>`,
-  ),
+	),
 };

@@ -6,5 +6,5 @@ const value = ref('The quick brown fox jumps over the lazy dog.');
 </script>
 
 <template>
-  <Textarea v-model="value" />
+	<Textarea v-model="value" />
 </template>

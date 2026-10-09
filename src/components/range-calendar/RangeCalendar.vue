@@ -19,7 +19,7 @@ import RangeCalendarNextButton from './RangeCalendarNextButton.vue';
 import RangeCalendarPrevButton from './RangeCalendarPrevButton.vue';
 
 const props = withDefaults(defineProps<RangeCalendarRootProps & { class?: HTMLAttributes['class'] }>(), {
-  weekdayFormat: 'short',
+	weekdayFormat: 'short',
 });
 
 const emits = defineEmits<RangeCalendarRootEmits>();
@@ -34,49 +34,49 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
-  <RangeCalendarRoot
-    #default="{ grid, weekDays }"
-    data-slot="range-calendar"
-    :class="cn('bg-field p-3 text-field-foreground', props.class)"
-    :locale="localeCode"
-    v-bind="forwarded"
-  >
-    <RangeCalendarHeader>
-      <RangeCalendarHeading />
+	<RangeCalendarRoot
+		#default="{ grid, weekDays }"
+		data-slot="range-calendar"
+		:class="cn('bg-field p-3 text-field-foreground', props.class)"
+		:locale="localeCode"
+		v-bind="forwarded"
+	>
+		<RangeCalendarHeader>
+			<RangeCalendarHeading />
 
-      <div class="flex items-center gap-1">
-        <RangeCalendarPrevButton />
-        <RangeCalendarNextButton />
-      </div>
-    </RangeCalendarHeader>
+			<div class="flex items-center gap-1">
+				<RangeCalendarPrevButton />
+				<RangeCalendarNextButton />
+			</div>
+		</RangeCalendarHeader>
 
-    <div class="mt-4 flex flex-col gap-y-4 sm:flex-row sm:gap-x-4 sm:gap-y-0">
-      <RangeCalendarGrid v-for="month in grid" :key="month.value.toString()">
-        <RangeCalendarGridHead>
-          <RangeCalendarGridRow>
-            <RangeCalendarHeadCell
-              v-for="day in weekDays"
-              :key="day"
-            >
-              {{ day }}
-            </RangeCalendarHeadCell>
-          </RangeCalendarGridRow>
-        </RangeCalendarGridHead>
-        <RangeCalendarGridBody>
-          <RangeCalendarGridRow v-for="(weekDates, index) in month.rows" :key="`weekDate-${index}`" class="mt-2 w-full">
-            <RangeCalendarCell
-              v-for="weekDate in weekDates"
-              :key="weekDate.toString()"
-              :date="weekDate"
-            >
-              <RangeCalendarCellTrigger
-                :day="weekDate"
-                :month="month.value"
-              />
-            </RangeCalendarCell>
-          </RangeCalendarGridRow>
-        </RangeCalendarGridBody>
-      </RangeCalendarGrid>
-    </div>
-  </RangeCalendarRoot>
+		<div class="mt-4 flex flex-col gap-y-4 sm:flex-row sm:gap-x-4 sm:gap-y-0">
+			<RangeCalendarGrid v-for="month in grid" :key="month.value.toString()">
+				<RangeCalendarGridHead>
+					<RangeCalendarGridRow>
+						<RangeCalendarHeadCell
+							v-for="day in weekDays"
+							:key="day"
+						>
+							{{ day }}
+						</RangeCalendarHeadCell>
+					</RangeCalendarGridRow>
+				</RangeCalendarGridHead>
+				<RangeCalendarGridBody>
+					<RangeCalendarGridRow v-for="(weekDates, index) in month.rows" :key="`weekDate-${index}`" class="mt-2 w-full">
+						<RangeCalendarCell
+							v-for="weekDate in weekDates"
+							:key="weekDate.toString()"
+							:date="weekDate"
+						>
+							<RangeCalendarCellTrigger
+								:day="weekDate"
+								:month="month.value"
+							/>
+						</RangeCalendarCell>
+					</RangeCalendarGridRow>
+				</RangeCalendarGridBody>
+			</RangeCalendarGrid>
+		</div>
+	</RangeCalendarRoot>
 </template>

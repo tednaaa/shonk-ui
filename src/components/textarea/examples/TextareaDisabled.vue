@@ -6,5 +6,5 @@ const value = ref('');
 </script>
 
 <template>
-  <Textarea v-model="value" placeholder="This field is disabled." disabled />
+	<Textarea v-model="value" placeholder="This field is disabled." disabled />
 </template>

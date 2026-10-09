@@ -6,21 +6,21 @@ import { ref } from 'vue';
 import FilteredSearchDateEditor from './FilteredSearchDateEditor.vue';
 
 const definitions = [
-  {
-    key: 'createdAt',
-    label: 'Created',
-    icon: CalendarIcon,
-    editor: FilteredSearchDateEditor,
-    operators: [
-      { value: 'greaterOrEqual', label: 'on or after' },
-      { value: 'lessOrEqual', label: 'on or before' },
-    ],
-  },
+	{
+		key: 'createdAt',
+		label: 'Created',
+		icon: CalendarIcon,
+		editor: FilteredSearchDateEditor,
+		operators: [
+			{ value: 'greaterOrEqual', label: 'on or after' },
+			{ value: 'lessOrEqual', label: 'on or before' },
+		],
+	},
 ];
 
 const filters = ref<ActiveFilter[]>([]);
 </script>
 
 <template>
-  <FilteredSearch v-model:filters="filters" :definitions="definitions" />
+	<FilteredSearch v-model:filters="filters" :definitions="definitions" />
 </template>

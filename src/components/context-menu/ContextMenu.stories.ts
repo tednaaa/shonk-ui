@@ -1,32 +1,32 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import {
-  CreditCardIcon,
-  KeyboardIcon,
-  LogOutIcon,
-  MailIcon,
-  MessageSquareIcon,
-  PlusCircleIcon,
-  SettingsIcon,
-  UserIcon,
-  UserPlusIcon,
-  UsersIcon,
+	CreditCardIcon,
+	KeyboardIcon,
+	LogOutIcon,
+	MailIcon,
+	MessageSquareIcon,
+	PlusCircleIcon,
+	SettingsIcon,
+	UserIcon,
+	UserPlusIcon,
+	UsersIcon,
 } from '@lucide/vue';
 import { example, render, showControls } from '@/lib/storybook';
 import {
-  ContextMenu,
-  ContextMenuCheckboxItem,
-  ContextMenuContent,
-  ContextMenuGroup,
-  ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuRadioGroup,
-  ContextMenuRadioItem,
-  ContextMenuSeparator,
-  ContextMenuShortcut,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
-  ContextMenuTrigger,
+	ContextMenu,
+	ContextMenuCheckboxItem,
+	ContextMenuContent,
+	ContextMenuGroup,
+	ContextMenuItem,
+	ContextMenuLabel,
+	ContextMenuRadioGroup,
+	ContextMenuRadioItem,
+	ContextMenuSeparator,
+	ContextMenuShortcut,
+	ContextMenuSub,
+	ContextMenuSubContent,
+	ContextMenuSubTrigger,
+	ContextMenuTrigger,
 } from '.';
 import ContextMenuWithCheckboxItems from './examples/ContextMenuWithCheckboxItems.vue';
 import contextMenuWithCheckboxItemsSource from './examples/ContextMenuWithCheckboxItems.vue?raw';
@@ -34,30 +34,30 @@ import ContextMenuWithRadioItems from './examples/ContextMenuWithRadioItems.vue'
 import contextMenuWithRadioItemsSource from './examples/ContextMenuWithRadioItems.vue?raw';
 
 const components = {
-  ContextMenu,
-  ContextMenuCheckboxItem,
-  ContextMenuContent,
-  ContextMenuGroup,
-  ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuRadioGroup,
-  ContextMenuRadioItem,
-  ContextMenuSeparator,
-  ContextMenuShortcut,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
-  ContextMenuTrigger,
-  CreditCardIcon,
-  KeyboardIcon,
-  LogOutIcon,
-  MailIcon,
-  MessageSquareIcon,
-  PlusCircleIcon,
-  SettingsIcon,
-  UserIcon,
-  UserPlusIcon,
-  UsersIcon,
+	ContextMenu,
+	ContextMenuCheckboxItem,
+	ContextMenuContent,
+	ContextMenuGroup,
+	ContextMenuItem,
+	ContextMenuLabel,
+	ContextMenuRadioGroup,
+	ContextMenuRadioItem,
+	ContextMenuSeparator,
+	ContextMenuShortcut,
+	ContextMenuSub,
+	ContextMenuSubContent,
+	ContextMenuSubTrigger,
+	ContextMenuTrigger,
+	CreditCardIcon,
+	KeyboardIcon,
+	LogOutIcon,
+	MailIcon,
+	MessageSquareIcon,
+	PlusCircleIcon,
+	SettingsIcon,
+	UserIcon,
+	UserPlusIcon,
+	UsersIcon,
 };
 
 const trigger = `<ContextMenuTrigger class="border-border text-muted-foreground flex h-37.5 w-75 items-center justify-center rounded-md border border-dashed text-sm select-none">
@@ -65,12 +65,12 @@ const trigger = `<ContextMenuTrigger class="border-border text-muted-foreground 
       </ContextMenuTrigger>`;
 
 const meta: Meta<typeof ContextMenu> = {
-  title: 'Components/ContextMenu',
-  component: ContextMenu,
-  tags: ['autodocs'],
-  render: render(
-    components,
-    `<ContextMenu v-bind="args">
+	title: 'Components/ContextMenu',
+	component: ContextMenu,
+	tags: ['autodocs'],
+	render: render(
+		components,
+		`<ContextMenu v-bind="args">
       ${trigger}
       <ContextMenuContent class="w-64">
         <ContextMenuLabel>My Account</ContextMenuLabel>
@@ -85,30 +85,30 @@ const meta: Meta<typeof ContextMenu> = {
         <ContextMenuItem variant="destructive"><LogOutIcon />Log out<ContextMenuShortcut>⇧⌘Q</ContextMenuShortcut></ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const WithCheckboxItems: Story = {
-  parameters: example(contextMenuWithCheckboxItemsSource),
-  render: render({ ContextMenuWithCheckboxItems }, `<ContextMenuWithCheckboxItems />`),
+	parameters: example(contextMenuWithCheckboxItemsSource),
+	render: render({ ContextMenuWithCheckboxItems }, `<ContextMenuWithCheckboxItems />`),
 };
 
 export const WithRadioItems: Story = {
-  parameters: example(contextMenuWithRadioItemsSource),
-  render: render({ ContextMenuWithRadioItems }, `<ContextMenuWithRadioItems />`),
+	parameters: example(contextMenuWithRadioItemsSource),
+	render: render({ ContextMenuWithRadioItems }, `<ContextMenuWithRadioItems />`),
 };
 
 export const WithSubmenu: Story = {
-  render: render(
-    components,
-    `<ContextMenu v-bind="args">
+	render: render(
+		components,
+		`<ContextMenu v-bind="args">
       ${trigger}
       <ContextMenuContent class="w-64">
         <ContextMenuLabel>Team</ContextMenuLabel>
@@ -125,13 +125,13 @@ export const WithSubmenu: Story = {
         </ContextMenuSub>
       </ContextMenuContent>
     </ContextMenu>`,
-  ),
+	),
 };
 
 export const Disabled: Story = {
-  render: render(
-    components,
-    `<ContextMenu v-bind="args">
+	render: render(
+		components,
+		`<ContextMenu v-bind="args">
       ${trigger}
       <ContextMenuContent class="w-64">
         <ContextMenuItem><UserIcon />Profile</ContextMenuItem>
@@ -139,5 +139,5 @@ export const Disabled: Story = {
         <ContextMenuItem><SettingsIcon />Settings</ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>`,
-  ),
+	),
 };

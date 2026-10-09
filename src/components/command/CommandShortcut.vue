@@ -3,15 +3,15 @@ import type { HTMLAttributes } from 'vue';
 import { cn } from '@/utils';
 
 const props = defineProps<{
-  class?: HTMLAttributes['class'];
+	class?: HTMLAttributes['class'];
 }>();
 </script>
 
 <template>
-  <span
-    data-slot="command-shortcut"
-    :class="cn('ml-auto text-xs tracking-widest text-muted-foreground', props.class)"
-  >
-    <slot />
-  </span>
+	<span
+		data-slot="command-shortcut"
+		:class="cn('ml-auto text-xs tracking-widest text-muted-foreground', props.class)"
+	>
+		<slot />
+	</span>
 </template>

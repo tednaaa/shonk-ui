@@ -44,11 +44,11 @@ import dataTableStoredColumnsSource from './examples/DataTableStoredColumns.vue?
 const dataTableComponent: FunctionalComponent<ComponentPropsAndSlots<typeof DataTable>> = DataTable;
 
 const meta: Meta<typeof DataTable> = {
-  title: 'Components/DataTable',
-  component: dataTableComponent,
-  tags: ['autodocs'],
-  parameters: example(dataTableBasicSource),
-  render: render({ DataTableBasic }, `<DataTableBasic />`),
+	title: 'Components/DataTable',
+	component: dataTableComponent,
+	tags: ['autodocs'],
+	parameters: example(dataTableBasicSource),
+	render: render({ DataTableBasic }, `<DataTableBasic />`),
 };
 
 export default meta;
@@ -57,91 +57,91 @@ type Story = StoryObj<typeof meta>;
 export const Basic: Story = {};
 
 export const Empty: Story = {
-  parameters: example(dataTableEmptySource),
-  render: render({ DataTableEmpty }, `<DataTableEmpty />`),
+	parameters: example(dataTableEmptySource),
+	render: render({ DataTableEmpty }, `<DataTableEmpty />`),
 };
 
 export const Loading: Story = {
-  parameters: example(dataTableLoadingSource),
-  render: render({ DataTableLoading }, `<DataTableLoading />`),
+	parameters: example(dataTableLoadingSource),
+	render: render({ DataTableLoading }, `<DataTableLoading />`),
 };
 
 export const RowClick: Story = {
-  parameters: example(dataTableRowClickSource),
-  render: render({ DataTableRowClick }, `<DataTableRowClick />`),
+	parameters: example(dataTableRowClickSource),
+	render: render({ DataTableRowClick }, `<DataTableRowClick />`),
 };
 
 export const ClientSorting: Story = {
-  parameters: example(dataTableClientSortingSource),
-  render: render({ DataTableClientSorting }, `<DataTableClientSorting />`),
+	parameters: example(dataTableClientSortingSource),
+	render: render({ DataTableClientSorting }, `<DataTableClientSorting />`),
 };
 
 export const ServerMultiSorting: Story = {
-  parameters: example(dataTableServerMultiSortingSource),
-  render: render({ DataTableServerMultiSorting }, `<DataTableServerMultiSorting />`),
+	parameters: example(dataTableServerMultiSortingSource),
+	render: render({ DataTableServerMultiSorting }, `<DataTableServerMultiSorting />`),
 };
 
 export const ServerPaginationOnTop: Story = {
-  parameters: example(dataTableServerPaginationOnTopSource),
-  render: render({ DataTableServerPaginationOnTop }, `<DataTableServerPaginationOnTop />`),
+	parameters: example(dataTableServerPaginationOnTopSource),
+	render: render({ DataTableServerPaginationOnTop }, `<DataTableServerPaginationOnTop />`),
 };
 
 export const ServerPageSize: Story = {
-  parameters: example(dataTableServerPageSizeSource),
-  render: render({ DataTableServerPageSize }, `<DataTableServerPageSize />`),
+	parameters: example(dataTableServerPageSizeSource),
+	render: render({ DataTableServerPageSize }, `<DataTableServerPageSize />`),
 };
 
 export const PaginationVariants: Story = {
-  parameters: example(dataTablePaginationVariantsSource),
-  render: render({ DataTablePaginationVariants }, `<DataTablePaginationVariants />`),
+	parameters: example(dataTablePaginationVariantsSource),
+	render: render({ DataTablePaginationVariants }, `<DataTablePaginationVariants />`),
 };
 
 export const InfiniteLoading: Story = {
-  parameters: example(dataTableInfiniteLoadingSource),
-  render: render({ DataTableInfiniteLoading }, `<DataTableInfiniteLoading />`),
+	parameters: example(dataTableInfiniteLoadingSource),
+	render: render({ DataTableInfiniteLoading }, `<DataTableInfiniteLoading />`),
 };
 
 export const RowSelection: Story = {
-  parameters: example(dataTableRowSelectionSource),
-  render: render({ DataTableRowSelection }, `<DataTableRowSelection />`),
+	parameters: example(dataTableRowSelectionSource),
+	render: render({ DataTableRowSelection }, `<DataTableRowSelection />`),
 };
 
 export const ColumnToggle: Story = {
-  parameters: example(dataTableColumnToggleSource),
-  render: render({ DataTableColumnToggle }, `<DataTableColumnToggle />`),
+	parameters: example(dataTableColumnToggleSource),
+	render: render({ DataTableColumnToggle }, `<DataTableColumnToggle />`),
 };
 
 export const StoredColumns: Story = {
-  parameters: example(dataTableStoredColumnsSource),
-  render: render({ DataTableStoredColumns }, `<DataTableStoredColumns />`),
+	parameters: example(dataTableStoredColumnsSource),
+	render: render({ DataTableStoredColumns }, `<DataTableStoredColumns />`),
 };
 
 export const PinnedColumns: Story = {
-  parameters: example(dataTablePinnedColumnsSource),
-  render: render({ DataTablePinnedColumns }, `<DataTablePinnedColumns />`),
+	parameters: example(dataTablePinnedColumnsSource),
+	render: render({ DataTablePinnedColumns }, `<DataTablePinnedColumns />`),
 };
 
 export const ColumnResizing: Story = {
-  parameters: example(dataTableColumnResizingSource),
-  render: render({ DataTableColumnResizing }, `<DataTableColumnResizing />`),
+	parameters: example(dataTableColumnResizingSource),
+	render: render({ DataTableColumnResizing }, `<DataTableColumnResizing />`),
 };
 
 export const RowExpansion: Story = {
-  parameters: example(dataTableRowExpansionSource),
-  render: render({ DataTableRowExpansion }, `<DataTableRowExpansion />`),
+	parameters: example(dataTableRowExpansionSource),
+	render: render({ DataTableRowExpansion }, `<DataTableRowExpansion />`),
 };
 
 export const PinnedRows: Story = {
-  parameters: example(dataTablePinnedRowsSource),
-  render: render({ DataTablePinnedRows }, `<DataTablePinnedRows />`),
+	parameters: example(dataTablePinnedRowsSource),
+	render: render({ DataTablePinnedRows }, `<DataTablePinnedRows />`),
 };
 
 export const MergedCells: Story = {
-  parameters: example(dataTableMergedCellsSource),
-  render: render({ DataTableMergedCells }, `<DataTableMergedCells />`),
+	parameters: example(dataTableMergedCellsSource),
+	render: render({ DataTableMergedCells }, `<DataTableMergedCells />`),
 };
 
 export const Export: Story = {
-  parameters: example(dataTableExportSource),
-  render: render({ DataTableExport }, `<DataTableExport />`),
+	parameters: example(dataTableExportSource),
+	render: render({ DataTableExport }, `<DataTableExport />`),
 };

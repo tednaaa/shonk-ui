@@ -2,13 +2,13 @@
 import { Button, toast, Toaster } from 'shonk-ui';
 
 function show() {
-  toast('Event has been created', {
-    description: 'Sunday, December 03, 2023 at 9:00 AM',
-  });
+	toast('Event has been created', {
+		description: 'Sunday, December 03, 2023 at 9:00 AM',
+	});
 }
 </script>
 
 <template>
-  <Button variant="secondary" @click="show">Show toast</Button>
-  <Toaster />
+	<Button variant="secondary" @click="show">Show toast</Button>
+	<Toaster />
 </template>

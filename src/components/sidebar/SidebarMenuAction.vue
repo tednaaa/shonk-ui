@@ -6,21 +6,21 @@ import { cn } from '@/utils';
 import { sidebarMenuActionVariants } from './variants';
 
 const props = withDefaults(defineProps<PrimitiveProps & {
-  showOnHover?: boolean;
-  class?: HTMLAttributes['class'];
+	showOnHover?: boolean;
+	class?: HTMLAttributes['class'];
 }>(), {
-  as: 'button',
+	as: 'button',
 });
 </script>
 
 <template>
-  <Primitive
-    data-slot="sidebar-menu-action"
-    data-sidebar="menu-action"
-    :class="cn(sidebarMenuActionVariants({ showOnHover }), props.class)"
-    :as="as"
-    :as-child="asChild"
-  >
-    <slot />
-  </Primitive>
+	<Primitive
+		data-slot="sidebar-menu-action"
+		data-sidebar="menu-action"
+		:class="cn(sidebarMenuActionVariants({ showOnHover }), props.class)"
+		:as="as"
+		:as-child="asChild"
+	>
+		<slot />
+	</Primitive>
 </template>

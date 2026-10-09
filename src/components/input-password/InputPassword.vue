@@ -8,11 +8,11 @@ import { Button } from '../button';
 import { Input } from '../input';
 
 export interface InputPasswordProps {
-  name: string;
-  invalid?: boolean;
-  class?: HTMLAttributes['class'];
-  showPasswordAriaLabel?: string;
-  hidePasswordAriaLabel?: string;
+	name: string;
+	invalid?: boolean;
+	class?: HTMLAttributes['class'];
+	showPasswordAriaLabel?: string;
+	hidePasswordAriaLabel?: string;
 }
 
 const props = defineProps<InputPasswordProps>();
@@ -25,29 +25,29 @@ const visible = ref(false);
 
 const inputType = computed(() => visible.value ? 'text' : 'password');
 const buttonAriaLabel = computed(() => visible.value
-  ? (props.hidePasswordAriaLabel ?? locale.value.inputPassword.hidePasswordAriaLabel)
-  : (props.showPasswordAriaLabel ?? locale.value.inputPassword.showPasswordAriaLabel));
+	? (props.hidePasswordAriaLabel ?? locale.value.inputPassword.hidePasswordAriaLabel)
+	: (props.showPasswordAriaLabel ?? locale.value.inputPassword.showPasswordAriaLabel));
 </script>
 
 <template>
-  <div data-slot="input-password" :class="cn('relative', props.class)">
-    <Input
-      v-model="modelValue"
-      class="pr-10"
-      :type="inputType"
-      :name="name"
-      :aria-invalid="invalid || undefined"
-    />
-    <Button
-      type="button"
-      variant="ghost"
-      size="icon-sm"
-      class="absolute top-1/2 right-1 -translate-y-1/2 text-muted-foreground"
-      :aria-label="buttonAriaLabel"
-      @click="visible = !visible"
-    >
-      <EyeOff v-if="visible" />
-      <Eye v-else />
-    </Button>
-  </div>
+	<div data-slot="input-password" :class="cn('relative', props.class)">
+		<Input
+			v-model="modelValue"
+			class="pr-10"
+			:type="inputType"
+			:name="name"
+			:aria-invalid="invalid || undefined"
+		/>
+		<Button
+			type="button"
+			variant="ghost"
+			size="icon-sm"
+			class="absolute top-1/2 right-1 -translate-y-1/2 text-muted-foreground"
+			:aria-label="buttonAriaLabel"
+			@click="visible = !visible"
+		>
+			<EyeOff v-if="visible" />
+			<Eye v-else />
+		</Button>
+	</div>
 </template>

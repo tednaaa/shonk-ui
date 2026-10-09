@@ -10,33 +10,33 @@ import TextareaWithLabel from './examples/TextareaWithLabel.vue';
 import textareaWithLabelSource from './examples/TextareaWithLabel.vue?raw';
 
 const meta: Meta<typeof Textarea> = {
-  title: 'Components/Textarea',
-  component: Textarea,
-  tags: ['autodocs'],
-  render: args => ({
-    components: { Textarea },
-    setup() {
-      const value = ref('');
-      return { args, value };
-    },
-    template: `
+	title: 'Components/Textarea',
+	component: Textarea,
+	tags: ['autodocs'],
+	render: args => ({
+		components: { Textarea },
+		setup() {
+			const value = ref('');
+			return { args, value };
+		},
+		template: `
       <div class="max-w-sm">
         <Textarea v-bind="args" v-model="value" placeholder="Type your message here." />
       </div>
     `,
-  }),
+	}),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Prefilled: Story = {
-  parameters: example(textareaPrefilledSource),
-  render: render({ TextareaPrefilled }, `
+	parameters: example(textareaPrefilledSource),
+	render: render({ TextareaPrefilled }, `
     <div class="max-w-sm">
       <TextareaPrefilled />
     </div>
@@ -44,8 +44,8 @@ export const Prefilled: Story = {
 };
 
 export const Disabled: Story = {
-  parameters: example(textareaDisabledSource),
-  render: render({ TextareaDisabled }, `
+	parameters: example(textareaDisabledSource),
+	render: render({ TextareaDisabled }, `
     <div class="max-w-sm">
       <TextareaDisabled />
     </div>
@@ -53,8 +53,8 @@ export const Disabled: Story = {
 };
 
 export const WithLabel: Story = {
-  parameters: example(textareaWithLabelSource),
-  render: render({ TextareaWithLabel }, `
+	parameters: example(textareaWithLabelSource),
+	render: render({ TextareaWithLabel }, `
     <div class="max-w-sm">
       <TextareaWithLabel />
     </div>

@@ -10,12 +10,12 @@ const { orientation } = useCarousel();
 </script>
 
 <template>
-  <div
-    data-slot="carousel-item"
-    role="group"
-    aria-roledescription="slide"
-    :class="cn(carouselItemVariants({ orientation }), props.class)"
-  >
-    <slot />
-  </div>
+	<div
+		data-slot="carousel-item"
+		role="group"
+		aria-roledescription="slide"
+		:class="cn(carouselItemVariants({ orientation }), props.class)"
+	>
+		<slot />
+	</div>
 </template>

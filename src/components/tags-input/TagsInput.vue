@@ -14,15 +14,15 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
-  <TagsInputRoot
-    #default="slotProps"
-    v-bind="forwarded"
-    :class="cn(
-      'flex flex-wrap items-center gap-2 rounded-md border border-border bg-field px-2 py-1 text-sm text-field-foreground shadow-xs transition-[color,box-shadow] outline-none',
-      'focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50',
-      'aria-invalid:border-destructive aria-invalid:ring-destructive-ring',
-      props.class)"
-  >
-    <slot v-bind="slotProps" />
-  </TagsInputRoot>
+	<TagsInputRoot
+		#default="slotProps"
+		v-bind="forwarded"
+		:class="cn(
+			'flex flex-wrap items-center gap-2 rounded-md border border-border bg-field px-2 py-1 text-sm text-field-foreground shadow-xs transition-[color,box-shadow] outline-none',
+			'focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50',
+			'aria-invalid:border-destructive aria-invalid:ring-destructive-ring',
+			props.class)"
+	>
+		<slot v-bind="slotProps" />
+	</TagsInputRoot>
 </template>

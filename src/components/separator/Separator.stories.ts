@@ -3,28 +3,28 @@ import { render, showControls } from '@/lib/storybook';
 import { Separator } from '.';
 
 const meta: Meta<typeof Separator> = {
-  title: 'Components/Separator',
-  component: Separator,
-  tags: ['autodocs'],
-  render: render(
-    { Separator },
-    `<div class="flex h-24 w-64 items-center justify-center">
+	title: 'Components/Separator',
+	component: Separator,
+	tags: ['autodocs'],
+	render: render(
+		{ Separator },
+		`<div class="flex h-24 w-64 items-center justify-center">
       <Separator v-bind="args" />
     </div>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Demo: Story = {
-  render: render(
-    { Separator },
-    `<div>
+	render: render(
+		{ Separator },
+		`<div>
       <div class="space-y-1">
         <h4 class="text-sm leading-none font-medium">Acme UI</h4>
         <p class="text-muted-foreground text-sm">A shared component library.</p>
@@ -38,5 +38,5 @@ export const Demo: Story = {
         <div>Source</div>
       </div>
     </div>`,
-  ),
+	),
 };

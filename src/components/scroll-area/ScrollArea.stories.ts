@@ -4,12 +4,12 @@ import { ScrollArea } from '.';
 import { Separator } from '../separator';
 
 const meta: Meta<typeof ScrollArea> = {
-  title: 'Components/ScrollArea',
-  component: ScrollArea,
-  tags: ['autodocs'],
-  render: render(
-    { ScrollArea, Separator },
-    `<div class="h-72 w-48">
+	title: 'Components/ScrollArea',
+	component: ScrollArea,
+	tags: ['autodocs'],
+	render: render(
+		{ ScrollArea, Separator },
+		`<div class="h-72 w-48">
       <ScrollArea v-bind="args" class="h-full w-full rounded-md border">
         <div class="p-4">
           <h4 class="mb-4 text-sm leading-none font-medium">Tags</h4>
@@ -20,20 +20,20 @@ const meta: Meta<typeof ScrollArea> = {
         </div>
       </ScrollArea>
     </div>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Prose: Story = {
-  render: render(
-    { ScrollArea },
-    `<div class="h-72 w-full max-w-md">
+	render: render(
+		{ ScrollArea },
+		`<div class="h-72 w-full max-w-md">
       <ScrollArea class="h-full w-full rounded-md border">
         <div class="text-muted-foreground space-y-4 p-4 text-sm">
           <h4 class="text-foreground text-sm font-medium">Changelog</h4>
@@ -45,5 +45,5 @@ export const Prose: Story = {
         </div>
       </ScrollArea>
     </div>`,
-  ),
+	),
 };

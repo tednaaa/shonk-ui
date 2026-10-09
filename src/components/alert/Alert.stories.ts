@@ -3,29 +3,29 @@ import { render, showControls, StorybookLabel } from '@/lib/storybook';
 import { Alert } from '.';
 
 const meta: Meta<typeof Alert> = {
-  title: 'Components/Alert',
-  component: Alert,
-  tags: ['autodocs'],
-  args: {
-    title: 'Heads up!',
-  },
-  render: render(
-    { Alert },
-    `<Alert v-bind="args" class="max-w-md">You can add components to your app using the CLI.</Alert>`,
-  ),
+	title: 'Components/Alert',
+	component: Alert,
+	tags: ['autodocs'],
+	args: {
+		title: 'Heads up!',
+	},
+	render: render(
+		{ Alert },
+		`<Alert v-bind="args" class="max-w-md">You can add components to your app using the CLI.</Alert>`,
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Variants: Story = {
-  render: render(
-    { Alert, StorybookLabel },
-    `<div class="flex gap-12">
+	render: render(
+		{ Alert, StorybookLabel },
+		`<div class="flex gap-12">
       <div class="flex max-w-md flex-col gap-6">
         <StorybookLabel>With title</StorybookLabel>
         <Alert title="Default">This is a default alert with neutral styling.</Alert>
@@ -43,13 +43,13 @@ export const Variants: Story = {
         <Alert variant="destructive">Something went wrong while saving.</Alert>
       </div>
     </div>`,
-  ),
+	),
 };
 
 export const Appearances: Story = {
-  render: render(
-    { Alert, StorybookLabel },
-    `<div class="flex gap-12">
+	render: render(
+		{ Alert, StorybookLabel },
+		`<div class="flex gap-12">
       <div class="flex max-w-md flex-col gap-6">
         <StorybookLabel>With title</StorybookLabel>
         <Alert variant="success" appearance="default" title="Default">Bordered, rounded container.</Alert>
@@ -63,5 +63,5 @@ export const Appearances: Story = {
         <Alert variant="success" appearance="text">Text appearance with body content only.</Alert>
       </div>
     </div>`,
-  ),
+	),
 };

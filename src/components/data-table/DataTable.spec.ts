@@ -9,1257 +9,1257 @@ import DataTable from './DataTable.vue';
 import { useDataTable } from './useDataTable';
 
 interface Person {
-  id: string;
-  name: string;
-  age: number;
+	id: string;
+	name: string;
+	age: number;
 }
 
 const people: Person[] = [
-  { id: 'ada', name: 'Ada', age: 36 },
-  { id: 'linus', name: 'Linus', age: 54 },
+	{ id: 'ada', name: 'Ada', age: 36 },
+	{ id: 'linus', name: 'Linus', age: 54 },
 ];
 
 const columns: DataTableColumn<Person>[] = [
-  { accessorKey: 'name', header: 'Name' },
-  { accessorKey: 'age', header: 'Age' },
+	{ accessorKey: 'name', header: 'Name' },
+	{ accessorKey: 'age', header: 'Age' },
 ];
 
 interface MountOptions {
-  data?: UseDataTableOptions<Person>['data'];
-  columns?: DataTableColumn<Person>[];
-  tableOptions?: Omit<UseDataTableOptions<Person>, 'data' | 'columns'>;
-  bindings?: Record<string, unknown>;
+	data?: UseDataTableOptions<Person>['data'];
+	columns?: DataTableColumn<Person>[];
+	tableOptions?: Omit<UseDataTableOptions<Person>, 'data' | 'columns'>;
+	bindings?: Record<string, unknown>;
 }
 
 function mountTable(template = '<DataTable :table="table" />', options: MountOptions = {}) {
-  const Host = defineComponent({
-    components: { DataTable },
-    setup() {
-      const table = useDataTable({
-        data: options.data ?? people,
-        columns: options.columns ?? columns,
-        ...options.tableOptions,
-      });
+	const Host = defineComponent({
+		components: { DataTable },
+		setup() {
+			const table = useDataTable({
+				data: options.data ?? people,
+				columns: options.columns ?? columns,
+				...options.tableOptions,
+			});
 
-      return { table, ...options.bindings };
-    },
-    template,
-  });
+			return { table, ...options.bindings };
+		},
+		template,
+	});
 
-  return mount(Host);
+	return mount(Host);
 }
 
 function bodyRows(wrapper: ReturnType<typeof mountTable>) {
-  return wrapper.findAll('tbody tr').map(row => row.findAll('td').map(cell => cell.text()));
+	return wrapper.findAll('tbody tr').map(row => row.findAll('td').map(cell => cell.text()));
 }
 
 describe('dataTable', () => {
-  it('should render the headers and the values of every row', () => {
-    const wrapper = mountTable();
+	it('should render the headers and the values of every row', () => {
+		const wrapper = mountTable();
 
-    expect(wrapper.findAll('th').map(header => header.text())).toEqual(['Name', 'Age']);
-    expect(bodyRows(wrapper)).toEqual([['Ada', '36'], ['Linus', '54']]);
-  });
+		expect(wrapper.findAll('th').map(header => header.text())).toEqual(['Name', 'Age']);
+		expect(bodyRows(wrapper)).toEqual([['Ada', '36'], ['Linus', '54']]);
+	});
 
-  it('should render a cell through the column render function and through a slot', () => {
-    const wrapper = mountTable(
-      `<DataTable :table="table">
+	it('should render a cell through the column render function and through a slot', () => {
+		const wrapper = mountTable(
+			`<DataTable :table="table">
         <template #cell-age="{ row, value }"><i>{{ row.name }}: {{ value }}</i></template>
       </DataTable>`,
-      {
-        columns: [
-          { accessorKey: 'name', cell: ({ row, value }) => h('b', `${value} (${row.age})`) },
-          { accessorKey: 'age' },
-        ],
-      },
-    );
+			{
+				columns: [
+					{ accessorKey: 'name', cell: ({ row, value }) => h('b', `${value} (${row.age})`) },
+					{ accessorKey: 'age' },
+				],
+			},
+		);
 
-    expect(bodyRows(wrapper)).toEqual([['Ada (36)', 'Ada: 36'], ['Linus (54)', 'Linus: 54']]);
-  });
+		expect(bodyRows(wrapper)).toEqual([['Ada (36)', 'Ada: 36'], ['Linus (54)', 'Linus: 54']]);
+	});
 
-  it('should pass the header label to the header slot', () => {
-    const wrapper = mountTable(
-      `<DataTable :table="table">
+	it('should pass the header label to the header slot', () => {
+		const wrapper = mountTable(
+			`<DataTable :table="table">
         <template #header-age="{ label }"><a href="#age">{{ label }}</a></template>
       </DataTable>`,
-    );
+		);
 
-    expect(wrapper.get('th a[href="#age"]').text()).toBe('Age');
-  });
+		expect(wrapper.get('th a[href="#age"]').text()).toBe('Age');
+	});
 
-  it('should span a group header over its columns', () => {
-    const wrapper = mountTable(undefined, {
-      columns: [{ id: 'person', header: 'Person', columns }],
-    });
+	it('should span a group header over its columns', () => {
+		const wrapper = mountTable(undefined, {
+			columns: [{ id: 'person', header: 'Person', columns }],
+		});
 
-    expect(wrapper.getElementByText('th', 'Person').attributes('colspan')).toBe('2');
-  });
+		expect(wrapper.getElementByText('th', 'Person').attributes('colspan')).toBe('2');
+	});
 
-  it('should merge the header of a column outside the groups over every header row', () => {
-    const wrapper = mountTable(undefined, {
-      columns: [
-        { accessorKey: 'name', header: 'Name' },
-        { id: 'details', header: 'Details', columns: [{ accessorKey: 'age', header: 'Age' }, { accessorKey: 'id', header: 'Code' }] },
-      ],
-    });
+	it('should merge the header of a column outside the groups over every header row', () => {
+		const wrapper = mountTable(undefined, {
+			columns: [
+				{ accessorKey: 'name', header: 'Name' },
+				{ id: 'details', header: 'Details', columns: [{ accessorKey: 'age', header: 'Age' }, { accessorKey: 'id', header: 'Code' }] },
+			],
+		});
 
-    expect(wrapper.findAll('thead tr').map(row => row.findAll('th').map(header => header.text()))).toEqual([['Name', 'Details'], ['Age', 'Code']]);
-    expect(wrapper.getElementByText('th', 'Name').attributes('rowspan')).toBe('2');
-  });
+		expect(wrapper.findAll('thead tr').map(row => row.findAll('th').map(header => header.text()))).toEqual([['Name', 'Details'], ['Age', 'Code']]);
+		expect(wrapper.getElementByText('th', 'Name').attributes('rowspan')).toBe('2');
+	});
 
-  it('should sort by a column whose header spans every header row', async () => {
-    const wrapper = mountTable(undefined, {
-      columns: [
-        { accessorKey: 'name', header: 'Name', sortable: true },
-        { id: 'details', header: 'Details', columns: [{ accessorKey: 'age', header: 'Age' }] },
-      ],
-    });
+	it('should sort by a column whose header spans every header row', async () => {
+		const wrapper = mountTable(undefined, {
+			columns: [
+				{ accessorKey: 'name', header: 'Name', sortable: true },
+				{ id: 'details', header: 'Details', columns: [{ accessorKey: 'age', header: 'Age' }] },
+			],
+		});
 
-    await wrapper.getElementByText('th', 'Name').trigger('click');
+		await wrapper.getElementByText('th', 'Name').trigger('click');
 
-    expect(wrapper.getElementByText('th', 'Name').attributes()).toMatchObject({ 'rowspan': '2', 'aria-sort': 'ascending' });
-  });
+		expect(wrapper.getElementByText('th', 'Name').attributes()).toMatchObject({ 'rowspan': '2', 'aria-sort': 'ascending' });
+	});
 
-  it('should apply the column classes and the row class', () => {
-    const wrapper = mountTable('<DataTable :table="table" :row-class="rowClass" />', {
-      columns: [{ accessorKey: 'age', class: 'text-right', headerClass: 'w-20' }],
-      bindings: { rowClass: (person: Person) => person.age > 50 && 'font-semibold' },
-    });
+	it('should apply the column classes and the row class', () => {
+		const wrapper = mountTable('<DataTable :table="table" :row-class="rowClass" />', {
+			columns: [{ accessorKey: 'age', class: 'text-right', headerClass: 'w-20' }],
+			bindings: { rowClass: (person: Person) => person.age > 50 && 'font-semibold' },
+		});
 
-    expect(wrapper.get('th').classes()).toContain('w-20');
-    expect(wrapper.findAll('td').map(cell => cell.classes('text-right'))).toEqual([true, true]);
-    expect(wrapper.findAll('tbody tr').map(row => row.classes('font-semibold'))).toEqual([false, true]);
-  });
+		expect(wrapper.get('th').classes()).toContain('w-20');
+		expect(wrapper.findAll('td').map(cell => cell.classes('text-right'))).toEqual([true, true]);
+		expect(wrapper.findAll('tbody tr').map(row => row.classes('font-semibold'))).toEqual([false, true]);
+	});
 
-  describe('sorting', () => {
-    const crew: Person[] = [
-      { id: 'linus', name: 'Linus', age: 54 },
-      { id: 'ada', name: 'Ada', age: 54 },
-      { id: 'grace', name: 'Grace', age: 36 },
-    ];
+	describe('sorting', () => {
+		const crew: Person[] = [
+			{ id: 'linus', name: 'Linus', age: 54 },
+			{ id: 'ada', name: 'Ada', age: 54 },
+			{ id: 'grace', name: 'Grace', age: 36 },
+		];
 
-    const sortableColumns: DataTableColumn<Person>[] = [
-      { accessorKey: 'id', header: 'Code' },
-      { accessorKey: 'name', header: 'Name', sortable: true },
-      { accessorKey: 'age', header: 'Age', sortable: true },
-    ];
+		const sortableColumns: DataTableColumn<Person>[] = [
+			{ accessorKey: 'id', header: 'Code' },
+			{ accessorKey: 'name', header: 'Name', sortable: true },
+			{ accessorKey: 'age', header: 'Age', sortable: true },
+		];
 
-    function mountSortable(template?: string, tableOptions?: MountOptions['tableOptions']) {
-      return mountTable(template, { data: crew, columns: sortableColumns, tableOptions });
-    }
+		function mountSortable(template?: string, tableOptions?: MountOptions['tableOptions']) {
+			return mountTable(template, { data: crew, columns: sortableColumns, tableOptions });
+		}
 
-    function rowIds(wrapper: ReturnType<typeof mountTable>) {
-      return bodyRows(wrapper).map(([id]) => id);
-    }
+		function rowIds(wrapper: ReturnType<typeof mountTable>) {
+			return bodyRows(wrapper).map(([id]) => id);
+		}
 
-    it('should not sort by a column without the sortable flag', async () => {
-      const wrapper = mountSortable();
-      const idHeader = wrapper.getElementByText('th', 'Code');
+		it('should not sort by a column without the sortable flag', async () => {
+			const wrapper = mountSortable();
+			const idHeader = wrapper.getElementByText('th', 'Code');
 
-      await idHeader.trigger('click');
+			await idHeader.trigger('click');
 
-      expect(rowIds(wrapper)).toEqual(['linus', 'ada', 'grace']);
-      expect(idHeader.attributes()).not.toHaveProperty('aria-sort');
-      expect(idHeader.attributes()).not.toHaveProperty('tabindex');
-    });
+			expect(rowIds(wrapper)).toEqual(['linus', 'ada', 'grace']);
+			expect(idHeader.attributes()).not.toHaveProperty('aria-sort');
+			expect(idHeader.attributes()).not.toHaveProperty('tabindex');
+		});
 
-    it('should cycle a column from ascending to descending to unsorted', async () => {
-      const wrapper = mountSortable();
-      const ageHeader = wrapper.getElementByText('th', 'Age');
+		it('should cycle a column from ascending to descending to unsorted', async () => {
+			const wrapper = mountSortable();
+			const ageHeader = wrapper.getElementByText('th', 'Age');
 
-      expect(ageHeader.attributes('aria-sort')).toBe('none');
+			expect(ageHeader.attributes('aria-sort')).toBe('none');
 
-      await ageHeader.trigger('click');
+			await ageHeader.trigger('click');
 
-      expect(ageHeader.attributes('aria-sort')).toBe('ascending');
-      expect(rowIds(wrapper)).toEqual(['grace', 'linus', 'ada']);
+			expect(ageHeader.attributes('aria-sort')).toBe('ascending');
+			expect(rowIds(wrapper)).toEqual(['grace', 'linus', 'ada']);
 
-      await ageHeader.trigger('click');
+			await ageHeader.trigger('click');
 
-      expect(ageHeader.attributes('aria-sort')).toBe('descending');
-      expect(rowIds(wrapper)).toEqual(['linus', 'ada', 'grace']);
+			expect(ageHeader.attributes('aria-sort')).toBe('descending');
+			expect(rowIds(wrapper)).toEqual(['linus', 'ada', 'grace']);
 
-      await ageHeader.trigger('click');
+			await ageHeader.trigger('click');
 
-      expect(ageHeader.attributes('aria-sort')).toBe('none');
-      expect(rowIds(wrapper)).toEqual(['linus', 'ada', 'grace']);
-    });
+			expect(ageHeader.attributes('aria-sort')).toBe('none');
+			expect(rowIds(wrapper)).toEqual(['linus', 'ada', 'grace']);
+		});
 
-    it('should sort from the keyboard', async () => {
-      const wrapper = mountSortable();
-      const ageHeader = wrapper.getElementByText('th', 'Age');
+		it('should sort from the keyboard', async () => {
+			const wrapper = mountSortable();
+			const ageHeader = wrapper.getElementByText('th', 'Age');
 
-      await ageHeader.trigger('keydown', { key: 'Enter' });
+			await ageHeader.trigger('keydown', { key: 'Enter' });
 
-      expect(ageHeader.attributes('aria-sort')).toBe('ascending');
+			expect(ageHeader.attributes('aria-sort')).toBe('ascending');
 
-      await ageHeader.trigger('keydown', { key: ' ' });
+			await ageHeader.trigger('keydown', { key: ' ' });
 
-      expect(ageHeader.attributes('aria-sort')).toBe('descending');
-    });
+			expect(ageHeader.attributes('aria-sort')).toBe('descending');
+		});
 
-    it('should add a column to the sorting on shift click and number the sorted columns', async () => {
-      const sorting = ref<DataTableSortingState>([]);
-      const wrapper = mountSortable(undefined, { sorting, enableMultiSort: true });
+		it('should add a column to the sorting on shift click and number the sorted columns', async () => {
+			const sorting = ref<DataTableSortingState>([]);
+			const wrapper = mountSortable(undefined, { sorting, enableMultiSort: true });
 
-      await wrapper.getElementByText('th', 'Age').trigger('click');
-      await wrapper.getElementByText('th', 'Name').trigger('click', { shiftKey: true });
+			await wrapper.getElementByText('th', 'Age').trigger('click');
+			await wrapper.getElementByText('th', 'Name').trigger('click', { shiftKey: true });
 
-      expect(sorting.value).toEqual([{ id: 'age', desc: false }, { id: 'name', desc: false }]);
-      expect(rowIds(wrapper)).toEqual(['grace', 'ada', 'linus']);
-      expect(wrapper.findAll('th').map(header => header.text())).toEqual(['Code', 'Name 2', 'Age 1']);
-    });
+			expect(sorting.value).toEqual([{ id: 'age', desc: false }, { id: 'name', desc: false }]);
+			expect(rowIds(wrapper)).toEqual(['grace', 'ada', 'linus']);
+			expect(wrapper.findAll('th').map(header => header.text())).toEqual(['Code', 'Name 2', 'Age 1']);
+		});
 
-    it('should replace the sorting on shift click without multi-sort', async () => {
-      const sorting = ref<DataTableSortingState>([]);
-      const wrapper = mountSortable(undefined, { sorting });
+		it('should replace the sorting on shift click without multi-sort', async () => {
+			const sorting = ref<DataTableSortingState>([]);
+			const wrapper = mountSortable(undefined, { sorting });
 
-      await wrapper.getElementByText('th', 'Age').trigger('click');
-      await wrapper.getElementByText('th', 'Name').trigger('click', { shiftKey: true });
+			await wrapper.getElementByText('th', 'Age').trigger('click');
+			await wrapper.getElementByText('th', 'Name').trigger('click', { shiftKey: true });
 
-      expect(sorting.value).toEqual([{ id: 'name', desc: false }]);
-    });
+			expect(sorting.value).toEqual([{ id: 'name', desc: false }]);
+		});
 
-    it('should ignore a click and a key press on a link inside the header', async () => {
-      const wrapper = mountSortable(
-        `<DataTable :table="table">
+		it('should ignore a click and a key press on a link inside the header', async () => {
+			const wrapper = mountSortable(
+				`<DataTable :table="table">
           <template #header-age="{ label }"><a href="#age">{{ label }}</a></template>
         </DataTable>`,
-      );
+			);
 
-      await wrapper.get('th a').trigger('click');
-      await wrapper.get('th a').trigger('keydown', { key: 'Enter' });
+			await wrapper.get('th a').trigger('click');
+			await wrapper.get('th a').trigger('keydown', { key: 'Enter' });
 
-      expect(wrapper.getElementByText('th', 'Age').attributes('aria-sort')).toBe('none');
-    });
-  });
+			expect(wrapper.getElementByText('th', 'Age').attributes('aria-sort')).toBe('none');
+		});
+	});
 
-  describe('without rows', () => {
-    it('should span the empty text over every leaf column', () => {
-      const wrapper = mountTable(undefined, {
-        data: [],
-        columns: [{ accessorKey: 'id' }, { id: 'person', columns }],
-      });
+	describe('without rows', () => {
+		it('should span the empty text over every leaf column', () => {
+			const wrapper = mountTable(undefined, {
+				data: [],
+				columns: [{ accessorKey: 'id' }, { id: 'person', columns }],
+			});
 
-      const emptyCell = wrapper.get('tbody td');
+			const emptyCell = wrapper.get('tbody td');
 
-      expect(emptyCell.text()).toBe('No data');
-      expect(emptyCell.attributes('colspan')).toBe('3');
-    });
+			expect(emptyCell.text()).toBe('No data');
+			expect(emptyCell.attributes('colspan')).toBe('3');
+		});
 
-    it('should show the empty text passed in props', () => {
-      const wrapper = mountTable('<DataTable :table="table" empty-text="Nothing found" />', { data: [] });
+		it('should show the empty text passed in props', () => {
+			const wrapper = mountTable('<DataTable :table="table" empty-text="Nothing found" />', { data: [] });
 
-      expect(wrapper.get('tbody td').text()).toBe('Nothing found');
-    });
+			expect(wrapper.get('tbody td').text()).toBe('Nothing found');
+		});
 
-    it('should prefer the empty slot over the empty text', () => {
-      const wrapper = mountTable(
-        `<DataTable :table="table" empty-text="Nothing found">
+		it('should prefer the empty slot over the empty text', () => {
+			const wrapper = mountTable(
+				`<DataTable :table="table" empty-text="Nothing found">
           <template #empty>Create the first record</template>
         </DataTable>`,
-        { data: [] },
-      );
-
-      expect(wrapper.get('tbody td').text()).toBe('Create the first record');
-    });
-
-    it('should show a spinner instead of the empty text while loading', () => {
-      const wrapper = mountTable('<DataTable :table="table" loading />', { data: [] });
-
-      expect(wrapper.find('tbody [role="status"]').exists()).toBe(true);
-      expect(wrapper.text()).not.toContain('No data');
-    });
-  });
-
-  describe('column visibility', () => {
-    it('should leave a hidden column out of the header and the rows', () => {
-      const columnVisibility = ref<DataTableColumnVisibilityState>({ age: false });
-      const wrapper = mountTable(undefined, { tableOptions: { columnVisibility } });
-
-      expect(wrapper.findAll('th').map(header => header.text())).toEqual(['Name']);
-      expect(bodyRows(wrapper)).toEqual([['Ada'], ['Linus']]);
-    });
-
-    it('should span the empty text over the visible columns only', () => {
-      const columnVisibility = ref<DataTableColumnVisibilityState>({ age: false });
-      const wrapper = mountTable(undefined, { data: [], tableOptions: { columnVisibility } });
-
-      expect(wrapper.get('tbody td').attributes('colspan')).toBe('1');
-    });
-  });
-
-  describe('column pinning', () => {
-    const headerWidths: Record<string, number> = { Name: 120, Code: 64 };
-
-    class BorderBoxResizeObserver implements ResizeObserver {
-      constructor(private readonly callback: ResizeObserverCallback) {}
-
-      observe(target: Element) {
-        const inlineSize = headerWidths[target.textContent.trim()] ?? 0;
-
-        this.callback([{
-          target,
-          borderBoxSize: [{ inlineSize, blockSize: 40 }],
-          contentBoxSize: [],
-          devicePixelContentBoxSize: [],
-          contentRect: target.getBoundingClientRect(),
-        }], this);
-      }
-
-      unobserve() {}
-
-      disconnect() {}
-    }
-
-    const pinnedColumns: DataTableColumn<Person>[] = [
-      { accessorKey: 'age', header: 'Age' },
-      { accessorKey: 'name', header: 'Name', footer: 'Total', pinned: true, sortable: true },
-      { id: 'code', accessorKey: 'id', header: 'Code', pinned: true },
-    ];
-
-    beforeEach(() => {
-      vi.stubGlobal('ResizeObserver', BorderBoxResizeObserver);
-    });
-
-    afterEach(() => {
-      vi.unstubAllGlobals();
-    });
-
-    async function mountPinnedTable(options: MountOptions = {}) {
-      const wrapper = mountTable(undefined, { columns: pinnedColumns, ...options });
-      await flushPromises();
-
-      return wrapper;
-    }
-
-    function offsets<TElement extends Element>(cells: DOMWrapper<TElement>[]) {
-      return cells.map(cell => cell.attributes('style'));
-    }
-
-    it('should move the pinned columns to the start and offset each by the widths of the pinned columns before it', async () => {
-      const wrapper = await mountPinnedTable();
-      const stickyOffsets = ['inset-inline-start: 0px;', 'inset-inline-start: 120px;', undefined];
-
-      expect(wrapper.findAll('th').map(header => header.text())).toEqual(['Name', 'Code', 'Age']);
-      expect(offsets(wrapper.findAll('th'))).toEqual(stickyOffsets);
-      expect(offsets(wrapper.get('tbody tr').findAll('td'))).toEqual(stickyOffsets);
-      expect(offsets(wrapper.get('tfoot tr').findAll('td'))).toEqual(stickyOffsets);
-      expect(wrapper.findAll('th').map(header => header.classes('sticky'))).toEqual([true, true, false]);
-    });
-
-    it('should keep the select column sticky in every row when it is pinned with the columns after it', async () => {
-      const wrapper = await mountPinnedTable({ columns: [selectColumn(), ...pinnedColumns] });
-
-      expect(wrapper.get('thead th').classes('sticky')).toBe(true);
-      expect(wrapper.get('tbody td').classes('sticky')).toBe(true);
-      expect(wrapper.get('tfoot td').classes('sticky')).toBe(true);
-    });
-
-    it('should draw the edge after the last pinned column only', async () => {
-      const wrapper = await mountPinnedTable();
-
-      expect(wrapper.findAll('th').map(header => header.classes('after:border-e'))).toEqual([false, true, false]);
-      expect(wrapper.get('tbody tr').findAll('td').map(cell => cell.classes('after:border-e'))).toEqual([false, true, false]);
-    });
-
-    it('should offset the pinned columns by the visible ones only', async () => {
-      const columnVisibility = ref<DataTableColumnVisibilityState>({});
-      const wrapper = await mountPinnedTable({ tableOptions: { columnVisibility } });
-
-      columnVisibility.value = { name: false };
-      await flushPromises();
-
-      expect(offsets(wrapper.findAll('th'))).toEqual(['inset-inline-start: 0px;', undefined]);
-    });
-
-    it('should measure a pinned header that spans every header row and pin a group header over pinned columns', async () => {
-      const wrapper = await mountPinnedTable({
-        columns: [
-          { accessorKey: 'age', header: 'Age' },
-          { accessorKey: 'name', header: 'Name', pinned: true },
-          { id: 'details', header: 'Details', columns: [{ id: 'code', accessorKey: 'id', header: 'Code', pinned: true }] },
-        ],
-      });
-
-      expect(wrapper.findAll('thead tr').map(row => row.findAll('th').map(header => header.text()))).toEqual([['Name', 'Details', 'Age'], ['Code']]);
-      expect(offsets(wrapper.findAll('th'))).toEqual(['inset-inline-start: 0px;', 'inset-inline-start: 120px;', undefined, 'inset-inline-start: 120px;']);
-    });
+				{ data: [] },
+			);
+
+			expect(wrapper.get('tbody td').text()).toBe('Create the first record');
+		});
+
+		it('should show a spinner instead of the empty text while loading', () => {
+			const wrapper = mountTable('<DataTable :table="table" loading />', { data: [] });
+
+			expect(wrapper.find('tbody [role="status"]').exists()).toBe(true);
+			expect(wrapper.text()).not.toContain('No data');
+		});
+	});
+
+	describe('column visibility', () => {
+		it('should leave a hidden column out of the header and the rows', () => {
+			const columnVisibility = ref<DataTableColumnVisibilityState>({ age: false });
+			const wrapper = mountTable(undefined, { tableOptions: { columnVisibility } });
+
+			expect(wrapper.findAll('th').map(header => header.text())).toEqual(['Name']);
+			expect(bodyRows(wrapper)).toEqual([['Ada'], ['Linus']]);
+		});
+
+		it('should span the empty text over the visible columns only', () => {
+			const columnVisibility = ref<DataTableColumnVisibilityState>({ age: false });
+			const wrapper = mountTable(undefined, { data: [], tableOptions: { columnVisibility } });
+
+			expect(wrapper.get('tbody td').attributes('colspan')).toBe('1');
+		});
+	});
+
+	describe('column pinning', () => {
+		const headerWidths: Record<string, number> = { Name: 120, Code: 64 };
+
+		class BorderBoxResizeObserver implements ResizeObserver {
+			constructor(private readonly callback: ResizeObserverCallback) {}
+
+			observe(target: Element) {
+				const inlineSize = headerWidths[target.textContent.trim()] ?? 0;
+
+				this.callback([{
+					target,
+					borderBoxSize: [{ inlineSize, blockSize: 40 }],
+					contentBoxSize: [],
+					devicePixelContentBoxSize: [],
+					contentRect: target.getBoundingClientRect(),
+				}], this);
+			}
+
+			unobserve() {}
+
+			disconnect() {}
+		}
+
+		const pinnedColumns: DataTableColumn<Person>[] = [
+			{ accessorKey: 'age', header: 'Age' },
+			{ accessorKey: 'name', header: 'Name', footer: 'Total', pinned: true, sortable: true },
+			{ id: 'code', accessorKey: 'id', header: 'Code', pinned: true },
+		];
+
+		beforeEach(() => {
+			vi.stubGlobal('ResizeObserver', BorderBoxResizeObserver);
+		});
+
+		afterEach(() => {
+			vi.unstubAllGlobals();
+		});
+
+		async function mountPinnedTable(options: MountOptions = {}) {
+			const wrapper = mountTable(undefined, { columns: pinnedColumns, ...options });
+			await flushPromises();
+
+			return wrapper;
+		}
+
+		function offsets<TElement extends Element>(cells: DOMWrapper<TElement>[]) {
+			return cells.map(cell => cell.attributes('style'));
+		}
+
+		it('should move the pinned columns to the start and offset each by the widths of the pinned columns before it', async () => {
+			const wrapper = await mountPinnedTable();
+			const stickyOffsets = ['inset-inline-start: 0px;', 'inset-inline-start: 120px;', undefined];
+
+			expect(wrapper.findAll('th').map(header => header.text())).toEqual(['Name', 'Code', 'Age']);
+			expect(offsets(wrapper.findAll('th'))).toEqual(stickyOffsets);
+			expect(offsets(wrapper.get('tbody tr').findAll('td'))).toEqual(stickyOffsets);
+			expect(offsets(wrapper.get('tfoot tr').findAll('td'))).toEqual(stickyOffsets);
+			expect(wrapper.findAll('th').map(header => header.classes('sticky'))).toEqual([true, true, false]);
+		});
+
+		it('should keep the select column sticky in every row when it is pinned with the columns after it', async () => {
+			const wrapper = await mountPinnedTable({ columns: [selectColumn(), ...pinnedColumns] });
+
+			expect(wrapper.get('thead th').classes('sticky')).toBe(true);
+			expect(wrapper.get('tbody td').classes('sticky')).toBe(true);
+			expect(wrapper.get('tfoot td').classes('sticky')).toBe(true);
+		});
+
+		it('should draw the edge after the last pinned column only', async () => {
+			const wrapper = await mountPinnedTable();
+
+			expect(wrapper.findAll('th').map(header => header.classes('after:border-e'))).toEqual([false, true, false]);
+			expect(wrapper.get('tbody tr').findAll('td').map(cell => cell.classes('after:border-e'))).toEqual([false, true, false]);
+		});
+
+		it('should offset the pinned columns by the visible ones only', async () => {
+			const columnVisibility = ref<DataTableColumnVisibilityState>({});
+			const wrapper = await mountPinnedTable({ tableOptions: { columnVisibility } });
+
+			columnVisibility.value = { name: false };
+			await flushPromises();
+
+			expect(offsets(wrapper.findAll('th'))).toEqual(['inset-inline-start: 0px;', undefined]);
+		});
+
+		it('should measure a pinned header that spans every header row and pin a group header over pinned columns', async () => {
+			const wrapper = await mountPinnedTable({
+				columns: [
+					{ accessorKey: 'age', header: 'Age' },
+					{ accessorKey: 'name', header: 'Name', pinned: true },
+					{ id: 'details', header: 'Details', columns: [{ id: 'code', accessorKey: 'id', header: 'Code', pinned: true }] },
+				],
+			});
+
+			expect(wrapper.findAll('thead tr').map(row => row.findAll('th').map(header => header.text()))).toEqual([['Name', 'Details', 'Age'], ['Code']]);
+			expect(offsets(wrapper.findAll('th'))).toEqual(['inset-inline-start: 0px;', 'inset-inline-start: 120px;', undefined, 'inset-inline-start: 120px;']);
+		});
 
-    it('should leave in place a group header over pinned and unpinned columns', async () => {
-      const wrapper = await mountPinnedTable({
-        columns: [
-          { id: 'details', header: 'Details', columns: [{ accessorKey: 'name', header: 'Name', pinned: true }, { accessorKey: 'age', header: 'Age' }] },
-        ],
-      });
-
-      expect(wrapper.getElementByText('th', 'Details').attributes('style')).toBeUndefined();
-      expect(wrapper.getElementByText('th', 'Name').attributes('style')).toBe('inset-inline-start: 0px;');
-    });
-  });
-
-  describe('column resizing', () => {
-    const headerWidths: Record<string, number> = { Name: 120, Age: 80, Code: 64 };
-
-    beforeEach(() => {
-      vi.spyOn(HTMLTableCellElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLTableCellElement) {
-        return DOMRect.fromRect({ width: headerWidths[this.textContent.trim()] ?? 0, height: 40 });
-      });
-    });
+		it('should leave in place a group header over pinned and unpinned columns', async () => {
+			const wrapper = await mountPinnedTable({
+				columns: [
+					{ id: 'details', header: 'Details', columns: [{ accessorKey: 'name', header: 'Name', pinned: true }, { accessorKey: 'age', header: 'Age' }] },
+				],
+			});
+
+			expect(wrapper.getElementByText('th', 'Details').attributes('style')).toBeUndefined();
+			expect(wrapper.getElementByText('th', 'Name').attributes('style')).toBe('inset-inline-start: 0px;');
+		});
+	});
+
+	describe('column resizing', () => {
+		const headerWidths: Record<string, number> = { Name: 120, Age: 80, Code: 64 };
+
+		beforeEach(() => {
+			vi.spyOn(HTMLTableCellElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLTableCellElement) {
+				return DOMRect.fromRect({ width: headerWidths[this.textContent.trim()] ?? 0, height: 40 });
+			});
+		});
 
-    afterEach(() => {
-      vi.restoreAllMocks();
-    });
-
-    function mountResizableTable(columnSizing: DataTableColumnSizingState = {}, options: MountOptions = {}) {
-      const sizing = ref(columnSizing);
-      const wrapper = mountTable(undefined, { ...options, tableOptions: { columnSizing: sizing, ...options.tableOptions } });
+		afterEach(() => {
+			vi.restoreAllMocks();
+		});
+
+		function mountResizableTable(columnSizing: DataTableColumnSizingState = {}, options: MountOptions = {}) {
+			const sizing = ref(columnSizing);
+			const wrapper = mountTable(undefined, { ...options, tableOptions: { columnSizing: sizing, ...options.tableOptions } });
 
-      return { wrapper, sizing };
-    }
+			return { wrapper, sizing };
+		}
 
-    function resizeHandle(wrapper: ReturnType<typeof mountTable>, header: string) {
-      return wrapper.getElementByText('th', header).get('[data-slot="data-table-resize-handle"]');
-    }
+		function resizeHandle(wrapper: ReturnType<typeof mountTable>, header: string) {
+			return wrapper.getElementByText('th', header).get('[data-slot="data-table-resize-handle"]');
+		}
 
-    async function drag(wrapper: ReturnType<typeof mountTable>, header: string, distance: number) {
-      await resizeHandle(wrapper, header).trigger('mousedown', { clientX: 0 });
-      await flushPromises();
-      document.dispatchEvent(new MouseEvent('mousemove', { clientX: distance }));
-      document.dispatchEvent(new MouseEvent('mouseup', { clientX: distance }));
-      await flushPromises();
-    }
-
-    function columnWidths(wrapper: ReturnType<typeof mountTable>) {
-      return wrapper.findAll('col').map(column => column.attributes('style'));
-    }
-
-    it('should keep the table as it was without columnSizing', () => {
-      const wrapper = mountTable();
-
-      expect(wrapper.find('[data-slot="data-table-resize-handle"]').exists()).toBe(false);
-      expect(wrapper.find('colgroup').exists()).toBe(false);
-      expect(wrapper.get('table').classes()).not.toContain('table-fixed');
-    });
-
-    it('should lay the columns out by their content until the first drag', () => {
-      const { wrapper } = mountResizableTable();
-
-      expect(columnWidths(wrapper)).toEqual([undefined, undefined]);
-      expect(wrapper.get('table').classes()).not.toContain('table-fixed');
-    });
+		async function drag(wrapper: ReturnType<typeof mountTable>, header: string, distance: number) {
+			await resizeHandle(wrapper, header).trigger('mousedown', { clientX: 0 });
+			await flushPromises();
+			document.dispatchEvent(new MouseEvent('mousemove', { clientX: distance }));
+			document.dispatchEvent(new MouseEvent('mouseup', { clientX: distance }));
+			await flushPromises();
+		}
+
+		function columnWidths(wrapper: ReturnType<typeof mountTable>) {
+			return wrapper.findAll('col').map(column => column.attributes('style'));
+		}
+
+		it('should keep the table as it was without columnSizing', () => {
+			const wrapper = mountTable();
+
+			expect(wrapper.find('[data-slot="data-table-resize-handle"]').exists()).toBe(false);
+			expect(wrapper.find('colgroup').exists()).toBe(false);
+			expect(wrapper.get('table').classes()).not.toContain('table-fixed');
+		});
+
+		it('should lay the columns out by their content until the first drag', () => {
+			const { wrapper } = mountResizableTable();
+
+			expect(columnWidths(wrapper)).toEqual([undefined, undefined]);
+			expect(wrapper.get('table').classes()).not.toContain('table-fixed');
+		});
 
-    it('should fix the measured widths on the first drag and change only the dragged column', async () => {
-      const { wrapper, sizing } = mountResizableTable();
+		it('should fix the measured widths on the first drag and change only the dragged column', async () => {
+			const { wrapper, sizing } = mountResizableTable();
 
-      await drag(wrapper, 'Name', 30);
+			await drag(wrapper, 'Name', 30);
 
-      expect(sizing.value).toEqual({ name: 150, age: 80 });
-      expect(columnWidths(wrapper)).toEqual(['width: 150px;', 'width: 80px;']);
-      expect(wrapper.get('table').classes()).toContain('table-fixed');
-      expect(wrapper.get('table').attributes('style')).toBe('width: 230px;');
-    });
-
-    it('should not narrow a column past its minimum width', async () => {
-      const { wrapper } = mountResizableTable();
+			expect(sizing.value).toEqual({ name: 150, age: 80 });
+			expect(columnWidths(wrapper)).toEqual(['width: 150px;', 'width: 80px;']);
+			expect(wrapper.get('table').classes()).toContain('table-fixed');
+			expect(wrapper.get('table').attributes('style')).toBe('width: 230px;');
+		});
+
+		it('should not narrow a column past its minimum width', async () => {
+			const { wrapper } = mountResizableTable();
 
-      await drag(wrapper, 'Name', -200);
-
-      expect(columnWidths(wrapper)).toEqual(['width: 64px;', 'width: 80px;']);
-    });
+			await drag(wrapper, 'Name', -200);
+
+			expect(columnWidths(wrapper)).toEqual(['width: 64px;', 'width: 80px;']);
+		});
 
-    it('should sort by a click on the header but not by a click on its handle', async () => {
-      const { wrapper } = mountResizableTable({}, {
-        columns: [{ accessorKey: 'name', header: 'Name', sortable: true }, { accessorKey: 'age', header: 'Age' }],
-      });
-      const header = wrapper.getElementByText('th', 'Name');
+		it('should sort by a click on the header but not by a click on its handle', async () => {
+			const { wrapper } = mountResizableTable({}, {
+				columns: [{ accessorKey: 'name', header: 'Name', sortable: true }, { accessorKey: 'age', header: 'Age' }],
+			});
+			const header = wrapper.getElementByText('th', 'Name');
 
-      await drag(wrapper, 'Name', 10);
-      await header.trigger('click');
+			await drag(wrapper, 'Name', 10);
+			await header.trigger('click');
 
-      expect(header.attributes('aria-sort')).toBe('none');
+			expect(header.attributes('aria-sort')).toBe('none');
 
-      await header.trigger('mousedown');
-      await header.trigger('click');
+			await header.trigger('mousedown');
+			await header.trigger('click');
 
-      expect(header.attributes('aria-sort')).toBe('ascending');
-    });
+			expect(header.attributes('aria-sort')).toBe('ascending');
+		});
 
-    it('should not offer a handle on the select column and on a column that opts out', () => {
-      const { wrapper } = mountResizableTable({}, {
-        columns: [selectColumn(), { accessorKey: 'name', header: 'Name', resizable: false }, { accessorKey: 'age', header: 'Age' }],
-      });
+		it('should not offer a handle on the select column and on a column that opts out', () => {
+			const { wrapper } = mountResizableTable({}, {
+				columns: [selectColumn(), { accessorKey: 'name', header: 'Name', resizable: false }, { accessorKey: 'age', header: 'Age' }],
+			});
 
-      expect(wrapper.findAll('th').map(header => header.find('[data-slot="data-table-resize-handle"]').exists())).toEqual([false, false, true]);
-    });
+			expect(wrapper.findAll('th').map(header => header.find('[data-slot="data-table-resize-handle"]').exists())).toEqual([false, false, true]);
+		});
 
-    it('should give a column its size right away and cut its content to that width', () => {
-      const { wrapper } = mountResizableTable({}, {
-        columns: [{ accessorKey: 'name', header: 'Name', size: 128 }, { accessorKey: 'age', header: 'Age' }],
-      });
+		it('should give a column its size right away and cut its content to that width', () => {
+			const { wrapper } = mountResizableTable({}, {
+				columns: [{ accessorKey: 'name', header: 'Name', size: 128 }, { accessorKey: 'age', header: 'Age' }],
+			});
 
-      expect(columnWidths(wrapper)).toEqual(['width: 128px;', undefined]);
-      expect(wrapper.get('td div').attributes('style')).toBe('max-width: calc(128px - var(--spacing) * 4);');
-      expect(wrapper.get('table').classes()).not.toContain('table-fixed');
-    });
+			expect(columnWidths(wrapper)).toEqual(['width: 128px;', undefined]);
+			expect(wrapper.get('td div').attributes('style')).toBe('max-width: calc(128px - var(--spacing) * 4);');
+			expect(wrapper.get('table').classes()).not.toContain('table-fixed');
+		});
 
-    it('should apply the passed widths right away', () => {
-      const { wrapper } = mountResizableTable({ name: 200, age: 90 });
+		it('should apply the passed widths right away', () => {
+			const { wrapper } = mountResizableTable({ name: 200, age: 90 });
 
-      expect(columnWidths(wrapper)).toEqual(['width: 200px;', 'width: 90px;']);
-      expect(wrapper.get('table').attributes('style')).toBe('width: 290px;');
-      expect(wrapper.get('td div').attributes('style')).toBeUndefined();
-    });
-
-    it('should let a column fit its content again on a double click of its handle', async () => {
-      const { wrapper, sizing } = mountResizableTable({ name: 200, age: 90 });
-
-      await resizeHandle(wrapper, 'Name').trigger('dblclick');
-
-      expect(sizing.value).toEqual({ age: 90 });
-      expect(columnWidths(wrapper)).toEqual([undefined, 'width: 90px;']);
-      expect(wrapper.get('table').classes()).not.toContain('table-fixed');
-    });
-
-    it('should move the pinned columns after a resize of a pinned column before them', async () => {
-      const { wrapper } = mountResizableTable({ name: 120, code: 64, age: 80 }, {
-        columns: [
-          { accessorKey: 'age', header: 'Age' },
-          { accessorKey: 'name', header: 'Name', pinned: true },
-          { id: 'code', accessorKey: 'id', header: 'Code', pinned: true },
-        ],
-      });
-
-      expect(wrapper.getElementByText('th', 'Code').attributes('style')).toBe('inset-inline-start: 120px;');
-
-      await drag(wrapper, 'Name', 30);
+			expect(columnWidths(wrapper)).toEqual(['width: 200px;', 'width: 90px;']);
+			expect(wrapper.get('table').attributes('style')).toBe('width: 290px;');
+			expect(wrapper.get('td div').attributes('style')).toBeUndefined();
+		});
+
+		it('should let a column fit its content again on a double click of its handle', async () => {
+			const { wrapper, sizing } = mountResizableTable({ name: 200, age: 90 });
+
+			await resizeHandle(wrapper, 'Name').trigger('dblclick');
+
+			expect(sizing.value).toEqual({ age: 90 });
+			expect(columnWidths(wrapper)).toEqual([undefined, 'width: 90px;']);
+			expect(wrapper.get('table').classes()).not.toContain('table-fixed');
+		});
+
+		it('should move the pinned columns after a resize of a pinned column before them', async () => {
+			const { wrapper } = mountResizableTable({ name: 120, code: 64, age: 80 }, {
+				columns: [
+					{ accessorKey: 'age', header: 'Age' },
+					{ accessorKey: 'name', header: 'Name', pinned: true },
+					{ id: 'code', accessorKey: 'id', header: 'Code', pinned: true },
+				],
+			});
+
+			expect(wrapper.getElementByText('th', 'Code').attributes('style')).toBe('inset-inline-start: 120px;');
+
+			await drag(wrapper, 'Name', 30);
 
-      expect(wrapper.getElementByText('th', 'Code').attributes('style')).toBe('inset-inline-start: 150px;');
-      expect(wrapper.get('tbody tr').findAll('td')[1]?.attributes('style')).toBe('inset-inline-start: 150px;');
-    });
+			expect(wrapper.getElementByText('th', 'Code').attributes('style')).toBe('inset-inline-start: 150px;');
+			expect(wrapper.get('tbody tr').findAll('td')[1]?.attributes('style')).toBe('inset-inline-start: 150px;');
+		});
 
-    it('should resize the columns under a group header', async () => {
-      const { wrapper, sizing } = mountResizableTable({}, {
-        columns: [{ id: 'person', header: 'Person', columns }],
-      });
+		it('should resize the columns under a group header', async () => {
+			const { wrapper, sizing } = mountResizableTable({}, {
+				columns: [{ id: 'person', header: 'Person', columns }],
+			});
 
-      expect(wrapper.getElementByText('th', 'Person').find('[data-slot="data-table-resize-handle"]').exists()).toBe(false);
+			expect(wrapper.getElementByText('th', 'Person').find('[data-slot="data-table-resize-handle"]').exists()).toBe(false);
 
-      await drag(wrapper, 'Age', 20);
+			await drag(wrapper, 'Age', 20);
 
-      expect(sizing.value).toEqual({ name: 120, age: 100 });
-    });
-  });
+			expect(sizing.value).toEqual({ name: 120, age: 100 });
+		});
+	});
 
-  describe('footer', () => {
-    const totalColumns: DataTableColumn<Person>[] = [
-      { accessorKey: 'name', header: 'Name', footer: 'Total' },
-      { accessorKey: 'age', header: 'Age', footer: ({ rows }) => h('b', rows.reduce((total, person) => total + person.age, 0)) },
-    ];
+	describe('footer', () => {
+		const totalColumns: DataTableColumn<Person>[] = [
+			{ accessorKey: 'name', header: 'Name', footer: 'Total' },
+			{ accessorKey: 'age', header: 'Age', footer: ({ rows }) => h('b', rows.reduce((total, person) => total + person.age, 0)) },
+		];
 
-    function footerCells(wrapper: ReturnType<typeof mountTable>) {
-      return wrapper.findAll('tfoot td').map(cell => cell.text());
-    }
+		function footerCells(wrapper: ReturnType<typeof mountTable>) {
+			return wrapper.findAll('tfoot td').map(cell => cell.text());
+		}
 
-    it('should total the rows of the current page', async () => {
-      const pagination = ref<DataTablePaginationState>({ pageIndex: 0, pageSize: 1 });
-      const wrapper = mountTable(undefined, { columns: totalColumns, tableOptions: { pagination } });
+		it('should total the rows of the current page', async () => {
+			const pagination = ref<DataTablePaginationState>({ pageIndex: 0, pageSize: 1 });
+			const wrapper = mountTable(undefined, { columns: totalColumns, tableOptions: { pagination } });
 
-      expect(footerCells(wrapper)).toEqual(['Total', '36']);
+			expect(footerCells(wrapper)).toEqual(['Total', '36']);
 
-      pagination.value = { pageIndex: 1, pageSize: 1 };
-      await nextTick();
+			pagination.value = { pageIndex: 1, pageSize: 1 };
+			await nextTick();
 
-      expect(footerCells(wrapper)).toEqual(['Total', '54']);
-    });
+			expect(footerCells(wrapper)).toEqual(['Total', '54']);
+		});
 
-    it('should not render a footer when no visible column has one', () => {
-      const wrapper = mountTable(undefined, {
-        columns: [{ accessorKey: 'name', header: 'Name' }, { accessorKey: 'age', header: 'Age', footer: 'Sum' }],
-        tableOptions: { columnVisibility: ref({ age: false }) },
-      });
+		it('should not render a footer when no visible column has one', () => {
+			const wrapper = mountTable(undefined, {
+				columns: [{ accessorKey: 'name', header: 'Name' }, { accessorKey: 'age', header: 'Age', footer: 'Sum' }],
+				tableOptions: { columnVisibility: ref({ age: false }) },
+			});
 
-      expect(wrapper.find('tfoot').exists()).toBe(false);
-    });
+			expect(wrapper.find('tfoot').exists()).toBe(false);
+		});
 
-    it('should not render the footer without rows', () => {
-      const wrapper = mountTable(undefined, { data: [], columns: totalColumns });
+		it('should not render the footer without rows', () => {
+			const wrapper = mountTable(undefined, { data: [], columns: totalColumns });
 
-      expect(wrapper.find('tfoot').exists()).toBe(false);
-    });
-  });
+			expect(wrapper.find('tfoot').exists()).toBe(false);
+		});
+	});
 
-  it('should dim the rows and mark the table busy while loading', () => {
-    const wrapper = mountTable('<DataTable :table="table" loading />');
+	it('should dim the rows and mark the table busy while loading', () => {
+		const wrapper = mountTable('<DataTable :table="table" loading />');
 
-    expect(wrapper.get('tbody').classes()).toEqual(expect.arrayContaining(['pointer-events-none', 'opacity-50']));
-    expect(wrapper.get('[aria-busy]').attributes('aria-busy')).toBe('true');
-    expect(bodyRows(wrapper)).toHaveLength(2);
-  });
+		expect(wrapper.get('tbody').classes()).toEqual(expect.arrayContaining(['pointer-events-none', 'opacity-50']));
+		expect(wrapper.get('[aria-busy]').attributes('aria-busy')).toBe('true');
+		expect(bodyRows(wrapper)).toHaveLength(2);
+	});
 
-  describe('row selection', () => {
-    const team: Person[] = [
-      { id: 'ada', name: 'Ada', age: 36 },
-      { id: 'linus', name: 'Linus', age: 54 },
-      { id: 'grace', name: 'Grace', age: 45 },
-    ];
+	describe('row selection', () => {
+		const team: Person[] = [
+			{ id: 'ada', name: 'Ada', age: 36 },
+			{ id: 'linus', name: 'Linus', age: 54 },
+			{ id: 'grace', name: 'Grace', age: 45 },
+		];
 
-    function mountSelectableTable(tableOptions: MountOptions['tableOptions'] = {}, data: MountOptions['data'] = team) {
-      const rowSelection = ref<DataTableRowSelectionState>({});
-      const openPerson = vi.fn();
-      const wrapper = mountTable('<DataTable :table="table" @row-click="openPerson" />', {
-        data,
-        columns: [selectColumn(), ...columns],
-        tableOptions: { getRowId: person => person.id, rowSelection, ...tableOptions },
-        bindings: { openPerson },
-      });
+		function mountSelectableTable(tableOptions: MountOptions['tableOptions'] = {}, data: MountOptions['data'] = team) {
+			const rowSelection = ref<DataTableRowSelectionState>({});
+			const openPerson = vi.fn();
+			const wrapper = mountTable('<DataTable :table="table" @row-click="openPerson" />', {
+				data,
+				columns: [selectColumn(), ...columns],
+				tableOptions: { getRowId: person => person.id, rowSelection, ...tableOptions },
+				bindings: { openPerson },
+			});
 
-      return { wrapper, rowSelection, openPerson };
-    }
+			return { wrapper, rowSelection, openPerson };
+		}
 
-    function rowCheckbox(wrapper: ReturnType<typeof mountTable>, name: string) {
-      const row = wrapper.findAll('tbody tr').find(tableRow => tableRow.text().startsWith(name));
+		function rowCheckbox(wrapper: ReturnType<typeof mountTable>, name: string) {
+			const row = wrapper.findAll('tbody tr').find(tableRow => tableRow.text().startsWith(name));
 
-      if (!row)
-        throw new Error(`rowCheckbox: no row starts with "${name}"`);
+			if (!row)
+				throw new Error(`rowCheckbox: no row starts with "${name}"`);
 
-      return row.get('[role="checkbox"]');
-    }
+			return row.get('[role="checkbox"]');
+		}
 
-    function pageCheckbox(wrapper: ReturnType<typeof mountTable>) {
-      return wrapper.get('[aria-label="Select all rows on the page"]');
-    }
+		function pageCheckbox(wrapper: ReturnType<typeof mountTable>) {
+			return wrapper.get('[aria-label="Select all rows on the page"]');
+		}
 
-    it('should select a row through its checkbox without clicking the row', async () => {
-      const { wrapper, rowSelection, openPerson } = mountSelectableTable();
+		it('should select a row through its checkbox without clicking the row', async () => {
+			const { wrapper, rowSelection, openPerson } = mountSelectableTable();
 
-      await rowCheckbox(wrapper, 'Linus').trigger('click');
+			await rowCheckbox(wrapper, 'Linus').trigger('click');
 
-      expect(rowSelection.value).toEqual({ linus: true });
-      expect(rowCheckbox(wrapper, 'Linus').attributes('aria-label')).toBe('Select row');
-      expect(wrapper.findAll('tbody tr').map(row => row.attributes('data-state'))).toEqual([undefined, 'selected', undefined]);
-      expect(openPerson).not.toHaveBeenCalled();
-    });
+			expect(rowSelection.value).toEqual({ linus: true });
+			expect(rowCheckbox(wrapper, 'Linus').attributes('aria-label')).toBe('Select row');
+			expect(wrapper.findAll('tbody tr').map(row => row.attributes('data-state'))).toEqual([undefined, 'selected', undefined]);
+			expect(openPerson).not.toHaveBeenCalled();
+		});
 
-    it('should select and deselect the rows between the last clicked row and a shift-clicked one', async () => {
-      const { wrapper, rowSelection } = mountSelectableTable();
+		it('should select and deselect the rows between the last clicked row and a shift-clicked one', async () => {
+			const { wrapper, rowSelection } = mountSelectableTable();
 
-      await rowCheckbox(wrapper, 'Ada').trigger('click');
-      await rowCheckbox(wrapper, 'Grace').trigger('click', { shiftKey: true });
+			await rowCheckbox(wrapper, 'Ada').trigger('click');
+			await rowCheckbox(wrapper, 'Grace').trigger('click', { shiftKey: true });
 
-      expect(rowSelection.value).toEqual({ ada: true, linus: true, grace: true });
+			expect(rowSelection.value).toEqual({ ada: true, linus: true, grace: true });
 
-      await rowCheckbox(wrapper, 'Linus').trigger('click');
-      await rowCheckbox(wrapper, 'Grace').trigger('click', { shiftKey: true });
+			await rowCheckbox(wrapper, 'Linus').trigger('click');
+			await rowCheckbox(wrapper, 'Grace').trigger('click', { shiftKey: true });
 
-      expect(rowSelection.value).toEqual({ ada: true });
-    });
+			expect(rowSelection.value).toEqual({ ada: true });
+		});
 
-    it('should skip a row that enableRowSelection rejects inside a shift range', async () => {
-      const { wrapper, rowSelection } = mountSelectableTable(
-        { enableRowSelection: person => person.age < 50 },
-        [...team, { id: 'alan', name: 'Alan', age: 41 }],
-      );
+		it('should skip a row that enableRowSelection rejects inside a shift range', async () => {
+			const { wrapper, rowSelection } = mountSelectableTable(
+				{ enableRowSelection: person => person.age < 50 },
+				[...team, { id: 'alan', name: 'Alan', age: 41 }],
+			);
 
-      await rowCheckbox(wrapper, 'Ada').trigger('click');
-      await rowCheckbox(wrapper, 'Alan').trigger('click', { shiftKey: true });
+			await rowCheckbox(wrapper, 'Ada').trigger('click');
+			await rowCheckbox(wrapper, 'Alan').trigger('click', { shiftKey: true });
 
-      expect(rowSelection.value).toEqual({ ada: true, grace: true, alan: true });
-    });
+			expect(rowSelection.value).toEqual({ ada: true, grace: true, alan: true });
+		});
 
-    it('should select only the rows of the current page from the header', async () => {
-      const { wrapper, rowSelection } = mountSelectableTable({ pagination: ref({ pageIndex: 0, pageSize: 2 }) });
-      rowSelection.value = { grace: true };
+		it('should select only the rows of the current page from the header', async () => {
+			const { wrapper, rowSelection } = mountSelectableTable({ pagination: ref({ pageIndex: 0, pageSize: 2 }) });
+			rowSelection.value = { grace: true };
 
-      await rowCheckbox(wrapper, 'Ada').trigger('click');
+			await rowCheckbox(wrapper, 'Ada').trigger('click');
 
-      expect(pageCheckbox(wrapper).attributes('aria-checked')).toBe('mixed');
+			expect(pageCheckbox(wrapper).attributes('aria-checked')).toBe('mixed');
 
-      await pageCheckbox(wrapper).trigger('click');
+			await pageCheckbox(wrapper).trigger('click');
 
-      expect(rowSelection.value).toEqual({ grace: true, ada: true, linus: true });
-      expect(pageCheckbox(wrapper).attributes('aria-checked')).toBe('true');
+			expect(rowSelection.value).toEqual({ grace: true, ada: true, linus: true });
+			expect(pageCheckbox(wrapper).attributes('aria-checked')).toBe('true');
 
-      await pageCheckbox(wrapper).trigger('click');
+			await pageCheckbox(wrapper).trigger('click');
 
-      expect(rowSelection.value).toEqual({ grace: true });
-      expect(pageCheckbox(wrapper).attributes('aria-checked')).toBe('false');
-    });
+			expect(rowSelection.value).toEqual({ grace: true });
+			expect(pageCheckbox(wrapper).attributes('aria-checked')).toBe('false');
+		});
 
-    it('should keep the selection of a row that leaves the data and comes back', async () => {
-      const data = ref(team.slice(0, 2));
-      const { wrapper, rowSelection } = mountSelectableTable({}, data);
+		it('should keep the selection of a row that leaves the data and comes back', async () => {
+			const data = ref(team.slice(0, 2));
+			const { wrapper, rowSelection } = mountSelectableTable({}, data);
 
-      await rowCheckbox(wrapper, 'Ada').trigger('click');
-      data.value = team.slice(2);
-      await nextTick();
+			await rowCheckbox(wrapper, 'Ada').trigger('click');
+			data.value = team.slice(2);
+			await nextTick();
 
-      expect(bodyRows(wrapper)).toEqual([['', 'Grace', '45']]);
+			expect(bodyRows(wrapper)).toEqual([['', 'Grace', '45']]);
 
-      data.value = team.map(person => ({ ...person }));
-      await nextTick();
+			data.value = team.map(person => ({ ...person }));
+			await nextTick();
 
-      expect(rowSelection.value).toEqual({ ada: true });
-      expect(rowCheckbox(wrapper, 'Ada').attributes('aria-checked')).toBe('true');
-    });
+			expect(rowSelection.value).toEqual({ ada: true });
+			expect(rowCheckbox(wrapper, 'Ada').attributes('aria-checked')).toBe('true');
+		});
 
-    it('should not select a row that enableRowSelection rejects', async () => {
-      const { wrapper, rowSelection } = mountSelectableTable({ enableRowSelection: person => person.age < 50 });
+		it('should not select a row that enableRowSelection rejects', async () => {
+			const { wrapper, rowSelection } = mountSelectableTable({ enableRowSelection: person => person.age < 50 });
 
-      expect(rowCheckbox(wrapper, 'Linus').attributes()).toHaveProperty('disabled');
+			expect(rowCheckbox(wrapper, 'Linus').attributes()).toHaveProperty('disabled');
 
-      await pageCheckbox(wrapper).trigger('click');
+			await pageCheckbox(wrapper).trigger('click');
 
-      expect(rowSelection.value).toEqual({ ada: true, grace: true });
-      expect(pageCheckbox(wrapper).attributes('aria-checked')).toBe('true');
-    });
+			expect(rowSelection.value).toEqual({ ada: true, grace: true });
+			expect(pageCheckbox(wrapper).attributes('aria-checked')).toBe('true');
+		});
 
-    it('should disable the header checkbox when no row on the page can be selected', () => {
-      const { wrapper } = mountSelectableTable({ enableRowSelection: () => false });
+		it('should disable the header checkbox when no row on the page can be selected', () => {
+			const { wrapper } = mountSelectableTable({ enableRowSelection: () => false });
 
-      expect(pageCheckbox(wrapper).attributes()).toHaveProperty('disabled');
-    });
-  });
+			expect(pageCheckbox(wrapper).attributes()).toHaveProperty('disabled');
+		});
+	});
 
-  describe('row expansion', () => {
-    const team: Person[] = [
-      { id: 'ada', name: 'Ada', age: 36 },
-      { id: 'linus', name: 'Linus', age: 54 },
-      { id: 'grace', name: 'Grace', age: 45 },
-    ];
+	describe('row expansion', () => {
+		const team: Person[] = [
+			{ id: 'ada', name: 'Ada', age: 36 },
+			{ id: 'linus', name: 'Linus', age: 54 },
+			{ id: 'grace', name: 'Grace', age: 45 },
+		];
 
-    const expandedSlot = '<template #expanded="{ row }"><p>{{ row.name }} is {{ row.age }}</p></template>';
+		const expandedSlot = '<template #expanded="{ row }"><p>{{ row.name }} is {{ row.age }}</p></template>';
 
-    function mountExpandableTable(tableOptions: MountOptions['tableOptions'] = {}, { data = team, slots = expandedSlot }: { data?: MountOptions['data']; slots?: string } = {}) {
-      const expanded = ref<DataTableExpandedState>({});
-      const openPerson = vi.fn();
-      const wrapper = mountTable(`<DataTable :table="table" @row-click="openPerson">${slots}</DataTable>`, {
-        data,
-        columns: [expandColumn(), ...columns],
-        tableOptions: { getRowId: person => person.id, expanded, ...tableOptions },
-        bindings: { openPerson },
-      });
+		function mountExpandableTable(tableOptions: MountOptions['tableOptions'] = {}, { data = team, slots = expandedSlot }: { data?: MountOptions['data']; slots?: string } = {}) {
+			const expanded = ref<DataTableExpandedState>({});
+			const openPerson = vi.fn();
+			const wrapper = mountTable(`<DataTable :table="table" @row-click="openPerson">${slots}</DataTable>`, {
+				data,
+				columns: [expandColumn(), ...columns],
+				tableOptions: { getRowId: person => person.id, expanded, ...tableOptions },
+				bindings: { openPerson },
+			});
 
-      return { wrapper, expanded, openPerson };
-    }
+			return { wrapper, expanded, openPerson };
+		}
 
-    function rowButton(wrapper: ReturnType<typeof mountTable>, name: string) {
-      const row = wrapper.findAll('tbody tr').find(tableRow => tableRow.findAll('td')[1]?.text() === name);
+		function rowButton(wrapper: ReturnType<typeof mountTable>, name: string) {
+			const row = wrapper.findAll('tbody tr').find(tableRow => tableRow.findAll('td')[1]?.text() === name);
 
-      if (!row)
-        throw new Error(`rowButton: no row of "${name}"`);
+			if (!row)
+				throw new Error(`rowButton: no row of "${name}"`);
 
-      return row.find('button');
-    }
+			return row.find('button');
+		}
 
-    function headerButton(wrapper: ReturnType<typeof mountTable>) {
-      return wrapper.get('th button');
-    }
+		function headerButton(wrapper: ReturnType<typeof mountTable>) {
+			return wrapper.get('th button');
+		}
 
-    it('should expand a row under itself through its button without clicking the row', async () => {
-      const { wrapper, expanded, openPerson } = mountExpandableTable();
+		it('should expand a row under itself through its button without clicking the row', async () => {
+			const { wrapper, expanded, openPerson } = mountExpandableTable();
 
-      await rowButton(wrapper, 'Linus').trigger('click');
+			await rowButton(wrapper, 'Linus').trigger('click');
 
-      expect(expanded.value).toEqual({ linus: true });
-      expect(bodyRows(wrapper)).toEqual([['', 'Ada', '36'], ['', 'Linus', '54'], ['Linus is 54'], ['', 'Grace', '45']]);
-      expect(wrapper.get('td[colspan]').attributes('colspan')).toBe('3');
-      expect(rowButton(wrapper, 'Linus').attributes()).toMatchObject({ 'aria-label': 'Expand row', 'aria-expanded': 'true' });
-      expect(rowButton(wrapper, 'Ada').attributes('aria-expanded')).toBe('false');
-      expect(headerButton(wrapper).attributes('aria-label')).toBe('Expand all rows');
-      expect(openPerson).not.toHaveBeenCalled();
+			expect(expanded.value).toEqual({ linus: true });
+			expect(bodyRows(wrapper)).toEqual([['', 'Ada', '36'], ['', 'Linus', '54'], ['Linus is 54'], ['', 'Grace', '45']]);
+			expect(wrapper.get('td[colspan]').attributes('colspan')).toBe('3');
+			expect(rowButton(wrapper, 'Linus').attributes()).toMatchObject({ 'aria-label': 'Expand row', 'aria-expanded': 'true' });
+			expect(rowButton(wrapper, 'Ada').attributes('aria-expanded')).toBe('false');
+			expect(headerButton(wrapper).attributes('aria-label')).toBe('Expand all rows');
+			expect(openPerson).not.toHaveBeenCalled();
 
-      await rowButton(wrapper, 'Linus').trigger('click');
+			await rowButton(wrapper, 'Linus').trigger('click');
 
-      expect(expanded.value).toEqual({});
-      expect(bodyRows(wrapper)).toHaveLength(3);
-      expect(rowButton(wrapper, 'Linus').attributes('aria-expanded')).toBe('false');
-    });
+			expect(expanded.value).toEqual({});
+			expect(bodyRows(wrapper)).toHaveLength(3);
+			expect(rowButton(wrapper, 'Linus').attributes('aria-expanded')).toBe('false');
+		});
 
-    it('should span the expanded row over the visible columns only', async () => {
-      const { wrapper, expanded } = mountExpandableTable({ columnVisibility: ref({ age: false }) });
+		it('should span the expanded row over the visible columns only', async () => {
+			const { wrapper, expanded } = mountExpandableTable({ columnVisibility: ref({ age: false }) });
 
-      expanded.value = { ada: true };
-      await nextTick();
+			expanded.value = { ada: true };
+			await nextTick();
 
-      expect(wrapper.get('td[colspan]').attributes('colspan')).toBe('2');
-    });
+			expect(wrapper.get('td[colspan]').attributes('colspan')).toBe('2');
+		});
 
-    it('should not render an expanded row without the expanded slot', async () => {
-      const { wrapper, expanded } = mountExpandableTable({}, { slots: '' });
+		it('should not render an expanded row without the expanded slot', async () => {
+			const { wrapper, expanded } = mountExpandableTable({}, { slots: '' });
 
-      await rowButton(wrapper, 'Ada').trigger('click');
+			await rowButton(wrapper, 'Ada').trigger('click');
 
-      expect(expanded.value).toEqual({ ada: true });
-      expect(bodyRows(wrapper)).toHaveLength(3);
-    });
+			expect(expanded.value).toEqual({ ada: true });
+			expect(bodyRows(wrapper)).toHaveLength(3);
+		});
 
-    it('should not let a row that getRowCanExpand rejects expand', async () => {
-      const { wrapper, expanded } = mountExpandableTable({ getRowCanExpand: person => person.age < 50 });
+		it('should not let a row that getRowCanExpand rejects expand', async () => {
+			const { wrapper, expanded } = mountExpandableTable({ getRowCanExpand: person => person.age < 50 });
 
-      expect(rowButton(wrapper, 'Linus').exists()).toBe(false);
-      expect(rowButton(wrapper, 'Grace').exists()).toBe(true);
+			expect(rowButton(wrapper, 'Linus').exists()).toBe(false);
+			expect(rowButton(wrapper, 'Grace').exists()).toBe(true);
 
-      expanded.value = { linus: true };
-      await nextTick();
+			expanded.value = { linus: true };
+			await nextTick();
 
-      expect(bodyRows(wrapper)).toHaveLength(3);
-    });
+			expect(bodyRows(wrapper)).toHaveLength(3);
+		});
 
-    it('should expand every row that can expand from the header and collapse them back', async () => {
-      const { wrapper, expanded } = mountExpandableTable({
-        getRowCanExpand: person => person.age < 50,
-        pagination: ref({ pageIndex: 0, pageSize: 2 }),
-      });
+		it('should expand every row that can expand from the header and collapse them back', async () => {
+			const { wrapper, expanded } = mountExpandableTable({
+				getRowCanExpand: person => person.age < 50,
+				pagination: ref({ pageIndex: 0, pageSize: 2 }),
+			});
 
-      expect(headerButton(wrapper).attributes('aria-label')).toBe('Expand all rows');
+			expect(headerButton(wrapper).attributes('aria-label')).toBe('Expand all rows');
 
-      await headerButton(wrapper).trigger('click');
+			await headerButton(wrapper).trigger('click');
 
-      expect(expanded.value).toEqual({ ada: true, grace: true });
-      expect(bodyRows(wrapper)).toEqual([['', 'Ada', '36'], ['Ada is 36'], ['', 'Linus', '54']]);
-      expect(headerButton(wrapper).attributes('aria-label')).toBe('Collapse all rows');
+			expect(expanded.value).toEqual({ ada: true, grace: true });
+			expect(bodyRows(wrapper)).toEqual([['', 'Ada', '36'], ['Ada is 36'], ['', 'Linus', '54']]);
+			expect(headerButton(wrapper).attributes('aria-label')).toBe('Collapse all rows');
 
-      await headerButton(wrapper).trigger('click');
+			await headerButton(wrapper).trigger('click');
 
-      expect(expanded.value).toEqual({});
-      expect(headerButton(wrapper).attributes('aria-label')).toBe('Expand all rows');
-    });
+			expect(expanded.value).toEqual({});
+			expect(headerButton(wrapper).attributes('aria-label')).toBe('Expand all rows');
+		});
 
-    it('should disable the header button when no row can expand', () => {
-      const { wrapper } = mountExpandableTable({ getRowCanExpand: () => false });
+		it('should disable the header button when no row can expand', () => {
+			const { wrapper } = mountExpandableTable({ getRowCanExpand: () => false });
 
-      expect(headerButton(wrapper).attributes()).toHaveProperty('disabled');
-      expect(wrapper.findAll('tbody button')).toHaveLength(0);
-    });
+			expect(headerButton(wrapper).attributes()).toHaveProperty('disabled');
+			expect(wrapper.findAll('tbody button')).toHaveLength(0);
+		});
 
-    it('should keep a row expanded when the data is replaced by new objects', async () => {
-      const data = ref(team);
-      const { wrapper, expanded } = mountExpandableTable({}, { data });
+		it('should keep a row expanded when the data is replaced by new objects', async () => {
+			const data = ref(team);
+			const { wrapper, expanded } = mountExpandableTable({}, { data });
 
-      await rowButton(wrapper, 'Ada').trigger('click');
-      data.value = team.map(person => ({ ...person, age: person.age + 1 }));
-      await flushPromises();
+			await rowButton(wrapper, 'Ada').trigger('click');
+			data.value = team.map(person => ({ ...person, age: person.age + 1 }));
+			await flushPromises();
 
-      expect(expanded.value).toEqual({ ada: true });
-      expect(bodyRows(wrapper)[1]).toEqual(['Ada is 37']);
-    });
-  });
+			expect(expanded.value).toEqual({ ada: true });
+			expect(bodyRows(wrapper)[1]).toEqual(['Ada is 37']);
+		});
+	});
 
-  describe('row pinning', () => {
-    const team: Person[] = [
-      { id: 'ada', name: 'Ada', age: 36 },
-      { id: 'linus', name: 'Linus', age: 54 },
-      { id: 'grace', name: 'Grace', age: 45 },
-      { id: 'ken', name: 'Ken', age: 60 },
-    ];
+	describe('row pinning', () => {
+		const team: Person[] = [
+			{ id: 'ada', name: 'Ada', age: 36 },
+			{ id: 'linus', name: 'Linus', age: 54 },
+			{ id: 'grace', name: 'Grace', age: 45 },
+			{ id: 'ken', name: 'Ken', age: 60 },
+		];
 
-    const namedColumns: DataTableColumn<Person>[] = [
-      { accessorKey: 'name', header: 'Name', sortable: true, footer: ({ rows }) => rows.map(person => person.name).join(', ') },
-      { accessorKey: 'age', header: 'Age' },
-    ];
+		const namedColumns: DataTableColumn<Person>[] = [
+			{ accessorKey: 'name', header: 'Name', sortable: true, footer: ({ rows }) => rows.map(person => person.name).join(', ') },
+			{ accessorKey: 'age', header: 'Age' },
+		];
 
-    function mountPinnedRowsTable(rowPinning: DataTableRowPinningState, { data = team, columns = namedColumns, tableOptions = {}, template }: MountOptions & { template?: string } = {}) {
-      return mountTable(template, {
-        data,
-        columns,
-        tableOptions: { getRowId: person => person.id, rowPinning: ref(rowPinning), ...tableOptions },
-      });
-    }
+		function mountPinnedRowsTable(rowPinning: DataTableRowPinningState, { data = team, columns = namedColumns, tableOptions = {}, template }: MountOptions & { template?: string } = {}) {
+			return mountTable(template, {
+				data,
+				columns,
+				tableOptions: { getRowId: person => person.id, rowPinning: ref(rowPinning), ...tableOptions },
+			});
+		}
 
-    function rowNamesByBody(wrapper: ReturnType<typeof mountTable>) {
-      return wrapper.findAll('tbody').map(body => body.findAll('tr').map(row => row.get('td').text()));
-    }
+		function rowNamesByBody(wrapper: ReturnType<typeof mountTable>) {
+			return wrapper.findAll('tbody').map(body => body.findAll('tr').map(row => row.get('td').text()));
+		}
 
-    it('should render a pinned row once above the other rows and keep it there after a page change and sorting', async () => {
-      const pagination = ref<DataTablePaginationState>({ pageIndex: 0, pageSize: 2 });
-      const sorting = ref<DataTableSortingState>([]);
-      const wrapper = mountPinnedRowsTable({ top: ['linus'], bottom: [] }, { tableOptions: { pagination, sorting } });
+		it('should render a pinned row once above the other rows and keep it there after a page change and sorting', async () => {
+			const pagination = ref<DataTablePaginationState>({ pageIndex: 0, pageSize: 2 });
+			const sorting = ref<DataTableSortingState>([]);
+			const wrapper = mountPinnedRowsTable({ top: ['linus'], bottom: [] }, { tableOptions: { pagination, sorting } });
 
-      expect(rowNamesByBody(wrapper)).toEqual([['Linus'], ['Ada']]);
+			expect(rowNamesByBody(wrapper)).toEqual([['Linus'], ['Ada']]);
 
-      pagination.value = { pageIndex: 1, pageSize: 2 };
-      await nextTick();
+			pagination.value = { pageIndex: 1, pageSize: 2 };
+			await nextTick();
 
-      expect(rowNamesByBody(wrapper)).toEqual([['Linus'], ['Grace', 'Ken']]);
+			expect(rowNamesByBody(wrapper)).toEqual([['Linus'], ['Grace', 'Ken']]);
 
-      sorting.value = [{ id: 'name', desc: true }];
-      await nextTick();
+			sorting.value = [{ id: 'name', desc: true }];
+			await nextTick();
 
-      expect(rowNamesByBody(wrapper)).toEqual([['Linus'], ['Grace', 'Ada']]);
-    });
+			expect(rowNamesByBody(wrapper)).toEqual([['Linus'], ['Grace', 'Ada']]);
+		});
 
-    it('should pin rows to the top and to the bottom in the pinning order', () => {
-      const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: ['grace', 'ada'] });
+		it('should pin rows to the top and to the bottom in the pinning order', () => {
+			const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: ['grace', 'ada'] });
 
-      expect(rowNamesByBody(wrapper)).toEqual([['Ken'], ['Linus'], ['Grace', 'Ada']]);
-    });
+			expect(rowNamesByBody(wrapper)).toEqual([['Ken'], ['Linus'], ['Grace', 'Ada']]);
+		});
 
-    describe('sticky offsets', () => {
-      const sectionHeights: Record<string, number> = { THEAD: 81, TFOOT: 37 };
+		describe('sticky offsets', () => {
+			const sectionHeights: Record<string, number> = { THEAD: 81, TFOOT: 37 };
 
-      class SectionResizeObserver implements ResizeObserver {
-        constructor(private readonly callback: ResizeObserverCallback) {}
+			class SectionResizeObserver implements ResizeObserver {
+				constructor(private readonly callback: ResizeObserverCallback) {}
 
-        observe(target: Element) {
-          this.callback([{
-            target,
-            borderBoxSize: [{ inlineSize: 0, blockSize: sectionHeights[target.tagName] ?? 0 }],
-            contentBoxSize: [],
-            devicePixelContentBoxSize: [],
-            contentRect: target.getBoundingClientRect(),
-          }], this);
-        }
+				observe(target: Element) {
+					this.callback([{
+						target,
+						borderBoxSize: [{ inlineSize: 0, blockSize: sectionHeights[target.tagName] ?? 0 }],
+						contentBoxSize: [],
+						devicePixelContentBoxSize: [],
+						contentRect: target.getBoundingClientRect(),
+					}], this);
+				}
 
-        unobserve() {}
+				unobserve() {}
 
-        disconnect() {}
-      }
+				disconnect() {}
+			}
 
-      beforeEach(() => {
-        vi.stubGlobal('ResizeObserver', SectionResizeObserver);
-      });
+			beforeEach(() => {
+				vi.stubGlobal('ResizeObserver', SectionResizeObserver);
+			});
 
-      afterEach(() => {
-        vi.unstubAllGlobals();
-      });
+			afterEach(() => {
+				vi.unstubAllGlobals();
+			});
 
-      it('should stick the top rows under the header and the bottom rows above the footer', async () => {
-        const columnVisibility = ref<DataTableColumnVisibilityState>({});
-        const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: ['ada'] }, { tableOptions: { columnVisibility } });
-        await flushPromises();
+			it('should stick the top rows under the header and the bottom rows above the footer', async () => {
+				const columnVisibility = ref<DataTableColumnVisibilityState>({});
+				const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: ['ada'] }, { tableOptions: { columnVisibility } });
+				await flushPromises();
 
-        const [topRows, , bottomRows] = wrapper.findAll('tbody');
+				const [topRows, , bottomRows] = wrapper.findAll('tbody');
 
-        expect(topRows?.attributes('style')).toBe('top: 81px;');
-        expect(bottomRows?.attributes('style')).toBe('bottom: 37px;');
+				expect(topRows?.attributes('style')).toBe('top: 81px;');
+				expect(bottomRows?.attributes('style')).toBe('bottom: 37px;');
 
-        columnVisibility.value = { name: false };
-        await flushPromises();
+				columnVisibility.value = { name: false };
+				await flushPromises();
 
-        expect(wrapper.find('tfoot').exists()).toBe(false);
-        expect(bottomRows?.attributes('style')).toBe('bottom: 0px;');
-      });
-    });
+				expect(wrapper.find('tfoot').exists()).toBe(false);
+				expect(bottomRows?.attributes('style')).toBe('bottom: 0px;');
+			});
+		});
 
-    it('should total the pinned rows shown on the page in the footer', async () => {
-      const pagination = ref<DataTablePaginationState>({ pageIndex: 0, pageSize: 2 });
-      const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: [] }, { tableOptions: { pagination } });
+		it('should total the pinned rows shown on the page in the footer', async () => {
+			const pagination = ref<DataTablePaginationState>({ pageIndex: 0, pageSize: 2 });
+			const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: [] }, { tableOptions: { pagination } });
 
-      expect(wrapper.get('tfoot td').text()).toBe('Ken, Ada, Linus');
+			expect(wrapper.get('tfoot td').text()).toBe('Ken, Ada, Linus');
 
-      pagination.value = { pageIndex: 1, pageSize: 2 };
-      await nextTick();
+			pagination.value = { pageIndex: 1, pageSize: 2 };
+			await nextTick();
 
-      expect(wrapper.get('tfoot td').text()).toBe('Ken, Grace');
-    });
+			expect(wrapper.get('tfoot td').text()).toBe('Ken, Grace');
+		});
 
-    it('should show the table without the empty text on a page past the rows when a pinned row is shown', () => {
-      const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: [] }, { tableOptions: { pagination: ref({ pageIndex: 2, pageSize: 2 }) } });
+		it('should show the table without the empty text on a page past the rows when a pinned row is shown', () => {
+			const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: [] }, { tableOptions: { pagination: ref({ pageIndex: 2, pageSize: 2 }) } });
 
-      expect(rowNamesByBody(wrapper)).toEqual([['Ken'], []]);
-      expect(wrapper.text()).not.toContain('No data');
-      expect(wrapper.get('tfoot td').text()).toBe('Ken');
-    });
+			expect(rowNamesByBody(wrapper)).toEqual([['Ken'], []]);
+			expect(wrapper.text()).not.toContain('No data');
+			expect(wrapper.get('tfoot td').text()).toBe('Ken');
+		});
 
-    it('should dim the pinned rows while loading and keep the pinned rows background opaque', () => {
-      const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: [] }, { template: '<DataTable :table="table" loading />' });
-      const [topRows, centerRows] = wrapper.findAll('tbody');
+		it('should dim the pinned rows while loading and keep the pinned rows background opaque', () => {
+			const wrapper = mountPinnedRowsTable({ top: ['ken'], bottom: [] }, { template: '<DataTable :table="table" loading />' });
+			const [topRows, centerRows] = wrapper.findAll('tbody');
 
-      expect(topRows?.classes()).toEqual(expect.arrayContaining(['pointer-events-none', '[&>tr]:opacity-50']));
-      expect(topRows?.classes()).not.toContain('opacity-50');
-      expect(centerRows?.classes()).toEqual(expect.arrayContaining(['pointer-events-none', 'opacity-50']));
-    });
+			expect(topRows?.classes()).toEqual(expect.arrayContaining(['pointer-events-none', '[&>tr]:opacity-50']));
+			expect(topRows?.classes()).not.toContain('opacity-50');
+			expect(centerRows?.classes()).toEqual(expect.arrayContaining(['pointer-events-none', 'opacity-50']));
+		});
 
-    it('should expand a pinned row inside the pinned rows', () => {
-      const wrapper = mountPinnedRowsTable({ top: ['linus'], bottom: [] }, {
-        columns: [expandColumn(), ...namedColumns],
-        tableOptions: { expanded: ref<DataTableExpandedState>({ linus: true }) },
-        template: '<DataTable :table="table"><template #expanded="{ row }">{{ row.name }} is {{ row.age }}</template></DataTable>',
-      });
+		it('should expand a pinned row inside the pinned rows', () => {
+			const wrapper = mountPinnedRowsTable({ top: ['linus'], bottom: [] }, {
+				columns: [expandColumn(), ...namedColumns],
+				tableOptions: { expanded: ref<DataTableExpandedState>({ linus: true }) },
+				template: '<DataTable :table="table"><template #expanded="{ row }">{{ row.name }} is {{ row.age }}</template></DataTable>',
+			});
 
-      expect(wrapper.get('tbody').findAll('tr').map(row => row.text())).toEqual(['Linus54', 'Linus is 54']);
-    });
-  });
-
-  describe('cell spanning', () => {
-    interface Deal {
-      id: string;
-      manager: string | null;
-      client: string;
-    }
-
-    const deals: Deal[] = [
-      { id: '1', manager: 'Ada', client: 'Alpha' },
-      { id: '2', manager: 'Ada', client: 'Beta' },
-      { id: '3', manager: 'Linus', client: 'Gamma' },
-      { id: '4', manager: 'Ada', client: 'Delta' },
-      { id: '5', manager: null, client: 'Omega' },
-      { id: '6', manager: null, client: 'Sigma' },
-    ];
-
-    function mountDealsTable(manager: DataTableColumn<Deal>, tableOptions: Omit<UseDataTableOptions<Deal>, 'data' | 'columns'> = {}) {
-      const Host = defineComponent({
-        components: { DataTable },
-        setup() {
-          const table = useDataTable({
-            data: deals,
-            columns: [manager, { accessorKey: 'client', header: 'Client' }],
-            getRowId: deal => deal.id,
-            ...tableOptions,
-          });
-
-          return { table };
-        },
-        template: '<DataTable :table="table" />',
-      });
-
-      return mount(Host);
-    }
-
-    function dealRows(wrapper: ReturnType<typeof mountDealsTable>) {
-      return wrapper.findAll('tbody tr').map(row => row.findAll('td').map(cell => cell.text()));
-    }
-
-    function spanningCells(wrapper: ReturnType<typeof mountDealsTable>) {
-      return wrapper.findAll('tbody td').filter(cell => cell.attributes('rowspan') !== undefined);
-    }
-
-    it('should merge adjacent cells with the same value into one cell spanning their rows', () => {
-      const wrapper = mountDealsTable({ accessorKey: 'manager', header: 'Manager', spanRows: true });
-
-      expect(dealRows(wrapper)).toEqual([
-        ['Ada', 'Alpha'],
-        ['Beta'],
-        ['Linus', 'Gamma'],
-        ['Ada', 'Delta'],
-        ['', 'Omega'],
-        ['', 'Sigma'],
-      ]);
-      expect(spanningCells(wrapper).map(cell => cell.attributes('rowspan'))).toEqual(['2']);
-    });
-
-    it('should keep every cell of its own when the column turns spanning off', () => {
-      const wrapper = mountDealsTable({ accessorKey: 'manager', header: 'Manager', spanRows: false });
-
-      expect(dealRows(wrapper).map(cells => cells.length)).toEqual([2, 2, 2, 2, 2, 2]);
-      expect(spanningCells(wrapper)).toEqual([]);
-    });
-
-    it('should merge by the predicate of the column, which also sees empty values', () => {
-      const contexts: DataTableSpanRowsContext<Deal, string | null>[] = [];
-      const wrapper = mountDealsTable({
-        accessorKey: 'manager',
-        header: 'Manager',
-        spanRows: (context) => {
-          contexts.push(context);
-
-          return context.value === context.anchorValue;
-        },
-      });
-
-      expect(dealRows(wrapper)).toEqual([
-        ['Ada', 'Alpha'],
-        ['Beta'],
-        ['Linus', 'Gamma'],
-        ['Ada', 'Delta'],
-        ['', 'Omega'],
-        ['Sigma'],
-      ]);
-      expect(contexts[0]).toEqual({ row: deals[1], value: 'Ada', anchorRow: deals[0], anchorValue: 'Ada' });
-    });
-
-    it('should merge by the value of an accessor function', () => {
-      const wrapper = mountDealsTable({ id: 'owner', header: 'Manager', accessorFn: deal => deal.manager ?? 'Unassigned', spanRows: true });
-
-      expect(dealRows(wrapper)).toEqual([
-        ['Ada', 'Alpha'],
-        ['Beta'],
-        ['Linus', 'Gamma'],
-        ['Ada', 'Delta'],
-        ['Unassigned', 'Omega'],
-        ['Sigma'],
-      ]);
-      expect(spanningCells(wrapper).map(cell => cell.attributes('rowspan'))).toEqual(['2', '2']);
-    });
-
-    it('should merge the rows that sorting made adjacent', async () => {
-      const sorting = ref<DataTableSortingState>([]);
-      const wrapper = mountDealsTable({ accessorKey: 'manager', header: 'Manager', sortable: true, spanRows: true }, { sorting });
-
-      sorting.value = [{ id: 'manager', desc: false }];
-      await nextTick();
-
-      expect(dealRows(wrapper)).toEqual([
-        ['', 'Omega'],
-        ['', 'Sigma'],
-        ['Ada', 'Alpha'],
-        ['Beta'],
-        ['Delta'],
-        ['Linus', 'Gamma'],
-      ]);
-      expect(spanningCells(wrapper).map(cell => cell.attributes('rowspan'))).toEqual(['3']);
-    });
-
-    it('should not merge a pinned row into the rows under it', () => {
-      const wrapper = mountDealsTable({ accessorKey: 'manager', header: 'Manager', spanRows: true }, { rowPinning: ref({ top: ['4'], bottom: [] }) });
-
-      expect(dealRows(wrapper)).toEqual([
-        ['Ada', 'Delta'],
-        ['Ada', 'Alpha'],
-        ['Beta'],
-        ['Linus', 'Gamma'],
-        ['', 'Omega'],
-        ['', 'Sigma'],
-      ]);
-      expect(spanningCells(wrapper).map(cell => cell.attributes('rowspan'))).toEqual(['2']);
-    });
-  });
-
-  describe('load more', () => {
-    const clientHeight = 400;
-    let scrollTop = 0;
-    let scrollHeight = 1000;
-
-    class VisibleIntersectionObserver implements IntersectionObserver {
-      readonly root = null;
-      readonly rootMargin = '0px';
-      readonly scrollMargin = '0px';
-      readonly thresholds = [0];
-
-      constructor(private readonly callback: IntersectionObserverCallback) {}
-
-      observe(target: Element) {
-        const rect = target.getBoundingClientRect();
-        this.callback([{ target, time: 0, isIntersecting: true, intersectionRatio: 1, boundingClientRect: rect, intersectionRect: rect, rootBounds: null }], this);
-      }
-
-      unobserve() {}
-
-      disconnect() {}
-
-      takeRecords() {
-        return [];
-      }
-    }
-
-    beforeEach(() => {
-      scrollTop = 0;
-      scrollHeight = 1000;
-      vi.stubGlobal('IntersectionObserver', VisibleIntersectionObserver);
-      vi.spyOn(Element.prototype, 'clientHeight', 'get').mockImplementation(() => clientHeight);
-      vi.spyOn(Element.prototype, 'scrollHeight', 'get').mockImplementation(() => scrollHeight);
-      vi.spyOn(Element.prototype, 'scrollTop', 'get').mockImplementation(() => scrollTop);
-    });
-
-    afterEach(() => {
-      vi.unstubAllGlobals();
-    });
-
-    function mountScrollableTable(attributes: string, bindings: Record<string, unknown> = {}) {
-      const loadMore = vi.fn();
-      const wrapper = mountTable(`<DataTable :table="table" ${attributes} @load-more="loadMore" />`, { bindings: { loadMore, ...bindings } });
-
-      return { wrapper, loadMore };
-    }
-
-    async function scrollToBottom(wrapper: ReturnType<typeof mountTable>, gap = 0) {
-      scrollTop = scrollHeight - clientHeight - gap;
-      await wrapper.get('[data-slot="table-container"]').trigger('scroll');
-      await flushPromises();
-    }
-
-    it('should ask for the next page when scrolled close to the bottom', async () => {
-      const { wrapper, loadMore } = mountScrollableTable('has-next-page');
-      await flushPromises();
-
-      expect(loadMore).not.toHaveBeenCalled();
-
-      await scrollToBottom(wrapper, 50);
-
-      expect(loadMore).toHaveBeenCalledTimes(1);
-    });
-
-    it('should ask for the next page right away when the rows do not fill the table', async () => {
-      scrollHeight = clientHeight;
-      const { loadMore } = mountScrollableTable('has-next-page');
-      await flushPromises();
-
-      expect(loadMore).toHaveBeenCalledTimes(1);
-    });
-
-    it('should not ask for a page without a next page', async () => {
-      const { wrapper, loadMore } = mountScrollableTable('');
-
-      await scrollToBottom(wrapper);
-
-      expect(loadMore).not.toHaveBeenCalled();
-    });
-
-    it('should not ask for a page while the table is loading', async () => {
-      const { wrapper, loadMore } = mountScrollableTable('has-next-page loading');
-
-      await scrollToBottom(wrapper);
-
-      expect(loadMore).not.toHaveBeenCalled();
-    });
-
-    it('should wait for the page being loaded before asking for the next one', async () => {
-      const loadingMore = ref(true);
-      const { wrapper, loadMore } = mountScrollableTable('has-next-page :loading-more="loadingMore"', { loadingMore });
-
-      await scrollToBottom(wrapper);
-
-      expect(loadMore).not.toHaveBeenCalled();
-
-      loadingMore.value = false;
-      await flushPromises();
-
-      expect(loadMore).toHaveBeenCalledTimes(1);
-    });
-
-    it('should show a spinner row under the rows while the next page loads', () => {
-      const wrapper = mountTable('<DataTable :table="table" loading-more />');
-      const lastCell = wrapper.get('tbody tr:last-child td');
-
-      expect(lastCell.find('[role="status"]').exists()).toBe(true);
-      expect(lastCell.attributes('colspan')).toBe('2');
-      expect(wrapper.findAll('tbody tr')).toHaveLength(3);
-      expect(wrapper.get('tbody').classes()).not.toContain('opacity-50');
-      expect(wrapper.get('[aria-busy]').attributes('aria-busy')).toBe('true');
-    });
-  });
-
-  describe('row click', () => {
-    it('should pass the row data to the listener', async () => {
-      const openPerson = vi.fn();
-      const wrapper = mountTable('<DataTable :table="table" @row-click="openPerson" />', { bindings: { openPerson } });
-
-      await wrapper.getElementByText('td', 'Linus').trigger('click');
-
-      expect(openPerson).toHaveBeenCalledWith(people[1]);
-      expect(wrapper.get('tbody tr').classes()).toEqual(expect.arrayContaining(['cursor-pointer', 'hover:bg-muted/50']));
-    });
-
-    it('should ignore a click on a control inside a cell', async () => {
-      const openPerson = vi.fn();
-      const wrapper = mountTable(
-        `<DataTable :table="table" @row-click="openPerson">
+			expect(wrapper.get('tbody').findAll('tr').map(row => row.text())).toEqual(['Linus54', 'Linus is 54']);
+		});
+	});
+
+	describe('cell spanning', () => {
+		interface Deal {
+			id: string;
+			manager: string | null;
+			client: string;
+		}
+
+		const deals: Deal[] = [
+			{ id: '1', manager: 'Ada', client: 'Alpha' },
+			{ id: '2', manager: 'Ada', client: 'Beta' },
+			{ id: '3', manager: 'Linus', client: 'Gamma' },
+			{ id: '4', manager: 'Ada', client: 'Delta' },
+			{ id: '5', manager: null, client: 'Omega' },
+			{ id: '6', manager: null, client: 'Sigma' },
+		];
+
+		function mountDealsTable(manager: DataTableColumn<Deal>, tableOptions: Omit<UseDataTableOptions<Deal>, 'data' | 'columns'> = {}) {
+			const Host = defineComponent({
+				components: { DataTable },
+				setup() {
+					const table = useDataTable({
+						data: deals,
+						columns: [manager, { accessorKey: 'client', header: 'Client' }],
+						getRowId: deal => deal.id,
+						...tableOptions,
+					});
+
+					return { table };
+				},
+				template: '<DataTable :table="table" />',
+			});
+
+			return mount(Host);
+		}
+
+		function dealRows(wrapper: ReturnType<typeof mountDealsTable>) {
+			return wrapper.findAll('tbody tr').map(row => row.findAll('td').map(cell => cell.text()));
+		}
+
+		function spanningCells(wrapper: ReturnType<typeof mountDealsTable>) {
+			return wrapper.findAll('tbody td').filter(cell => cell.attributes('rowspan') !== undefined);
+		}
+
+		it('should merge adjacent cells with the same value into one cell spanning their rows', () => {
+			const wrapper = mountDealsTable({ accessorKey: 'manager', header: 'Manager', spanRows: true });
+
+			expect(dealRows(wrapper)).toEqual([
+				['Ada', 'Alpha'],
+				['Beta'],
+				['Linus', 'Gamma'],
+				['Ada', 'Delta'],
+				['', 'Omega'],
+				['', 'Sigma'],
+			]);
+			expect(spanningCells(wrapper).map(cell => cell.attributes('rowspan'))).toEqual(['2']);
+		});
+
+		it('should keep every cell of its own when the column turns spanning off', () => {
+			const wrapper = mountDealsTable({ accessorKey: 'manager', header: 'Manager', spanRows: false });
+
+			expect(dealRows(wrapper).map(cells => cells.length)).toEqual([2, 2, 2, 2, 2, 2]);
+			expect(spanningCells(wrapper)).toEqual([]);
+		});
+
+		it('should merge by the predicate of the column, which also sees empty values', () => {
+			const contexts: DataTableSpanRowsContext<Deal, string | null>[] = [];
+			const wrapper = mountDealsTable({
+				accessorKey: 'manager',
+				header: 'Manager',
+				spanRows: (context) => {
+					contexts.push(context);
+
+					return context.value === context.anchorValue;
+				},
+			});
+
+			expect(dealRows(wrapper)).toEqual([
+				['Ada', 'Alpha'],
+				['Beta'],
+				['Linus', 'Gamma'],
+				['Ada', 'Delta'],
+				['', 'Omega'],
+				['Sigma'],
+			]);
+			expect(contexts[0]).toEqual({ row: deals[1], value: 'Ada', anchorRow: deals[0], anchorValue: 'Ada' });
+		});
+
+		it('should merge by the value of an accessor function', () => {
+			const wrapper = mountDealsTable({ id: 'owner', header: 'Manager', accessorFn: deal => deal.manager ?? 'Unassigned', spanRows: true });
+
+			expect(dealRows(wrapper)).toEqual([
+				['Ada', 'Alpha'],
+				['Beta'],
+				['Linus', 'Gamma'],
+				['Ada', 'Delta'],
+				['Unassigned', 'Omega'],
+				['Sigma'],
+			]);
+			expect(spanningCells(wrapper).map(cell => cell.attributes('rowspan'))).toEqual(['2', '2']);
+		});
+
+		it('should merge the rows that sorting made adjacent', async () => {
+			const sorting = ref<DataTableSortingState>([]);
+			const wrapper = mountDealsTable({ accessorKey: 'manager', header: 'Manager', sortable: true, spanRows: true }, { sorting });
+
+			sorting.value = [{ id: 'manager', desc: false }];
+			await nextTick();
+
+			expect(dealRows(wrapper)).toEqual([
+				['', 'Omega'],
+				['', 'Sigma'],
+				['Ada', 'Alpha'],
+				['Beta'],
+				['Delta'],
+				['Linus', 'Gamma'],
+			]);
+			expect(spanningCells(wrapper).map(cell => cell.attributes('rowspan'))).toEqual(['3']);
+		});
+
+		it('should not merge a pinned row into the rows under it', () => {
+			const wrapper = mountDealsTable({ accessorKey: 'manager', header: 'Manager', spanRows: true }, { rowPinning: ref({ top: ['4'], bottom: [] }) });
+
+			expect(dealRows(wrapper)).toEqual([
+				['Ada', 'Delta'],
+				['Ada', 'Alpha'],
+				['Beta'],
+				['Linus', 'Gamma'],
+				['', 'Omega'],
+				['', 'Sigma'],
+			]);
+			expect(spanningCells(wrapper).map(cell => cell.attributes('rowspan'))).toEqual(['2']);
+		});
+	});
+
+	describe('load more', () => {
+		const clientHeight = 400;
+		let scrollTop = 0;
+		let scrollHeight = 1000;
+
+		class VisibleIntersectionObserver implements IntersectionObserver {
+			readonly root = null;
+			readonly rootMargin = '0px';
+			readonly scrollMargin = '0px';
+			readonly thresholds = [0];
+
+			constructor(private readonly callback: IntersectionObserverCallback) {}
+
+			observe(target: Element) {
+				const rect = target.getBoundingClientRect();
+				this.callback([{ target, time: 0, isIntersecting: true, intersectionRatio: 1, boundingClientRect: rect, intersectionRect: rect, rootBounds: null }], this);
+			}
+
+			unobserve() {}
+
+			disconnect() {}
+
+			takeRecords() {
+				return [];
+			}
+		}
+
+		beforeEach(() => {
+			scrollTop = 0;
+			scrollHeight = 1000;
+			vi.stubGlobal('IntersectionObserver', VisibleIntersectionObserver);
+			vi.spyOn(Element.prototype, 'clientHeight', 'get').mockImplementation(() => clientHeight);
+			vi.spyOn(Element.prototype, 'scrollHeight', 'get').mockImplementation(() => scrollHeight);
+			vi.spyOn(Element.prototype, 'scrollTop', 'get').mockImplementation(() => scrollTop);
+		});
+
+		afterEach(() => {
+			vi.unstubAllGlobals();
+		});
+
+		function mountScrollableTable(attributes: string, bindings: Record<string, unknown> = {}) {
+			const loadMore = vi.fn();
+			const wrapper = mountTable(`<DataTable :table="table" ${attributes} @load-more="loadMore" />`, { bindings: { loadMore, ...bindings } });
+
+			return { wrapper, loadMore };
+		}
+
+		async function scrollToBottom(wrapper: ReturnType<typeof mountTable>, gap = 0) {
+			scrollTop = scrollHeight - clientHeight - gap;
+			await wrapper.get('[data-slot="table-container"]').trigger('scroll');
+			await flushPromises();
+		}
+
+		it('should ask for the next page when scrolled close to the bottom', async () => {
+			const { wrapper, loadMore } = mountScrollableTable('has-next-page');
+			await flushPromises();
+
+			expect(loadMore).not.toHaveBeenCalled();
+
+			await scrollToBottom(wrapper, 50);
+
+			expect(loadMore).toHaveBeenCalledTimes(1);
+		});
+
+		it('should ask for the next page right away when the rows do not fill the table', async () => {
+			scrollHeight = clientHeight;
+			const { loadMore } = mountScrollableTable('has-next-page');
+			await flushPromises();
+
+			expect(loadMore).toHaveBeenCalledTimes(1);
+		});
+
+		it('should not ask for a page without a next page', async () => {
+			const { wrapper, loadMore } = mountScrollableTable('');
+
+			await scrollToBottom(wrapper);
+
+			expect(loadMore).not.toHaveBeenCalled();
+		});
+
+		it('should not ask for a page while the table is loading', async () => {
+			const { wrapper, loadMore } = mountScrollableTable('has-next-page loading');
+
+			await scrollToBottom(wrapper);
+
+			expect(loadMore).not.toHaveBeenCalled();
+		});
+
+		it('should wait for the page being loaded before asking for the next one', async () => {
+			const loadingMore = ref(true);
+			const { wrapper, loadMore } = mountScrollableTable('has-next-page :loading-more="loadingMore"', { loadingMore });
+
+			await scrollToBottom(wrapper);
+
+			expect(loadMore).not.toHaveBeenCalled();
+
+			loadingMore.value = false;
+			await flushPromises();
+
+			expect(loadMore).toHaveBeenCalledTimes(1);
+		});
+
+		it('should show a spinner row under the rows while the next page loads', () => {
+			const wrapper = mountTable('<DataTable :table="table" loading-more />');
+			const lastCell = wrapper.get('tbody tr:last-child td');
+
+			expect(lastCell.find('[role="status"]').exists()).toBe(true);
+			expect(lastCell.attributes('colspan')).toBe('2');
+			expect(wrapper.findAll('tbody tr')).toHaveLength(3);
+			expect(wrapper.get('tbody').classes()).not.toContain('opacity-50');
+			expect(wrapper.get('[aria-busy]').attributes('aria-busy')).toBe('true');
+		});
+	});
+
+	describe('row click', () => {
+		it('should pass the row data to the listener', async () => {
+			const openPerson = vi.fn();
+			const wrapper = mountTable('<DataTable :table="table" @row-click="openPerson" />', { bindings: { openPerson } });
+
+			await wrapper.getElementByText('td', 'Linus').trigger('click');
+
+			expect(openPerson).toHaveBeenCalledWith(people[1]);
+			expect(wrapper.get('tbody tr').classes()).toEqual(expect.arrayContaining(['cursor-pointer', 'hover:bg-muted/50']));
+		});
+
+		it('should ignore a click on a control inside a cell', async () => {
+			const openPerson = vi.fn();
+			const wrapper = mountTable(
+				`<DataTable :table="table" @row-click="openPerson">
           <template #cell-name="{ value }"><button type="button"><span>{{ value }}</span></button></template>
         </DataTable>`,
-        { bindings: { openPerson } },
-      );
+				{ bindings: { openPerson } },
+			);
 
-      await wrapper.getElementByText('span', 'Ada').trigger('click');
+			await wrapper.getElementByText('span', 'Ada').trigger('click');
 
-      expect(openPerson).not.toHaveBeenCalled();
-    });
+			expect(openPerson).not.toHaveBeenCalled();
+		});
 
-    it('should not look clickable and leave every row background alone on hover without a listener', () => {
-      const wrapper = mountTable();
+		it('should not look clickable and leave every row background alone on hover without a listener', () => {
+			const wrapper = mountTable();
 
-      expect(wrapper.get('tbody tr').classes()).not.toContain('cursor-pointer');
-      expect(wrapper.findAll('tr').filter(row => row.classes().some(className => className.startsWith('hover:')))).toEqual([]);
-    });
-  });
+			expect(wrapper.get('tbody tr').classes()).not.toContain('cursor-pointer');
+			expect(wrapper.findAll('tr').filter(row => row.classes().some(className => className.startsWith('hover:')))).toEqual([]);
+		});
+	});
 });

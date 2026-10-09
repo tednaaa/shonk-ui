@@ -1,41 +1,41 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import {
-  CalculatorIcon,
-  CalendarIcon,
-  CreditCardIcon,
-  SettingsIcon,
-  SmileIcon,
-  UserIcon,
+	CalculatorIcon,
+	CalendarIcon,
+	CreditCardIcon,
+	SettingsIcon,
+	SmileIcon,
+	UserIcon,
 } from '@lucide/vue';
 import { example, render, showControls } from '@/lib/storybook';
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut,
+	Command,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+	CommandSeparator,
+	CommandShortcut,
 } from '.';
 import CommandWithDialog from './examples/CommandWithDialog.vue';
 import commandWithDialogSource from './examples/CommandWithDialog.vue?raw';
 
 const components = {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut,
-  CalculatorIcon,
-  CalendarIcon,
-  CreditCardIcon,
-  SettingsIcon,
-  SmileIcon,
-  UserIcon,
+	Command,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+	CommandSeparator,
+	CommandShortcut,
+	CalculatorIcon,
+	CalendarIcon,
+	CreditCardIcon,
+	SettingsIcon,
+	SmileIcon,
+	UserIcon,
 };
 
 const items = `
@@ -57,23 +57,23 @@ const items = `
 `;
 
 const meta: Meta<typeof Command> = {
-  title: 'Components/Command',
-  component: Command,
-  tags: ['autodocs'],
-  render: render(
-    components,
-    `<Command v-bind="args" class="max-w-md rounded-lg border shadow-md">${items}</Command>`,
-  ),
+	title: 'Components/Command',
+	component: Command,
+	tags: ['autodocs'],
+	render: render(
+		components,
+		`<Command v-bind="args" class="max-w-md rounded-lg border shadow-md">${items}</Command>`,
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Dialog: Story = {
-  parameters: example(commandWithDialogSource),
-  render: render({ CommandWithDialog }, `<CommandWithDialog />`),
+	parameters: example(commandWithDialogSource),
+	render: render({ CommandWithDialog }, `<CommandWithDialog />`),
 };

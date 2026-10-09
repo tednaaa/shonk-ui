@@ -8,8 +8,8 @@ import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 
 const props = defineProps<PaginationEllipsisProps & {
-  class?: HTMLAttributes['class'];
-  screenReaderText?: string;
+	class?: HTMLAttributes['class'];
+	screenReaderText?: string;
 }>();
 
 const locale = useLocale();
@@ -18,14 +18,14 @@ const delegatedProps = reactiveOmit(props, 'class', 'screenReaderText');
 </script>
 
 <template>
-  <PaginationEllipsis
-    data-slot="pagination-ellipsis"
-    v-bind="delegatedProps"
-    :class="cn('flex size-9 items-center justify-center text-muted-foreground', props.class)"
-  >
-    <slot>
-      <MoreHorizontal class="size-4" />
-      <span class="sr-only">{{ props.screenReaderText ?? locale.pagination.ellipsisScreenReaderText }}</span>
-    </slot>
-  </PaginationEllipsis>
+	<PaginationEllipsis
+		data-slot="pagination-ellipsis"
+		v-bind="delegatedProps"
+		:class="cn('flex size-9 items-center justify-center text-muted-foreground', props.class)"
+	>
+		<slot>
+			<MoreHorizontal class="size-4" />
+			<span class="sr-only">{{ props.screenReaderText ?? locale.pagination.ellipsisScreenReaderText }}</span>
+		</slot>
+	</PaginationEllipsis>
 </template>

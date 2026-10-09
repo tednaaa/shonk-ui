@@ -13,11 +13,11 @@ import ChartLine from './examples/ChartLine.vue';
 import chartLineSource from './examples/ChartLine.vue?raw';
 
 const meta: Meta<typeof ChartContainer> = {
-  title: 'Components/Chart',
-  component: ChartContainer,
-  tags: ['autodocs'],
-  parameters: example(chartAreaSource),
-  render: render({ ChartArea }, `<ChartArea />`),
+	title: 'Components/Chart',
+	component: ChartContainer,
+	tags: ['autodocs'],
+	parameters: example(chartAreaSource),
+	render: render({ ChartArea }, `<ChartArea />`),
 };
 
 export default meta;
@@ -26,37 +26,37 @@ type Story = StoryObj<typeof meta>;
 export const Area: Story = {};
 
 export const BarGrouped: Story = {
-  parameters: example(chartBarGroupedSource),
-  render: render({ ChartBarGrouped }, `<ChartBarGrouped />`),
+	parameters: example(chartBarGroupedSource),
+	render: render({ ChartBarGrouped }, `<ChartBarGrouped />`),
 };
 
 export const BarStacked: Story = {
-  parameters: example(chartBarStackedSource),
-  render: render({ ChartBarStacked }, `<ChartBarStacked />`),
+	parameters: example(chartBarStackedSource),
+	render: render({ ChartBarStacked }, `<ChartBarStacked />`),
 };
 
 export const Line: Story = {
-  parameters: example(chartLineSource),
-  render: render({ ChartLine }, `<ChartLine />`),
+	parameters: example(chartLineSource),
+	render: render({ ChartLine }, `<ChartLine />`),
 };
 
 export const Composed: Story = {
-  parameters: example(chartComposedSource, 'Bars and a line share one Y axis: unovis has a single Y scale per container.'),
-  render: render({ ChartComposed }, `<ChartComposed />`),
+	parameters: example(chartComposedSource, 'Bars and a line share one Y axis: unovis has a single Y scale per container.'),
+	render: render({ ChartComposed }, `<ChartComposed />`),
 };
 
 export const TooltipIndicators: Story = {
-  render: () => ({
-    components: { ChartTooltipContent, StorybookLabel },
-    setup: () => ({
-      config: {
-        inbound: { label: 'Inbound', color: 'var(--color-chart-1)' },
-        outbound: { label: 'Outbound', color: 'var(--color-chart-2)' },
-      },
-      payload: { inbound: 1860, outbound: 800 },
-      x: new Date(2026, 0, 1),
-    }),
-    template: `
+	render: () => ({
+		components: { ChartTooltipContent, StorybookLabel },
+		setup: () => ({
+			config: {
+				inbound: { label: 'Inbound', color: 'var(--color-chart-1)' },
+				outbound: { label: 'Outbound', color: 'var(--color-chart-2)' },
+			},
+			payload: { inbound: 1860, outbound: 800 },
+			x: new Date(2026, 0, 1),
+		}),
+		template: `
       <div class="flex flex-wrap gap-6" style="--chart-inbound: var(--color-chart-1); --chart-outbound: var(--color-chart-2)">
         <div v-for="indicator in ['dot', 'line', 'dashed']" :key="indicator" class="flex flex-col gap-2">
           <StorybookLabel>{{ indicator }}</StorybookLabel>
@@ -64,5 +64,5 @@ export const TooltipIndicators: Story = {
         </div>
       </div>
     `,
-  }),
+	}),
 };

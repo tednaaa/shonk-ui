@@ -6,22 +6,22 @@ import { Avatar, AvatarFallback } from '../avatar';
 import { Button } from '../button';
 
 const components = {
-  HoverCard,
-  HoverCardTrigger,
-  HoverCardContent,
-  Avatar,
-  AvatarFallback,
-  Button,
-  CalendarIcon,
+	HoverCard,
+	HoverCardTrigger,
+	HoverCardContent,
+	Avatar,
+	AvatarFallback,
+	Button,
+	CalendarIcon,
 };
 
 const meta: Meta<typeof HoverCard> = {
-  title: 'Components/HoverCard',
-  component: HoverCard,
-  tags: ['autodocs'],
-  render: render(
-    components,
-    `<HoverCard v-bind="args">
+	title: 'Components/HoverCard',
+	component: HoverCard,
+	tags: ['autodocs'],
+	render: render(
+		components,
+		`<HoverCard v-bind="args">
       <HoverCardTrigger as-child>
         <Button variant="link">@acme</Button>
       </HoverCardTrigger>
@@ -41,20 +41,20 @@ const meta: Meta<typeof HoverCard> = {
         </div>
       </HoverCardContent>
     </HoverCard>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const TextOnly: Story = {
-  render: render(
-    components,
-    `<HoverCard>
+	render: render(
+		components,
+		`<HoverCard>
       <HoverCardTrigger as-child>
         <Button variant="link">Design tokens</Button>
       </HoverCardTrigger>
@@ -65,5 +65,5 @@ export const TextOnly: Story = {
         </p>
       </HoverCardContent>
     </HoverCard>`,
-  ),
+	),
 };

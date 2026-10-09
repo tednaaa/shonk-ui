@@ -9,13 +9,13 @@ import { useCarousel } from './useCarousel';
 import { carouselNextVariants } from './variants';
 
 const props = withDefaults(defineProps<{
-  variant?: ButtonVariants['variant'];
-  size?: ButtonVariants['size'];
-  screenReaderText?: string;
+	variant?: ButtonVariants['variant'];
+	size?: ButtonVariants['size'];
+	screenReaderText?: string;
 }
 & WithClassAsProps>(), {
-  variant: 'secondary',
-  size: 'icon',
+	variant: 'secondary',
+	size: 'icon',
 });
 
 const locale = useLocale();
@@ -24,17 +24,17 @@ const { orientation, canScrollNext, scrollNext } = useCarousel();
 </script>
 
 <template>
-  <Button
-    data-slot="carousel-next"
-    :disabled="!canScrollNext"
-    :class="cn(carouselNextVariants({ orientation }), props.class)"
-    :variant="variant"
-    :size="size"
-    @click="scrollNext"
-  >
-    <slot>
-      <ArrowRight />
-      <span class="sr-only">{{ props.screenReaderText ?? locale.carousel.nextButtonScreenReaderText }}</span>
-    </slot>
-  </Button>
+	<Button
+		data-slot="carousel-next"
+		:disabled="!canScrollNext"
+		:class="cn(carouselNextVariants({ orientation }), props.class)"
+		:variant="variant"
+		:size="size"
+		@click="scrollNext"
+	>
+		<slot>
+			<ArrowRight />
+			<span class="sr-only">{{ props.screenReaderText ?? locale.carousel.nextButtonScreenReaderText }}</span>
+		</slot>
+	</Button>
 </template>

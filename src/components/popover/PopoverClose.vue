@@ -6,10 +6,10 @@ const props = defineProps<PopoverCloseProps>();
 </script>
 
 <template>
-  <PopoverClose
-    data-slot="popover-close"
-    v-bind="props"
-  >
-    <slot />
-  </PopoverClose>
+	<PopoverClose
+		data-slot="popover-close"
+		v-bind="props"
+	>
+		<slot />
+	</PopoverClose>
 </template>

@@ -2,32 +2,32 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { ref } from 'vue';
 import { showControls } from '@/lib/storybook';
 import {
-  TagsInput,
-  TagsInputInput,
-  TagsInputItem,
-  TagsInputItemDelete,
-  TagsInputItemText,
+	TagsInput,
+	TagsInputInput,
+	TagsInputItem,
+	TagsInputItemDelete,
+	TagsInputItemText,
 } from '.';
 
 const components = {
-  TagsInput,
-  TagsInputInput,
-  TagsInputItem,
-  TagsInputItemDelete,
-  TagsInputItemText,
+	TagsInput,
+	TagsInputInput,
+	TagsInputItem,
+	TagsInputItemDelete,
+	TagsInputItemText,
 };
 
 const meta: Meta<typeof TagsInput> = {
-  title: 'Components/TagsInput',
-  component: TagsInput,
-  tags: ['autodocs'],
-  render: args => ({
-    components,
-    setup() {
-      const modelValue = ref(['Vue', 'Nuxt', 'Vite']);
-      return { args, modelValue };
-    },
-    template: `
+	title: 'Components/TagsInput',
+	component: TagsInput,
+	tags: ['autodocs'],
+	render: args => ({
+		components,
+		setup() {
+			const modelValue = ref(['Vue', 'Nuxt', 'Vite']);
+			return { args, modelValue };
+		},
+		template: `
       <div class="max-w-sm">
         <TagsInput v-model="modelValue" v-bind="args" class="w-full">
           <TagsInputItem v-for="item in modelValue" :key="item" :value="item">
@@ -38,16 +38,16 @@ const meta: Meta<typeof TagsInput> = {
         </TagsInput>
       </div>
     `,
-  }),
+	}),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Disabled: Story = {
-  args: { disabled: true },
+	args: { disabled: true },
 };

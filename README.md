@@ -122,13 +122,13 @@ import { readFileSync } from 'node:fs';
 import { validateThemeCss } from 'shonk-ui/theme-validator';
 
 const result = validateThemeCss(readFileSync('./my-theme.css', 'utf8'), {
-  file: 'my-theme.css',
+	file: 'my-theme.css',
 });
 
 if (!result.valid) {
-  for (const diagnostic of result.diagnostics) {
-    process.stderr.write(`${diagnostic.file}: ${diagnostic.message}\n`);
-  }
+	for (const diagnostic of result.diagnostics) {
+		process.stderr.write(`${diagnostic.file}: ${diagnostic.message}\n`);
+	}
 }
 ```
 
@@ -147,7 +147,7 @@ import { Button } from 'shonk-ui';
 </script>
 
 <template>
-  <Button>Click me</Button>
+	<Button>Click me</Button>
 </template>
 ```
 
@@ -169,10 +169,10 @@ back to `en` key by key:
 
 ```ts
 app.use(shonkUI, {
-  locale: {
-    intlLocale: 'de-DE',
-    confirmDialog: { title: 'Bestätigen', cancelButtonText: 'Abbrechen' },
-  },
+	locale: {
+		intlLocale: 'de-DE',
+		confirmDialog: { title: 'Bestätigen', cancelButtonText: 'Abbrechen' },
+	},
 });
 ```
 
@@ -196,11 +196,11 @@ And `require()` overrides a single confirm dialog:
 
 ```ts
 useConfirm().require({
-  title: 'Удаление',
-  message: 'Удалить продукт?',
-  acceptButtonText: 'Удалить',
-  cancelButtonText: 'Отмена',
-  accept: () => deleteProduct(),
+	title: 'Удаление',
+	message: 'Удалить продукт?',
+	acceptButtonText: 'Удалить',
+	cancelButtonText: 'Отмена',
+	accept: () => deleteProduct(),
 });
 ```
 

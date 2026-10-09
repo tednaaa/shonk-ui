@@ -5,15 +5,15 @@ import ConfirmDialogDefault from './examples/ConfirmDialogDefault.vue';
 import confirmDialogDefaultSource from './examples/ConfirmDialogDefault.vue?raw';
 
 const meta: Meta<typeof ConfirmDialog> = {
-  title: 'Components/ConfirmDialog',
-  component: ConfirmDialog,
-  tags: ['autodocs'],
-  render: render({ ConfirmDialogDefault }, `<ConfirmDialogDefault />`),
+	title: 'Components/ConfirmDialog',
+	component: ConfirmDialog,
+	tags: ['autodocs'],
+	render: render({ ConfirmDialogDefault }, `<ConfirmDialogDefault />`),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: example(confirmDialogDefaultSource),
+	parameters: example(confirmDialogDefaultSource),
 };

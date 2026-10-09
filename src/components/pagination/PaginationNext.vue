@@ -11,11 +11,11 @@ import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 
 const props = withDefaults(defineProps<PaginationNextProps & {
-  size?: ButtonVariants['size'];
-  class?: HTMLAttributes['class'];
-  buttonText?: string;
+	size?: ButtonVariants['size'];
+	class?: HTMLAttributes['class'];
+	buttonText?: string;
 }>(), {
-  size: 'default',
+	size: 'default',
 });
 
 const locale = useLocale();
@@ -27,15 +27,15 @@ const forwarded = useForwardProps(delegatedProps);
 </script>
 
 <template>
-  <PaginationNext
-    data-slot="pagination-next"
-    :class="cn(buttonVariants({ variant: 'ghost', size }), 'gap-1 px-2.5 sm:pr-2.5', props.class)"
-    v-bind="forwarded"
-    :aria-label="resolvedButtonText"
-  >
-    <slot>
-      <span class="hidden sm:block">{{ resolvedButtonText }}</span>
-      <ChevronRightIcon />
-    </slot>
-  </PaginationNext>
+	<PaginationNext
+		data-slot="pagination-next"
+		:class="cn(buttonVariants({ variant: 'ghost', size }), 'gap-1 px-2.5 sm:pr-2.5', props.class)"
+		v-bind="forwarded"
+		:aria-label="resolvedButtonText"
+	>
+		<slot>
+			<span class="hidden sm:block">{{ resolvedButtonText }}</span>
+			<ChevronRightIcon />
+		</slot>
+	</PaginationNext>
 </template>

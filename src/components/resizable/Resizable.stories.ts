@@ -5,13 +5,13 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '.';
 const components = { ResizablePanelGroup, ResizablePanel, ResizableHandle };
 
 const meta: Meta<typeof ResizablePanelGroup> = {
-  title: 'Components/Resizable',
-  component: ResizablePanelGroup,
-  tags: ['autodocs'],
-  args: { direction: 'horizontal' },
-  render: render(
-    components,
-    `<div class="h-48 max-w-md">
+	title: 'Components/Resizable',
+	component: ResizablePanelGroup,
+	tags: ['autodocs'],
+	args: { direction: 'horizontal' },
+	render: render(
+		components,
+		`<div class="h-48 max-w-md">
       <ResizablePanelGroup v-bind="args" class="rounded-lg border">
         <ResizablePanel :default-size="50">
           <div class="flex h-full items-center justify-center p-6">
@@ -26,20 +26,20 @@ const meta: Meta<typeof ResizablePanelGroup> = {
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Vertical: Story = {
-  render: render(
-    components,
-    `<div class="h-72 max-w-md">
+	render: render(
+		components,
+		`<div class="h-72 max-w-md">
       <ResizablePanelGroup direction="vertical" class="rounded-lg border">
         <ResizablePanel :default-size="35">
           <div class="flex h-full items-center justify-center p-6">
@@ -54,13 +54,13 @@ export const Vertical: Story = {
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>`,
-  ),
+	),
 };
 
 export const WithHandle: Story = {
-  render: render(
-    components,
-    `<div class="h-48 max-w-md">
+	render: render(
+		components,
+		`<div class="h-48 max-w-md">
       <ResizablePanelGroup direction="horizontal" class="rounded-lg border">
         <ResizablePanel :default-size="50">
           <div class="flex h-full items-center justify-center p-6">
@@ -75,13 +75,13 @@ export const WithHandle: Story = {
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>`,
-  ),
+	),
 };
 
 export const Nested: Story = {
-  render: render(
-    components,
-    `<div class="h-72 max-w-md">
+	render: render(
+		components,
+		`<div class="h-72 max-w-md">
       <ResizablePanelGroup direction="horizontal" class="rounded-lg border">
         <ResizablePanel :default-size="40">
           <div class="flex h-full items-center justify-center p-6">
@@ -106,5 +106,5 @@ export const Nested: Story = {
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>`,
-  ),
+	),
 };

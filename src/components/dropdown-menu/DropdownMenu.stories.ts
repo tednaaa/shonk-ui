@@ -1,32 +1,32 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import {
-  CreditCardIcon,
-  KeyboardIcon,
-  LogOutIcon,
-  MailIcon,
-  MessageSquareIcon,
-  PlusCircleIcon,
-  SettingsIcon,
-  UserIcon,
-  UserPlusIcon,
-  UsersIcon,
+	CreditCardIcon,
+	KeyboardIcon,
+	LogOutIcon,
+	MailIcon,
+	MessageSquareIcon,
+	PlusCircleIcon,
+	SettingsIcon,
+	UserIcon,
+	UserPlusIcon,
+	UsersIcon,
 } from '@lucide/vue';
 import { example, render, showControls } from '@/lib/storybook';
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuRadioGroup,
+	DropdownMenuRadioItem,
+	DropdownMenuSeparator,
+	DropdownMenuShortcut,
+	DropdownMenuSub,
+	DropdownMenuSubContent,
+	DropdownMenuSubTrigger,
+	DropdownMenuTrigger,
 } from '.';
 import { Button } from '../button';
 import DropdownMenuWithCheckboxItems from './examples/DropdownMenuWithCheckboxItems.vue';
@@ -35,40 +35,40 @@ import DropdownMenuWithRadioItems from './examples/DropdownMenuWithRadioItems.vu
 import dropdownMenuWithRadioItemsSource from './examples/DropdownMenuWithRadioItems.vue?raw';
 
 const components = {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-  Button,
-  CreditCardIcon,
-  KeyboardIcon,
-  LogOutIcon,
-  MailIcon,
-  MessageSquareIcon,
-  PlusCircleIcon,
-  SettingsIcon,
-  UserIcon,
-  UserPlusIcon,
-  UsersIcon,
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuGroup,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuRadioGroup,
+	DropdownMenuRadioItem,
+	DropdownMenuSeparator,
+	DropdownMenuShortcut,
+	DropdownMenuSub,
+	DropdownMenuSubContent,
+	DropdownMenuSubTrigger,
+	DropdownMenuTrigger,
+	Button,
+	CreditCardIcon,
+	KeyboardIcon,
+	LogOutIcon,
+	MailIcon,
+	MessageSquareIcon,
+	PlusCircleIcon,
+	SettingsIcon,
+	UserIcon,
+	UserPlusIcon,
+	UsersIcon,
 };
 
 const meta: Meta<typeof DropdownMenu> = {
-  title: 'Components/DropdownMenu',
-  component: DropdownMenu,
-  tags: ['autodocs'],
-  render: render(
-    components,
-    `<DropdownMenu v-bind="args">
+	title: 'Components/DropdownMenu',
+	component: DropdownMenu,
+	tags: ['autodocs'],
+	render: render(
+		components,
+		`<DropdownMenu v-bind="args">
       <DropdownMenuTrigger as-child>
         <Button variant="secondary">Open</Button>
       </DropdownMenuTrigger>
@@ -95,30 +95,30 @@ const meta: Meta<typeof DropdownMenu> = {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const WithCheckboxItems: Story = {
-  parameters: example(dropdownMenuWithCheckboxItemsSource),
-  render: render({ DropdownMenuWithCheckboxItems }, `<DropdownMenuWithCheckboxItems />`),
+	parameters: example(dropdownMenuWithCheckboxItemsSource),
+	render: render({ DropdownMenuWithCheckboxItems }, `<DropdownMenuWithCheckboxItems />`),
 };
 
 export const WithRadioItems: Story = {
-  parameters: example(dropdownMenuWithRadioItemsSource),
-  render: render({ DropdownMenuWithRadioItems }, `<DropdownMenuWithRadioItems />`),
+	parameters: example(dropdownMenuWithRadioItemsSource),
+	render: render({ DropdownMenuWithRadioItems }, `<DropdownMenuWithRadioItems />`),
 };
 
 export const WithSubmenu: Story = {
-  render: render(
-    components,
-    `<DropdownMenu v-bind="args">
+	render: render(
+		components,
+		`<DropdownMenu v-bind="args">
       <DropdownMenuTrigger as-child>
         <Button variant="secondary">Open</Button>
       </DropdownMenuTrigger>
@@ -137,13 +137,13 @@ export const WithSubmenu: Story = {
         </DropdownMenuSub>
       </DropdownMenuContent>
     </DropdownMenu>`,
-  ),
+	),
 };
 
 export const Disabled: Story = {
-  render: render(
-    components,
-    `<DropdownMenu v-bind="args">
+	render: render(
+		components,
+		`<DropdownMenu v-bind="args">
       <DropdownMenuTrigger as-child>
         <Button variant="secondary">Open</Button>
       </DropdownMenuTrigger>
@@ -153,5 +153,5 @@ export const Disabled: Story = {
         <DropdownMenuItem><SettingsIcon />Settings</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>`,
-  ),
+	),
 };

@@ -1,65 +1,65 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 
 interface ColorPair {
-  name: string;
-  surface: string;
-  foreground: string;
+	name: string;
+	surface: string;
+	foreground: string;
 }
 
 interface ColorToken {
-  name: string;
-  token: string;
+	name: string;
+	token: string;
 }
 
 const surfaces: readonly ColorPair[] = [
-  { name: 'background', surface: '--background', foreground: '--foreground' },
-  { name: 'card', surface: '--card', foreground: '--card-foreground' },
-  { name: 'popover', surface: '--popover', foreground: '--popover-foreground' },
-  { name: 'primary', surface: '--primary', foreground: '--primary-foreground' },
-  { name: 'secondary', surface: '--secondary', foreground: '--secondary-foreground' },
-  { name: 'muted', surface: '--muted', foreground: '--muted-foreground' },
-  { name: 'accent', surface: '--accent', foreground: '--accent-foreground' },
-  { name: 'destructive', surface: '--destructive', foreground: '--destructive-foreground' },
-  { name: 'success', surface: '--success', foreground: '--success-foreground' },
-  { name: 'warning', surface: '--warning', foreground: '--warning-foreground' },
+	{ name: 'background', surface: '--background', foreground: '--foreground' },
+	{ name: 'card', surface: '--card', foreground: '--card-foreground' },
+	{ name: 'popover', surface: '--popover', foreground: '--popover-foreground' },
+	{ name: 'primary', surface: '--primary', foreground: '--primary-foreground' },
+	{ name: 'secondary', surface: '--secondary', foreground: '--secondary-foreground' },
+	{ name: 'muted', surface: '--muted', foreground: '--muted-foreground' },
+	{ name: 'accent', surface: '--accent', foreground: '--accent-foreground' },
+	{ name: 'destructive', surface: '--destructive', foreground: '--destructive-foreground' },
+	{ name: 'success', surface: '--success', foreground: '--success-foreground' },
+	{ name: 'warning', surface: '--warning', foreground: '--warning-foreground' },
 ] as const;
 
 const lines: readonly ColorToken[] = [
-  { name: 'border', token: '--border' },
-  { name: 'input', token: '--input' },
-  { name: 'ring', token: '--ring' },
+	{ name: 'border', token: '--border' },
+	{ name: 'input', token: '--input' },
+	{ name: 'ring', token: '--ring' },
 ] as const;
 
 const charts: readonly ColorToken[] = [
-  { name: 'chart-1', token: '--chart-1' },
-  { name: 'chart-2', token: '--chart-2' },
-  { name: 'chart-3', token: '--chart-3' },
-  { name: 'chart-4', token: '--chart-4' },
-  { name: 'chart-5', token: '--chart-5' },
+	{ name: 'chart-1', token: '--chart-1' },
+	{ name: 'chart-2', token: '--chart-2' },
+	{ name: 'chart-3', token: '--chart-3' },
+	{ name: 'chart-4', token: '--chart-4' },
+	{ name: 'chart-5', token: '--chart-5' },
 ] as const;
 
 const sidebar: readonly ColorPair[] = [
-  { name: 'sidebar', surface: '--sidebar', foreground: '--sidebar-foreground' },
-  { name: 'sidebar-primary', surface: '--sidebar-primary', foreground: '--sidebar-primary-foreground' },
-  { name: 'sidebar-accent', surface: '--sidebar-accent', foreground: '--sidebar-accent-foreground' },
+	{ name: 'sidebar', surface: '--sidebar', foreground: '--sidebar-foreground' },
+	{ name: 'sidebar-primary', surface: '--sidebar-primary', foreground: '--sidebar-primary-foreground' },
+	{ name: 'sidebar-accent', surface: '--sidebar-accent', foreground: '--sidebar-accent-foreground' },
 ] as const;
 
 const sidebarLines: readonly ColorToken[] = [
-  { name: 'sidebar-border', token: '--sidebar-border' },
-  { name: 'sidebar-ring', token: '--sidebar-ring' },
+	{ name: 'sidebar-border', token: '--sidebar-border' },
+	{ name: 'sidebar-ring', token: '--sidebar-ring' },
 ] as const;
 
 const meta: Meta = {
-  title: 'Foundations/Colors',
+	title: 'Foundations/Colors',
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Colors: Story = {
-  render: () => ({
-    setup: () => ({ surfaces, lines, charts, sidebar, sidebarLines }),
-    template: `
+	render: () => ({
+		setup: () => ({ surfaces, lines, charts, sidebar, sidebarLines }),
+		template: `
       <div class="flex flex-col gap-10">
         <section class="flex flex-col gap-3">
           <p class="text-sm font-medium text-muted-foreground">Surfaces</p>
@@ -123,5 +123,5 @@ export const Colors: Story = {
         </section>
       </div>
     `,
-  }),
+	}),
 };

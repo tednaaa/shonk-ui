@@ -6,11 +6,11 @@ const props = defineProps<AspectRatioProps>();
 </script>
 
 <template>
-  <AspectRatio
-    #default="slotProps"
-    data-slot="aspect-ratio"
-    v-bind="props"
-  >
-    <slot v-bind="slotProps" />
-  </AspectRatio>
+	<AspectRatio
+		#default="slotProps"
+		data-slot="aspect-ratio"
+		v-bind="props"
+	>
+		<slot v-bind="slotProps" />
+	</AspectRatio>
 </template>

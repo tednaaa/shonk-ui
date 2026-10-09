@@ -1,36 +1,36 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { render, showControls } from '@/lib/storybook';
 import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableEmpty,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableEmpty,
+	TableFooter,
+	TableHead,
+	TableHeader,
+	TableRow,
 } from '.';
 
 const components = {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableEmpty,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableEmpty,
+	TableFooter,
+	TableHead,
+	TableHeader,
+	TableRow,
 };
 
 const meta: Meta<typeof Table> = {
-  title: 'Components/Table',
-  component: Table,
-  tags: ['autodocs'],
-  render: render(
-    components,
-    `<div class="max-w-2xl">
+	title: 'Components/Table',
+	component: Table,
+	tags: ['autodocs'],
+	render: render(
+		components,
+		`<div class="max-w-2xl">
       <Table v-bind="args">
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
@@ -69,20 +69,20 @@ const meta: Meta<typeof Table> = {
         </TableFooter>
       </Table>
     </div>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Empty: Story = {
-  render: render(
-    components,
-    `<div class="max-w-2xl">
+	render: render(
+		components,
+		`<div class="max-w-2xl">
       <Table>
         <TableHeader>
           <TableRow>
@@ -97,5 +97,5 @@ export const Empty: Story = {
         </TableBody>
       </Table>
     </div>`,
-  ),
+	),
 };

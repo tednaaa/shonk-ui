@@ -11,132 +11,132 @@ import { ru } from './ru';
 import { resolveLocale, useLocale } from './useLocale';
 
 const Probe = defineComponent({
-  setup() {
-    const locale = useLocale();
+	setup() {
+		const locale = useLocale();
 
-    return () => h('span', `${locale.value.confirmDialog.title}|${locale.value.confirmDialog.cancelButtonText}|${locale.value.intlLocale}`);
-  },
+		return () => h('span', `${locale.value.confirmDialog.title}|${locale.value.confirmDialog.cancelButtonText}|${locale.value.intlLocale}`);
+	},
 });
 
 function render(options?: ShonkUIOptions) {
-  const host = document.createElement('div');
-  const app = createApp(Probe);
+	const host = document.createElement('div');
+	const app = createApp(Probe);
 
-  if (options)
-    app.use(shonkUI, options);
+	if (options)
+		app.use(shonkUI, options);
 
-  app.mount(host);
+	app.mount(host);
 
-  return { host, app };
+	return { host, app };
 }
 
 describe('resolveLocale', () => {
-  it('should return the English defaults when nothing is overridden', () => {
-    expect(resolveLocale()).toEqual(en);
-  });
+	it('should return the English defaults when nothing is overridden', () => {
+		expect(resolveLocale()).toEqual(en);
+	});
 
-  it('should keep untouched keys of a section', () => {
-    const locale = resolveLocale({ confirmDialog: { title: 'Are you sure?' } });
+	it('should keep untouched keys of a section', () => {
+		const locale = resolveLocale({ confirmDialog: { title: 'Are you sure?' } });
 
-    expect(locale.confirmDialog.title).toBe('Are you sure?');
-    expect(locale.confirmDialog.cancelButtonText).toBe(en.confirmDialog.cancelButtonText);
-  });
+		expect(locale.confirmDialog.title).toBe('Are you sure?');
+		expect(locale.confirmDialog.cancelButtonText).toBe(en.confirmDialog.cancelButtonText);
+	});
 
-  it('should keep untouched sections', () => {
-    const locale = resolveLocale({ spinner: { ariaLabel: 'Working' } });
+	it('should keep untouched sections', () => {
+		const locale = resolveLocale({ spinner: { ariaLabel: 'Working' } });
 
-    expect(locale.pagination).toEqual(en.pagination);
-  });
+		expect(locale.pagination).toEqual(en.pagination);
+	});
 
-  it('should override the Intl locale', () => {
-    expect(resolveLocale({ intlLocale: 'de-DE' }).intlLocale).toBe('de-DE');
-    expect(resolveLocale().intlLocale).toBe(en.intlLocale);
-  });
+	it('should override the Intl locale', () => {
+		expect(resolveLocale({ intlLocale: 'de-DE' }).intlLocale).toBe('de-DE');
+		expect(resolveLocale().intlLocale).toBe(en.intlLocale);
+	});
 
-  it('should not mutate the shipped locales', () => {
-    resolveLocale({ dialog: { closeButtonAriaLabel: 'Dismiss' } });
+	it('should not mutate the shipped locales', () => {
+		resolveLocale({ dialog: { closeButtonAriaLabel: 'Dismiss' } });
 
-    expect(en.dialog.closeButtonAriaLabel).toBe('Close');
-  });
+		expect(en.dialog.closeButtonAriaLabel).toBe('Close');
+	});
 
-  it('should accept a full locale unchanged', () => {
-    expect(resolveLocale(ru)).toEqual(ru);
-  });
+	it('should accept a full locale unchanged', () => {
+		expect(resolveLocale(ru)).toEqual(ru);
+	});
 });
 
 describe('useLocale', () => {
-  it('should fall back to English when the plugin is not installed', () => {
-    const { host } = render();
+	it('should fall back to English when the plugin is not installed', () => {
+		const { host } = render();
 
-    expect(host.textContent).toBe('Confirm|Cancel|en-US');
-  });
+		expect(host.textContent).toBe('Confirm|Cancel|en-US');
+	});
 
-  it('should read the locale the plugin provides', () => {
-    const { host } = render({ locale: ru });
+	it('should read the locale the plugin provides', () => {
+		const { host } = render({ locale: ru });
 
-    expect(host.textContent).toBe('Подтверждение|Отменить|ru-RU');
-  });
+		expect(host.textContent).toBe('Подтверждение|Отменить|ru-RU');
+	});
 
-  it('should fill a partial locale in with English', () => {
-    const { host } = render({ locale: { confirmDialog: { title: 'Погоди' } } });
+	it('should fill a partial locale in with English', () => {
+		const { host } = render({ locale: { confirmDialog: { title: 'Погоди' } } });
 
-    expect(host.textContent).toBe('Погоди|Cancel|en-US');
-  });
+		expect(host.textContent).toBe('Погоди|Cancel|en-US');
+	});
 
-  it('should follow a locale that changes at runtime', async () => {
-    const locale = ref(en);
-    const { host } = render({ locale });
+	it('should follow a locale that changes at runtime', async () => {
+		const locale = ref(en);
+		const { host } = render({ locale });
 
-    expect(host.textContent).toBe('Confirm|Cancel|en-US');
+		expect(host.textContent).toBe('Confirm|Cancel|en-US');
 
-    locale.value = ru;
-    await nextTick();
+		locale.value = ru;
+		await nextTick();
 
-    expect(host.textContent).toBe('Подтверждение|Отменить|ru-RU');
-  });
+		expect(host.textContent).toBe('Подтверждение|Отменить|ru-RU');
+	});
 });
 
 describe('localized components', () => {
-  function mount(component: Component, props?: Record<string, unknown>) {
-    const host = document.createElement('div');
-    createApp(component, props).use(shonkUI, { locale: ru }).mount(host);
+	function mount(component: Component, props?: Record<string, unknown>) {
+		const host = document.createElement('div');
+		createApp(component, props).use(shonkUI, { locale: ru }).mount(host);
 
-    return host;
-  }
+		return host;
+	}
 
-  it('should read a string from the locale', () => {
-    const host = mount(Spinner);
+	it('should read a string from the locale', () => {
+		const host = mount(Spinner);
 
-    expect(host.querySelector('[role="status"]')?.getAttribute('aria-label')).toBe('Загрузка');
-  });
+		expect(host.querySelector('[role="status"]')?.getAttribute('aria-label')).toBe('Загрузка');
+	});
 
-  it('should fall back to the locale when the prop is omitted', () => {
-    const host = mount(Breadcrumb);
+	it('should fall back to the locale when the prop is omitted', () => {
+		const host = mount(Breadcrumb);
 
-    expect(host.querySelector('nav')?.getAttribute('aria-label')).toBe('хлебные крошки');
-  });
+		expect(host.querySelector('nav')?.getAttribute('aria-label')).toBe('хлебные крошки');
+	});
 
-  it('should let a prop win over the locale', () => {
-    const host = mount(Breadcrumb, { ariaLabel: 'Навигация' });
+	it('should let a prop win over the locale', () => {
+		const host = mount(Breadcrumb, { ariaLabel: 'Навигация' });
 
-    expect(host.querySelector('nav')?.getAttribute('aria-label')).toBe('Навигация');
-  });
+		expect(host.querySelector('nav')?.getAttribute('aria-label')).toBe('Навигация');
+	});
 });
 
 describe('calendar weekdays', () => {
-  function weekdays(component: Component, options: ShonkUIOptions) {
-    const host = document.createElement('div');
-    createApp(component).use(shonkUI, options).mount(host);
+	function weekdays(component: Component, options: ShonkUIOptions) {
+		const host = document.createElement('div');
+		createApp(component).use(shonkUI, options).mount(host);
 
-    return [...host.querySelectorAll('[data-slot$="head-cell"]')].map(cell => cell.textContent?.trim());
-  }
+		return [...host.querySelectorAll('[data-slot$="head-cell"]')].map(cell => cell.textContent?.trim());
+	}
 
-  it('should abbreviate Russian weekdays so none of them collide', () => {
-    expect(weekdays(Calendar, { locale: ru })).toEqual(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
-    expect(weekdays(RangeCalendar, { locale: ru })).toEqual(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
-  });
+	it('should abbreviate Russian weekdays so none of them collide', () => {
+		expect(weekdays(Calendar, { locale: ru })).toEqual(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
+		expect(weekdays(RangeCalendar, { locale: ru })).toEqual(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
+	});
 
-  it('should abbreviate weekdays in the default locale', () => {
-    expect(weekdays(Calendar, {})).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
-  });
+	it('should abbreviate weekdays in the default locale', () => {
+		expect(weekdays(Calendar, {})).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
+	});
 });

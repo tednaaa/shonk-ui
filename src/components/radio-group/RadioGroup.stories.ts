@@ -6,18 +6,18 @@ import { Label } from '../label';
 const components = { RadioGroup, RadioGroupItem, Label };
 
 const row
-  = 'flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-base font-normal transition-colors hover:bg-muted has-[[data-state=checked]]:bg-accent has-[[data-state=checked]]:hover:bg-accent has-[[data-state=checked]]:font-semibold';
+	= 'flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-base font-normal transition-colors hover:bg-muted has-[[data-state=checked]]:bg-accent has-[[data-state=checked]]:hover:bg-accent has-[[data-state=checked]]:font-semibold';
 
 const meta: Meta<typeof RadioGroup> = {
-  title: 'Components/RadioGroup',
-  component: RadioGroup,
-  tags: ['autodocs'],
-  args: {
-    defaultValue: 'all',
-  },
-  render: render(
-    components,
-    `<RadioGroup v-bind="args" class="max-w-sm gap-1">
+	title: 'Components/RadioGroup',
+	component: RadioGroup,
+	tags: ['autodocs'],
+	args: {
+		defaultValue: 'all',
+	},
+	render: render(
+		components,
+		`<RadioGroup v-bind="args" class="max-w-sm gap-1">
       <Label class="${row}">
         <RadioGroupItem value="all" />
         All notifications
@@ -35,21 +35,21 @@ const meta: Meta<typeof RadioGroup> = {
         Nothing
       </Label>
     </RadioGroup>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Inline: Story = {
-  args: { defaultValue: 'comfortable' },
-  render: render(
-    components,
-    `<RadioGroup v-bind="args">
+	args: { defaultValue: 'comfortable' },
+	render: render(
+		components,
+		`<RadioGroup v-bind="args">
       <div class="flex items-center gap-2">
         <RadioGroupItem id="r1" value="default" />
         <Label for="r1">Default</Label>
@@ -63,17 +63,17 @@ export const Inline: Story = {
         <Label for="r3">Compact</Label>
       </div>
     </RadioGroup>`,
-  ),
+	),
 };
 
 export const Disabled: Story = {
-  args: { disabled: true },
+	args: { disabled: true },
 };
 
 export const DisabledItem: Story = {
-  render: render(
-    components,
-    `<RadioGroup default-value="card" class="max-w-sm gap-1">
+	render: render(
+		components,
+		`<RadioGroup default-value="card" class="max-w-sm gap-1">
       <Label class="${row}">
         <RadioGroupItem value="card" />
         Card
@@ -87,5 +87,5 @@ export const DisabledItem: Story = {
         Apple Pay
       </Label>
     </RadioGroup>`,
-  ),
+	),
 };

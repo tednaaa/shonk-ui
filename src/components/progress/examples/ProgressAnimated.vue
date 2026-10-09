@@ -6,10 +6,10 @@ import { ref } from 'vue';
 const value = ref(0);
 
 useIntervalFn(() => {
-  value.value = value.value === 100 ? 0 : Math.min(value.value + 20, 100);
+	value.value = value.value === 100 ? 0 : Math.min(value.value + 20, 100);
 }, 800);
 </script>
 
 <template>
-  <Progress :model-value="value" />
+	<Progress :model-value="value" />
 </template>

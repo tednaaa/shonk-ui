@@ -9,83 +9,83 @@ import DatePickerWithPresets from './examples/DatePickerWithPresets.vue';
 import datePickerWithPresetsSource from './examples/DatePickerWithPresets.vue?raw';
 
 const meta: Meta<typeof DatePicker> = {
-  title: 'Components/DatePicker',
-  component: DatePicker,
-  tags: ['autodocs'],
-  args: {
-    triggerPlaceholder: 'Pick a date',
-  },
-  render: render({ DatePicker }, `<DatePicker v-bind="args" />`),
+	title: 'Components/DatePicker',
+	component: DatePicker,
+	tags: ['autodocs'],
+	args: {
+		triggerPlaceholder: 'Pick a date',
+	},
+	render: render({ DatePicker }, `<DatePicker v-bind="args" />`),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Preselected: Story = {
-  parameters: example(datePickerPreselectedSource),
-  render: render({ DatePickerPreselected }, `<DatePickerPreselected />`),
+	parameters: example(datePickerPreselectedSource),
+	render: render({ DatePickerPreselected }, `<DatePickerPreselected />`),
 };
 
 export const MinValue: Story = {
-  args: { minValue: new CalendarDate(2026, 6, 17) },
-  render: render(
-    { DatePicker, StorybookLabel },
-    `
+	args: { minValue: new CalendarDate(2026, 6, 17) },
+	render: render(
+		{ DatePicker, StorybookLabel },
+		`
       <div class="grid gap-2">
         <StorybookLabel>Dates before Jun 17 are disabled</StorybookLabel>
         <DatePicker v-bind="args" />
       </div>
     `,
-  ),
+	),
 };
 
 export const MaxValue: Story = {
-  args: { maxValue: new CalendarDate(2026, 6, 17) },
-  render: render(
-    { DatePicker, StorybookLabel },
-    `
+	args: { maxValue: new CalendarDate(2026, 6, 17) },
+	render: render(
+		{ DatePicker, StorybookLabel },
+		`
       <div class="grid gap-2">
         <StorybookLabel>Dates after Jun 17 are disabled</StorybookLabel>
         <DatePicker v-bind="args" />
       </div>
     `,
-  ),
+	),
 };
 
 export const DisabledWeekends: Story = {
-  args: {
-    isDateDisabled: (date: DateValue) => {
-      const day = date.toDate(getLocalTimeZone()).getDay();
-      return day === 0 || day === 6;
-    },
-  },
-  render: render(
-    { DatePicker, StorybookLabel },
-    `
+	args: {
+		isDateDisabled: (date: DateValue) => {
+			const day = date.toDate(getLocalTimeZone()).getDay();
+			return day === 0 || day === 6;
+		},
+	},
+	render: render(
+		{ DatePicker, StorybookLabel },
+		`
       <div class="grid gap-2">
         <StorybookLabel>Weekends are disabled</StorybookLabel>
         <DatePicker v-bind="args" />
       </div>
     `,
-  ),
+	),
 };
 
 export const CustomFormatter: Story = {
-  args: {
-    formatter: (date: Date) =>
-      new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(date),
-  },
+	args: {
+		formatter: (date: Date) =>
+			new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(date),
+	},
 };
 
 export const StayOpen: Story = {
-  args: { closeOnSelect: false },
+	args: { closeOnSelect: false },
 };
 
 export const WithPresets: Story = {
-  parameters: example(datePickerWithPresetsSource),
-  render: render({ DatePickerWithPresets }, `<DatePickerWithPresets />`),
+	parameters: example(datePickerWithPresetsSource),
+	render: render({ DatePickerWithPresets }, `<DatePickerWithPresets />`),
 };

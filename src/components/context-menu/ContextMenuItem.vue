@@ -3,17 +3,17 @@ import type { ContextMenuItemEmits, ContextMenuItemProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import { reactiveOmit } from '@vueuse/core';
 import {
-  ContextMenuItem,
-  useForwardPropsEmits,
+	ContextMenuItem,
+	useForwardPropsEmits,
 } from 'reka-ui';
 import { cn } from '@/utils';
 
 const props = withDefaults(defineProps<ContextMenuItemProps & {
-  class?: HTMLAttributes['class'];
-  inset?: boolean;
-  variant?: 'default' | 'destructive';
+	class?: HTMLAttributes['class'];
+	inset?: boolean;
+	variant?: 'default' | 'destructive';
 }>(), {
-  variant: 'default',
+	variant: 'default',
 });
 const emits = defineEmits<ContextMenuItemEmits>();
 
@@ -23,16 +23,16 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
-  <ContextMenuItem
-    data-slot="context-menu-item"
-    :data-inset="inset ? '' : undefined"
-    :data-variant="variant"
-    v-bind="forwarded"
-    :class="cn(
-      'relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 data-inset:pl-8 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive-subtle data-[variant=destructive]:focus:text-destructive-subtle-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4 [&_svg:not([class*=text-])]:text-muted-foreground data-[variant=destructive]:*:[svg]:text-destructive!',
-      props.class,
-    )"
-  >
-    <slot />
-  </ContextMenuItem>
+	<ContextMenuItem
+		data-slot="context-menu-item"
+		:data-inset="inset ? '' : undefined"
+		:data-variant="variant"
+		v-bind="forwarded"
+		:class="cn(
+			'relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 data-inset:pl-8 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive-subtle data-[variant=destructive]:focus:text-destructive-subtle-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4 [&_svg:not([class*=text-])]:text-muted-foreground data-[variant=destructive]:*:[svg]:text-destructive!',
+			props.class,
+		)"
+	>
+		<slot />
+	</ContextMenuItem>
 </template>

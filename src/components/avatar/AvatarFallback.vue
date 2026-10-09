@@ -11,11 +11,11 @@ const delegatedProps = reactiveOmit(props, 'class');
 </script>
 
 <template>
-  <AvatarFallback
-    data-slot="avatar-fallback"
-    v-bind="delegatedProps"
-    :class="cn('flex size-full items-center justify-center rounded-full bg-accent text-accent-foreground', props.class)"
-  >
-    <slot />
-  </AvatarFallback>
+	<AvatarFallback
+		data-slot="avatar-fallback"
+		v-bind="delegatedProps"
+		:class="cn('flex size-full items-center justify-center rounded-full bg-accent text-accent-foreground', props.class)"
+	>
+		<slot />
+	</AvatarFallback>
 </template>

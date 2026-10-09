@@ -7,8 +7,8 @@ import { unwrapDataTable } from './lib/instance';
 import { provideDataTablePaginationContext } from './lib/paginationContext';
 
 const props = defineProps<{
-  table: DataTableInstance<TData>;
-  class?: HTMLAttributes['class'];
+	table: DataTableInstance<TData>;
+	class?: HTMLAttributes['class'];
 }>();
 
 const kitTable = computed(() => unwrapDataTable(props.table));
@@ -20,21 +20,21 @@ const smallestPageSize = computed(() => Math.min(pagination.value.pageSize, ...p
 const allRowsFitOnePage = computed(() => rowCount.value <= smallestPageSize.value);
 
 provideDataTablePaginationContext({
-  page: computed(() => pagination.value.pageIndex + 1),
-  pageSize: computed(() => pagination.value.pageSize),
-  rowCount,
-  pageSizeOptions,
-  goToPage: page => kitTable.value.setPageIndex(page - 1),
-  changePageSize: pageSize => kitTable.value.setPagination({ pageIndex: 0, pageSize }),
+	page: computed(() => pagination.value.pageIndex + 1),
+	pageSize: computed(() => pagination.value.pageSize),
+	rowCount,
+	pageSizeOptions,
+	goToPage: page => kitTable.value.setPageIndex(page - 1),
+	changePageSize: pageSize => kitTable.value.setPagination({ pageIndex: 0, pageSize }),
 });
 </script>
 
 <template>
-  <div
-    v-show="!allRowsFitOnePage"
-    data-slot="data-table-pagination"
-    :class="cn('flex flex-wrap items-center justify-center gap-x-6 gap-y-2', props.class)"
-  >
-    <slot />
-  </div>
+	<div
+		v-show="!allRowsFitOnePage"
+		data-slot="data-table-pagination"
+		:class="cn('flex flex-wrap items-center justify-center gap-x-6 gap-y-2', props.class)"
+	>
+		<slot />
+	</div>
 </template>

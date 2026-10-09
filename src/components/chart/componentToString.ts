@@ -5,26 +5,26 @@ import { h, render } from 'vue';
 export type ChartTooltipOptions = Omit<ChartTooltipContentProps, 'payload' | 'config' | 'x'>;
 
 export function componentToString<T extends Component<ChartTooltipContentProps>>(
-  config: ChartConfig,
-  component: T,
-  options: ChartTooltipOptions = {},
+	config: ChartConfig,
+	component: T,
+	options: ChartTooltipOptions = {},
 ) {
-  const rendered = new Map<string, string>();
+	const rendered = new Map<string, string>();
 
-  return (datum: object, x: number | Date) => {
-    const key = JSON.stringify([datum, x]);
-    const cached = rendered.get(key);
+	return (datum: object, x: number | Date) => {
+		const key = JSON.stringify([datum, x]);
+		const cached = rendered.get(key);
 
-    if (cached !== undefined)
-      return cached;
+		if (cached !== undefined)
+			return cached;
 
-    const element = document.createElement('div');
-    render(h(component, { ...options, payload: datum, config, x }), element);
-    const html = element.innerHTML;
-    render(null, element);
+		const element = document.createElement('div');
+		render(h(component, { ...options, payload: datum, config, x }), element);
+		const html = element.innerHTML;
+		render(null, element);
 
-    rendered.set(key, html);
+		rendered.set(key, html);
 
-    return html;
-  };
+		return html;
+	};
 }

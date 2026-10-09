@@ -4,33 +4,33 @@ import { Switch } from '.';
 import { Label } from '../label';
 
 const meta: Meta<typeof Switch> = {
-  title: 'Components/Switch',
-  component: Switch,
-  tags: ['autodocs'],
-  render: render({ Switch }, `<Switch v-bind="args" />`),
+	title: 'Components/Switch',
+	component: Switch,
+	tags: ['autodocs'],
+	render: render({ Switch }, `<Switch v-bind="args" />`),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Checked: Story = {
-  args: { defaultValue: true },
+	args: { defaultValue: true },
 };
 
 export const Disabled: Story = {
-  args: { disabled: true },
+	args: { disabled: true },
 };
 
 export const DisabledChecked: Story = {
-  args: { disabled: true, defaultValue: true },
+	args: { disabled: true, defaultValue: true },
 };
 
 export const WithLabel: Story = {
-  render: render({ Switch, Label }, `
+	render: render({ Switch, Label }, `
     <Label class="gap-3">
       <Switch v-bind="args" />
       Airplane mode

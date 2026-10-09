@@ -1,30 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 
 interface Preset {
-  name: string;
-  summary: string;
+	name: string;
+	summary: string;
 }
 
 const presets: readonly Preset[] = [
-  { name: 'atlas', summary: 'White day, deep neutral night, one blue. Also the default.' },
-  { name: 'graphite', summary: 'Near-neutral greys and one confident blue.' },
-  { name: 'nocturne', summary: 'Navy surfaces on both sides, cool saturated accents.' },
-  { name: 'orchid', summary: 'Lavender-tinted neutrals and a violet primary.' },
+	{ name: 'atlas', summary: 'White day, deep neutral night, one blue. Also the default.' },
+	{ name: 'graphite', summary: 'Near-neutral greys and one confident blue.' },
+	{ name: 'nocturne', summary: 'Navy surfaces on both sides, cool saturated accents.' },
+	{ name: 'orchid', summary: 'Lavender-tinted neutrals and a violet primary.' },
 ] as const;
 
 const appearances = ['light', 'dark'] as const;
 
 const meta: Meta = {
-  title: 'Foundations/Themes',
+	title: 'Foundations/Themes',
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Themes: Story = {
-  render: () => ({
-    setup: () => ({ presets, appearances }),
-    template: `
+	render: () => ({
+		setup: () => ({ presets, appearances }),
+		template: `
       <div class="flex flex-col gap-10">
         <section v-for="preset in presets" :key="preset.name" class="flex flex-col gap-3">
           <div class="flex flex-col gap-1">
@@ -67,5 +67,5 @@ export const Themes: Story = {
         </section>
       </div>
     `,
-  }),
+	}),
 };

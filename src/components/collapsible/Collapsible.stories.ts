@@ -5,12 +5,12 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '.';
 import { Button } from '../button';
 
 const meta: Meta<typeof Collapsible> = {
-  title: 'Components/Collapsible',
-  component: Collapsible,
-  tags: ['autodocs'],
-  render: render(
-    { Collapsible, CollapsibleTrigger, CollapsibleContent, Button, ChevronsUpDownIcon },
-    `<div class="w-80">
+	title: 'Components/Collapsible',
+	component: Collapsible,
+	tags: ['autodocs'],
+	render: render(
+		{ Collapsible, CollapsibleTrigger, CollapsibleContent, Button, ChevronsUpDownIcon },
+		`<div class="w-80">
       <Collapsible v-bind="args" class="space-y-2">
         <div class="flex items-center justify-between gap-4 px-1">
           <h4 class="text-sm font-semibold">@acme starred 3 repositories</h4>
@@ -28,24 +28,24 @@ const meta: Meta<typeof Collapsible> = {
         </CollapsibleContent>
       </Collapsible>
     </div>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Disabled: Story = {
-  args: { disabled: true },
+	args: { disabled: true },
 };
 
 export const ShowMore: Story = {
-  render: render(
-    { Collapsible, CollapsibleTrigger, CollapsibleContent, Button },
-    `<div class="w-96">
+	render: render(
+		{ Collapsible, CollapsibleTrigger, CollapsibleContent, Button },
+		`<div class="w-96">
       <Collapsible class="space-y-2">
         <p class="text-muted-foreground text-sm">
           A component library built on accessible primitives and Tailwind utility classes.
@@ -61,5 +61,5 @@ export const ShowMore: Story = {
         </CollapsibleTrigger>
       </Collapsible>
     </div>`,
-  ),
+	),
 };

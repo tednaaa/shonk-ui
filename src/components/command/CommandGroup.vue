@@ -8,8 +8,8 @@ import { cn } from '@/utils';
 import { provideCommandGroupContext, useCommand } from './utils';
 
 const props = defineProps<ListboxGroupProps & {
-  class?: HTMLAttributes['class'];
-  heading?: string;
+	class?: HTMLAttributes['class'];
+	heading?: string;
 }>();
 
 const delegatedProps = reactiveOmit(props, 'class');
@@ -21,25 +21,25 @@ const isRender = computed(() => !filterState.search ? true : filterState.filtere
 
 provideCommandGroupContext({ id });
 onMounted(() => {
-  if (!allGroups.value.has(id))
-    allGroups.value.set(id, new Set());
+	if (!allGroups.value.has(id))
+		allGroups.value.set(id, new Set());
 });
 onUnmounted(() => {
-  allGroups.value.delete(id);
+	allGroups.value.delete(id);
 });
 </script>
 
 <template>
-  <ListboxGroup
-    v-bind="delegatedProps"
-    :id="id"
-    data-slot="command-group"
-    :class="cn('overflow-hidden p-1 text-foreground', props.class)"
-    :hidden="isRender ? undefined : true"
-  >
-    <ListboxGroupLabel v-if="heading" data-slot="command-group-heading" class="px-2 py-1.5 text-xs font-medium text-muted-foreground">
-      {{ heading }}
-    </ListboxGroupLabel>
-    <slot />
-  </ListboxGroup>
+	<ListboxGroup
+		v-bind="delegatedProps"
+		:id="id"
+		data-slot="command-group"
+		:class="cn('overflow-hidden p-1 text-foreground', props.class)"
+		:hidden="isRender ? undefined : true"
+	>
+		<ListboxGroupLabel v-if="heading" data-slot="command-group-heading" class="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+			{{ heading }}
+		</ListboxGroupLabel>
+		<slot />
+	</ListboxGroup>
 </template>

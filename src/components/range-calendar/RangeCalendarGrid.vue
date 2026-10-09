@@ -13,11 +13,11 @@ const forwardedProps = useForwardProps(delegatedProps);
 </script>
 
 <template>
-  <RangeCalendarGrid
-    data-slot="range-calendar-grid"
-    :class="cn('w-full border-collapse space-x-1', props.class)"
-    v-bind="forwardedProps"
-  >
-    <slot />
-  </RangeCalendarGrid>
+	<RangeCalendarGrid
+		data-slot="range-calendar-grid"
+		:class="cn('w-full border-collapse space-x-1', props.class)"
+		v-bind="forwardedProps"
+	>
+		<slot />
+	</RangeCalendarGrid>
 </template>

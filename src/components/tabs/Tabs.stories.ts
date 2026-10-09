@@ -1,29 +1,29 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { render, showControls } from '@/lib/storybook';
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
+	Tabs,
+	TabsContent,
+	TabsList,
+	TabsTrigger,
 } from '.';
 
 const components = {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
+	Tabs,
+	TabsContent,
+	TabsList,
+	TabsTrigger,
 };
 
 const meta: Meta<typeof Tabs> = {
-  title: 'Components/Tabs',
-  component: Tabs,
-  tags: ['autodocs'],
-  args: {
-    defaultValue: 'account',
-  },
-  render: render(
-    components,
-    `<div class="max-w-md">
+	title: 'Components/Tabs',
+	component: Tabs,
+	tags: ['autodocs'],
+	args: {
+		defaultValue: 'account',
+	},
+	render: render(
+		components,
+		`<div class="max-w-md">
       <Tabs v-bind="args">
         <TabsList class="w-full">
           <TabsTrigger value="account">Account</TabsTrigger>
@@ -37,20 +37,20 @@ const meta: Meta<typeof Tabs> = {
         </TabsContent>
       </Tabs>
     </div>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const DisabledTab: Story = {
-  render: render(
-    components,
-    `<div class="max-w-md">
+	render: render(
+		components,
+		`<div class="max-w-md">
       <Tabs default-value="overview">
         <TabsList class="w-full">
           <TabsTrigger value="overview">Overview</TabsTrigger>
@@ -62,5 +62,5 @@ export const DisabledTab: Story = {
         <TabsContent value="reports" class="text-muted-foreground text-sm">Reports are not available on your plan.</TabsContent>
       </Tabs>
     </div>`,
-  ),
+	),
 };

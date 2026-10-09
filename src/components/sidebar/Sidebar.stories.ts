@@ -9,63 +9,63 @@ import SidebarToggle from './examples/SidebarToggle.vue';
 import sidebarToggleSource from './examples/SidebarToggle.vue?raw';
 
 const meta: Meta<typeof Sidebar> = {
-  title: 'Components/Sidebar',
-  component: Sidebar,
-  tags: ['autodocs'],
-  parameters: example(sidebarAppSource),
-  render: render({ SidebarApp }, `<SidebarApp v-bind="args" />`),
+	title: 'Components/Sidebar',
+	component: Sidebar,
+	tags: ['autodocs'],
+	parameters: example(sidebarAppSource),
+	render: render({ SidebarApp }, `<SidebarApp v-bind="args" />`),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const IconCollapsible: Story = {
-  args: { collapsible: 'icon' },
-  parameters: example(
-    sidebarAppSource,
-    'With `collapsible="icon"` the sidebar shrinks to a rail of icons rather than sliding off canvas, so the `tooltip` on each `SidebarMenuButton` becomes the only remaining label.',
-  ),
+	args: { collapsible: 'icon' },
+	parameters: example(
+		sidebarAppSource,
+		'With `collapsible="icon"` the sidebar shrinks to a rail of icons rather than sliding off canvas, so the `tooltip` on each `SidebarMenuButton` becomes the only remaining label.',
+	),
 };
 
 export const Floating: Story = {
-  args: { variant: 'floating' },
-  parameters: example(
-    sidebarAppSource,
-    'The `floating` variant detaches the sidebar from the viewport edge and gives it its own rounded, bordered surface.',
-  ),
+	args: { variant: 'floating' },
+	parameters: example(
+		sidebarAppSource,
+		'The `floating` variant detaches the sidebar from the viewport edge and gives it its own rounded, bordered surface.',
+	),
 };
 
 export const RightSide: Story = {
-  args: { side: 'right' },
-  parameters: example(
-    sidebarAppSource,
-    'Setting `side="right"` anchors the sidebar to the opposite edge; `SidebarInset` and `SidebarRail` follow it without further changes.',
-  ),
+	args: { side: 'right' },
+	parameters: example(
+		sidebarAppSource,
+		'Setting `side="right"` anchors the sidebar to the opposite edge; `SidebarInset` and `SidebarRail` follow it without further changes.',
+	),
 };
 
 export const ToggleButton: Story = {
-  args: { collapsible: 'icon' },
-  parameters: example(
-    sidebarToggleSource,
-    '`SidebarToggleButton` replaces `SidebarRail` with a round button sitting on the sidebar edge; its chevron follows `side` and the collapsed state.',
-  ),
-  render: render({ SidebarToggle }, `<SidebarToggle v-bind="args" />`),
+	args: { collapsible: 'icon' },
+	parameters: example(
+		sidebarToggleSource,
+		'`SidebarToggleButton` replaces `SidebarRail` with a round button sitting on the sidebar edge; its chevron follows `side` and the collapsed state.',
+	),
+	render: render({ SidebarToggle }, `<SidebarToggle v-bind="args" />`),
 };
 
 export const ToggleButtonRightSide: Story = {
-  args: { side: 'right', collapsible: 'icon' },
-  parameters: example(sidebarToggleSource),
-  render: render({ SidebarToggle }, `<SidebarToggle v-bind="args" />`),
+	args: { side: 'right', collapsible: 'icon' },
+	parameters: example(sidebarToggleSource),
+	render: render({ SidebarToggle }, `<SidebarToggle v-bind="args" />`),
 };
 
 export const Loading: Story = {
-  parameters: example(
-    sidebarSkeletonSource,
-    'Fill the menu with `SidebarMenuSkeleton` while the navigation is still being fetched. `show-icon` reserves room for the icon so nothing shifts once the real items arrive.',
-  ),
-  render: render({ SidebarSkeleton }, `<SidebarSkeleton />`),
+	parameters: example(
+		sidebarSkeletonSource,
+		'Fill the menu with `SidebarMenuSkeleton` while the navigation is still being fetched. `show-icon` reserves room for the icon so nothing shifts once the real items arrive.',
+	),
+	render: render({ SidebarSkeleton }, `<SidebarSkeleton />`),
 };

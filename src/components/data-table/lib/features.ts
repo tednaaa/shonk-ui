@@ -1,47 +1,47 @@
 import type { VueTable } from '@tanstack/vue-table';
 import type { HTMLAttributes } from 'vue';
 import {
-  cellSpanningFeature,
-  columnPinningFeature,
-  columnResizingFeature,
-  columnSizingFeature,
-  columnVisibilityFeature,
-  createPaginatedRowModel,
-  createSortedRowModel,
-  metaHelper,
-  rowExpandingFeature,
-  rowPaginationFeature,
-  rowPinningFeature,
-  rowSelectionFeature,
-  rowSortingFeature,
-  sortFn_alphanumeric,
-  sortFn_datetime,
-  sortFn_text,
-  tableFeatures,
+	cellSpanningFeature,
+	columnPinningFeature,
+	columnResizingFeature,
+	columnSizingFeature,
+	columnVisibilityFeature,
+	createPaginatedRowModel,
+	createSortedRowModel,
+	metaHelper,
+	rowExpandingFeature,
+	rowPaginationFeature,
+	rowPinningFeature,
+	rowSelectionFeature,
+	rowSortingFeature,
+	sortFn_alphanumeric,
+	sortFn_datetime,
+	sortFn_text,
+	tableFeatures,
 } from '@tanstack/vue-table';
 
 export interface KitColumnMeta {
-  label?: string;
-  class?: HTMLAttributes['class'];
-  headerClass?: HTMLAttributes['class'];
-  sized?: boolean;
+	label?: string;
+	class?: HTMLAttributes['class'];
+	headerClass?: HTMLAttributes['class'];
+	sized?: boolean;
 }
 
 export const features = tableFeatures({
-  columnVisibilityFeature,
-  columnPinningFeature,
-  columnSizingFeature,
-  columnResizingFeature,
-  rowSortingFeature,
-  sortedRowModel: createSortedRowModel(),
-  sortFns: { alphanumeric: sortFn_alphanumeric, datetime: sortFn_datetime, text: sortFn_text },
-  rowPaginationFeature,
-  paginatedRowModel: createPaginatedRowModel(),
-  rowSelectionFeature,
-  rowExpandingFeature,
-  rowPinningFeature,
-  cellSpanningFeature,
-  columnMeta: metaHelper<KitColumnMeta>(),
+	columnVisibilityFeature,
+	columnPinningFeature,
+	columnSizingFeature,
+	columnResizingFeature,
+	rowSortingFeature,
+	sortedRowModel: createSortedRowModel(),
+	sortFns: { alphanumeric: sortFn_alphanumeric, datetime: sortFn_datetime, text: sortFn_text },
+	rowPaginationFeature,
+	paginatedRowModel: createPaginatedRowModel(),
+	rowSelectionFeature,
+	rowExpandingFeature,
+	rowPinningFeature,
+	cellSpanningFeature,
+	columnMeta: metaHelper<KitColumnMeta>(),
 });
 
 export type KitFeatures = typeof features;

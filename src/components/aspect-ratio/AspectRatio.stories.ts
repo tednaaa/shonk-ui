@@ -3,32 +3,32 @@ import { render, showControls, StorybookLabel } from '@/lib/storybook';
 import { AspectRatio } from '.';
 
 const meta: Meta<typeof AspectRatio> = {
-  title: 'Components/AspectRatio',
-  component: AspectRatio,
-  tags: ['autodocs'],
-  args: { ratio: 16 / 9 },
-  render: render(
-    { AspectRatio, StorybookLabel },
-    `<div class="w-100 space-y-2">
+	title: 'Components/AspectRatio',
+	component: AspectRatio,
+	tags: ['autodocs'],
+	args: { ratio: 16 / 9 },
+	render: render(
+		{ AspectRatio, StorybookLabel },
+		`<div class="w-100 space-y-2">
       <StorybookLabel>{{ args.ratio }}</StorybookLabel>
       <AspectRatio v-bind="args">
         <div class="bg-muted h-full w-full rounded-lg"></div>
       </AspectRatio>
     </div>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Ratios: Story = {
-  render: render(
-    { AspectRatio, StorybookLabel },
-    `<div class="flex items-end gap-6">
+	render: render(
+		{ AspectRatio, StorybookLabel },
+		`<div class="flex items-end gap-6">
       <div class="w-40 space-y-2">
         <StorybookLabel>16 / 9</StorybookLabel>
         <AspectRatio :ratio="16 / 9">
@@ -48,13 +48,13 @@ export const Ratios: Story = {
         </AspectRatio>
       </div>
     </div>`,
-  ),
+	),
 };
 
 export const Image: Story = {
-  render: render(
-    { AspectRatio, StorybookLabel },
-    `<div class="w-112.5 space-y-2">
+	render: render(
+		{ AspectRatio, StorybookLabel },
+		`<div class="w-112.5 space-y-2">
       <StorybookLabel>16 / 9</StorybookLabel>
       <AspectRatio :ratio="16 / 9">
         <img
@@ -64,5 +64,5 @@ export const Image: Story = {
         />
       </AspectRatio>
     </div>`,
-  ),
+	),
 };

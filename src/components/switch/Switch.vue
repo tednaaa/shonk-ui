@@ -3,9 +3,9 @@ import type { SwitchRootEmits, SwitchRootProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import { reactiveOmit } from '@vueuse/core';
 import {
-  SwitchRoot,
-  SwitchThumb,
-  useForwardPropsEmits,
+	SwitchRoot,
+	SwitchThumb,
+	useForwardPropsEmits,
 } from 'reka-ui';
 import { cn } from '@/utils';
 
@@ -19,20 +19,20 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
 
 <template>
-  <SwitchRoot
-    #default="slotProps"
-    data-slot="switch"
-    v-bind="forwarded"
-    :class="cn(
-      'peer inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input',
-      props.class,
-    )"
-  >
-    <SwitchThumb
-      data-slot="switch-thumb"
-      :class="cn('pointer-events-none block size-4 rounded-full bg-switch-thumb ring-0 transition-transform data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=checked]:bg-switch-thumb-checked data-[state=unchecked]:translate-x-0')"
-    >
-      <slot name="thumb" v-bind="slotProps" />
-    </SwitchThumb>
-  </SwitchRoot>
+	<SwitchRoot
+		#default="slotProps"
+		data-slot="switch"
+		v-bind="forwarded"
+		:class="cn(
+			'peer inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input',
+			props.class,
+		)"
+	>
+		<SwitchThumb
+			data-slot="switch-thumb"
+			:class="cn('pointer-events-none block size-4 rounded-full bg-switch-thumb ring-0 transition-transform data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=checked]:bg-switch-thumb-checked data-[state=unchecked]:translate-x-0')"
+		>
+			<slot name="thumb" v-bind="slotProps" />
+		</SwitchThumb>
+	</SwitchRoot>
 </template>

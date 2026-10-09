@@ -9,13 +9,13 @@ import { useCarousel } from './useCarousel';
 import { carouselPreviousVariants } from './variants';
 
 const props = withDefaults(defineProps<{
-  variant?: ButtonVariants['variant'];
-  size?: ButtonVariants['size'];
-  screenReaderText?: string;
+	variant?: ButtonVariants['variant'];
+	size?: ButtonVariants['size'];
+	screenReaderText?: string;
 }
 & WithClassAsProps>(), {
-  variant: 'secondary',
-  size: 'icon',
+	variant: 'secondary',
+	size: 'icon',
 });
 
 const locale = useLocale();
@@ -24,17 +24,17 @@ const { orientation, canScrollPrev, scrollPrev } = useCarousel();
 </script>
 
 <template>
-  <Button
-    data-slot="carousel-previous"
-    :disabled="!canScrollPrev"
-    :class="cn(carouselPreviousVariants({ orientation }), props.class)"
-    :variant="variant"
-    :size="size"
-    @click="scrollPrev"
-  >
-    <slot>
-      <ArrowLeft />
-      <span class="sr-only">{{ props.screenReaderText ?? locale.carousel.previousButtonScreenReaderText }}</span>
-    </slot>
-  </Button>
+	<Button
+		data-slot="carousel-previous"
+		:disabled="!canScrollPrev"
+		:class="cn(carouselPreviousVariants({ orientation }), props.class)"
+		:variant="variant"
+		:size="size"
+		@click="scrollPrev"
+	>
+		<slot>
+			<ArrowLeft />
+			<span class="sr-only">{{ props.screenReaderText ?? locale.carousel.previousButtonScreenReaderText }}</span>
+		</slot>
+	</Button>
 </template>

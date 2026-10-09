@@ -1,28 +1,28 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { render, showControls } from '@/lib/storybook';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
 } from '.';
 import { Button } from '../button';
 
 const components = {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-  Button,
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+	Button,
 };
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'Components/Tooltip',
-  component: Tooltip,
-  tags: ['autodocs'],
-  render: render(
-    components,
-    `<TooltipProvider>
+	title: 'Components/Tooltip',
+	component: Tooltip,
+	tags: ['autodocs'],
+	render: render(
+		components,
+		`<TooltipProvider>
       <Tooltip v-bind="args">
         <TooltipTrigger as-child>
           <Button variant="secondary">Hover me</Button>
@@ -32,20 +32,20 @@ const meta: Meta<typeof Tooltip> = {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Sides: Story = {
-  render: render(
-    components,
-    `<TooltipProvider>
+	render: render(
+		components,
+		`<TooltipProvider>
       <div class="flex flex-wrap gap-2">
         <Tooltip v-for="side in ['top', 'right', 'bottom', 'left']" :key="side">
           <TooltipTrigger as-child>
@@ -57,5 +57,5 @@ export const Sides: Story = {
         </Tooltip>
       </div>
     </TooltipProvider>`,
-  ),
+	),
 };

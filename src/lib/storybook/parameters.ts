@@ -1,16 +1,16 @@
 export const hideControls = {
-  controls: { disable: true },
+	controls: { disable: true },
 };
 
 export const showControls = {
-  controls: { disable: false },
+	controls: { disable: false },
 };
 
 export function example(source: string, description?: string) {
-  const docs: Record<string, unknown> = { source: { code: source } };
+	const docs: Record<string, unknown> = { source: { code: source } };
 
-  if (description)
-    docs.description = { story: description };
+	if (description)
+		docs.description = { story: description };
 
-  return { docs };
+	return { docs };
 }

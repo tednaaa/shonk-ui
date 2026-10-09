@@ -11,30 +11,30 @@ import ToastWithPromise from './examples/ToastWithPromise.vue';
 import toastWithPromiseSource from './examples/ToastWithPromise.vue?raw';
 
 const meta: Meta<typeof Toaster> = {
-  title: 'Components/Toast',
-  component: Toaster,
-  tags: ['autodocs'],
+	title: 'Components/Toast',
+	component: Toaster,
+	tags: ['autodocs'],
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: example(toastDefaultSource),
-  render: render({ ToastDefault }, `<ToastDefault />`),
+	parameters: example(toastDefaultSource),
+	render: render({ ToastDefault }, `<ToastDefault />`),
 };
 
 export const Variants: Story = {
-  parameters: example(toastVariantsSource),
-  render: render({ ToastVariants }, `<ToastVariants />`),
+	parameters: example(toastVariantsSource),
+	render: render({ ToastVariants }, `<ToastVariants />`),
 };
 
 export const WithAction: Story = {
-  parameters: example(toastWithActionSource),
-  render: render({ ToastWithAction }, `<ToastWithAction />`),
+	parameters: example(toastWithActionSource),
+	render: render({ ToastWithAction }, `<ToastWithAction />`),
 };
 
 export const WithPromise: Story = {
-  parameters: example(toastWithPromiseSource),
-  render: render({ ToastWithPromise }, `<ToastWithPromise />`),
+	parameters: example(toastWithPromiseSource),
+	render: render({ ToastWithPromise }, `<ToastWithPromise />`),
 };

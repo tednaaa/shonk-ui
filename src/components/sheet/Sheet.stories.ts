@@ -1,40 +1,40 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { render, showControls } from '@/lib/storybook';
 import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
+	Sheet,
+	SheetClose,
+	SheetContent,
+	SheetDescription,
+	SheetFooter,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
 } from '.';
 import { Button } from '../button';
 import { Input } from '../input';
 import { Label } from '../label';
 
 const components = {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-  Button,
-  Input,
-  Label,
+	Sheet,
+	SheetClose,
+	SheetContent,
+	SheetDescription,
+	SheetFooter,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+	Button,
+	Input,
+	Label,
 };
 
 const meta: Meta<typeof Sheet> = {
-  title: 'Components/Sheet',
-  component: Sheet,
-  tags: ['autodocs'],
-  render: render(
-    components,
-    `<Sheet v-bind="args">
+	title: 'Components/Sheet',
+	component: Sheet,
+	tags: ['autodocs'],
+	render: render(
+		components,
+		`<Sheet v-bind="args">
       <SheetTrigger as-child>
         <Button variant="secondary">Open sheet</Button>
       </SheetTrigger>
@@ -50,20 +50,20 @@ const meta: Meta<typeof Sheet> = {
         </SheetFooter>
       </SheetContent>
     </Sheet>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Sides: Story = {
-  render: render(
-    components,
-    `<div class="flex flex-wrap gap-2">
+	render: render(
+		components,
+		`<div class="flex flex-wrap gap-2">
       <Sheet v-for="side in ['top', 'right', 'bottom', 'left']" :key="side">
         <SheetTrigger as-child>
           <Button variant="secondary" class="capitalize">{{ side }}</Button>
@@ -76,13 +76,13 @@ export const Sides: Story = {
         </SheetContent>
       </Sheet>
     </div>`,
-  ),
+	),
 };
 
 export const WithForm: Story = {
-  render: render(
-    components,
-    `<Sheet v-bind="args">
+	render: render(
+		components,
+		`<Sheet v-bind="args">
       <SheetTrigger as-child>
         <Button variant="secondary">Edit profile</Button>
       </SheetTrigger>
@@ -111,5 +111,5 @@ export const WithForm: Story = {
         </form>
       </SheetContent>
     </Sheet>`,
-  ),
+	),
 };

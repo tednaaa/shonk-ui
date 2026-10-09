@@ -1,44 +1,44 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { render, showControls } from '@/lib/storybook';
 import {
-  Dialog,
-  DialogBody,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogScrollContent,
-  DialogTitle,
-  DialogTrigger,
+	Dialog,
+	DialogBody,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogScrollContent,
+	DialogTitle,
+	DialogTrigger,
 } from '.';
 import { Button } from '../button';
 import { Input } from '../input';
 import { Label } from '../label';
 
 const components = {
-  Dialog,
-  DialogBody,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogScrollContent,
-  DialogTitle,
-  DialogTrigger,
-  Button,
-  Input,
-  Label,
+	Dialog,
+	DialogBody,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogScrollContent,
+	DialogTitle,
+	DialogTrigger,
+	Button,
+	Input,
+	Label,
 };
 
 const meta: Meta<typeof Dialog> = {
-  title: 'Components/Dialog',
-  component: Dialog,
-  tags: ['autodocs'],
-  render: render(
-    components,
-    `<Dialog v-bind="args">
+	title: 'Components/Dialog',
+	component: Dialog,
+	tags: ['autodocs'],
+	render: render(
+		components,
+		`<Dialog v-bind="args">
       <DialogTrigger as-child>
         <Button variant="secondary">Open dialog</Button>
       </DialogTrigger>
@@ -52,20 +52,20 @@ const meta: Meta<typeof Dialog> = {
         <DialogFooter show-close-button />
       </DialogContent>
     </Dialog>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const TitleOnly: Story = {
-  render: render(
-    components,
-    `<Dialog v-bind="args">
+	render: render(
+		components,
+		`<Dialog v-bind="args">
       <DialogTrigger as-child>
         <Button variant="secondary">Delete project</Button>
       </DialogTrigger>
@@ -83,13 +83,13 @@ export const TitleOnly: Story = {
         </DialogFooter>
       </DialogContent>
     </Dialog>`,
-  ),
+	),
 };
 
 export const WithBody: Story = {
-  render: render(
-    components,
-    `<Dialog v-bind="args">
+	render: render(
+		components,
+		`<Dialog v-bind="args">
       <DialogTrigger as-child>
         <Button variant="secondary">Publish changes</Button>
       </DialogTrigger>
@@ -112,13 +112,13 @@ export const WithBody: Story = {
         </DialogFooter>
       </DialogContent>
     </Dialog>`,
-  ),
+	),
 };
 
 export const WithoutFooter: Story = {
-  render: render(
-    components,
-    `<Dialog v-bind="args">
+	render: render(
+		components,
+		`<Dialog v-bind="args">
       <DialogTrigger as-child>
         <Button variant="secondary">What's new</Button>
       </DialogTrigger>
@@ -135,13 +135,13 @@ export const WithoutFooter: Story = {
         </DialogBody>
       </DialogContent>
     </Dialog>`,
-  ),
+	),
 };
 
 export const WithoutHeader: Story = {
-  render: render(
-    components,
-    `<Dialog v-bind="args">
+	render: render(
+		components,
+		`<Dialog v-bind="args">
       <DialogTrigger as-child>
         <Button variant="secondary">Show notice</Button>
       </DialogTrigger>
@@ -153,13 +153,13 @@ export const WithoutHeader: Story = {
         <DialogFooter show-close-button />
       </DialogContent>
     </Dialog>`,
-  ),
+	),
 };
 
 export const NoCloseButton: Story = {
-  render: render(
-    components,
-    `<Dialog v-bind="args">
+	render: render(
+		components,
+		`<Dialog v-bind="args">
       <DialogTrigger as-child>
         <Button variant="secondary">Confirm subscription</Button>
       </DialogTrigger>
@@ -180,13 +180,13 @@ export const NoCloseButton: Story = {
         </DialogFooter>
       </DialogContent>
     </Dialog>`,
-  ),
+	),
 };
 
 export const WithForm: Story = {
-  render: render(
-    components,
-    `<Dialog v-bind="args">
+	render: render(
+		components,
+		`<Dialog v-bind="args">
       <DialogTrigger as-child>
         <Button variant="secondary">Edit profile</Button>
       </DialogTrigger>
@@ -219,13 +219,13 @@ export const WithForm: Story = {
         </form>
       </DialogContent>
     </Dialog>`,
-  ),
+	),
 };
 
 export const Scrollable: Story = {
-  render: render(
-    components,
-    `<Dialog v-bind="args">
+	render: render(
+		components,
+		`<Dialog v-bind="args">
       <DialogTrigger as-child>
         <Button variant="secondary">Terms of service</Button>
       </DialogTrigger>
@@ -248,13 +248,13 @@ export const Scrollable: Story = {
         <DialogFooter show-close-button />
       </DialogScrollContent>
     </Dialog>`,
-  ),
+	),
 };
 
 export const ScrollableWithoutFooter: Story = {
-  render: render(
-    components,
-    `<Dialog v-bind="args">
+	render: render(
+		components,
+		`<Dialog v-bind="args">
       <DialogTrigger as-child>
         <Button variant="secondary">Changelog</Button>
       </DialogTrigger>
@@ -276,5 +276,5 @@ export const ScrollableWithoutFooter: Story = {
         </DialogBody>
       </DialogScrollContent>
     </Dialog>`,
-  ),
+	),
 };

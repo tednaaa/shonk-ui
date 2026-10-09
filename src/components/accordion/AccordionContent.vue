@@ -11,13 +11,13 @@ const delegatedProps = reactiveOmit(props, 'class');
 </script>
 
 <template>
-  <AccordionContent
-    data-slot="accordion-content"
-    v-bind="delegatedProps"
-    class="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
-  >
-    <div :class="cn('border-t border-input p-4', props.class)">
-      <slot />
-    </div>
-  </AccordionContent>
+	<AccordionContent
+		data-slot="accordion-content"
+		v-bind="delegatedProps"
+		class="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+	>
+		<div :class="cn('border-t border-input p-4', props.class)">
+			<slot />
+		</div>
+	</AccordionContent>
 </template>

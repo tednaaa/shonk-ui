@@ -4,16 +4,16 @@ import { toast as sonner } from 'vue-sonner';
 type PromiseParams = Parameters<typeof sonner.promise>;
 
 const DEFAULT_OPTIONS: ExternalToast = {
-  duration: 5000,
-  position: 'top-right',
+	duration: 5000,
+	position: 'top-right',
 } as const;
 
 function withDefaults(options?: ExternalToast): ExternalToast {
-  return { ...DEFAULT_OPTIONS, ...options };
+	return { ...DEFAULT_OPTIONS, ...options };
 }
 
 export function toast(title: string, options?: ExternalToast) {
-  sonner(title, withDefaults(options));
+	sonner(title, withDefaults(options));
 }
 
 toast.success = (title: string, options?: ExternalToast) => sonner.success(title, withDefaults(options));

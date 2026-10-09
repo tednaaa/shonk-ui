@@ -2,173 +2,173 @@ import { ref } from 'vue';
 import { templateSource } from '@/lib/storybook';
 
 function context(story: unknown, args: Record<string, unknown> = {}) {
-  return { originalStoryFn: () => story, args } as never;
+	return { originalStoryFn: () => story, args } as never;
 }
 
 it('wraps the story template in an sfc and imports what it renders', () => {
-  const template = `
+	const template = `
       <div class="max-w-sm">
         <Button v-bind="args">Button</Button>
       </div>
     `;
 
-  expect(templateSource('IGNORED', context({ components: { Button: {} }, template }, { loading: true, size: 'lg' })))
-    .toBe([
-      `<script setup lang="ts">`,
-      `import { Button } from 'shonk-ui';`,
-      `</script>`,
-      ``,
-      `<template>`,
-      `  <div class="max-w-sm">`,
-      `    <Button loading size="lg">Button</Button>`,
-      `  </div>`,
-      `</template>`,
-    ].join('\n'));
+	expect(templateSource('IGNORED', context({ components: { Button: {} }, template }, { loading: true, size: 'lg' })))
+		.toBe([
+			`<script setup lang="ts">`,
+			`import { Button } from 'shonk-ui';`,
+			`</script>`,
+			``,
+			`<template>`,
+			`  <div class="max-w-sm">`,
+			`    <Button loading size="lg">Button</Button>`,
+			`  </div>`,
+			`</template>`,
+		].join('\n'));
 });
 
 it('groups imports by where each component comes from', () => {
-  const story = {
-    components: { Button: {}, ChartContainer: {}, Input: {}, StorybookLabel: {}, Trash2Icon: {}, VisLine: {} },
-    template: `<Button><Trash2Icon /></Button>`,
-  };
+	const story = {
+		components: { Button: {}, ChartContainer: {}, Input: {}, StorybookLabel: {}, Trash2Icon: {}, VisLine: {} },
+		template: `<Button><Trash2Icon /></Button>`,
+	};
 
-  expect(templateSource('IGNORED', context(story)).split('\n').slice(1, 4)).toEqual([
-    `import { Trash2Icon } from '@lucide/vue';`,
-    `import { Button, Input } from 'shonk-ui';`,
-    `import { ChartContainer, VisLine } from 'shonk-ui/charts';`,
-  ]);
+	expect(templateSource('IGNORED', context(story)).split('\n').slice(1, 4)).toEqual([
+		`import { Trash2Icon } from '@lucide/vue';`,
+		`import { Button, Input } from 'shonk-ui';`,
+		`import { ChartContainer, VisLine } from 'shonk-ui/charts';`,
+	]);
 });
 
 it('breaks a long import list across lines', () => {
-  const components = Object.fromEntries(
-    ['TagsInput', 'TagsInputInput', 'TagsInputItem', 'TagsInputItemDelete', 'TagsInputItemText']
-      .map(name => [name, {}]),
-  );
+	const components = Object.fromEntries(
+		['TagsInput', 'TagsInputInput', 'TagsInputItem', 'TagsInputItemDelete', 'TagsInputItemText']
+			.map(name => [name, {}]),
+	);
 
-  expect(templateSource('IGNORED', context({ components, template: `<TagsInput />` }))).toContain([
-    `import {`,
-    `  TagsInput,`,
-    `  TagsInputInput,`,
-    `  TagsInputItem,`,
-    `  TagsInputItemDelete,`,
-    `  TagsInputItemText,`,
-    `} from 'shonk-ui';`,
-  ].join('\n'));
+	expect(templateSource('IGNORED', context({ components, template: `<TagsInput />` }))).toContain([
+		`import {`,
+		`  TagsInput,`,
+		`  TagsInputInput,`,
+		`  TagsInputItem,`,
+		`  TagsInputItemDelete,`,
+		`  TagsInputItemText,`,
+		`} from 'shonk-ui';`,
+	].join('\n'));
 });
 
 it('declares the state a story sets up, importing ref when it needs one', () => {
-  const story = {
-    components: { TagsInput: {} },
-    setup: () => ({ args: {}, modelValue: ref(['Vue', 'Nuxt', 'Vite']), size: 3 }),
-    template: `<TagsInput v-model="modelValue" />`,
-  };
+	const story = {
+		components: { TagsInput: {} },
+		setup: () => ({ args: {}, modelValue: ref(['Vue', 'Nuxt', 'Vite']), size: 3 }),
+		template: `<TagsInput v-model="modelValue" />`,
+	};
 
-  expect(templateSource('IGNORED', context(story))).toBe([
-    `<script setup lang="ts">`,
-    `import { TagsInput } from 'shonk-ui';`,
-    `import { ref } from 'vue';`,
-    ``,
-    `const modelValue = ref(['Vue', 'Nuxt', 'Vite']);`,
-    `const size = 3;`,
-    `</script>`,
-    ``,
-    `<template>`,
-    `  <TagsInput v-model="modelValue" />`,
-    `</template>`,
-  ].join('\n'));
+	expect(templateSource('IGNORED', context(story))).toBe([
+		`<script setup lang="ts">`,
+		`import { TagsInput } from 'shonk-ui';`,
+		`import { ref } from 'vue';`,
+		``,
+		`const modelValue = ref(['Vue', 'Nuxt', 'Vite']);`,
+		`const size = 3;`,
+		`</script>`,
+		``,
+		`<template>`,
+		`  <TagsInput v-model="modelValue" />`,
+		`</template>`,
+	].join('\n'));
 });
 
 it('puts one entry per line once a list outgrows the inline width', () => {
-  const steps = [
-    { step: 1, title: 'Details', description: 'Your info' },
-    { step: 2, title: 'Shipping', description: 'Pick a method' },
-  ];
+	const steps = [
+		{ step: 1, title: 'Details', description: 'Your info' },
+		{ step: 2, title: 'Shipping', description: 'Pick a method' },
+	];
 
-  expect(templateSource('IGNORED', context({ setup: () => ({ steps }), template: `<p />` }))).toContain([
-    `const steps = [`,
-    `  { step: 1, title: 'Details', description: 'Your info' },`,
-    `  { step: 2, title: 'Shipping', description: 'Pick a method' },`,
-    `];`,
-  ].join('\n'));
+	expect(templateSource('IGNORED', context({ setup: () => ({ steps }), template: `<p />` }))).toContain([
+		`const steps = [`,
+		`  { step: 1, title: 'Details', description: 'Your info' },`,
+		`  { step: 2, title: 'Shipping', description: 'Pick a method' },`,
+		`];`,
+	].join('\n'));
 });
 
 it('gives every entry of a list of objects its own line', () => {
-  const definitions = [
-    { key: 'title', label: 'Title', operators: [{ value: 'contains', label: 'contains' }, { value: 'equals', label: 'exactly equals' }] },
-    { key: 'assignee', label: 'Assignee', operators: [{ value: 'equals', label: 'is' }, { value: 'notEquals', label: 'is not' }] },
-  ];
+	const definitions = [
+		{ key: 'title', label: 'Title', operators: [{ value: 'contains', label: 'contains' }, { value: 'equals', label: 'exactly equals' }] },
+		{ key: 'assignee', label: 'Assignee', operators: [{ value: 'equals', label: 'is' }, { value: 'notEquals', label: 'is not' }] },
+	];
 
-  expect(templateSource('IGNORED', context({ setup: () => ({ definitions }), template: `<p />` }))).toContain([
-    `const definitions = [`,
-    `  {`,
-    `    key: 'title',`,
-    `    label: 'Title',`,
-    `    operators: [`,
-    `      { value: 'contains', label: 'contains' },`,
-    `      { value: 'equals', label: 'exactly equals' },`,
-    `    ],`,
-    `  },`,
-    `  {`,
-    `    key: 'assignee',`,
-    `    label: 'Assignee',`,
-    `    operators: [`,
-    `      { value: 'equals', label: 'is' },`,
-    `      { value: 'notEquals', label: 'is not' },`,
-    `    ],`,
-    `  },`,
-    `];`,
-  ].join('\n'));
+	expect(templateSource('IGNORED', context({ setup: () => ({ definitions }), template: `<p />` }))).toContain([
+		`const definitions = [`,
+		`  {`,
+		`    key: 'title',`,
+		`    label: 'Title',`,
+		`    operators: [`,
+		`      { value: 'contains', label: 'contains' },`,
+		`      { value: 'equals', label: 'exactly equals' },`,
+		`    ],`,
+		`  },`,
+		`  {`,
+		`    key: 'assignee',`,
+		`    label: 'Assignee',`,
+		`    operators: [`,
+		`      { value: 'equals', label: 'is' },`,
+		`      { value: 'notEquals', label: 'is not' },`,
+		`    ],`,
+		`  },`,
+		`];`,
+	].join('\n'));
 });
 
 it('omits the state rather than silently dropping values it cannot write out', () => {
-  const items = [{ title: 'Home', icon: () => null }];
-  const story = { components: { Sidebar: {} }, setup: () => ({ items }), template: `<Sidebar />` };
+	const items = [{ title: 'Home', icon: () => null }];
+	const story = { components: { Sidebar: {} }, setup: () => ({ items }), template: `<Sidebar />` };
 
-  expect(templateSource('IGNORED', context(story))).not.toContain('const items');
+	expect(templateSource('IGNORED', context(story))).not.toContain('const items');
 });
 
 it('drops storybook-only labels from the markup', () => {
-  const story = {
-    components: { Input: {}, StorybookLabel: {} },
-    template: `<div class="grid gap-2"><StorybookLabel>Email</StorybookLabel><Input type="email" /></div>`,
-  };
+	const story = {
+		components: { Input: {}, StorybookLabel: {} },
+		template: `<div class="grid gap-2"><StorybookLabel>Email</StorybookLabel><Input type="email" /></div>`,
+	};
 
-  expect(templateSource('IGNORED', context(story))).toContain('<div class="grid gap-2"><Input type="email" /></div>');
+	expect(templateSource('IGNORED', context(story))).toContain('<div class="grid gap-2"><Input type="email" /></div>');
 });
 
 it('serialises non-string args as bindings', () => {
-  const story = { components: { Combobox: {} }, template: `<Combobox v-bind="args" />` };
-  const args = { options: ['a', 'b'], openThreshold: 0.9, disabled: false, onSelect: () => {} };
+	const story = { components: { Combobox: {} }, template: `<Combobox v-bind="args" />` };
+	const args = { options: ['a', 'b'], openThreshold: 0.9, disabled: false, onSelect: () => {} };
 
-  expect(templateSource('IGNORED', context(story, args)))
-    .toContain(`<Combobox :options="['a', 'b']" :open-threshold="0.9" :disabled="false" />`);
+	expect(templateSource('IGNORED', context(story, args)))
+		.toContain(`<Combobox :options="['a', 'b']" :open-threshold="0.9" :disabled="false" />`);
 });
 
 it('leaves out the script block when nothing needs importing', () => {
-  const story = { components: { StorybookLabel: {} }, template: `<p>plain</p>` };
+	const story = { components: { StorybookLabel: {} }, template: `<p>plain</p>` };
 
-  expect(templateSource('IGNORED', context(story))).toBe('<template>\n  <p>plain</p>\n</template>');
+	expect(templateSource('IGNORED', context(story))).toBe('<template>\n  <p>plain</p>\n</template>');
 });
 
 it('falls back to the generated code when a story has no template', () => {
-  expect(templateSource('FALLBACK', context({ render: () => null }))).toBe('FALLBACK');
+	expect(templateSource('FALLBACK', context({ render: () => null }))).toBe('FALLBACK');
 });
 
 it('dedents a template that opens on the backtick line', () => {
-  const template = `<div class="h-72">
+	const template = `<div class="h-72">
       <Card>
         <p>Body</p>
       </Card>
     </div>`;
 
-  expect(templateSource('IGNORED', context({ components: { Card: {} }, template })).split('\n').slice(4))
-    .toEqual([
-      `<template>`,
-      `  <div class="h-72">`,
-      `    <Card>`,
-      `      <p>Body</p>`,
-      `    </Card>`,
-      `  </div>`,
-      `</template>`,
-    ]);
+	expect(templateSource('IGNORED', context({ components: { Card: {} }, template })).split('\n').slice(4))
+		.toEqual([
+			`<template>`,
+			`  <div class="h-72">`,
+			`    <Card>`,
+			`      <p>Body</p>`,
+			`    </Card>`,
+			`  </div>`,
+			`</template>`,
+		]);
 });

@@ -1,15 +1,15 @@
 {
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"],
-      "shonk-ui": ["./src/index.ts"],
-      "shonk-ui/charts": ["./src/charts.ts"]
-    }
-  },
-  "references": [
-    { "path": "./tsconfig.node.json" },
-    { "path": "./tsconfig.lib.json" },
-    { "path": "./tsconfig.spec.json" }
-  ],
-  "files": []
+	"compilerOptions": {
+		"paths": {
+			"@/*": ["./src/*"],
+			"shonk-ui": ["./src/index.ts"],
+			"shonk-ui/charts": ["./src/charts.ts"]
+		}
+	},
+	"references": [
+		{ "path": "./tsconfig.node.json" },
+		{ "path": "./tsconfig.lib.json" },
+		{ "path": "./tsconfig.spec.json" }
+	],
+	"files": []
 }

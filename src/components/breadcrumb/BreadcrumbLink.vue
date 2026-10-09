@@ -5,17 +5,17 @@ import { Primitive } from 'reka-ui';
 import { cn } from '@/utils';
 
 const props = withDefaults(defineProps<PrimitiveProps & { class?: HTMLAttributes['class'] }>(), {
-  as: 'a',
+	as: 'a',
 });
 </script>
 
 <template>
-  <Primitive
-    data-slot="breadcrumb-link"
-    :as="as"
-    :as-child="asChild"
-    :class="cn('transition-colors hover:text-foreground', props.class)"
-  >
-    <slot />
-  </Primitive>
+	<Primitive
+		data-slot="breadcrumb-link"
+		:as="as"
+		:as-child="asChild"
+		:class="cn('transition-colors hover:text-foreground', props.class)"
+	>
+		<slot />
+	</Primitive>
 </template>

@@ -1,114 +1,114 @@
 import type { ShonkLocale } from './types';
 
 export const ru: ShonkLocale = {
-  intlLocale: 'ru-RU',
+	intlLocale: 'ru-RU',
 
-  breadcrumb: {
-    navAriaLabel: 'хлебные крошки',
-    ellipsisScreenReaderText: 'Ещё',
-  },
+	breadcrumb: {
+		navAriaLabel: 'хлебные крошки',
+		ellipsisScreenReaderText: 'Ещё',
+	},
 
-  carousel: {
-    previousButtonScreenReaderText: 'Предыдущий слайд',
-    nextButtonScreenReaderText: 'Следующий слайд',
-  },
+	carousel: {
+		previousButtonScreenReaderText: 'Предыдущий слайд',
+		nextButtonScreenReaderText: 'Следующий слайд',
+	},
 
-  combobox: {
-    triggerPlaceholder: 'Выбрать…',
-    searchPlaceholder: 'Найти…',
-    emptyText: 'Не найдено результатов.',
-    loadingText: 'Загрузка…',
-    clearButtonAriaLabel: 'Очистить выбор',
-  },
+	combobox: {
+		triggerPlaceholder: 'Выбрать…',
+		searchPlaceholder: 'Найти…',
+		emptyText: 'Не найдено результатов.',
+		loadingText: 'Загрузка…',
+		clearButtonAriaLabel: 'Очистить выбор',
+	},
 
-  command: {
-    screenReaderTitle: 'Командная палитра',
-    screenReaderDescription: 'Найдите команду для выполнения…',
-  },
+	command: {
+		screenReaderTitle: 'Командная палитра',
+		screenReaderDescription: 'Найдите команду для выполнения…',
+	},
 
-  confirmDialog: {
-    title: 'Подтверждение',
-    cancelButtonText: 'Отменить',
-  },
+	confirmDialog: {
+		title: 'Подтверждение',
+		cancelButtonText: 'Отменить',
+	},
 
-  dataTable: {
-    emptyText: 'Нет данных',
-    pageSizeLabel: 'Строк на странице',
-    selectPageRowsLabel: 'Выбрать все строки на странице',
-    selectRowLabel: 'Выбрать строку',
-    expandAllRowsLabel: 'Раскрыть все строки',
-    collapseAllRowsLabel: 'Свернуть все строки',
-    expandRowLabel: 'Раскрыть строку',
-    columnToggleButtonText: 'Поля',
-    columnToggleSearchPlaceholder: 'Найти поле…',
-    columnToggleEmptyText: 'Поле не найдено',
-    columnToggleShowAllButtonText: 'Показать все',
-    columnToggleVisibleCountText: (visible, total) => `${visible} из ${total}`,
-    exportButtonText: 'Скачать',
-    exportFileName: 'таблица',
-  },
+	dataTable: {
+		emptyText: 'Нет данных',
+		pageSizeLabel: 'Строк на странице',
+		selectPageRowsLabel: 'Выбрать все строки на странице',
+		selectRowLabel: 'Выбрать строку',
+		expandAllRowsLabel: 'Раскрыть все строки',
+		collapseAllRowsLabel: 'Свернуть все строки',
+		expandRowLabel: 'Раскрыть строку',
+		columnToggleButtonText: 'Поля',
+		columnToggleSearchPlaceholder: 'Найти поле…',
+		columnToggleEmptyText: 'Поле не найдено',
+		columnToggleShowAllButtonText: 'Показать все',
+		columnToggleVisibleCountText: (visible, total) => `${visible} из ${total}`,
+		exportButtonText: 'Скачать',
+		exportFileName: 'таблица',
+	},
 
-  datePicker: {
-    triggerPlaceholder: 'Выберите дату',
-  },
+	datePicker: {
+		triggerPlaceholder: 'Выберите дату',
+	},
 
-  dialog: {
-    closeButtonAriaLabel: 'Закрыть',
-  },
+	dialog: {
+		closeButtonAriaLabel: 'Закрыть',
+	},
 
-  filteredSearch: {
-    placeholder: 'Поиск или фильтр…',
-    addFilterPlaceholder: 'Добавить фильтр…',
-    selectOperatorPlaceholder: 'Выберите условие…',
-    enterValuePlaceholder: 'Введите значение…',
-    emptyText: 'Фильтры не найдены.',
-    valueHintText: 'Введите значение и нажмите Enter',
-    applyButtonText: 'Применить',
-    historyButtonAriaLabel: 'Показать историю поиска',
-    historyHeaderText: 'Недавние запросы',
-    historyEmptyText: 'Недавних запросов пока нет',
-    historyItemAriaLabel: search => `Выбрать недавний запрос: ${search}`,
-    clearHistoryButtonText: 'Очистить историю',
-    backButtonAriaLabel: 'Назад',
-    clearButtonAriaLabel: 'Очистить все фильтры',
-    removeSearchButtonAriaLabel: 'Убрать поиск',
-    removeFilterButtonAriaLabel: filter => `Убрать фильтр «${filter}»`,
-  },
+	filteredSearch: {
+		placeholder: 'Поиск или фильтр…',
+		addFilterPlaceholder: 'Добавить фильтр…',
+		selectOperatorPlaceholder: 'Выберите условие…',
+		enterValuePlaceholder: 'Введите значение…',
+		emptyText: 'Фильтры не найдены.',
+		valueHintText: 'Введите значение и нажмите Enter',
+		applyButtonText: 'Применить',
+		historyButtonAriaLabel: 'Показать историю поиска',
+		historyHeaderText: 'Недавние запросы',
+		historyEmptyText: 'Недавних запросов пока нет',
+		historyItemAriaLabel: search => `Выбрать недавний запрос: ${search}`,
+		clearHistoryButtonText: 'Очистить историю',
+		backButtonAriaLabel: 'Назад',
+		clearButtonAriaLabel: 'Очистить все фильтры',
+		removeSearchButtonAriaLabel: 'Убрать поиск',
+		removeFilterButtonAriaLabel: filter => `Убрать фильтр «${filter}»`,
+	},
 
-  inputPassword: {
-    showPasswordAriaLabel: 'Показать пароль',
-    hidePasswordAriaLabel: 'Скрыть пароль',
-  },
+	inputPassword: {
+		showPasswordAriaLabel: 'Показать пароль',
+		hidePasswordAriaLabel: 'Скрыть пароль',
+	},
 
-  pagination: {
-    navAriaLabel: 'Страницы',
-    pageButtonAriaLabel: page => `Страница ${page}`,
-    firstButtonText: 'Первая',
-    previousButtonText: 'Назад',
-    nextButtonText: 'Вперёд',
-    lastButtonText: 'Последняя',
-    ellipsisScreenReaderText: 'Ещё страницы',
-  },
+	pagination: {
+		navAriaLabel: 'Страницы',
+		pageButtonAriaLabel: page => `Страница ${page}`,
+		firstButtonText: 'Первая',
+		previousButtonText: 'Назад',
+		nextButtonText: 'Вперёд',
+		lastButtonText: 'Последняя',
+		ellipsisScreenReaderText: 'Ещё страницы',
+	},
 
-  rangeDatePicker: {
-    triggerPlaceholder: 'Выберите период',
-  },
+	rangeDatePicker: {
+		triggerPlaceholder: 'Выберите период',
+	},
 
-  select: {
-    clearButtonAriaLabel: 'Очистить выбор',
-  },
+	select: {
+		clearButtonAriaLabel: 'Очистить выбор',
+	},
 
-  sheet: {
-    closeButtonScreenReaderText: 'Закрыть',
-  },
+	sheet: {
+		closeButtonScreenReaderText: 'Закрыть',
+	},
 
-  sidebar: {
-    toggleAriaLabel: 'Переключить боковую панель',
-    mobileScreenReaderTitle: 'Боковая панель',
-    mobileScreenReaderDescription: 'Отображает мобильную боковую панель.',
-  },
+	sidebar: {
+		toggleAriaLabel: 'Переключить боковую панель',
+		mobileScreenReaderTitle: 'Боковая панель',
+		mobileScreenReaderDescription: 'Отображает мобильную боковую панель.',
+	},
 
-  spinner: {
-    ariaLabel: 'Загрузка',
-  },
+	spinner: {
+		ariaLabel: 'Загрузка',
+	},
 };

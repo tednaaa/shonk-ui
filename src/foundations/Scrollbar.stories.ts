@@ -4,16 +4,16 @@ const items = Array.from({ length: 24 }, (_, i) => i + 1);
 const cells = Array.from({ length: 64 }, (_, i) => i + 1);
 
 const meta: Meta = {
-  title: 'Foundations/Scrollbar',
+	title: 'Foundations/Scrollbar',
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Scrollbar: Story = {
-  render: () => ({
-    setup: () => ({ items, cells }),
-    template: `
+	render: () => ({
+		setup: () => ({ items, cells }),
+		template: `
       <div class="grid gap-6 md:grid-cols-3">
         <div class="flex flex-col gap-2">
           <p class="text-sm font-medium text-muted-foreground">Vertical</p>
@@ -43,5 +43,5 @@ export const Scrollbar: Story = {
         </div>
       </div>
     `,
-  }),
+	}),
 };

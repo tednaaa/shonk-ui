@@ -11,9 +11,9 @@ import { injectDataTableColumnPinning } from './lib/columnPinning';
 import { isInteractiveClick } from './lib/isInteractiveClick';
 
 const props = defineProps<{
-  row: Row<KitFeatures, TData>;
-  rowClass?: (row: TData) => HTMLAttributes['class'];
-  onRowClick?: (row: TData) => void;
+	row: Row<KitFeatures, TData>;
+	rowClass?: (row: TData) => HTMLAttributes['class'];
+	onRowClick?: (row: TData) => void;
 }>();
 
 const { pinnedCellAttrs } = injectDataTableColumnPinning();
@@ -21,61 +21,61 @@ const { pinnedCellAttrs } = injectDataTableColumnPinning();
 const cells = computed(() => props.row.getVisibleCells().filter(cell => !cell.getIsCovered()));
 
 function cellAttrs(cell: Cell<KitFeatures, TData>) {
-  const pinnedCell = pinnedCellAttrs([cell.column.id]);
+	const pinnedCell = pinnedCellAttrs([cell.column.id]);
 
-  return { class: cn(cell.column.columnDef.meta?.class, pinnedCell?.class), style: pinnedCell?.style };
+	return { class: cn(cell.column.columnDef.meta?.class, pinnedCell?.class), style: pinnedCell?.style };
 }
 
 function rowSpan(cell: Cell<KitFeatures, TData>) {
-  const span = cell.getRowSpan();
+	const span = cell.getRowSpan();
 
-  return span > 1 ? span : undefined;
+	return span > 1 ? span : undefined;
 }
 
 function handleClick(event: MouseEvent) {
-  if (!props.onRowClick || isInteractiveClick(event))
-    return;
+	if (!props.onRowClick || isInteractiveClick(event))
+		return;
 
-  props.onRowClick(props.row.original);
+	props.onRowClick(props.row.original);
 }
 </script>
 
 <template>
-  <TableRow
-    :data-state="row.getIsSelected() ? 'selected' : undefined"
-    :class="cn(onRowClick && 'cursor-pointer hover:bg-muted/50', rowClass?.(row.original))"
-    @click="handleClick"
-  >
-    <TableCell
-      v-for="cell in cells"
-      :key="cell.id"
-      v-bind="cellAttrs(cell)"
-      :rowspan="rowSpan(cell)"
-    >
-      <DataTableCellContent :column="cell.column">
-        <slot
-          :name="`cell-${cell.column.id}`"
-          :row="row.original"
-          :value="cell.getValue()"
-        >
-          <FlexRender :cell="cell" />
-        </slot>
-      </DataTableCellContent>
-    </TableCell>
-  </TableRow>
+	<TableRow
+		:data-state="row.getIsSelected() ? 'selected' : undefined"
+		:class="cn(onRowClick && 'cursor-pointer hover:bg-muted/50', rowClass?.(row.original))"
+		@click="handleClick"
+	>
+		<TableCell
+			v-for="cell in cells"
+			:key="cell.id"
+			v-bind="cellAttrs(cell)"
+			:rowspan="rowSpan(cell)"
+		>
+			<DataTableCellContent :column="cell.column">
+				<slot
+					:name="`cell-${cell.column.id}`"
+					:row="row.original"
+					:value="cell.getValue()"
+				>
+					<FlexRender :cell="cell" />
+				</slot>
+			</DataTableCellContent>
+		</TableCell>
+	</TableRow>
 
-  <TableRow
-    v-if="$slots.expanded && row.getIsExpanded() && row.getCanExpand()"
-    class="bg-secondary"
-  >
-    <TableCell
-      :colspan="row.getVisibleCells().length"
-      class="whitespace-normal"
-    >
-      <slot
-        name="expanded"
-        :row="row.original"
-      />
-    </TableCell>
-  </TableRow>
+	<TableRow
+		v-if="$slots.expanded && row.getIsExpanded() && row.getCanExpand()"
+		class="bg-secondary"
+	>
+		<TableCell
+			:colspan="row.getVisibleCells().length"
+			class="whitespace-normal"
+		>
+			<slot
+				name="expanded"
+				:row="row.original"
+			/>
+		</TableCell>
+	</TableRow>
 </template>

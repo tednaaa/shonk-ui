@@ -6,5 +6,5 @@ const password = ref('super-secret');
 </script>
 
 <template>
-  <InputPassword v-model="password" name="password" />
+	<InputPassword v-model="password" name="password" />
 </template>

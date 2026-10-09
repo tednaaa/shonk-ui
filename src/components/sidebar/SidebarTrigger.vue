@@ -7,8 +7,8 @@ import { Button } from '../button';
 import { useSidebar } from './utils';
 
 const props = defineProps<{
-  class?: HTMLAttributes['class'];
-  screenReaderText?: string;
+	class?: HTMLAttributes['class'];
+	screenReaderText?: string;
 }>();
 
 const locale = useLocale();
@@ -17,15 +17,15 @@ const { toggleSidebar } = useSidebar();
 </script>
 
 <template>
-  <Button
-    data-sidebar="trigger"
-    data-slot="sidebar-trigger"
-    variant="ghost"
-    size="icon"
-    :class="cn('size-7', props.class)"
-    @click="toggleSidebar"
-  >
-    <PanelLeft />
-    <span class="sr-only">{{ props.screenReaderText ?? locale.sidebar.toggleAriaLabel }}</span>
-  </Button>
+	<Button
+		data-sidebar="trigger"
+		data-slot="sidebar-trigger"
+		variant="ghost"
+		size="icon"
+		:class="cn('size-7', props.class)"
+		@click="toggleSidebar"
+	>
+		<PanelLeft />
+		<span class="sr-only">{{ props.screenReaderText ?? locale.sidebar.toggleAriaLabel }}</span>
+	</Button>
 </template>

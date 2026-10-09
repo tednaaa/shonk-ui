@@ -1,41 +1,41 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 
 interface TypeSample {
-  cls: string;
-  name: string;
+	cls: string;
+	name: string;
 }
 
 const sizes: readonly TypeSample[] = [
-  { cls: 'text-xs', name: 'text-xs · 12px' },
-  { cls: 'text-sm', name: 'text-sm · 14px' },
-  { cls: 'text-base', name: 'text-base · 16px' },
-  { cls: 'text-lg', name: 'text-lg · 18px' },
-  { cls: 'text-xl', name: 'text-xl · 20px' },
-  { cls: 'text-2xl', name: 'text-2xl · 24px' },
-  { cls: 'text-3xl', name: 'text-3xl · 30px' },
-  { cls: 'text-4xl', name: 'text-4xl · 36px' },
+	{ cls: 'text-xs', name: 'text-xs · 12px' },
+	{ cls: 'text-sm', name: 'text-sm · 14px' },
+	{ cls: 'text-base', name: 'text-base · 16px' },
+	{ cls: 'text-lg', name: 'text-lg · 18px' },
+	{ cls: 'text-xl', name: 'text-xl · 20px' },
+	{ cls: 'text-2xl', name: 'text-2xl · 24px' },
+	{ cls: 'text-3xl', name: 'text-3xl · 30px' },
+	{ cls: 'text-4xl', name: 'text-4xl · 36px' },
 ] as const;
 
 const weights: readonly TypeSample[] = [
-  { cls: 'font-normal', name: 'font-normal · 400' },
-  { cls: 'font-medium', name: 'font-medium · 500' },
-  { cls: 'font-semibold', name: 'font-semibold · 600' },
-  { cls: 'font-bold', name: 'font-bold · 700' },
+	{ cls: 'font-normal', name: 'font-normal · 400' },
+	{ cls: 'font-medium', name: 'font-medium · 500' },
+	{ cls: 'font-semibold', name: 'font-semibold · 600' },
+	{ cls: 'font-bold', name: 'font-bold · 700' },
 ] as const;
 
 const sample = 'The quick brown fox jumps';
 
 const meta: Meta = {
-  title: 'Foundations/Typography',
+	title: 'Foundations/Typography',
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Typography: Story = {
-  render: () => ({
-    setup: () => ({ sizes, weights, sample }),
-    template: `
+	render: () => ({
+		setup: () => ({ sizes, weights, sample }),
+		template: `
       <div class="flex flex-col gap-10">
         <section class="flex flex-col gap-2">
           <p class="text-sm font-medium text-muted-foreground">Font family</p>
@@ -66,5 +66,5 @@ export const Typography: Story = {
         </section>
       </div>
     `,
-  }),
+	}),
 };

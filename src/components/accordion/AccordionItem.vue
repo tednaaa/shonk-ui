@@ -13,12 +13,12 @@ const forwardedProps = useForwardProps(delegatedProps);
 </script>
 
 <template>
-  <AccordionItem
-    #default="slotProps"
-    data-slot="accordion-item"
-    v-bind="forwardedProps"
-    :class="cn('overflow-hidden rounded-lg border border-input bg-field shadow-sm data-[state=closed]:text-muted-foreground data-[state=open]:text-foreground', props.class)"
-  >
-    <slot v-bind="slotProps" />
-  </AccordionItem>
+	<AccordionItem
+		#default="slotProps"
+		data-slot="accordion-item"
+		v-bind="forwardedProps"
+		:class="cn('overflow-hidden rounded-lg border border-input bg-field shadow-sm data-[state=closed]:text-muted-foreground data-[state=open]:text-foreground', props.class)"
+	>
+		<slot v-bind="slotProps" />
+	</AccordionItem>
 </template>

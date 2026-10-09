@@ -4,11 +4,11 @@ import { computed, toValue } from 'vue';
 import { localeInjectionKey, resolveLocale } from './locales';
 
 export interface ShonkUIOptions {
-  locale?: MaybeRefOrGetter<PartialShonkLocale>;
+	locale?: MaybeRefOrGetter<PartialShonkLocale>;
 }
 
 export const shonkUI: Plugin<[options?: ShonkUIOptions]> = {
-  install(app: App, options: ShonkUIOptions = {}) {
-    app.provide(localeInjectionKey, computed(() => resolveLocale(toValue(options.locale))));
-  },
+	install(app: App, options: ShonkUIOptions = {}) {
+		app.provide(localeInjectionKey, computed(() => resolveLocale(toValue(options.locale))));
+	},
 };

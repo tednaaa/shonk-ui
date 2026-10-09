@@ -8,11 +8,11 @@ import { cn } from '@/utils';
 import { useCommand } from './utils';
 
 defineOptions({
-  inheritAttrs: false,
+	inheritAttrs: false,
 });
 
 const props = defineProps<ListboxFilterProps & {
-  class?: HTMLAttributes['class'];
+	class?: HTMLAttributes['class'];
 }>();
 
 const delegatedProps = reactiveOmit(props, 'class');
@@ -23,17 +23,17 @@ const { filterState } = useCommand();
 </script>
 
 <template>
-  <div
-    data-slot="command-input-wrapper"
-    class="flex h-9 items-center gap-2 border-b px-3"
-  >
-    <Search class="size-4 shrink-0 opacity-50" />
-    <ListboxFilter
-      v-bind="{ ...forwardedProps, ...$attrs }"
-      v-model="filterState.search"
-      data-slot="command-input"
-      auto-focus
-      :class="cn('flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50', props.class)"
-    />
-  </div>
+	<div
+		data-slot="command-input-wrapper"
+		class="flex h-9 items-center gap-2 border-b px-3"
+	>
+		<Search class="size-4 shrink-0 opacity-50" />
+		<ListboxFilter
+			v-bind="{ ...forwardedProps, ...$attrs }"
+			v-model="filterState.search"
+			data-slot="command-input"
+			auto-focus
+			:class="cn('flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50', props.class)"
+		/>
+	</div>
 </template>

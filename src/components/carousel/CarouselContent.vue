@@ -6,7 +6,7 @@ import { useCarousel } from './useCarousel';
 import { carouselContentVariants } from './variants';
 
 defineOptions({
-  inheritAttrs: false,
+	inheritAttrs: false,
 });
 
 const props = defineProps<WithClassAsProps>();
@@ -14,21 +14,21 @@ const props = defineProps<WithClassAsProps>();
 const { carouselRef, orientation } = useCarousel();
 
 function setViewport(el: Element | ComponentPublicInstance | null) {
-  carouselRef.value = (el as HTMLElement | null) ?? undefined;
+	carouselRef.value = (el as HTMLElement | null) ?? undefined;
 }
 </script>
 
 <template>
-  <div
-    :ref="setViewport"
-    data-slot="carousel-content"
-    class="overflow-hidden"
-  >
-    <div
-      :class="cn(carouselContentVariants({ orientation }), props.class)"
-      v-bind="$attrs"
-    >
-      <slot />
-    </div>
-  </div>
+	<div
+		:ref="setViewport"
+		data-slot="carousel-content"
+		class="overflow-hidden"
+	>
+		<div
+			:class="cn(carouselContentVariants({ orientation }), props.class)"
+			v-bind="$attrs"
+		>
+			<slot />
+		</div>
+	</div>
 </template>

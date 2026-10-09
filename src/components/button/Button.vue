@@ -8,29 +8,29 @@ import { cn } from '@/utils';
 import { buttonVariants } from './variants';
 
 interface Props extends PrimitiveProps {
-  variant?: ButtonVariants['variant'];
-  size?: ButtonVariants['size'];
-  class?: HTMLAttributes['class'];
-  loading?: boolean;
-  disabled?: boolean;
+	variant?: ButtonVariants['variant'];
+	size?: ButtonVariants['size'];
+	class?: HTMLAttributes['class'];
+	loading?: boolean;
+	disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  as: 'button',
+	as: 'button',
 });
 </script>
 
 <template>
-  <Primitive
-    data-slot="button"
-    :data-variant="variant"
-    :data-size="size"
-    :as="as"
-    :as-child="asChild"
-    :disabled="loading || disabled"
-    :class="cn(buttonVariants({ variant, size }), props.class)"
-  >
-    <LoaderCircleIcon v-if="loading" class="animate-spin" />
-    <slot />
-  </Primitive>
+	<Primitive
+		data-slot="button"
+		:data-variant="variant"
+		:data-size="size"
+		:as="as"
+		:as-child="asChild"
+		:disabled="loading || disabled"
+		:class="cn(buttonVariants({ variant, size }), props.class)"
+	>
+		<LoaderCircleIcon v-if="loading" class="animate-spin" />
+		<slot />
+	</Primitive>
 </template>

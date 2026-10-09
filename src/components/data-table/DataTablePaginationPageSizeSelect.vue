@@ -6,9 +6,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { useDataTablePagination } from './lib/paginationContext';
 
 const props = defineProps<{
-  options: number[];
-  label?: string;
-  class?: HTMLAttributes['class'];
+	options: number[];
+	label?: string;
+	class?: HTMLAttributes['class'];
 }>();
 
 const locale = useLocale();
@@ -16,34 +16,34 @@ const locale = useLocale();
 const { pageSize, pageSizeOptions, changePageSize } = useDataTablePagination();
 
 watchEffect(() => {
-  pageSizeOptions.value = props.options;
+	pageSizeOptions.value = props.options;
 });
 
 onUnmounted(() => {
-  pageSizeOptions.value = [];
+	pageSizeOptions.value = [];
 });
 </script>
 
 <template>
-  <Select
-    :model-value="pageSize"
-    @update:model-value="changePageSize"
-  >
-    <SelectTrigger
-      size="sm"
-      :aria-label="label ?? locale.dataTable.pageSizeLabel"
-      :class="props.class"
-    >
-      <SelectValue />
-    </SelectTrigger>
-    <SelectContent>
-      <SelectItem
-        v-for="option in options"
-        :key="option"
-        :value="option"
-      >
-        {{ option }}
-      </SelectItem>
-    </SelectContent>
-  </Select>
+	<Select
+		:model-value="pageSize"
+		@update:model-value="changePageSize"
+	>
+		<SelectTrigger
+			size="sm"
+			:aria-label="label ?? locale.dataTable.pageSizeLabel"
+			:class="props.class"
+		>
+			<SelectValue />
+		</SelectTrigger>
+		<SelectContent>
+			<SelectItem
+				v-for="option in options"
+				:key="option"
+				:value="option"
+			>
+				{{ option }}
+			</SelectItem>
+		</SelectContent>
+	</Select>
 </template>

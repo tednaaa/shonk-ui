@@ -14,25 +14,25 @@ import { unwrapDataTable } from './lib/instance';
 import { useRowPinning } from './lib/rowPinning';
 
 const props = defineProps<{
-  table: DataTableInstance<TData>;
-  class?: HTMLAttributes['class'];
-  rowClass?: (row: TData) => HTMLAttributes['class'];
-  emptyText?: string;
-  loading?: boolean;
-  hasNextPage?: boolean;
-  loadingMore?: boolean;
-  onRowClick?: (row: TData) => void;
+	table: DataTableInstance<TData>;
+	class?: HTMLAttributes['class'];
+	rowClass?: (row: TData) => HTMLAttributes['class'];
+	emptyText?: string;
+	loading?: boolean;
+	hasNextPage?: boolean;
+	loadingMore?: boolean;
+	onRowClick?: (row: TData) => void;
 }>();
 
 const emit = defineEmits<{
-  loadMore: [];
+	loadMore: [];
 }>();
 
 const slots = defineSlots<{
-  [name: `cell-${string}`]: ((context: DataTableCellContext<TData>) => VNodeChild) | undefined;
-  [name: `header-${string}`]: ((context: DataTableHeaderContext) => VNodeChild) | undefined;
-  expanded?: (context: { row: TData }) => VNodeChild;
-  empty?: () => VNodeChild;
+	[name: `cell-${string}`]: ((context: DataTableCellContext<TData>) => VNodeChild) | undefined;
+	[name: `header-${string}`]: ((context: DataTableHeaderContext) => VNodeChild) | undefined;
+	expanded?: (context: { row: TData }) => VNodeChild;
+	empty?: () => VNodeChild;
 }>();
 
 const kitTable = computed(() => unwrapDataTable(props.table));
@@ -45,67 +45,67 @@ useRowPinning();
 const scrollTable = useTemplateRef('scrollTable');
 
 useInfiniteScroll(
-  () => unrefElement(scrollTable),
-  () => emit('loadMore'),
-  {
-    distance: 100,
-    canLoadMore: () => props.hasNextPage && !props.loading && !props.loadingMore,
-  },
+	() => unrefElement(scrollTable),
+	() => emit('loadMore'),
+	{
+		distance: 100,
+		canLoadMore: () => props.hasNextPage && !props.loading && !props.loadingMore,
+	},
 );
 </script>
 
 <template>
-  <div
-    data-slot="data-table"
-    :class="cn('flex min-h-0 flex-col overflow-hidden rounded-sm border', props.class)"
-  >
-    <Table
-      ref="scrollTable"
-      table-container-class="min-h-0 flex-1"
-      :class="tableAttrs?.class"
-      :table-style="tableAttrs?.style"
-      :aria-busy="loading || loadingMore"
-    >
-      <colgroup v-if="resizable">
-        <col
-          v-for="column in sizedColumns"
-          :key="column.id"
-          :style="column.width === undefined ? undefined : { width: `${column.width}px` }"
-        >
-      </colgroup>
+	<div
+		data-slot="data-table"
+		:class="cn('flex min-h-0 flex-col overflow-hidden rounded-sm border', props.class)"
+	>
+		<Table
+			ref="scrollTable"
+			table-container-class="min-h-0 flex-1"
+			:class="tableAttrs?.class"
+			:table-style="tableAttrs?.style"
+			:aria-busy="loading || loadingMore"
+		>
+			<colgroup v-if="resizable">
+				<col
+					v-for="column in sizedColumns"
+					:key="column.id"
+					:style="column.width === undefined ? undefined : { width: `${column.width}px` }"
+				>
+			</colgroup>
 
-      <DataTableHeader :table="kitTable">
-        <template
-          v-for="(_, name) in slots"
-          #[name]="context"
-        >
-          <slot
-            :name="name"
-            v-bind="context"
-          />
-        </template>
-      </DataTableHeader>
+			<DataTableHeader :table="kitTable">
+				<template
+					v-for="(_, name) in slots"
+					#[name]="context"
+				>
+					<slot
+						:name="name"
+						v-bind="context"
+					/>
+				</template>
+			</DataTableHeader>
 
-      <DataTableBody
-        :table="kitTable"
-        :row-class="rowClass"
-        :empty-text="emptyText"
-        :loading="loading"
-        :loading-more="loadingMore"
-        :on-row-click="onRowClick"
-      >
-        <template
-          v-for="(_, name) in slots"
-          #[name]="context"
-        >
-          <slot
-            :name="name"
-            v-bind="context"
-          />
-        </template>
-      </DataTableBody>
+			<DataTableBody
+				:table="kitTable"
+				:row-class="rowClass"
+				:empty-text="emptyText"
+				:loading="loading"
+				:loading-more="loadingMore"
+				:on-row-click="onRowClick"
+			>
+				<template
+					v-for="(_, name) in slots"
+					#[name]="context"
+				>
+					<slot
+						:name="name"
+						v-bind="context"
+					/>
+				</template>
+			</DataTableBody>
 
-      <DataTableFooter :table="kitTable" />
-    </Table>
-  </div>
+			<DataTableFooter :table="kitTable" />
+		</Table>
+	</div>
 </template>

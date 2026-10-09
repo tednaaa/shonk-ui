@@ -10,12 +10,12 @@ const { forwardRef } = useForwardExpose();
 </script>
 
 <template>
-  <SplitterPanel
-    :ref="forwardRef"
-    #default="slotProps"
-    data-slot="resizable-panel"
-    v-bind="forwarded"
-  >
-    <slot v-bind="slotProps" />
-  </SplitterPanel>
+	<SplitterPanel
+		:ref="forwardRef"
+		#default="slotProps"
+		data-slot="resizable-panel"
+		v-bind="forwarded"
+	>
+		<slot v-bind="slotProps" />
+	</SplitterPanel>
 </template>

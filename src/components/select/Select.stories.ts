@@ -2,36 +2,36 @@ import type { ComponentPropsAndSlots, Meta, StoryObj } from '@storybook/vue3-vit
 import type { FunctionalComponent } from 'vue';
 import { render, showControls } from '@/lib/storybook';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectSeparator,
+	SelectTrigger,
+	SelectValue,
 } from '.';
 
 const components = {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectSeparator,
+	SelectTrigger,
+	SelectValue,
 };
 
 const selectComponent: FunctionalComponent<ComponentPropsAndSlots<typeof Select>> = Select;
 
 const meta: Meta<typeof Select> = {
-  title: 'Components/Select',
-  component: selectComponent,
-  tags: ['autodocs'],
-  render: render(
-    components,
-    `<div class="max-w-xs">
+	title: 'Components/Select',
+	component: selectComponent,
+	tags: ['autodocs'],
+	render: render(
+		components,
+		`<div class="max-w-xs">
       <Select v-bind="args">
         <SelectTrigger class="w-full">
           <SelectValue placeholder="Select a fruit" />
@@ -44,24 +44,24 @@ const meta: Meta<typeof Select> = {
         </SelectContent>
       </Select>
     </div>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const Preselected: Story = {
-  args: { defaultValue: 'banana' },
+	args: { defaultValue: 'banana' },
 };
 
 export const WithGroups: Story = {
-  render: render(
-    components,
-    `<div class="max-w-xs">
+	render: render(
+		components,
+		`<div class="max-w-xs">
       <Select>
         <SelectTrigger class="w-full">
           <SelectValue placeholder="Select a food" />
@@ -81,13 +81,13 @@ export const WithGroups: Story = {
         </SelectContent>
       </Select>
     </div>`,
-  ),
+	),
 };
 
 export const Clearable: Story = {
-  render: render(
-    components,
-    `<div class="max-w-xs">
+	render: render(
+		components,
+		`<div class="max-w-xs">
       <Select default-value="banana">
         <SelectTrigger clearable class="w-full">
           <SelectValue placeholder="Select a fruit" />
@@ -99,9 +99,9 @@ export const Clearable: Story = {
         </SelectContent>
       </Select>
     </div>`,
-  ),
+	),
 };
 
 export const Disabled: Story = {
-  args: { disabled: true },
+	args: { disabled: true },
 };

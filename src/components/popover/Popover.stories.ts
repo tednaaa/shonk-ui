@@ -1,34 +1,34 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { render, showControls } from '@/lib/storybook';
 import {
-  Popover,
-  PopoverAnchor,
-  PopoverClose,
-  PopoverContent,
-  PopoverTrigger,
+	Popover,
+	PopoverAnchor,
+	PopoverClose,
+	PopoverContent,
+	PopoverTrigger,
 } from '.';
 import { Button } from '../button';
 import { Input } from '../input';
 import { Label } from '../label';
 
 const components = {
-  Popover,
-  PopoverAnchor,
-  PopoverClose,
-  PopoverContent,
-  PopoverTrigger,
-  Button,
-  Input,
-  Label,
+	Popover,
+	PopoverAnchor,
+	PopoverClose,
+	PopoverContent,
+	PopoverTrigger,
+	Button,
+	Input,
+	Label,
 };
 
 const meta: Meta<typeof Popover> = {
-  title: 'Components/Popover',
-  component: Popover,
-  tags: ['autodocs'],
-  render: render(
-    components,
-    `<Popover v-bind="args">
+	title: 'Components/Popover',
+	component: Popover,
+	tags: ['autodocs'],
+	render: render(
+		components,
+		`<Popover v-bind="args">
       <PopoverTrigger as-child>
         <Button variant="secondary">Open popover</Button>
       </PopoverTrigger>
@@ -41,20 +41,20 @@ const meta: Meta<typeof Popover> = {
         </div>
       </PopoverContent>
     </Popover>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const WithForm: Story = {
-  render: render(
-    components,
-    `<Popover v-bind="args">
+	render: render(
+		components,
+		`<Popover v-bind="args">
       <PopoverTrigger as-child>
         <Button variant="secondary">Dimensions</Button>
       </PopoverTrigger>
@@ -77,13 +77,13 @@ export const WithForm: Story = {
         </div>
       </PopoverContent>
     </Popover>`,
-  ),
+	),
 };
 
 export const Placement: Story = {
-  render: render(
-    components,
-    `<Popover v-bind="args">
+	render: render(
+		components,
+		`<Popover v-bind="args">
       <PopoverTrigger as-child>
         <Button variant="secondary">Open to the right</Button>
       </PopoverTrigger>
@@ -91,13 +91,13 @@ export const Placement: Story = {
         <p class="text-sm">Use <code>side</code> and <code>align</code> on PopoverContent to control placement.</p>
       </PopoverContent>
     </Popover>`,
-  ),
+	),
 };
 
 export const Anchored: Story = {
-  render: render(
-    components,
-    `<Popover v-bind="args">
+	render: render(
+		components,
+		`<Popover v-bind="args">
       <PopoverAnchor as-child>
         <div class="rounded-md border border-dashed p-6 text-muted-foreground text-sm">Anchor element</div>
       </PopoverAnchor>
@@ -108,13 +108,13 @@ export const Anchored: Story = {
         <p class="text-sm">This content is positioned against the anchor, not the trigger.</p>
       </PopoverContent>
     </Popover>`,
-  ),
+	),
 };
 
 export const WithCloseButton: Story = {
-  render: render(
-    components,
-    `<Popover v-bind="args">
+	render: render(
+		components,
+		`<Popover v-bind="args">
       <PopoverTrigger as-child>
         <Button variant="secondary">Open popover</Button>
       </PopoverTrigger>
@@ -127,5 +127,5 @@ export const WithCloseButton: Story = {
         </div>
       </PopoverContent>
     </Popover>`,
-  ),
+	),
 };

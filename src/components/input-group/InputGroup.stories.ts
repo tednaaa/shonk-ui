@@ -1,44 +1,44 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import {
-  CopyIcon,
-  InfoIcon,
-  PlusIcon,
-  SearchIcon,
-  SendIcon,
+	CopyIcon,
+	InfoIcon,
+	PlusIcon,
+	SearchIcon,
+	SendIcon,
 } from '@lucide/vue';
 import { example, render, showControls } from '@/lib/storybook';
 import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-  InputGroupText,
-  InputGroupTextarea,
+	InputGroup,
+	InputGroupAddon,
+	InputGroupButton,
+	InputGroupInput,
+	InputGroupText,
+	InputGroupTextarea,
 } from '.';
 import InputGroupWithTextarea from './examples/InputGroupWithTextarea.vue';
 import inputGroupWithTextareaSource from './examples/InputGroupWithTextarea.vue?raw';
 
 const components = {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-  InputGroupText,
-  InputGroupTextarea,
-  CopyIcon,
-  InfoIcon,
-  PlusIcon,
-  SearchIcon,
-  SendIcon,
+	InputGroup,
+	InputGroupAddon,
+	InputGroupButton,
+	InputGroupInput,
+	InputGroupText,
+	InputGroupTextarea,
+	CopyIcon,
+	InfoIcon,
+	PlusIcon,
+	SearchIcon,
+	SendIcon,
 };
 
 const meta: Meta<typeof InputGroup> = {
-  title: 'Components/InputGroup',
-  component: InputGroup,
-  tags: ['autodocs'],
-  render: render(
-    components,
-    `<div class="max-w-sm">
+	title: 'Components/InputGroup',
+	component: InputGroup,
+	tags: ['autodocs'],
+	render: render(
+		components,
+		`<div class="max-w-sm">
       <InputGroup v-bind="args">
         <InputGroupInput placeholder="Search…" />
         <InputGroupAddon>
@@ -46,20 +46,20 @@ const meta: Meta<typeof InputGroup> = {
         </InputGroupAddon>
       </InputGroup>
     </div>`,
-  ),
+	),
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  parameters: showControls,
+	parameters: showControls,
 };
 
 export const WithText: Story = {
-  render: render(
-    components,
-    `<div class="max-w-sm">
+	render: render(
+		components,
+		`<div class="max-w-sm">
       <InputGroup>
         <InputGroupAddon>
           <InputGroupText>https://</InputGroupText>
@@ -70,13 +70,13 @@ export const WithText: Story = {
         </InputGroupAddon>
       </InputGroup>
     </div>`,
-  ),
+	),
 };
 
 export const WithButton: Story = {
-  render: render(
-    components,
-    `<div class="max-w-sm">
+	render: render(
+		components,
+		`<div class="max-w-sm">
       <InputGroup>
         <InputGroupInput placeholder="https://example.com/invite/xyz" readonly />
         <InputGroupAddon align="inline-end">
@@ -84,13 +84,13 @@ export const WithButton: Story = {
         </InputGroupAddon>
       </InputGroup>
     </div>`,
-  ),
+	),
 };
 
 export const Disabled: Story = {
-  render: render(
-    components,
-    `<div class="max-w-sm">
+	render: render(
+		components,
+		`<div class="max-w-sm">
       <InputGroup data-disabled="true">
         <InputGroupInput placeholder="Search…" disabled />
         <InputGroupAddon>
@@ -98,12 +98,12 @@ export const Disabled: Story = {
         </InputGroupAddon>
       </InputGroup>
     </div>`,
-  ),
+	),
 };
 
 export const WithTextarea: Story = {
-  parameters: example(inputGroupWithTextareaSource),
-  render: render({ InputGroupWithTextarea }, `
+	parameters: example(inputGroupWithTextareaSource),
+	render: render({ InputGroupWithTextarea }, `
     <div class="max-w-sm">
       <InputGroupWithTextarea />
     </div>

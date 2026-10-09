@@ -4,12 +4,12 @@ import { Badge, Button, DataTable, DataTableColumnToggle, useDataTable, useStore
 import { computed, h } from 'vue';
 
 interface Lead {
-  id: string;
-  phone: string;
-  site: string;
-  geo: string;
-  manager: string;
-  archived: boolean;
+	id: string;
+	phone: string;
+	site: string;
+	geo: string;
+	manager: string;
+	archived: boolean;
 }
 
 const sites = ['acme.com', 'globex.com', 'initech.com'];
@@ -17,24 +17,24 @@ const geos = ['Springfield', 'Riverside', 'Fairview'];
 const managers = ['Ada', 'Grace', 'Linus'];
 
 const leads: Lead[] = Array.from({ length: 6 }, (_, index) => ({
-  id: String(index + 1),
-  phone: `+1 555 ${String(index).padStart(4, '0')}`,
-  site: sites[index % sites.length] ?? '',
-  geo: geos[index % geos.length] ?? '',
-  manager: managers[index % managers.length] ?? '',
-  archived: index % 3 === 2,
+	id: String(index + 1),
+	phone: `+1 555 ${String(index).padStart(4, '0')}`,
+	site: sites[index % sites.length] ?? '',
+	geo: geos[index % geos.length] ?? '',
+	manager: managers[index % managers.length] ?? '',
+	archived: index % 3 === 2,
 }));
 
 const columns: DataTableColumn<Lead>[] = [
-  { accessorKey: 'phone', header: 'Phone', hideable: false, class: 'whitespace-nowrap' },
-  { accessorKey: 'site', header: 'Site' },
-  { accessorKey: 'geo', header: 'Geo' },
-  { accessorKey: 'manager', header: 'Manager' },
-  {
-    accessorKey: 'archived',
-    header: 'Status',
-    cell: ({ value }) => h(Badge, { variant: value ? 'secondary' : 'default' }, () => (value ? 'Archived' : 'Active')),
-  },
+	{ accessorKey: 'phone', header: 'Phone', hideable: false, class: 'whitespace-nowrap' },
+	{ accessorKey: 'site', header: 'Site' },
+	{ accessorKey: 'geo', header: 'Geo' },
+	{ accessorKey: 'manager', header: 'Manager' },
+	{
+		accessorKey: 'archived',
+		header: 'Status',
+		cell: ({ value }) => h(Badge, { variant: value ? 'secondary' : 'default' }, () => (value ? 'Archived' : 'Active')),
+	},
 ];
 
 const storageKey = 'shonk-ui-example-lead-columns';
@@ -50,29 +50,29 @@ const hiddenColumnIds = computed(() => Object.keys(columnVisibility.value).filte
 const table = useDataTable({ data: leads, columns, getRowId: lead => lead.id, columnVisibility, columnSizing });
 
 function showEveryColumn() {
-  columnVisibility.value = Object.fromEntries(Object.keys(columnVisibility.value).map(id => [id, true]));
+	columnVisibility.value = Object.fromEntries(Object.keys(columnVisibility.value).map(id => [id, true]));
 }
 </script>
 
 <template>
-  <div class="flex max-w-3xl flex-col gap-4">
-    <div class="flex min-h-8 items-center justify-between gap-4">
-      <p class="text-sm text-muted-foreground">
-        Hidden columns and column widths survive a reload: they are kept in localStorage under <code>{{ storageKey }}</code> and <code>{{ widthsStorageKey }}</code>.
-      </p>
-      <div class="flex items-center gap-2">
-        <Button
-          variant="secondary"
-          size="sm"
-          :disabled="hiddenColumnIds.length === 0"
-          @click="showEveryColumn"
-        >
-          Show all
-        </Button>
-        <DataTableColumnToggle :table="table" />
-      </div>
-    </div>
+	<div class="flex max-w-3xl flex-col gap-4">
+		<div class="flex min-h-8 items-center justify-between gap-4">
+			<p class="text-sm text-muted-foreground">
+				Hidden columns and column widths survive a reload: they are kept in localStorage under <code>{{ storageKey }}</code> and <code>{{ widthsStorageKey }}</code>.
+			</p>
+			<div class="flex items-center gap-2">
+				<Button
+					variant="secondary"
+					size="sm"
+					:disabled="hiddenColumnIds.length === 0"
+					@click="showEveryColumn"
+				>
+					Show all
+				</Button>
+				<DataTableColumnToggle :table="table" />
+			</div>
+		</div>
 
-    <DataTable :table="table" />
-  </div>
+		<DataTable :table="table" />
+	</div>
 </template>
