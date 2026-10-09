@@ -348,6 +348,14 @@ describe('dataTable', () => {
       expect(wrapper.findAll('th').map(header => header.classes('sticky'))).toEqual([true, true, false]);
     });
 
+    it('should keep the select column sticky in every row when it is pinned with the columns after it', async () => {
+      const wrapper = await mountPinnedTable({ columns: [selectColumn(), ...pinnedColumns] });
+
+      expect(wrapper.get('thead th').classes('sticky')).toBe(true);
+      expect(wrapper.get('tbody td').classes('sticky')).toBe(true);
+      expect(wrapper.get('tfoot td').classes('sticky')).toBe(true);
+    });
+
     it('should draw the edge after the last pinned column only', async () => {
       const wrapper = await mountPinnedTable();
 

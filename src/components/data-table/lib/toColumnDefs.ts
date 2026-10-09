@@ -138,12 +138,23 @@ function isAccessorKeyColumn<TData>(column: AnyDataTableColumn<TData>): column i
 }
 
 export function toColumnPinning<TData extends object>(columns: readonly DataTableColumn<TData>[]): ColumnPinningState {
-  return { start: columns.flatMap(pinnedColumnIds), end: [] };
+  return { start: pinnedColumnIds(columns), end: [] };
 }
 
-function pinnedColumnIds<TData extends object>(column: AnyDataTableColumn<TData>): string[] {
+function pinnedColumnIds<TData extends object>(columns: readonly AnyDataTableColumn<TData>[]): string[] {
+  const lastPinnedIndex = columns.findLastIndex(column => columnPinnedIds(column).length > 0);
+
+  return columns.flatMap((column, index) => {
+    if (column.kind !== undefined)
+      return index < lastPinnedIndex ? [column.id] : [];
+
+    return columnPinnedIds(column);
+  });
+}
+
+function columnPinnedIds<TData extends object>(column: AnyDataTableColumn<TData>): string[] {
   if (column.columns)
-    return toColumnPinning(column.columns).start;
+    return pinnedColumnIds(column.columns);
 
   if (!column.pinned)
     return [];

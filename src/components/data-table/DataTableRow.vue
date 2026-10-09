@@ -19,6 +19,12 @@ const { pinnedCellAttrs } = injectDataTableColumnPinning();
 
 const cells = computed(() => props.row.getVisibleCells().filter(cell => !cell.getIsCovered()));
 
+function cellAttrs(cell: Cell<KitFeatures, TData>) {
+  const pinnedCell = pinnedCellAttrs([cell.column.id]);
+
+  return { class: cn(cell.column.columnDef.meta?.class, pinnedCell?.class), style: pinnedCell?.style };
+}
+
 function rowSpan(cell: Cell<KitFeatures, TData>) {
   const span = cell.getRowSpan();
 
@@ -42,9 +48,8 @@ function handleClick(event: MouseEvent) {
     <TableCell
       v-for="cell in cells"
       :key="cell.id"
-      v-bind="pinnedCellAttrs([cell.column.id])"
+      v-bind="cellAttrs(cell)"
       :rowspan="rowSpan(cell)"
-      :class="cell.column.columnDef.meta?.class"
     >
       <slot
         :name="`cell-${cell.column.id}`"

@@ -103,10 +103,23 @@ describe('toColumnDefs', () => {
 
   it('should pin the pinned leaf columns to the start by their ids, inside groups too', () => {
     expect(toColumnPinning([
-      selectColumn(),
       { accessorKey: 'name', pinned: true },
       { id: 'details', columns: [{ id: 'years', accessorKey: 'age', pinned: true }, { accessorKey: 'id' }] },
     ])).toEqual({ start: ['name', 'years'], end: [] });
+  });
+
+  it('should pin the select and expand columns that stand before a pinned column', () => {
+    expect(toColumnPinning([
+      selectColumn(),
+      expandColumn(),
+      { accessorKey: 'name', pinned: true },
+      { accessorKey: 'age' },
+    ])).toEqual({ start: ['select', 'expand', 'name'], end: [] });
+  });
+
+  it('should leave the select and expand columns unpinned without a pinned column after them', () => {
+    expect(toColumnPinning([selectColumn(), { accessorKey: 'name' }])).toEqual({ start: [], end: [] });
+    expect(toColumnPinning([{ accessorKey: 'name', pinned: true }, expandColumn()])).toEqual({ start: ['name'], end: [] });
   });
 
   it('should keep the select column from sorting and hiding', () => {
