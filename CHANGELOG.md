@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.7.1 (2026-10-09)
+
+- fix(data-table): make the whole select cell toggle its checkbox [`9bb27981`](https://github.com/tednaaa/shonk-ui/commit/9bb2798122d96f284b0b008b7688bad2b82901f9)
+
 ## v0.7.0 (2026-09-25)
 
 - fix(styles): tint remaining field-like controls across the kit [`e35cd982`](https://github.com/tednaaa/shonk-ui/commit/e35cd9821a53899d9f67bcdf36ec0ff61afd187e)
