@@ -3,6 +3,7 @@ import { defineConfig } from 'tsdown';
 export default defineConfig({
   entry: {
     'index': 'src/index.ts',
+    'charts': 'src/charts.ts',
     'theme-validator': 'scripts/theme-validator.ts',
     'validate-themes': 'scripts/validate-themes.ts',
   },

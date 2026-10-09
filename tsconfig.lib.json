@@ -8,7 +8,8 @@
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./src/*"],
-      "shonk-ui": ["./src/index.ts"]
+      "shonk-ui": ["./src/index.ts"],
+      "shonk-ui/charts": ["./src/charts.ts"]
     },
     "resolveJsonModule": true,
     "types": ["node"],

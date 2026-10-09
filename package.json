@@ -18,6 +18,11 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
+    "./charts": {
+      "types": "./dist/charts.d.ts",
+      "import": "./dist/charts.js",
+      "default": "./dist/charts.js"
+    },
     "./themes/*.css": "./src/styles/themes/*.css",
     "./theme-validator": {
       "types": "./dist/theme-validator.d.ts",
@@ -62,6 +67,8 @@
   "dependencies": {
     "@lucide/vue": "1.30.0",
     "@tanstack/vue-table": "9.2.4",
+    "@unovis/ts": "1.7.1",
+    "@unovis/vue": "1.7.1",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "embla-carousel-vue": "8.6.0",

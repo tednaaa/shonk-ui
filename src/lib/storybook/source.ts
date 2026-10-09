@@ -100,7 +100,13 @@ function attributes(args: StoryContext['args']) {
 }
 
 function sourceOf(component: string) {
-  return component.endsWith('Icon') ? '@lucide/vue' : 'shonk-ui';
+  if (component.endsWith('Icon'))
+    return '@lucide/vue';
+
+  if (component.startsWith('Chart') || component.startsWith('Vis'))
+    return 'shonk-ui/charts';
+
+  return 'shonk-ui';
 }
 
 function importLine(source: string, names: string[]) {
