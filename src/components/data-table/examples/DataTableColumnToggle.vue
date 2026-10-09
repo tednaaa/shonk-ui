@@ -28,7 +28,7 @@ const statuses: Status[] = [
   { id: 'no-answer', name: 'No answer' },
 ];
 
-const streamNames = ['Real estate — Moscow', 'Dentistry — Kazan', 'Car service — Samara', 'Legal — Tver', 'Windows — Tula'];
+const streamNames = ['Real estate — Springfield', 'Dentistry — Riverside', 'Car service — Fairview', 'Legal — Lakeside', 'Windows — Hillcrest'];
 
 const rows: StreamStats[] = streamNames.map((stream, index) => ({
   id: String(index + 1),

@@ -84,7 +84,7 @@ const niches = [
   { id: 'education', name: 'Education' },
 ];
 
-const operatorNames = ['Anna Petrova', 'Boris Ivanov', 'Vera Smirnova', 'Gleb Kuznetsov', 'Daria Popova', 'Egor Sokolov'];
+const operatorNames = ['Alex Morgan', 'Blake Carter', 'Casey Brooks', 'Dana Fisher', 'Eli Turner', 'Frankie Hayes'];
 
 const orders: Order[] = deals.map((deal, index) => ({ id: String(index + 1), ...deal }));
 

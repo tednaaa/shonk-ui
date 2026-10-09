@@ -13,7 +13,7 @@ interface Lead {
 }
 
 const sites = ['acme.com', 'globex.com', 'initech.com'];
-const geos = ['Moscow', 'Kazan', 'Samara'];
+const geos = ['Springfield', 'Riverside', 'Fairview'];
 const managers = ['Ada', 'Grace', 'Linus'];
 
 const leads: Lead[] = Array.from({ length: 6 }, (_, index) => ({
