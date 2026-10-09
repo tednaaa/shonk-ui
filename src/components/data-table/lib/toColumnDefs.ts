@@ -217,3 +217,14 @@ function hideableIds<TData extends object>(column: AnyDataTableColumn<TData>): s
 function columnId<TData>(column: AnyDataTableColumn<TData>): string {
   return isAccessorKeyColumn(column) ? column.id ?? column.accessorKey : column.id;
 }
+
+export function leafColumnIds<TData extends object>(columns: readonly DataTableColumn<TData>[]): string[] {
+  return columns.flatMap(leafIds);
+}
+
+function leafIds<TData extends object>(column: AnyDataTableColumn<TData>): string[] {
+  if (column.columns)
+    return leafColumnIds(column.columns);
+
+  return [columnId(column)];
+}

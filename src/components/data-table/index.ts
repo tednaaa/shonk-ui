@@ -34,4 +34,5 @@ export { useDataTable } from './useDataTable';
 export type { UseDataTableOptions } from './useDataTable';
 export { useDataTableExport } from './useDataTableExport';
 export type { UseDataTableExportOptions } from './useDataTableExport';
+export { useStoredColumnSizing } from './useStoredColumnSizing';
 export { useStoredColumnVisibility } from './useStoredColumnVisibility';

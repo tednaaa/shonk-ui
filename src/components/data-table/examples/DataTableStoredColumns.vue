@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { DataTableColumn } from 'shonk-ui';
-import { Badge, Button, DataTable, DataTableColumnToggle, useDataTable, useStoredColumnVisibility } from 'shonk-ui';
+import { Badge, Button, DataTable, DataTableColumnToggle, useDataTable, useStoredColumnSizing, useStoredColumnVisibility } from 'shonk-ui';
 import { computed, h } from 'vue';
 
 interface Lead {
@@ -39,11 +39,15 @@ const columns: DataTableColumn<Lead>[] = [
 
 const storageKey = 'shonk-ui-example-lead-columns';
 
+const widthsStorageKey = 'shonk-ui-example-lead-column-widths';
+
 const columnVisibility = useStoredColumnVisibility(storageKey, columns);
+
+const columnSizing = useStoredColumnSizing(widthsStorageKey, columns);
 
 const hiddenColumnIds = computed(() => Object.keys(columnVisibility.value).filter(id => columnVisibility.value[id] === false));
 
-const table = useDataTable({ data: leads, columns, getRowId: lead => lead.id, columnVisibility });
+const table = useDataTable({ data: leads, columns, getRowId: lead => lead.id, columnVisibility, columnSizing });
 
 function showEveryColumn() {
   columnVisibility.value = Object.fromEntries(Object.keys(columnVisibility.value).map(id => [id, true]));
@@ -54,7 +58,7 @@ function showEveryColumn() {
   <div class="flex max-w-3xl flex-col gap-4">
     <div class="flex min-h-8 items-center justify-between gap-4">
       <p class="text-sm text-muted-foreground">
-        Hidden columns survive a reload: they are kept in localStorage under <code>{{ storageKey }}</code>.
+        Hidden columns and column widths survive a reload: they are kept in localStorage under <code>{{ storageKey }}</code> and <code>{{ widthsStorageKey }}</code>.
       </p>
       <div class="flex items-center gap-2">
         <Button
