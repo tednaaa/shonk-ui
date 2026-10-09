@@ -3,6 +3,7 @@ import type { DateValue } from '@internationalized/date';
 import type { DateRange } from 'reka-ui';
 
 import type { WeekStartsOn } from 'reka-ui/date';
+import type { HTMLAttributes } from 'vue';
 import { CalendarDate } from '@internationalized/date';
 import { CalendarIcon } from '@lucide/vue';
 import { computed, ref } from 'vue';
@@ -25,6 +26,7 @@ const props = withDefaults(defineProps<{
   isDateDisabled?: (date: DateValue) => boolean;
   formatter?: (date: Date) => string;
   weekStartsOn?: WeekStartsOn;
+  class?: HTMLAttributes['class'];
 }>(), {
   closeOnSelect: true,
   weekStartsOn: 1,
@@ -74,7 +76,7 @@ defineExpose({ close });
     <PopoverTrigger as-child>
       <Button
         variant="secondary"
-        :class="cn('w-55 justify-start bg-field text-left font-normal text-field-foreground', !displayValue && 'text-muted-foreground')"
+        :class="cn('w-55 justify-start bg-field text-left font-normal text-field-foreground', !displayValue && 'text-muted-foreground', props.class)"
       >
         <CalendarIcon :size="16" />
         <span>{{ displayValue || (props.triggerPlaceholder ?? locale.rangeDatePicker.triggerPlaceholder) }}</span>
