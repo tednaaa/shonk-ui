@@ -45,7 +45,7 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
     return {
       id: column.id,
       enableHiding: false,
-      meta: { class: 'w-px', headerClass: 'w-px' },
+      meta: { class: 'relative w-px', headerClass: 'relative w-px' },
       header: ({ table }) => h(DataTableSelectPageRowsCheckbox<TData>, { table }),
       cell: ({ row }) => h(DataTableSelectRowCheckbox<TData>, { row }),
     };

@@ -22,6 +22,7 @@ function toggleRow({ shiftKey }: MouseEvent) {
   <Checkbox
     :model-value="row.getIsSelected()"
     :disabled="!row.getCanSelect()"
+    class="after:absolute after:inset-0"
     :aria-label="locale.dataTable.selectRowLabel"
     @click="toggleRow"
   />

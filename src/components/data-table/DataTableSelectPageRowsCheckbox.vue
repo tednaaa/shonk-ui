@@ -29,6 +29,7 @@ function togglePageRows(value: boolean | 'indeterminate') {
   <Checkbox
     :model-value="checked"
     :disabled="!hasSelectableRows"
+    class="after:absolute after:inset-0"
     :aria-label="locale.dataTable.selectPageRowsLabel"
     @update:model-value="togglePageRows"
   />
