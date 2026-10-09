@@ -5,6 +5,8 @@ import SidebarApp from './examples/SidebarApp.vue';
 import sidebarAppSource from './examples/SidebarApp.vue?raw';
 import SidebarSkeleton from './examples/SidebarSkeleton.vue';
 import sidebarSkeletonSource from './examples/SidebarSkeleton.vue?raw';
+import SidebarToggle from './examples/SidebarToggle.vue';
+import sidebarToggleSource from './examples/SidebarToggle.vue?raw';
 
 const meta: Meta<typeof Sidebar> = {
   title: 'Components/Sidebar',
@@ -43,6 +45,21 @@ export const RightSide: Story = {
     sidebarAppSource,
     'Setting `side="right"` anchors the sidebar to the opposite edge; `SidebarInset` and `SidebarRail` follow it without further changes.',
   ),
+};
+
+export const ToggleButton: Story = {
+  args: { collapsible: 'icon' },
+  parameters: example(
+    sidebarToggleSource,
+    '`SidebarToggleButton` replaces `SidebarRail` with a round button sitting on the sidebar edge; its chevron follows `side` and the collapsed state.',
+  ),
+  render: render({ SidebarToggle }, `<SidebarToggle v-bind="args" />`),
+};
+
+export const ToggleButtonRightSide: Story = {
+  args: { side: 'right', collapsible: 'icon' },
+  parameters: example(sidebarToggleSource),
+  render: render({ SidebarToggle }, `<SidebarToggle v-bind="args" />`),
 };
 
 export const Loading: Story = {
