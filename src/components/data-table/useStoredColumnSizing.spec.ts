@@ -87,6 +87,7 @@ describe('useStoredColumnSizing', () => {
 	});
 
 	it('should start without widths when the stored value is broken', () => {
+		vi.spyOn(console, 'error').mockImplementation(() => {});
 		localStorage.setItem(storageKey, 'not json');
 
 		const columnSizing = useStoredColumnSizing(storageKey, columns);

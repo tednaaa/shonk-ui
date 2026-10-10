@@ -1,7 +1,7 @@
 import type { VueWrapper } from '@vue/test-utils';
 import type { FilterDefinition } from './types';
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils';
-import { defineComponent, h } from 'vue';
+import { defineComponent, h, markRaw } from 'vue';
 import FilteredSearch from './FilteredSearch.vue';
 
 const definitions: FilterDefinition[] = [
@@ -228,7 +228,7 @@ describe('filteredSearch definitions', () => {
 	});
 
 	it('should render the icon a definition supplies', async () => {
-		const PencilIcon = defineComponent({ render: () => h('svg', { 'data-testid': 'pencil' }) });
+		const PencilIcon = markRaw(defineComponent({ render: () => h('svg', { 'data-testid': 'pencil' }) }));
 		wrapper = createComponent({ definitions: [{ ...definitions[0], icon: PencilIcon }] });
 
 		await openKeyList();
@@ -274,7 +274,7 @@ describe('filteredSearch value editors', () => {
 	});
 
 	it('should commit what the editor a definition supplies submits', async () => {
-		const YearEditor = defineComponent({
+		const YearEditor = markRaw(defineComponent({
 			emits: ['submit'],
 			setup(_, { emit }) {
 				return () => h('button', {
@@ -282,7 +282,7 @@ describe('filteredSearch value editors', () => {
 					'onClick': () => emit('submit', { value: '2026', label: 'This year' }),
 				});
 			},
-		});
+		}));
 
 		wrapper = createComponent({
 			definitions: [{
