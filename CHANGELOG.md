@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.8.0 (2026-10-10)
+
+- feat(charts): add shonk-ui/charts with ChartContainer, tooltip and legend over unovis in kit tokens and every Vis* component re-exported, so a project builds charts without installing unovis itself [`2a460bd1`](https://github.com/tednaaa/shonk-ui/commit/2a460bd19e4becc872de98465695204d69908d4f)
+- feat(data-table): keep column widths in localStorage with useStoredColumnSizing [`272cbd43`](https://github.com/tednaaa/shonk-ui/commit/272cbd43cfd3e6cd2b76bad42561cf4114c52eb3)
+- feat(data-table): resize columns by dragging the header edge when columnSizing is passed [`da33af8e`](https://github.com/tednaaa/shonk-ui/commit/da33af8eb1ef8695f0d43c4913f04b4ff47750d4)
+- feat(sidebar): add SidebarToggleButton, a round collapse button on the sidebar edge [`cbb1d7da`](https://github.com/tednaaa/shonk-ui/commit/cbb1d7da98f5b3e55897b08822c9a89b55ac7d25)
+- fix(date-picker): pass class to the DatePicker and RangeDatePicker triggers, so a project can stretch them with class="w-full" instead of the fixed 220px [`f9c6d87b`](https://github.com/tednaaa/shonk-ui/commit/f9c6d87bf8e81bcb0b2a9c526f5511c0be61b1d7)
+- fix(data-table): pin the select and expand columns with the pinned columns after them [`96259841`](https://github.com/tednaaa/shonk-ui/commit/9625984165ebd592ef542f1657d4d9823500dbea)
+- fix(table): keep right padding on checkbox cells so the next column isn't pressed against the checkbox [`ef06b1b5`](https://github.com/tednaaa/shonk-ui/commit/ef06b1b552db911395af41c998ee4a17397c01b7)
+
 ## v0.7.1 (2026-10-09)
 
 - fix(data-table): make the whole select cell toggle its checkbox [`9bb27981`](https://github.com/tednaaa/shonk-ui/commit/9bb2798122d96f284b0b008b7688bad2b82901f9)
