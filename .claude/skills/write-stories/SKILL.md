@@ -67,7 +67,7 @@ Only a lone element with no wrapper stays inline — `` `<Switch v-bind="args" /
 - A large object handed through `args` is stringified into the tag, unreadable past a few keys.
 - Type annotations are gone either way, since only runtime values survive.
 
-#### Reach for an example file when any of those bite
+### Reach for an example file when any of those bite
 
 - Put it in `src/components/<group>/examples/<Group><Case>.vue`, importing from `'shonk-ui'`.
 - Import it twice in the story — the component, and its source with `?raw`.
