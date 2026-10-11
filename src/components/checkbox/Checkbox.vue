@@ -29,8 +29,9 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 		)"
 	>
 		<CheckboxIndicator
+			force-mount
 			data-slot="checkbox-indicator"
-			class="grid place-content-center text-current transition-none"
+			class="grid place-content-center text-current transition-none data-[state=unchecked]:invisible"
 		>
 			<slot v-bind="slotProps">
 				<MinusIcon v-if="slotProps.state === 'indeterminate'" class="size-3.5 text-current" />
