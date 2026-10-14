@@ -15,6 +15,8 @@ export interface InputPasswordProps {
 	hidePasswordAriaLabel?: string;
 }
 
+defineOptions({ inheritAttrs: false });
+
 const props = defineProps<InputPasswordProps>();
 
 const modelValue = defineModel<string>();
@@ -32,6 +34,7 @@ const buttonAriaLabel = computed(() => visible.value
 <template>
 	<div data-slot="input-password" :class="cn('relative', props.class)">
 		<Input
+			v-bind="$attrs"
 			v-model="modelValue"
 			class="pr-10"
 			:type="inputType"
