@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.8.1 (2026-10-14)
+
+- fix(input-password): pass attributes and listeners to the input instead of the wrapper [`3fb4e085`](https://github.com/tednaaa/shonk-ui/commit/3fb4e0857081841b181886f3c0369014ae4e1de9)
+- fix(checkbox): keep the indicator mounted so Safari leaves no stale icon after unchecking [`24b1c741`](https://github.com/tednaaa/shonk-ui/commit/24b1c741b67e93d6f19732606ab633619cc540f4)
+
 ## v0.8.0 (2026-10-10)
 
 - feat(charts): add shonk-ui/charts with ChartContainer, tooltip and legend over unovis in kit tokens and every Vis* component re-exported, so a project builds charts without installing unovis itself [`2a460bd1`](https://github.com/tednaaa/shonk-ui/commit/2a460bd19e4becc872de98465695204d69908d4f)
