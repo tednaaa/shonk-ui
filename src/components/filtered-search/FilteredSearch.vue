@@ -357,7 +357,7 @@ watch(isOpen, (open) => {
 	<Popover v-model:open="isOpen">
 		<div
 			ref="anchorRef"
-			:class="cn(filteredSearchVariants({ wrap, viewOnly, open: isOpen }), props.class)"
+			:class="cn(filteredSearchVariants({ wrap, viewOnly }), props.class)"
 			@click="inputRef?.focus()"
 		>
 			<div :class="filteredSearchTokenListVariants({ wrap })">

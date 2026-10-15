@@ -12,18 +12,10 @@ export const filteredSearchVariants = cva(
 				true: 'text-muted-foreground',
 				false: 'cursor-text',
 			},
-			open: {
-				true: 'border-ring ring-[3px] ring-ring/50',
-				false: '',
-			},
 		},
-		compoundVariants: [
-			{ viewOnly: false, open: false, class: 'hover:border-ring/50' },
-		],
 		defaultVariants: {
 			wrap: false,
 			viewOnly: false,
-			open: false,
 		},
 	},
 );
