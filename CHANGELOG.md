@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.9.2 (2026-10-15)
+
+- fix(filtered-search): wrap the field in a button group only when history is shown so it joins an outer button group again [`5a1ed1a3`](https://github.com/tednaaa/shonk-ui/commit/5a1ed1a3a504198cbb98d03a0d532c53040a674d)
+
 ## v0.9.1 (2026-10-15)
 
 - fix: give every button in the kit type button so none of them submits a surrounding form [`5c0bb958`](https://github.com/tednaaa/shonk-ui/commit/5c0bb9581312b52a9cdaa9cc0e637c5292be852b)
