@@ -2,12 +2,14 @@
 import type { FocusOutsideEvent, PointerDownOutsideEvent } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ActiveFilter, FilterDefinition, FilterHistoryItem, FilterOperator, FilterOption } from './types';
-import { CheckIcon, ChevronLeftIcon, CircleXIcon, HistoryIcon, SearchIcon, XIcon } from '@lucide/vue';
+import { CheckIcon, ChevronLeftIcon, CircleXIcon, SearchIcon, XIcon } from '@lucide/vue';
 import { computed, nextTick, ref, watch } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Button } from '../button';
-import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from '../popover';
+import { ButtonGroup } from '../button-group';
+import { Popover, PopoverAnchor, PopoverContent } from '../popover';
+import FilterHistory from './FilterHistory.vue';
 import FilterToken from './FilterToken.vue';
 import { filteredSearchTokenListVariants, filteredSearchVariants, filterTokenVariants, searchTokenVariants } from './variants';
 
@@ -42,7 +44,6 @@ type DropdownStep
 const locale = useLocale();
 
 const isOpen = ref(false);
-const isHistoryOpen = ref(false);
 const step = ref<DropdownStep>({ phase: 'key' });
 const inputText = ref('');
 const inputRef = ref<HTMLInputElement | null>(null);
@@ -231,21 +232,10 @@ function clearAll() {
 	resetToKeyPhase();
 }
 
-function historyItemLabel(item: FilterHistoryItem) {
-	const tokens = item.filters.map(filter => `${filter.keyLabel} ${filter.operatorLabel} ${filter.valueLabel}`);
-	return [...tokens, item.searchText].filter(Boolean).join(' ');
-}
-
 function selectHistoryItem(item: FilterHistoryItem) {
 	filters.value = item.filters.map(filter => ({ ...filter, id: crypto.randomUUID() }));
 	searchText.value = item.searchText ?? '';
-	isHistoryOpen.value = false;
 	resetToKeyPhase();
-}
-
-function clearHistory() {
-	isHistoryOpen.value = false;
-	emit('clearHistory');
 }
 
 function goBack() {
@@ -355,121 +345,80 @@ watch(isOpen, (open) => {
 
 <template>
 	<Popover v-model:open="isOpen">
-		<div
-			ref="anchorRef"
-			:class="cn(filteredSearchVariants({ wrap, viewOnly }), props.class)"
-			@click="inputRef?.focus()"
-		>
-			<div :class="filteredSearchTokenListVariants({ wrap })">
-				<span
-					v-if="searchText"
-					:class="searchTokenVariants({ removable: !viewOnly })"
-				>
-					<SearchIcon class="size-3 shrink-0 opacity-60" />
-					<span>{{ searchText }}</span>
-					<button
-						v-if="!viewOnly"
-						class="ml-0.5 rounded p-0.5 opacity-60 hover:opacity-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-						:aria-label="locale.filteredSearch.removeSearchButtonAriaLabel"
-						@click.stop="searchText = ''"
-					>
-						<XIcon class="size-3" />
-					</button>
-				</span>
+		<ButtonGroup :class="cn('w-full', props.class)">
+			<FilterHistory
+				v-if="historyItems && !viewOnly"
+				:items="historyItems"
+				@select="selectHistoryItem"
+				@clear="emit('clearHistory')"
+			/>
 
-				<FilterToken
-					v-for="filter in filters"
-					:key="filter.id"
-					:filter="filter"
-					:removable="!viewOnly"
-					@remove="removeFilter"
-				/>
-
-				<span
-					v-if="stepLabel"
-					:class="filterTokenVariants({ removable: false })"
-				>
-					{{ stepLabel }}
-				</span>
-
-				<PopoverAnchor v-if="!viewOnly" as-child>
-					<input
-						ref="inputRef"
-						v-model="inputText"
-						:placeholder="inputPlaceholder"
-						:readonly="step.phase === 'operator'"
-						class="min-w-20 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-						@focus="isOpen = true"
-						@keydown="handleKeydown"
-					>
-				</PopoverAnchor>
-			</div>
-
-			<slot name="suffix" />
-
-			<Popover v-if="historyItems && !viewOnly" v-model:open="isHistoryOpen">
-				<PopoverTrigger as-child>
-					<Button
-						variant="ghost"
-						size="icon-sm"
-						class="my-1 size-7 shrink-0"
-						:aria-label="locale.filteredSearch.historyButtonAriaLabel"
-						@click.stop
-					>
-						<HistoryIcon class="size-4" />
-					</Button>
-				</PopoverTrigger>
-
-				<PopoverContent class="min-w-70 overflow-hidden p-0" align="end" :side-offset="12">
-					<p class="border-b px-3 py-2 text-xs text-muted-foreground">
-						{{ locale.filteredSearch.historyHeaderText }}
-					</p>
-
-					<p v-if="historyItems.length === 0" class="px-3 py-2 text-sm text-muted-foreground">
-						{{ locale.filteredSearch.historyEmptyText }}
-					</p>
-
-					<div v-else class="max-h-60 overflow-y-auto py-1">
-						<button
-							v-for="(item, index) in historyItems"
-							:key="index"
-							class="w-full px-3 py-1.5 text-left transition-colors hover:bg-accent hover:text-accent-foreground"
-							:aria-label="locale.filteredSearch.historyItemAriaLabel(historyItemLabel(item))"
-							@click="selectHistoryItem(item)"
-						>
-							<span class="flex flex-wrap items-center gap-1.5">
-								<FilterToken
-									v-for="filter in item.filters"
-									:key="filter.id"
-									:filter="filter"
-									:removable="false"
-								/>
-								<span v-if="item.searchText" class="text-sm">{{ item.searchText }}</span>
-							</span>
-						</button>
-					</div>
-
-					<div v-if="historyItems.length > 0" class="border-t p-1">
-						<Button variant="ghost" size="sm" class="w-full justify-start" @click="clearHistory">
-							{{ locale.filteredSearch.clearHistoryButtonText }}
-						</Button>
-					</div>
-				</PopoverContent>
-			</Popover>
-
-			<Button
-				v-if="hasActiveFilters && !viewOnly"
-				variant="ghost"
-				size="icon-sm"
-				class="my-1 ml-1 size-7 shrink-0"
-				:aria-label="locale.filteredSearch.clearButtonAriaLabel"
-				@click.stop="clearAll"
+			<div
+				ref="anchorRef"
+				:class="cn(filteredSearchVariants({ wrap, viewOnly }), 'min-w-0 flex-1')"
+				@click="inputRef?.focus()"
 			>
-				<CircleXIcon class="size-4" />
-			</Button>
+				<div :class="filteredSearchTokenListVariants({ wrap })">
+					<span
+						v-if="searchText"
+						:class="searchTokenVariants({ removable: !viewOnly })"
+					>
+						<SearchIcon class="size-3 shrink-0 opacity-60" />
+						<span>{{ searchText }}</span>
+						<button
+							v-if="!viewOnly"
+							class="ml-0.5 rounded p-0.5 opacity-60 hover:opacity-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+							:aria-label="locale.filteredSearch.removeSearchButtonAriaLabel"
+							@click.stop="searchText = ''"
+						>
+							<XIcon class="size-3" />
+						</button>
+					</span>
 
-			<SearchIcon v-else-if="!viewOnly" class="ml-1 size-4 shrink-0 text-muted-foreground" />
-		</div>
+					<FilterToken
+						v-for="filter in filters"
+						:key="filter.id"
+						:filter="filter"
+						:removable="!viewOnly"
+						@remove="removeFilter"
+					/>
+
+					<span
+						v-if="stepLabel"
+						:class="filterTokenVariants({ removable: false })"
+					>
+						{{ stepLabel }}
+					</span>
+
+					<PopoverAnchor v-if="!viewOnly" as-child>
+						<input
+							ref="inputRef"
+							v-model="inputText"
+							:placeholder="inputPlaceholder"
+							:readonly="step.phase === 'operator'"
+							class="min-w-20 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+							@focus="isOpen = true"
+							@keydown="handleKeydown"
+						>
+					</PopoverAnchor>
+				</div>
+
+				<slot name="suffix" />
+
+				<Button
+					v-if="hasActiveFilters && !viewOnly"
+					variant="ghost"
+					size="icon-sm"
+					class="my-1 ml-1 size-7 shrink-0"
+					:aria-label="locale.filteredSearch.clearButtonAriaLabel"
+					@click.stop="clearAll"
+				>
+					<CircleXIcon class="size-4" />
+				</Button>
+
+				<SearchIcon v-else-if="!viewOnly" class="ml-1 size-4 shrink-0 text-muted-foreground" />
+			</div>
+		</ButtonGroup>
 
 		<PopoverContent
 			v-if="!viewOnly"
