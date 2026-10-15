@@ -15,6 +15,11 @@ export default defineConfig({
 	},
 
 	plugins: [tailwindcss(), vue()],
+
+	server: {
+		watch: { ignored: ['**/.devenv/**'] },
+	},
+
 	test: {
 		globals: true,
 		mockReset: true,
