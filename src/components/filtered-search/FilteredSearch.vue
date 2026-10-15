@@ -396,7 +396,7 @@ watch(isOpen, (open) => {
 							v-model="inputText"
 							:placeholder="inputPlaceholder"
 							:readonly="step.phase === 'operator'"
-							class="min-w-20 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+							:class="cn('min-w-20 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground', step.phase === 'key' && 'focus:placeholder:text-transparent')"
 							@focus="isOpen = true"
 							@keydown="handleKeydown"
 						>
