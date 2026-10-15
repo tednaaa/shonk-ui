@@ -33,7 +33,7 @@ export const filteredSearchTokenListVariants = cva('flex min-w-0 flex-1 items-ce
 });
 
 export const searchTokenVariants = cva(
-	'inline-flex h-6 shrink-0 items-center gap-1 rounded-md border border-border bg-accent/50 pl-1.5 text-xs text-accent-foreground',
+	'inline-flex h-6 shrink-0 items-center gap-1 rounded-md border border-border bg-secondary pl-1.5 text-xs text-secondary-foreground',
 	{
 		variants: {
 			removable: {
@@ -48,7 +48,7 @@ export const searchTokenVariants = cva(
 );
 
 export const filterTokenVariants = cva(
-	'inline-flex h-6 shrink-0 items-center gap-1 rounded-md border border-border bg-accent/50 pl-2 text-xs text-accent-foreground',
+	'inline-flex h-6 shrink-0 items-center gap-1 rounded-md border border-border bg-secondary pl-2 text-xs text-secondary-foreground',
 	{
 		variants: {
 			removable: {

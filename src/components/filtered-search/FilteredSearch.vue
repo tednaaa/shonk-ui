@@ -9,7 +9,7 @@ import { cn } from '@/utils';
 import { Button } from '../button';
 import { Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from '../popover';
 import FilterToken from './FilterToken.vue';
-import { filteredSearchTokenListVariants, filteredSearchVariants, searchTokenVariants } from './variants';
+import { filteredSearchTokenListVariants, filteredSearchVariants, filterTokenVariants, searchTokenVariants } from './variants';
 
 const props = withDefaults(defineProps<{
 	definitions: FilterDefinition[];
@@ -387,7 +387,7 @@ watch(isOpen, (open) => {
 
 				<span
 					v-if="stepLabel"
-					class="shrink-0 rounded bg-muted px-1.5 py-0.5 text-xs text-muted-foreground"
+					:class="filterTokenVariants({ removable: false })"
 				>
 					{{ stepLabel }}
 				</span>
