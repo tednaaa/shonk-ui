@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.9.0 (2026-10-15)
+
+- fix(button)!: default to type button so a button inside a form no longer submits it [`327367bf`](https://github.com/tednaaa/shonk-ui/commit/327367bf2f9981b75c3dce818a66431bee34449a)
+- feat(filtered-search): hide the search placeholder while the field is focused [`a47650e6`](https://github.com/tednaaa/shonk-ui/commit/a47650e61910fb7c179c84db9ff297ef2eca3d65)
+- fix(filtered-search): give filter badges a secondary background so they stand out in dark themes [`a949e1be`](https://github.com/tednaaa/shonk-ui/commit/a949e1be503d59cbfc8ee57d60e97dbcd86c3772)
+- fix: drop the focus glow from text fields and the focus border from filtered search [`68909e60`](https://github.com/tednaaa/shonk-ui/commit/68909e60a2e18124bc177e208e53b091343fd398)
+- feat(textarea): add auto-resize prop that grows the field with its content up to a max height [`63d97e6a`](https://github.com/tednaaa/shonk-ui/commit/63d97e6a97f490e0906572f666782253b5fd58ed)
+
 ## v0.8.1 (2026-10-14)
 
 - fix(input-password): pass attributes and listeners to the input instead of the wrapper [`3fb4e085`](https://github.com/tednaaa/shonk-ui/commit/3fb4e0857081841b181886f3c0369014ae4e1de9)
