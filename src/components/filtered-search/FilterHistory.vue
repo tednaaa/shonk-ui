@@ -55,6 +55,7 @@ function clear() {
 				<button
 					v-for="(item, index) in items"
 					:key="index"
+					type="button"
 					class="w-full px-3 py-1.5 text-left transition-colors hover:bg-accent hover:text-accent-foreground"
 					:aria-label="locale.filteredSearch.historyItemAriaLabel(itemLabel(item))"
 					@click="select(item)"

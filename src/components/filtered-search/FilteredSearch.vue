@@ -367,6 +367,7 @@ watch(isOpen, (open) => {
 						<span>{{ searchText }}</span>
 						<button
 							v-if="!viewOnly"
+							type="button"
 							class="ml-0.5 rounded p-0.5 opacity-60 hover:opacity-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
 							:aria-label="locale.filteredSearch.removeSearchButtonAriaLabel"
 							@click.stop="searchText = ''"
@@ -431,6 +432,7 @@ watch(isOpen, (open) => {
 		>
 			<div v-if="stepLabel" class="flex items-center gap-1.5 border-b px-3 py-2">
 				<button
+					type="button"
 					class="-ml-0.5 rounded p-0.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
 					:aria-label="locale.filteredSearch.backButtonAriaLabel"
 					@click="goBack"
@@ -447,6 +449,7 @@ watch(isOpen, (open) => {
 				<button
 					v-for="(definition, index) in filteredDefinitions"
 					:key="definition.key"
+					type="button"
 					role="option"
 					:aria-selected="index === highlightedIndex"
 					:class="cn(
@@ -467,6 +470,7 @@ watch(isOpen, (open) => {
 				<button
 					v-for="(operator, index) in operatorStep.operators"
 					:key="operator.value"
+					type="button"
 					role="option"
 					:aria-selected="index === highlightedIndex"
 					:class="cn(
@@ -499,6 +503,7 @@ watch(isOpen, (open) => {
 					<button
 						v-for="(option, index) in valueOptions"
 						:key="option.value"
+						type="button"
 						role="option"
 						:aria-selected="index === highlightedIndex"
 						:class="cn(

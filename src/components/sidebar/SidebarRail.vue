@@ -16,6 +16,7 @@ const { toggleSidebar } = useSidebar();
 
 <template>
 	<button
+		type="button"
 		data-sidebar="rail"
 		data-slot="sidebar-rail"
 		:aria-label="props.ariaLabel ?? locale.sidebar.toggleAriaLabel"

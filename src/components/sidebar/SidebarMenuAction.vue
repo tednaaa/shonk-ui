@@ -20,6 +20,7 @@ const props = withDefaults(defineProps<PrimitiveProps & {
 		:class="cn(sidebarMenuActionVariants({ showOnHover }), props.class)"
 		:as="as"
 		:as-child="asChild"
+		:type="as === 'button' && !asChild ? 'button' : undefined"
 	>
 		<slot />
 	</Primitive>

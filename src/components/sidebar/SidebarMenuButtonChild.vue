@@ -29,6 +29,7 @@ const props = withDefaults(defineProps<SidebarMenuButtonProps>(), {
 		:class="cn(sidebarMenuButtonVariants({ variant, size }), props.class)"
 		:as="as"
 		:as-child="asChild"
+		:type="as === 'button' && !asChild ? 'button' : undefined"
 		v-bind="$attrs"
 	>
 		<slot />

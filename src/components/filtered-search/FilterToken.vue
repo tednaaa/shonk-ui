@@ -18,6 +18,7 @@ const locale = useLocale();
 		<span class="truncate">{{ filter.valueLabel }}</span>
 		<button
 			v-if="removable"
+			type="button"
 			class="ml-0.5 shrink-0 rounded p-0.5 opacity-60 transition-opacity hover:bg-accent hover:opacity-100 focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
 			:aria-label="locale.filteredSearch.removeFilterButtonAriaLabel(filter.keyLabel)"
 			@click.stop="emit('remove', filter.id)"

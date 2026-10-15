@@ -18,6 +18,7 @@ const forwardedProps = useForwardProps(delegatedProps);
 <template>
 	<RangeCalendarCellTrigger
 		data-slot="range-calendar-trigger"
+		:type="as === 'button' && !asChild ? 'button' : undefined"
 		:class="cn(
 			buttonVariants({ variant: 'ghost' }),
 			'size-8 p-0 font-normal data-selected:opacity-100',
