@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.9.1 (2026-10-15)
+
+- fix: give every button in the kit type button so none of them submits a surrounding form [`5c0bb958`](https://github.com/tednaaa/shonk-ui/commit/5c0bb9581312b52a9cdaa9cc0e637c5292be852b)
+
 ## v0.9.0 (2026-10-15)
 
 - fix(button)!: default to type button so a button inside a form no longer submits it [`327367bf`](https://github.com/tednaaa/shonk-ui/commit/327367bf2f9981b75c3dce818a66431bee34449a)
