@@ -3,6 +3,7 @@ import type { FocusOutsideEvent, PointerDownOutsideEvent } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ActiveFilter, FilterDefinition, FilterHistoryItem, FilterOperator, FilterOption } from './types';
 import { CheckIcon, ChevronLeftIcon, CircleXIcon, SearchIcon, XIcon } from '@lucide/vue';
+import { createReusableTemplate } from '@vueuse/core';
 import { computed, nextTick, ref, watch } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
@@ -42,6 +43,8 @@ type DropdownStep
 		| { phase: 'value'; key: string; keyLabel: string; operator: string; operatorLabel: string };
 
 const locale = useLocale();
+
+const [DefineField, ReuseField] = createReusableTemplate<{ fieldClass?: HTMLAttributes['class'] }>();
 
 const isOpen = ref(false);
 const step = ref<DropdownStep>({ phase: 'key' });
@@ -345,17 +348,10 @@ watch(isOpen, (open) => {
 
 <template>
 	<Popover v-model:open="isOpen">
-		<ButtonGroup :class="cn('w-full', props.class)">
-			<FilterHistory
-				v-if="historyItems && !viewOnly"
-				:items="historyItems"
-				@select="selectHistoryItem"
-				@clear="emit('clearHistory')"
-			/>
-
+		<DefineField #default="{ fieldClass }">
 			<div
 				ref="anchorRef"
-				:class="cn(filteredSearchVariants({ wrap, viewOnly }), 'min-w-0 flex-1')"
+				:class="cn(filteredSearchVariants({ wrap, viewOnly }), fieldClass)"
 				@click="inputRef?.focus()"
 			>
 				<div :class="filteredSearchTokenListVariants({ wrap })">
@@ -419,7 +415,17 @@ watch(isOpen, (open) => {
 
 				<SearchIcon v-else-if="!viewOnly" class="ml-1 size-4 shrink-0 text-muted-foreground" />
 			</div>
+		</DefineField>
+
+		<ButtonGroup v-if="historyItems && !viewOnly" :class="cn('w-full', props.class)">
+			<FilterHistory
+				:items="historyItems"
+				@select="selectHistoryItem"
+				@clear="emit('clearHistory')"
+			/>
+			<ReuseField field-class="min-w-0 flex-1" />
 		</ButtonGroup>
+		<ReuseField v-else :field-class="props.class" />
 
 		<PopoverContent
 			v-if="!viewOnly"

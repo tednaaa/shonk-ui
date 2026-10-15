@@ -4,6 +4,8 @@ import { example, render, showControls } from '@/lib/storybook';
 import { FilteredSearch } from '.';
 import FilteredSearchControlled from './examples/FilteredSearchControlled.vue';
 import filteredSearchControlledSource from './examples/FilteredSearchControlled.vue?raw';
+import FilteredSearchCustomButtonGroup from './examples/FilteredSearchCustomButtonGroup.vue';
+import filteredSearchCustomButtonGroupSource from './examples/FilteredSearchCustomButtonGroup.vue?raw';
 import FilteredSearchCustomEditor from './examples/FilteredSearchCustomEditor.vue';
 import filteredSearchCustomEditorSource from './examples/FilteredSearchCustomEditor.vue?raw';
 import FilteredSearchHistory from './examples/FilteredSearchHistory.vue';
@@ -161,6 +163,15 @@ export const Controlled: Story = {
 	render: render({ FilteredSearchControlled }, `
     <div class="max-w-xl">
       <FilteredSearchControlled />
+    </div>
+  `),
+};
+
+export const InCustomButtonGroup: Story = {
+	parameters: example(filteredSearchCustomButtonGroupSource),
+	render: render({ FilteredSearchCustomButtonGroup }, `
+    <div class="max-w-xl">
+      <FilteredSearchCustomButtonGroup />
     </div>
   `),
 };
