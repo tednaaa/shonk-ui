@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { ref } from 'vue';
 import { example, render, showControls } from '@/lib/storybook';
 import { Textarea } from '.';
+import TextareaAutoResize from './examples/TextareaAutoResize.vue';
+import textareaAutoResizeSource from './examples/TextareaAutoResize.vue?raw';
 import TextareaDisabled from './examples/TextareaDisabled.vue';
 import textareaDisabledSource from './examples/TextareaDisabled.vue?raw';
 import TextareaPrefilled from './examples/TextareaPrefilled.vue';
@@ -39,6 +41,15 @@ export const Prefilled: Story = {
 	render: render({ TextareaPrefilled }, `
     <div class="max-w-sm">
       <TextareaPrefilled />
+    </div>
+  `),
+};
+
+export const AutoResize: Story = {
+	parameters: example(textareaAutoResizeSource),
+	render: render({ TextareaAutoResize }, `
+    <div class="max-w-sm">
+      <TextareaAutoResize />
     </div>
   `),
 };
