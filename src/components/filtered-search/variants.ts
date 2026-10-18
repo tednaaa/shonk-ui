@@ -84,3 +84,15 @@ export const filterTokenPartVariants = cva(
 		},
 	},
 );
+
+export const valueHintVariants = cva('text-xs', {
+	variants: {
+		invalid: {
+			true: 'text-destructive',
+			false: 'text-muted-foreground',
+		},
+	},
+	defaultVariants: {
+		invalid: false,
+	},
+});

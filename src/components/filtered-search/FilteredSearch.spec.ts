@@ -454,6 +454,61 @@ describe('filteredSearch multi select', () => {
 	});
 });
 
+describe('filteredSearch value validation', () => {
+	let wrapper: VueWrapper<InstanceType<typeof FilteredSearch>>;
+
+	beforeEach(() => {
+		wrapper = createComponent({
+			definitions: [{
+				key: 'price',
+				label: 'Price',
+				operators: [{ value: 'gt', label: '>' }],
+				validate: (value: string) => /^-?\d+(?:\.\d+)?$/.test(value) ? undefined : 'Enter a number',
+			}],
+		});
+	});
+
+	async function typeValue(text: string) {
+		const input = wrapper.find('input');
+		await input.trigger('focus');
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'Enter' });
+		await input.setValue(text);
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+		return input;
+	}
+
+	function describedBy(input: Element) {
+		return document.getElementById(input.getAttribute('aria-describedby') ?? '')?.textContent?.trim();
+	}
+
+	it('should keep a rejected value and say why instead of adding a filter', async () => {
+		const input = await typeValue('abc');
+
+		expect(wrapper.emitted('update:filters')).toBeUndefined();
+		expect((input.element as HTMLInputElement).value).toBe('abc');
+		expect(input.attributes('aria-invalid')).toBe('true');
+		expect(describedBy(input.element)).toBe('Enter a number');
+	});
+
+	it('should drop the error once the value changes', async () => {
+		const input = await typeValue('abc');
+		await input.setValue('ab');
+
+		expect(input.attributes('aria-invalid')).toBeUndefined();
+		expect(document.body.textContent).not.toContain('Enter a number');
+	});
+
+	it('should commit a value that passes', async () => {
+		await typeValue('-1.5');
+
+		expect(wrapper.emitted('update:filters')?.at(-1)?.[0]).toMatchObject([
+			{ key: 'price', operator: 'gt', value: '-1.5' },
+		]);
+	});
+});
+
 describe('filteredSearch editing a filter', () => {
 	let wrapper: VueWrapper<InstanceType<typeof FilteredSearch>>;
 

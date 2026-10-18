@@ -19,6 +19,7 @@ export interface FilterDefinition {
 	options?: FilterOption[];
 	multiSelect?: boolean;
 	unique?: boolean;
+	validate?: (value: string) => string | undefined;
 }
 
 export interface ActiveFilter {

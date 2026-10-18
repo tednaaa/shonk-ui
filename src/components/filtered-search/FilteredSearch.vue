@@ -4,7 +4,7 @@ import type { HTMLAttributes } from 'vue';
 import type { ActiveFilter, FilterDefinition, FilterHistoryItem, FilterOperator, FilterOption, FilterTokenSegment } from './types';
 import { CheckIcon, ChevronLeftIcon, CircleXIcon, SearchIcon, XIcon } from '@lucide/vue';
 import { createReusableTemplate } from '@vueuse/core';
-import { computed, nextTick, ref, watch } from 'vue';
+import { computed, nextTick, ref, useId, watch } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Button } from '../button';
@@ -13,7 +13,7 @@ import { Popover, PopoverAnchor, PopoverContent } from '../popover';
 import FilterHistory from './FilterHistory.vue';
 import FilterToken from './FilterToken.vue';
 import { useTokenDrag } from './useTokenDrag';
-import { filteredSearchTokenListVariants, filteredSearchVariants, filterTokenPartVariants, filterTokenVariants, searchTokenVariants } from './variants';
+import { filteredSearchTokenListVariants, filteredSearchVariants, filterTokenPartVariants, filterTokenVariants, searchTokenVariants, valueHintVariants } from './variants';
 
 const props = withDefaults(defineProps<{
 	definitions: FilterDefinition[];
@@ -62,6 +62,8 @@ const tokenListRef = ref<HTMLElement | null>(null);
 const highlightedIndex = ref(-1);
 const selectedValues = ref<FilterOption[]>([]);
 const editingId = ref<string | null>(null);
+const valueError = ref<string | null>(null);
+const valueHintId = useId();
 
 function preventCloseOnAnchorInteract(e: PointerDownOutsideEvent | FocusOutsideEvent) {
 	const { target } = e.detail.originalEvent;
@@ -240,6 +242,11 @@ function confirmTypedValue() {
 	const typed = inputText.value.trim();
 	if (!typed || suggestsOptions.value || valueDefinition.value?.editor)
 		return;
+	const error = valueDefinition.value?.validate?.(typed);
+	if (error) {
+		valueError.value = error;
+		return;
+	}
 	commitFilter(typed, typed);
 }
 
@@ -436,6 +443,7 @@ function handleKeydown(e: KeyboardEvent) {
 }
 
 watch(inputText, () => {
+	valueError.value = null;
 	highlightedIndex.value = -1;
 	if (inputText.value && step.value.phase === 'key')
 		isOpen.value = true;
@@ -456,6 +464,8 @@ watch(isOpen, (open) => {
 					v-model="inputText"
 					:placeholder="inputPlaceholder"
 					:readonly="step.phase === 'operator'"
+					:aria-invalid="valueError ? true : undefined"
+					:aria-describedby="valueError ? valueHintId : undefined"
 					:size="editingId ? editingInputSize : undefined"
 					:class="cn('bg-transparent text-sm outline-none placeholder:text-muted-foreground', editingId ? 'w-auto shrink-0' : 'min-w-20 flex-1', step.phase === 'key' && 'focus:placeholder:text-transparent')"
 					@focus="isOpen = true"
@@ -664,8 +674,8 @@ watch(isOpen, (open) => {
 			</template>
 
 			<div v-else-if="valueStep" class="px-3 py-2">
-				<p class="text-xs text-muted-foreground">
-					{{ locale.filteredSearch.valueHintText }}
+				<p :id="valueHintId" :class="valueHintVariants({ invalid: !!valueError })">
+					{{ valueError ?? locale.filteredSearch.valueHintText }}
 				</p>
 			</div>
 		</PopoverContent>

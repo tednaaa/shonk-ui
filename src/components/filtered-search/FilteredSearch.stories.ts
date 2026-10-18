@@ -22,6 +22,8 @@ import FilteredSearchSuffix from './examples/FilteredSearchSuffix.vue';
 import filteredSearchSuffixSource from './examples/FilteredSearchSuffix.vue?raw';
 import FilteredSearchUnique from './examples/FilteredSearchUnique.vue';
 import filteredSearchUniqueSource from './examples/FilteredSearchUnique.vue?raw';
+import FilteredSearchValidation from './examples/FilteredSearchValidation.vue';
+import filteredSearchValidationSource from './examples/FilteredSearchValidation.vue?raw';
 import FilteredSearchViewOnly from './examples/FilteredSearchViewOnly.vue';
 import filteredSearchViewOnlySource from './examples/FilteredSearchViewOnly.vue?raw';
 import FilteredSearchWrapped from './examples/FilteredSearchWrapped.vue';
@@ -129,6 +131,15 @@ export const Unique: Story = {
 	render: render({ FilteredSearchUnique }, `
     <div class="max-w-xl">
       <FilteredSearchUnique />
+    </div>
+  `),
+};
+
+export const Validation: Story = {
+	parameters: example(filteredSearchValidationSource),
+	render: render({ FilteredSearchValidation }, `
+    <div class="max-w-xl">
+      <FilteredSearchValidation />
     </div>
   `),
 };
