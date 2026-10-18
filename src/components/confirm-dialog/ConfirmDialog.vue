@@ -70,6 +70,8 @@ function preventDismiss(event: Event) {
 	<Dialog :open="open" @update:open="handleOpenChange">
 		<DialogContent
 			role="alertdialog"
+			class="z-60"
+			overlay-class="z-[60]"
 			@pointer-down-outside="preventDismiss"
 			@interact-outside="preventDismiss"
 		>
