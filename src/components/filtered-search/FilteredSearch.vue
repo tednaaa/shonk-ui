@@ -51,7 +51,7 @@ const locale = useLocale();
 
 const [DefineField, ReuseField] = createReusableTemplate<{ fieldClass?: HTMLAttributes['class'] }>();
 const [DefineInput, ReuseInput] = createReusableTemplate();
-const [DefineParts, ReuseParts] = createReusableTemplate<{ parts: TokenParts; rounded: 'start' | 'end' }>();
+const [DefineParts, ReuseParts] = createReusableTemplate<{ parts: TokenParts; rounded: 'start' | 'end'; editable?: FilterTokenSegment[] }>();
 
 const isOpen = ref(false);
 const step = ref<DropdownStep>({ phase: 'key' });
@@ -303,6 +303,31 @@ function showEditedKey() {
 	});
 }
 
+const pendingEditableSegments = computed<FilterTokenSegment[]>(() => {
+	const s = step.value;
+	if (s.phase !== 'value')
+		return ['key'];
+	const operators = valueDefinition.value?.operators ?? [];
+	return operators.length > 1 ? ['key', 'operator'] : ['key'];
+});
+
+function editPendingSegment(segment: FilterTokenSegment) {
+	const s = step.value;
+	if (s.phase === 'key')
+		return;
+	if (segment === 'key')
+		showStep({ phase: 'key' });
+	else if (segment === 'operator' && s.phase === 'value')
+		showStep({ phase: 'operator', key: s.key, keyLabel: s.keyLabel, operators: valueDefinition.value?.operators ?? [] });
+	focusInput();
+}
+
+function segmentAriaLabel(segment: FilterTokenSegment, keyLabel: string) {
+	return segment === 'key'
+		? locale.value.filteredSearch.changeKeyButtonAriaLabel(keyLabel)
+		: locale.value.filteredSearch.changeOperatorButtonAriaLabel(keyLabel);
+}
+
 function editFilter(id: string, segment: FilterTokenSegment) {
 	const filter = filters.value.find(existing => existing.id === id);
 	const operators = props.definitions.find(definition => definition.key === filter?.key)?.operators ?? [];
@@ -474,10 +499,19 @@ watch(isOpen, (open) => {
 			</PopoverAnchor>
 		</DefineInput>
 
-		<DefineParts #default="{ parts, rounded }">
+		<DefineParts #default="{ parts, rounded, editable }">
 			<span :class="filterTokenVariants({ rounded })">
 				<template v-for="(label, part) in parts" :key="part">
-					<span v-if="label" :class="filterTokenPartVariants({ part })">
+					<button
+						v-if="label && editable?.includes(part)"
+						type="button"
+						:aria-label="segmentAriaLabel(part, parts.key ?? label)"
+						:class="filterTokenPartVariants({ part, editable: true })"
+						@click="editPendingSegment(part)"
+					>
+						<span class="truncate">{{ label }}</span>
+					</button>
+					<span v-else-if="label" :class="filterTokenPartVariants({ part })">
 						<span class="truncate">{{ label }}</span>
 					</span>
 				</template>
@@ -522,14 +556,14 @@ watch(isOpen, (open) => {
 							@drag-start="startDrag($event, filter.id)"
 						/>
 						<template v-else>
-							<ReuseParts v-if="pendingParts" :parts="pendingParts" rounded="start" />
+							<ReuseParts v-if="pendingParts" :parts="pendingParts" rounded="start" :editable="pendingEditableSegments" />
 							<ReuseInput />
 							<ReuseParts v-if="editedRest" :parts="editedRest" rounded="end" />
 						</template>
 					</template>
 
 					<template v-if="!editingId">
-						<ReuseParts v-if="pendingParts" :parts="pendingParts" rounded="start" />
+						<ReuseParts v-if="pendingParts" :parts="pendingParts" rounded="start" :editable="pendingEditableSegments" />
 						<ReuseInput />
 					</template>
 				</div>

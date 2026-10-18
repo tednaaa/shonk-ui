@@ -646,6 +646,53 @@ describe('filteredSearch editing a filter', () => {
 	});
 });
 
+describe('filteredSearch jumping to an earlier step', () => {
+	let wrapper: VueWrapper<InstanceType<typeof FilteredSearch>>;
+
+	async function openValueStep() {
+		const input = wrapper.find('input');
+		await input.trigger('focus');
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+		return input;
+	}
+
+	it('should reopen the operator list when the pending operator is clicked', async () => {
+		wrapper = createComponent();
+
+		const input = await openValueStep();
+		await wrapper.get('[aria-label="Change Status operator"]').trigger('click');
+		await flushPromises();
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+		await input.setValue('open');
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+
+		expect(wrapper.emitted('update:filters')?.at(-1)?.[0]).toMatchObject([
+			{ key: 'status', operator: 'notEquals', value: 'open' },
+		]);
+	});
+
+	it('should reopen the whole key list with nothing picked when the pending key is clicked', async () => {
+		wrapper = createComponent();
+
+		const input = await openValueStep();
+		await wrapper.get('[aria-label="Change Status filter type"]').trigger('click');
+		await flushPromises();
+
+		expect((input.element as HTMLInputElement).value).toBe('');
+		expect(wrapper.find('[aria-label="Change Status filter type"]').exists()).toBe(false);
+		expect(document.querySelector('[role="option"][aria-selected="true"]')).toBeNull();
+	});
+});
+
 describe('filteredSearch dragging tokens', () => {
 	let wrapper: VueWrapper<InstanceType<typeof FilteredSearch>>;
 
