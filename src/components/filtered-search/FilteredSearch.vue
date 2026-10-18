@@ -12,6 +12,7 @@ import { ButtonGroup } from '../button-group';
 import { Popover, PopoverAnchor, PopoverContent } from '../popover';
 import FilterHistory from './FilterHistory.vue';
 import FilterToken from './FilterToken.vue';
+import { useTokenDrag } from './useTokenDrag';
 import { filteredSearchTokenListVariants, filteredSearchVariants, filterTokenPartVariants, filterTokenVariants, searchTokenVariants } from './variants';
 
 const props = withDefaults(defineProps<{
@@ -19,11 +20,13 @@ const props = withDefaults(defineProps<{
 	historyItems?: FilterHistoryItem[];
 	placeholder?: string;
 	searchable?: boolean;
+	draggable?: boolean;
 	viewOnly?: boolean;
 	wrap?: boolean;
 	class?: HTMLAttributes['class'];
 }>(), {
 	searchable: true,
+	draggable: false,
 	viewOnly: false,
 	wrap: false,
 });
@@ -55,6 +58,7 @@ const step = ref<DropdownStep>({ phase: 'key' });
 const inputText = ref('');
 const inputRef = ref<HTMLInputElement | null>(null);
 const anchorRef = ref<HTMLElement | null>(null);
+const tokenListRef = ref<HTMLElement | null>(null);
 const highlightedIndex = ref(-1);
 const selectedValues = ref<FilterOption[]>([]);
 const editingId = ref<string | null>(null);
@@ -69,6 +73,13 @@ const operatorStep = computed(() => step.value.phase === 'operator' ? step.value
 const valueStep = computed(() => step.value.phase === 'value' ? step.value : null);
 
 const editingFilter = computed(() => filters.value.find(filter => filter.id === editingId.value) ?? null);
+
+const { draggingId, startDrag } = useTokenDrag({
+	enabled: () => props.draggable && !props.viewOnly && !editingId.value,
+	vertical: () => props.wrap,
+	list: tokenListRef,
+	filters,
+});
 
 const availableDefinitions = computed(() => props.definitions.filter(definition =>
 	!definition.unique || !filters.value.some(filter => filter.key === definition.key && filter.id !== editingId.value),
@@ -469,7 +480,7 @@ watch(isOpen, (open) => {
 				:class="cn(filteredSearchVariants({ wrap, viewOnly }), fieldClass)"
 				@click="inputRef?.focus()"
 			>
-				<div :class="filteredSearchTokenListVariants({ wrap })">
+				<div ref="tokenListRef" :class="filteredSearchTokenListVariants({ wrap })">
 					<span
 						v-if="searchText"
 						:class="searchTokenVariants({ removable: !viewOnly })"
@@ -491,10 +502,14 @@ watch(isOpen, (open) => {
 						<FilterToken
 							v-if="filter.id !== editingId"
 							:filter="filter"
+							:data-filter-id="filter.id"
+							:class="filter.id === draggingId && 'relative z-10 rounded-md bg-background shadow-lg transition-shadow'"
 							:removable="!viewOnly"
 							:editable="!viewOnly"
+							:draggable="draggable && !viewOnly"
 							@remove="removeFilter"
 							@edit="editFilter"
+							@drag-start="startDrag($event, filter.id)"
 						/>
 						<template v-else>
 							<ReuseParts v-if="pendingParts" :parts="pendingParts" rounded="start" />

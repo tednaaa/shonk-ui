@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import type { ActiveFilter, FilterTokenSegment } from './types';
-import { XIcon } from '@lucide/vue';
+import { GripVerticalIcon, XIcon } from '@lucide/vue';
 import { useLocale } from '@/locales';
 import { filterTokenPartVariants, filterTokenVariants } from './variants';
 
-const props = withDefaults(defineProps<{ filter: ActiveFilter; removable?: boolean; editable?: boolean }>(), {
+const props = withDefaults(defineProps<{ filter: ActiveFilter; removable?: boolean; editable?: boolean; draggable?: boolean }>(), {
 	removable: true,
 	editable: false,
+	draggable: false,
 });
 
-const emit = defineEmits<{ remove: [id: string]; edit: [id: string, segment: FilterTokenSegment] }>();
+const emit = defineEmits<{ remove: [id: string]; edit: [id: string, segment: FilterTokenSegment]; dragStart: [event: PointerEvent] }>();
 
 const locale = useLocale();
 
@@ -21,6 +22,15 @@ function edit(segment: FilterTokenSegment) {
 
 <template>
 	<span :class="filterTokenVariants()">
+		<span
+			v-if="draggable"
+			data-slot="filter-token-handle"
+			aria-hidden="true"
+			:class="filterTokenPartVariants({ part: 'handle' })"
+			@pointerdown="emit('dragStart', $event)"
+		>
+			<GripVerticalIcon class="size-3" />
+		</span>
 		<component
 			:is="editable ? 'button' : 'span'"
 			:type="editable ? 'button' : undefined"

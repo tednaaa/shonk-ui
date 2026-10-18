@@ -24,7 +24,7 @@ export const filteredSearchTokenListVariants = cva('flex min-w-0 flex-1 items-ce
 	variants: {
 		wrap: {
 			true: 'flex-wrap',
-			false: 'scrollbar-none overflow-x-auto [&::-webkit-scrollbar]:hidden',
+			false: '-my-2 scrollbar-none overflow-x-auto py-2 [&::-webkit-scrollbar]:hidden',
 		},
 	},
 	defaultVariants: {
@@ -65,6 +65,7 @@ export const filterTokenPartVariants = cva(
 	{
 		variants: {
 			part: {
+				handle: 'shrink-0 cursor-grab touch-none bg-secondary px-0.5 text-muted-foreground active:cursor-grabbing',
 				key: 'shrink-0 bg-secondary font-medium text-secondary-foreground',
 				operator: 'shrink-0 bg-secondary text-muted-foreground',
 				value: 'gap-1 bg-input/70 text-secondary-foreground',

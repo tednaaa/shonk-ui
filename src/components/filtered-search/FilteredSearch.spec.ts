@@ -590,3 +590,93 @@ describe('filteredSearch editing a filter', () => {
 		expect(wrapper.find('[aria-label="Edit Author filter"]').exists()).toBe(true);
 	});
 });
+
+describe('filteredSearch dragging tokens', () => {
+	let wrapper: VueWrapper<InstanceType<typeof FilteredSearch>>;
+
+	const applied = [
+		{ id: 'a', key: 'status', keyLabel: 'Status', operator: 'equals', operatorLabel: 'is', value: 'open', valueLabel: 'Open' },
+		{ id: 'b', key: 'author', keyLabel: 'Author', operator: 'equals', operatorLabel: 'is', value: 'ann', valueLabel: 'ann' },
+	];
+
+	beforeEach(() => {
+		vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function (this: Element) {
+			const token = this.closest('[data-filter-id]');
+			const left = [...document.querySelectorAll('[data-filter-id]')].indexOf(token as Element) * 100;
+			return DOMRect.fromRect({ x: left, y: 0, width: 90, height: 24 });
+		});
+	});
+
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
+	function drag(from: string, clientX: number, clientY = 10) {
+		const element = wrapper.get(from).element as HTMLElement;
+		element.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, button: 0, clientX: 10, clientY: 10 }));
+		window.dispatchEvent(new PointerEvent('pointermove', { clientX, clientY }));
+		window.dispatchEvent(new PointerEvent('pointerup', { clientX, clientY }));
+		return element;
+	}
+
+	async function dragStatusTo(clientX: number) {
+		drag('[data-filter-id="a"] [data-slot="filter-token-handle"]', clientX).click();
+		await flushPromises();
+	}
+
+	it('should move a token past the one it is dropped beyond', async () => {
+		wrapper = createComponent({ draggable: true, filters: applied });
+
+		await dragStatusTo(180);
+
+		expect(wrapper.emitted('update:filters')?.at(-1)?.[0]).toMatchObject([{ id: 'b' }, { id: 'a' }]);
+	});
+
+	it('should not open the dropdown when a dragged token is released', async () => {
+		wrapper = createComponent({ draggable: true, filters: applied });
+
+		await dragStatusTo(180);
+
+		expect(document.querySelector('[role="listbox"]')).toBeNull();
+	});
+
+	it('should swap a token once it covers 30% of its neighbour', async () => {
+		wrapper = createComponent({ draggable: true, filters: applied });
+
+		await dragStatusTo(50);
+
+		expect(wrapper.emitted('update:filters')?.at(-1)?.[0]).toMatchObject([{ id: 'b' }, { id: 'a' }]);
+	});
+
+	it('should keep a swapped token in place while it is dragged a little further', async () => {
+		wrapper = createComponent({ draggable: true, filters: applied });
+
+		const handle = wrapper.get('[data-filter-id="a"] [data-slot="filter-token-handle"]').element;
+		handle.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, button: 0, clientX: 10, clientY: 10 }));
+		window.dispatchEvent(new PointerEvent('pointermove', { clientX: 50, clientY: 10 }));
+		await flushPromises();
+		window.dispatchEvent(new PointerEvent('pointermove', { clientX: 60, clientY: 10 }));
+		await flushPromises();
+
+		expect(wrapper.emitted('update:filters')?.at(-1)?.[0]).toMatchObject([{ id: 'b' }, { id: 'a' }]);
+		window.dispatchEvent(new PointerEvent('pointerup', { clientX: 60, clientY: 10 }));
+	});
+
+	it('should place a token by the pointer x alone when the tokens do not wrap', async () => {
+		wrapper = createComponent({ draggable: true, filters: applied });
+
+		drag('[data-filter-id="a"] [data-slot="filter-token-handle"]', 30, 200);
+		await flushPromises();
+
+		expect(wrapper.emitted('update:filters')).toBeUndefined();
+	});
+
+	it('should drag a token only by its handle', async () => {
+		wrapper = createComponent({ draggable: true, filters: applied });
+
+		drag('[aria-label="Change Status filter type"]', 180);
+		await flushPromises();
+
+		expect(wrapper.emitted('update:filters')).toBeUndefined();
+	});
+});

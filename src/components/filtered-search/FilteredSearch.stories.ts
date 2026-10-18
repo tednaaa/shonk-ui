@@ -8,6 +8,8 @@ import FilteredSearchCustomButtonGroup from './examples/FilteredSearchCustomButt
 import filteredSearchCustomButtonGroupSource from './examples/FilteredSearchCustomButtonGroup.vue?raw';
 import FilteredSearchCustomEditor from './examples/FilteredSearchCustomEditor.vue';
 import filteredSearchCustomEditorSource from './examples/FilteredSearchCustomEditor.vue?raw';
+import FilteredSearchDraggable from './examples/FilteredSearchDraggable.vue';
+import filteredSearchDraggableSource from './examples/FilteredSearchDraggable.vue?raw';
 import FilteredSearchHistory from './examples/FilteredSearchHistory.vue';
 import filteredSearchHistorySource from './examples/FilteredSearchHistory.vue?raw';
 import FilteredSearchIcons from './examples/FilteredSearchIcons.vue';
@@ -145,6 +147,15 @@ export const Wrapped: Story = {
 	render: render({ FilteredSearchWrapped }, `
     <div class="max-w-md">
       <FilteredSearchWrapped />
+    </div>
+  `),
+};
+
+export const Draggable: Story = {
+	parameters: example(filteredSearchDraggableSource),
+	render: render({ FilteredSearchDraggable }, `
+    <div class="max-w-xl">
+      <FilteredSearchDraggable />
     </div>
   `),
 };
