@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.10.0 (2026-10-18)
+
+- feat(filtered-search): validate values [`4f89500e`](https://github.com/tednaaa/shonk-ui/commit/4f89500e7ec3ce10c70118a13193d19b34932e3d)
+- fix(confirm-dialog): show above dialogs [`8f5d4a59`](https://github.com/tednaaa/shonk-ui/commit/8f5d4a59b50b3d17b4c6c8bef49fb39a7a259c0b)
+- feat(filtered-search): draggable tokens [`855b9bce`](https://github.com/tednaaa/shonk-ui/commit/855b9bce94292a95c2ef61afd439010f3559186a)
+- feat(filtered-search): edit token parts [`b72a0f9d`](https://github.com/tednaaa/shonk-ui/commit/b72a0f9d5453bcf882bd5a9289ada18f2b9c544e)
+
 ## v0.9.2 (2026-10-15)
 
 - fix(filtered-search): wrap the field in a button group only when history is shown so it joins an outer button group again [`5a1ed1a3`](https://github.com/tednaaa/shonk-ui/commit/5a1ed1a3a504198cbb98d03a0d532c53040a674d)
