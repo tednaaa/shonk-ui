@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FocusOutsideEvent, PointerDownOutsideEvent } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
-import type { ActiveFilter, FilterDefinition, FilterHistoryItem, FilterOperator, FilterOption } from './types';
+import type { ActiveFilter, FilterDefinition, FilterHistoryItem, FilterOperator, FilterOption, FilterTokenSegment } from './types';
 import { CheckIcon, ChevronLeftIcon, CircleXIcon, SearchIcon, XIcon } from '@lucide/vue';
 import { createReusableTemplate } from '@vueuse/core';
 import { computed, nextTick, ref, watch } from 'vue';
@@ -12,7 +12,7 @@ import { ButtonGroup } from '../button-group';
 import { Popover, PopoverAnchor, PopoverContent } from '../popover';
 import FilterHistory from './FilterHistory.vue';
 import FilterToken from './FilterToken.vue';
-import { filteredSearchTokenListVariants, filteredSearchVariants, filterTokenVariants, searchTokenVariants } from './variants';
+import { filteredSearchTokenListVariants, filteredSearchVariants, filterTokenPartVariants, filterTokenVariants, searchTokenVariants } from './variants';
 
 const props = withDefaults(defineProps<{
 	definitions: FilterDefinition[];
@@ -37,6 +37,8 @@ defineSlots<{
 const filters = defineModel<ActiveFilter[]>('filters', { default: () => [] });
 const searchText = defineModel<string>('searchText', { default: '' });
 
+type TokenParts = Partial<Record<FilterTokenSegment, string>>;
+
 type DropdownStep
 	= | { phase: 'key' }
 		| { phase: 'operator'; key: string; keyLabel: string; operators: FilterOperator[] }
@@ -45,6 +47,8 @@ type DropdownStep
 const locale = useLocale();
 
 const [DefineField, ReuseField] = createReusableTemplate<{ fieldClass?: HTMLAttributes['class'] }>();
+const [DefineInput, ReuseInput] = createReusableTemplate();
+const [DefineParts, ReuseParts] = createReusableTemplate<{ parts: TokenParts; rounded: 'start' | 'end' }>();
 
 const isOpen = ref(false);
 const step = ref<DropdownStep>({ phase: 'key' });
@@ -53,6 +57,7 @@ const inputRef = ref<HTMLInputElement | null>(null);
 const anchorRef = ref<HTMLElement | null>(null);
 const highlightedIndex = ref(-1);
 const selectedValues = ref<FilterOption[]>([]);
+const editingId = ref<string | null>(null);
 
 function preventCloseOnAnchorInteract(e: PointerDownOutsideEvent | FocusOutsideEvent) {
 	const { target } = e.detail.originalEvent;
@@ -63,8 +68,10 @@ function preventCloseOnAnchorInteract(e: PointerDownOutsideEvent | FocusOutsideE
 const operatorStep = computed(() => step.value.phase === 'operator' ? step.value : null);
 const valueStep = computed(() => step.value.phase === 'value' ? step.value : null);
 
+const editingFilter = computed(() => filters.value.find(filter => filter.id === editingId.value) ?? null);
+
 const availableDefinitions = computed(() => props.definitions.filter(definition =>
-	!definition.unique || !filters.value.some(filter => filter.key === definition.key),
+	!definition.unique || !filters.value.some(filter => filter.key === definition.key && filter.id !== editingId.value),
 ));
 
 const filteredDefinitions = computed(() => {
@@ -119,6 +126,25 @@ const stepLabel = computed(() => {
 	return `${s.keyLabel} ${s.operatorLabel}`;
 });
 
+const pendingParts = computed<TokenParts | null>(() => {
+	const s = step.value;
+	if (s.phase === 'key')
+		return null;
+	return { key: s.keyLabel, operator: s.phase === 'value' ? s.operatorLabel : undefined };
+});
+
+const editedRest = computed<TokenParts | null>(() => {
+	const filter = editingFilter.value;
+	const s = step.value;
+	if (!filter)
+		return null;
+	if (s.phase === 'key')
+		return { operator: filter.operatorLabel, value: filter.valueLabel };
+	if (s.phase === 'operator' && s.key === filter.key)
+		return { value: filter.valueLabel };
+	return null;
+});
+
 const inputPlaceholder = computed(() => {
 	if (step.value.phase === 'value')
 		return locale.value.filteredSearch.enterValuePlaceholder;
@@ -129,15 +155,22 @@ const inputPlaceholder = computed(() => {
 	return props.placeholder ?? locale.value.filteredSearch.placeholder;
 });
 
+const editingInputSize = computed(() => Math.max(inputText.value.length, step.value.phase === 'key' ? 1 : inputPlaceholder.value.length));
+
 function focusInput() {
 	nextTick(() => inputRef.value?.focus());
 }
 
-function resetToKeyPhase() {
-	step.value = { phase: 'key' };
+function showStep(next: DropdownStep) {
+	step.value = next;
 	inputText.value = '';
 	highlightedIndex.value = -1;
 	selectedValues.value = [];
+}
+
+function resetToKeyPhase() {
+	editingId.value = null;
+	showStep({ phase: 'key' });
 }
 
 function selectKey(definition: FilterDefinition) {
@@ -147,6 +180,7 @@ function selectKey(definition: FilterDefinition) {
 		: { phase: 'operator', key: definition.key, keyLabel: definition.label, operators: definition.operators };
 	inputText.value = '';
 	highlightedIndex.value = -1;
+	prefillEditedValue();
 	focusInput();
 }
 
@@ -163,6 +197,7 @@ function selectOperator(operator: FilterOperator) {
 	};
 	inputText.value = '';
 	highlightedIndex.value = -1;
+	prefillEditedValue();
 	focusInput();
 }
 
@@ -170,18 +205,18 @@ function commitFilter(value: string | string[], valueLabel: string) {
 	const s = valueStep.value;
 	if (!s)
 		return;
-	filters.value = [
-		...filters.value,
-		{
-			id: crypto.randomUUID(),
-			key: s.key,
-			keyLabel: s.keyLabel,
-			operator: s.operator,
-			operatorLabel: s.operatorLabel,
-			value,
-			valueLabel,
-		},
-	];
+	const filter: ActiveFilter = {
+		id: editingId.value ?? crypto.randomUUID(),
+		key: s.key,
+		keyLabel: s.keyLabel,
+		operator: s.operator,
+		operatorLabel: s.operatorLabel,
+		value,
+		valueLabel,
+	};
+	filters.value = editingId.value
+		? filters.value.map(existing => existing.id === filter.id ? filter : existing)
+		: [...filters.value, filter];
 	resetToKeyPhase();
 	focusInput();
 }
@@ -227,6 +262,49 @@ function removeFilter(id: string) {
 	filters.value = filters.value.filter(filter => filter.id !== id);
 }
 
+function prefillEditedValue() {
+	const filter = editingFilter.value;
+	const definition = valueDefinition.value;
+	if (!filter || !definition || definition.key !== filter.key)
+		return;
+	const values = [filter.value].flat();
+	if (definition.multiSelect)
+		selectedValues.value = definition.options?.filter(option => values.includes(option.value)) ?? [];
+	else if (!definition.options && !definition.editor)
+		inputText.value = values.join(', ');
+}
+
+function showEditedKey() {
+	const filter = editingFilter.value;
+	if (!filter)
+		return;
+	showStep({ phase: 'key' });
+	inputText.value = filter.keyLabel;
+	nextTick(() => {
+		highlightedIndex.value = filteredDefinitions.value.findIndex(definition => definition.key === filter.key);
+	});
+}
+
+function editFilter(id: string, segment: FilterTokenSegment) {
+	const filter = filters.value.find(existing => existing.id === id);
+	const operators = props.definitions.find(definition => definition.key === filter?.key)?.operators ?? [];
+	if (!filter || !operators.length)
+		return;
+	editingId.value = id;
+	if (segment === 'key') {
+		showEditedKey();
+	}
+	else if (segment === 'operator' && operators.length > 1) {
+		showStep({ phase: 'operator', key: filter.key, keyLabel: filter.keyLabel, operators });
+	}
+	else {
+		showStep({ phase: 'value', key: filter.key, keyLabel: filter.keyLabel, operator: filter.operator, operatorLabel: filter.operatorLabel });
+		prefillEditedValue();
+	}
+	isOpen.value = true;
+	focusInput();
+}
+
 const hasActiveFilters = computed(() => filters.value.length > 0 || !!searchText.value);
 
 function clearAll() {
@@ -241,20 +319,26 @@ function selectHistoryItem(item: FilterHistoryItem) {
 	resetToKeyPhase();
 }
 
+function backToKey() {
+	if (editingId.value)
+		showEditedKey();
+	else
+		resetToKeyPhase();
+}
+
 function goBack() {
 	const s = step.value;
 	if (s.phase === 'operator') {
-		resetToKeyPhase();
+		backToKey();
 		focusInput();
 		return;
 	}
 	if (s.phase === 'value') {
 		const operators = valueDefinition.value?.operators ?? [];
-		const back: DropdownStep = operators.length > 1
-			? { phase: 'operator', key: s.key, keyLabel: s.keyLabel, operators }
-			: { phase: 'key' };
-		resetToKeyPhase();
-		step.value = back;
+		if (operators.length > 1)
+			showStep({ phase: 'operator', key: s.key, keyLabel: s.keyLabel, operators });
+		else
+			backToKey();
 	}
 	focusInput();
 }
@@ -270,7 +354,7 @@ function confirmHighlighted() {
 		if (highlightedIndex.value >= 0) {
 			selectKey(filteredDefinitions.value[highlightedIndex.value]);
 		}
-		else if (props.searchable && inputText.value.trim()) {
+		else if (props.searchable && !editingId.value && inputText.value.trim()) {
 			searchText.value = inputText.value.trim();
 			inputText.value = '';
 			isOpen.value = false;
@@ -301,10 +385,16 @@ function stepBackOnEmptyInput() {
 		goBack();
 		return;
 	}
-	if (filters.value.length > 0)
+	if (editingId.value) {
+		removeFilter(editingId.value);
+		resetToKeyPhase();
+	}
+	else if (filters.value.length > 0) {
 		filters.value = filters.value.slice(0, -1);
-	else if (searchText.value)
+	}
+	else if (searchText.value) {
 		searchText.value = '';
+	}
 }
 
 function handleKeydown(e: KeyboardEvent) {
@@ -348,6 +438,31 @@ watch(isOpen, (open) => {
 
 <template>
 	<Popover v-model:open="isOpen">
+		<DefineInput>
+			<PopoverAnchor v-if="!viewOnly" as-child>
+				<input
+					ref="inputRef"
+					v-model="inputText"
+					:placeholder="inputPlaceholder"
+					:readonly="step.phase === 'operator'"
+					:size="editingId ? editingInputSize : undefined"
+					:class="cn('bg-transparent text-sm outline-none placeholder:text-muted-foreground', editingId ? 'w-auto shrink-0' : 'min-w-20 flex-1', step.phase === 'key' && 'focus:placeholder:text-transparent')"
+					@focus="isOpen = true"
+					@keydown="handleKeydown"
+				>
+			</PopoverAnchor>
+		</DefineInput>
+
+		<DefineParts #default="{ parts, rounded }">
+			<span :class="filterTokenVariants({ rounded })">
+				<template v-for="(label, part) in parts" :key="part">
+					<span v-if="label" :class="filterTokenPartVariants({ part })">
+						<span class="truncate">{{ label }}</span>
+					</span>
+				</template>
+			</span>
+		</DefineParts>
+
 		<DefineField #default="{ fieldClass }">
 			<div
 				ref="anchorRef"
@@ -372,32 +487,26 @@ watch(isOpen, (open) => {
 						</button>
 					</span>
 
-					<FilterToken
-						v-for="filter in filters"
-						:key="filter.id"
-						:filter="filter"
-						:removable="!viewOnly"
-						@remove="removeFilter"
-					/>
+					<template v-for="filter in filters" :key="filter.id">
+						<FilterToken
+							v-if="filter.id !== editingId"
+							:filter="filter"
+							:removable="!viewOnly"
+							:editable="!viewOnly"
+							@remove="removeFilter"
+							@edit="editFilter"
+						/>
+						<template v-else>
+							<ReuseParts v-if="pendingParts" :parts="pendingParts" rounded="start" />
+							<ReuseInput />
+							<ReuseParts v-if="editedRest" :parts="editedRest" rounded="end" />
+						</template>
+					</template>
 
-					<span
-						v-if="stepLabel"
-						:class="filterTokenVariants({ removable: false })"
-					>
-						{{ stepLabel }}
-					</span>
-
-					<PopoverAnchor v-if="!viewOnly" as-child>
-						<input
-							ref="inputRef"
-							v-model="inputText"
-							:placeholder="inputPlaceholder"
-							:readonly="step.phase === 'operator'"
-							:class="cn('min-w-20 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground', step.phase === 'key' && 'focus:placeholder:text-transparent')"
-							@focus="isOpen = true"
-							@keydown="handleKeydown"
-						>
-					</PopoverAnchor>
+					<template v-if="!editingId">
+						<ReuseParts v-if="pendingParts" :parts="pendingParts" rounded="start" />
+						<ReuseInput />
+					</template>
 				</div>
 
 				<slot name="suffix" />

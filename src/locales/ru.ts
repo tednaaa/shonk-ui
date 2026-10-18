@@ -73,6 +73,9 @@ export const ru: ShonkLocale = {
 		clearButtonAriaLabel: 'Очистить все фильтры',
 		removeSearchButtonAriaLabel: 'Убрать поиск',
 		removeFilterButtonAriaLabel: filter => `Убрать фильтр «${filter}»`,
+		editFilterButtonAriaLabel: filter => `Изменить фильтр «${filter}»`,
+		changeOperatorButtonAriaLabel: filter => `Изменить условие фильтра «${filter}»`,
+		changeKeyButtonAriaLabel: filter => `Изменить тип фильтра «${filter}»`,
 	},
 
 	inputPassword: {

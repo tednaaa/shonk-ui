@@ -47,17 +47,39 @@ export const searchTokenVariants = cva(
 	},
 );
 
-export const filterTokenVariants = cva(
-	'inline-flex h-6 shrink-0 items-center gap-1 rounded-md border border-border bg-secondary pl-2 text-xs text-secondary-foreground',
+export const filterTokenVariants = cva('inline-flex h-6 shrink-0 items-stretch gap-px text-xs', {
+	variants: {
+		rounded: {
+			both: '*:first:rounded-l-md *:last:rounded-r-md',
+			start: '*:first:rounded-l-md',
+			end: '*:last:rounded-r-md',
+		},
+	},
+	defaultVariants: {
+		rounded: 'both',
+	},
+});
+
+export const filterTokenPartVariants = cva(
+	'inline-flex min-w-0 items-center px-1.5 focus:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset',
 	{
 		variants: {
-			removable: {
-				true: 'pr-1',
-				false: 'pr-2',
+			part: {
+				key: 'shrink-0 bg-secondary font-medium text-secondary-foreground',
+				operator: 'shrink-0 bg-secondary text-muted-foreground',
+				value: 'gap-1 bg-input/70 text-secondary-foreground',
+			},
+			editable: {
+				true: 'cursor-pointer',
+				false: '',
 			},
 		},
+		compoundVariants: [
+			{ part: ['key', 'operator'], editable: true, class: 'hover:bg-secondary/70' },
+			{ part: 'value', editable: true, class: 'hover:bg-input/50' },
+		],
 		defaultVariants: {
-			removable: true,
+			editable: false,
 		},
 	},
 );

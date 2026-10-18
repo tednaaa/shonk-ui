@@ -453,3 +453,140 @@ describe('filteredSearch multi select', () => {
 		expect(input.attributes('placeholder')).toBe('Enter value…');
 	});
 });
+
+describe('filteredSearch editing a filter', () => {
+	let wrapper: VueWrapper<InstanceType<typeof FilteredSearch>>;
+
+	const editDefinitions: FilterDefinition[] = [
+		{
+			key: 'label',
+			label: 'Label',
+			multiSelect: true,
+			operators: [{ value: 'oneOf', label: 'is one of' }],
+			options: [
+				{ value: 'bug', label: 'bug' },
+				{ value: 'wip', label: 'WIP' },
+				{ value: 'docs', label: 'docs' },
+			],
+		},
+		{
+			key: 'author',
+			label: 'Author',
+			unique: true,
+			operators: [
+				{ value: 'equals', label: 'is' },
+				{ value: 'notEquals', label: 'is not' },
+			],
+		},
+	];
+
+	const applied = [
+		{ id: 'a', key: 'label', keyLabel: 'Label', operator: 'oneOf', operatorLabel: 'is one of', value: ['bug'], valueLabel: 'bug' },
+		{ id: 'b', key: 'author', keyLabel: 'Author', operator: 'equals', operatorLabel: 'is', value: 'ann', valueLabel: 'ann' },
+	];
+
+	async function editToken(name: string) {
+		await wrapper.get(`[aria-label="Edit ${name} filter"]`).trigger('click');
+		await flushPromises();
+		return wrapper.find('input');
+	}
+
+	it('should reopen the picks of a multi select filter and replace it in place', async () => {
+		wrapper = createComponent({ definitions: editDefinitions, filters: applied });
+
+		const input = await editToken('Label');
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'Enter' });
+		await input.trigger('keydown', { key: 'ArrowUp' });
+		await input.trigger('keydown', { key: 'ArrowUp' });
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+
+		expect(wrapper.emitted('update:filters')?.at(-1)?.[0]).toMatchObject([
+			{ id: 'a', key: 'label', value: ['bug', 'wip'], valueLabel: 'bug, WIP' },
+			{ id: 'b', key: 'author', value: 'ann' },
+		]);
+	});
+
+	it('should prefill a typed value and replace it in place', async () => {
+		wrapper = createComponent({ definitions: editDefinitions, filters: applied });
+
+		const input = await editToken('Author');
+
+		expect((input.element as HTMLInputElement).value).toBe('ann');
+
+		await input.setValue('bob');
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+
+		expect(wrapper.emitted('update:filters')?.at(-1)?.[0]).toMatchObject([
+			{ id: 'a', key: 'label', value: ['bug'] },
+			{ id: 'b', key: 'author', value: 'bob' },
+		]);
+	});
+
+	it('should edit the filter where its token sits instead of after the last one', async () => {
+		wrapper = createComponent({ definitions: editDefinitions, filters: applied });
+
+		const input = await editToken('Label');
+		const nextToken = wrapper.get('[aria-label="Edit Author filter"]').element;
+
+		expect(input.element.compareDocumentPosition(nextToken) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+	});
+
+	it('should change the operator and keep the value when the operator is clicked', async () => {
+		wrapper = createComponent({ definitions: editDefinitions, filters: applied });
+
+		await wrapper.get('[aria-label="Change Author operator"]').trigger('click');
+		await flushPromises();
+		const input = wrapper.find('input');
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+
+		expect(wrapper.emitted('update:filters')?.at(-1)?.[0]).toMatchObject([
+			{ id: 'a', key: 'label' },
+			{ id: 'b', key: 'author', operator: 'notEquals', operatorLabel: 'is not', value: 'ann' },
+		]);
+	});
+
+	it('should reopen the key list with the key typed in and keep the rest when the key is clicked', async () => {
+		wrapper = createComponent({ definitions: editDefinitions, filters: applied });
+
+		await wrapper.get('[aria-label="Change Author filter type"]').trigger('click');
+		await flushPromises();
+		const input = wrapper.find('input');
+
+		expect((input.element as HTMLInputElement).value).toBe('Author');
+		const rest = [...input.element.nextElementSibling?.children ?? []].map(part => part.textContent?.trim());
+		expect(rest).toEqual(['is', 'ann']);
+
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+
+		expect(wrapper.emitted('update:filters')?.at(-1)?.[0]).toMatchObject([
+			{ id: 'a', key: 'label' },
+			{ id: 'b', key: 'author', operator: 'equals', value: 'ann' },
+		]);
+	});
+
+	it('should leave the filter untouched when the edit is cancelled', async () => {
+		wrapper = createComponent({ definitions: editDefinitions, filters: applied });
+
+		const input = await editToken('Author');
+		await input.trigger('keydown', { key: 'Escape' });
+		await flushPromises();
+
+		expect(wrapper.emitted('update:filters')).toBeUndefined();
+		expect(wrapper.find('[aria-label="Edit Author filter"]').exists()).toBe(true);
+	});
+});

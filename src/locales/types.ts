@@ -71,6 +71,9 @@ export interface ShonkLocale {
 		clearButtonAriaLabel: string;
 		removeSearchButtonAriaLabel: string;
 		removeFilterButtonAriaLabel: (filter: string) => string;
+		editFilterButtonAriaLabel: (filter: string) => string;
+		changeOperatorButtonAriaLabel: (filter: string) => string;
+		changeKeyButtonAriaLabel: (filter: string) => string;
 	};
 
 	inputPassword: {

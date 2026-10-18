@@ -35,3 +35,5 @@ export interface FilterHistoryItem {
 	filters: ActiveFilter[];
 	searchText?: string;
 }
+
+export type FilterTokenSegment = 'key' | 'operator' | 'value';
