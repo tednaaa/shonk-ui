@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.10.1 (2026-10-18)
+
+- feat(filtered-search): jump to earlier step [`33d619f0`](https://github.com/tednaaa/shonk-ui/commit/33d619f05404761781e519399ea367c508652b96)
+
 ## v0.10.0 (2026-10-18)
 
 - feat(filtered-search): validate values [`4f89500e`](https://github.com/tednaaa/shonk-ui/commit/4f89500e7ec3ce10c70118a13193d19b34932e3d)
