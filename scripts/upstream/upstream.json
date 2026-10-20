@@ -162,6 +162,9 @@
 		},
 		"menubar": {
 			"ref": "de1f76cb"
+		},
+		"navigation-menu": {
+			"ref": "de1f76cb"
 		}
 	},
 	"skipped": {
