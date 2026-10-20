@@ -324,6 +324,7 @@ describe('dataTable', () => {
 
 		afterEach(() => {
 			vi.unstubAllGlobals();
+			vi.useRealTimers();
 		});
 
 		async function mountPinnedTable(options: MountOptions = {}) {
@@ -1144,6 +1145,7 @@ describe('dataTable', () => {
 		}
 
 		beforeEach(() => {
+			vi.useFakeTimers({ toFake: ['setTimeout'] });
 			scrollTop = 0;
 			scrollHeight = 1000;
 			vi.stubGlobal('IntersectionObserver', VisibleIntersectionObserver);
