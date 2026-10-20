@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.12.1 (2026-10-20)
+
+- perf(filtered-search): memo option rows [`7113be1e`](https://github.com/tednaaa/shonk-ui/commit/7113be1e7ea66a0e044591f1d1972fa4f2c87888)
+
 ## v0.12.0 (2026-10-20)
 
 - feat(filtered-search): render options per filter [`0077310a`](https://github.com/tednaaa/shonk-ui/commit/0077310a315de603a13ec972bb5bf06837e43c41)
