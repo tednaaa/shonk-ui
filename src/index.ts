@@ -18,6 +18,7 @@ export * from './components/context-menu';
 export * from './components/data-table';
 export * from './components/date-picker';
 export * from './components/dialog';
+export * from './components/drawer';
 export * from './components/dropdown-menu';
 export * from './components/filtered-search';
 export * from './components/hover-card';

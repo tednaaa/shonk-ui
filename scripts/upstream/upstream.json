@@ -156,6 +156,9 @@
 		},
 		"number-field": {
 			"ref": "de1f76cb"
+		},
+		"drawer": {
+			"ref": "de1f76cb"
 		}
 	},
 	"skipped": {
