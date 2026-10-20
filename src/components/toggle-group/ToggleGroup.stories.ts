@@ -38,10 +38,10 @@ export const Single: Story = {
 	),
 };
 
-export const Outline: Story = {
+export const Secondary: Story = {
 	render: render(
 		formatting,
-		`<ToggleGroup type="multiple" variant="outline" :spacing="1" :default-value="['bold']">
+		`<ToggleGroup type="multiple" variant="secondary" :spacing="1" :default-value="['bold']">
       <ToggleGroupItem value="bold" aria-label="Bold"><BoldIcon /></ToggleGroupItem>
       <ToggleGroupItem value="italic" aria-label="Italic"><ItalicIcon /></ToggleGroupItem>
       <ToggleGroupItem value="underline" aria-label="Underline"><UnderlineIcon /></ToggleGroupItem>
@@ -52,7 +52,7 @@ export const Outline: Story = {
 export const Joined: Story = {
 	render: render(
 		{ ToggleGroup, ToggleGroupItem },
-		`<ToggleGroup type="single" variant="outline" default-value="week">
+		`<ToggleGroup type="single" variant="secondary" default-value="week">
       <ToggleGroupItem value="day">Day</ToggleGroupItem>
       <ToggleGroupItem value="week">Week</ToggleGroupItem>
       <ToggleGroupItem value="month">Month</ToggleGroupItem>

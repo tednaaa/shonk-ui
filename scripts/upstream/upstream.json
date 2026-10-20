@@ -148,9 +148,6 @@
 		"kbd": {
 			"ref": "de1f76cb"
 		},
-		"toggle": {
-			"ref": "de1f76cb"
-		},
 		"toggle-group": {
 			"ref": "de1f76cb"
 		},
@@ -195,6 +192,7 @@
 		"form": "ties the kit to vee-validate",
 		"field": "not needed",
 		"item": "not needed",
-		"questionnaire": "skipped for now"
+		"questionnaire": "skipped for now",
+		"toggle": "Button v-model:pressed covers it"
 	}
 }

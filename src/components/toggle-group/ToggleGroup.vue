@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ToggleGroupRootEmits, ToggleGroupRootProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
-import type { ToggleVariants } from '../toggle';
+import type { ButtonVariants } from '../button';
 import { reactiveOmit } from '@vueuse/core';
 import { ToggleGroupRoot, useForwardPropsEmits } from 'reka-ui';
 import { computed, provide } from 'vue';
@@ -10,8 +10,8 @@ import { toggleGroupKey } from './context';
 
 const props = withDefaults(defineProps<ToggleGroupRootProps & {
 	class?: HTMLAttributes['class'];
-	variant?: ToggleVariants['variant'];
-	size?: ToggleVariants['size'];
+	variant?: ButtonVariants['variant'];
+	size?: ButtonVariants['size'];
 	spacing?: number;
 }>(), {
 	spacing: 0,
@@ -38,7 +38,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 		:data-spacing="spacing"
 		:style="{ '--gap': spacing }"
 		v-bind="forwarded"
-		:class="cn('group/toggle-group flex w-fit items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=0]:data-[variant=outline]:shadow-xs', props.class)"
+		:class="cn('group/toggle-group flex w-fit items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=0]:data-[variant=secondary]:shadow-xs', props.class)"
 	>
 		<slot v-bind="slotProps" />
 	</ToggleGroupRoot>

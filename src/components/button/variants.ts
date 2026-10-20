@@ -21,6 +21,9 @@ export const buttonVariants = cva(
 				'icon-sm': 'size-9',
 				'icon-lg': 'size-11',
 			},
+			pressable: {
+				true: 'data-[state=off]:hover:bg-muted data-[state=on]:bg-accent data-[state=on]:text-accent-foreground',
+			},
 		},
 		defaultVariants: {
 			variant: 'default',

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { MailIcon, SearchIcon } from '@lucide/vue';
+import { BoldIcon, BookmarkIcon, MailIcon, SearchIcon } from '@lucide/vue';
+import { ref } from 'vue';
 import { render, showControls } from '@/lib/storybook';
 import { Button } from '.';
 
@@ -61,4 +62,19 @@ export const Loading: Story = {
 
 export const Disabled: Story = {
 	args: { disabled: true },
+};
+
+export const Pressed: Story = {
+	render: () => ({
+		components: { Button, BoldIcon, BookmarkIcon },
+		setup: () => ({ bold: ref(false), bookmarked: ref(true) }),
+		template: `
+  <div class="flex items-center gap-3">
+    <Button v-model:pressed="bold" variant="ghost" size="icon" aria-label="Bold"><BoldIcon /></Button>
+    <Button v-model:pressed="bookmarked" variant="secondary" class="data-[state=on]:*:[svg]:fill-current">
+      <BookmarkIcon />Bookmark
+    </Button>
+  </div>
+`,
+	}),
 };

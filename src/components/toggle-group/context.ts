@@ -1,9 +1,9 @@
 import type { InjectionKey, Ref } from 'vue';
-import type { ToggleVariants } from '../toggle';
+import type { ButtonVariants } from '../button';
 
 export interface ToggleGroupContext {
-	variant?: ToggleVariants['variant'];
-	size?: ToggleVariants['size'];
+	variant?: ButtonVariants['variant'];
+	size?: ButtonVariants['size'];
 	spacing: number;
 }
 
