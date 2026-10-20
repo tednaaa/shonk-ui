@@ -168,6 +168,12 @@
 		},
 		"marker": {
 			"ref": "de1f76cb"
+		},
+		"message": {
+			"ref": "de1f76cb"
+		},
+		"bubble": {
+			"ref": "de1f76cb"
 		}
 	},
 	"skipped": {
