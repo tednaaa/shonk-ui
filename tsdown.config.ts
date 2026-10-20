@@ -4,8 +4,8 @@ export default defineConfig({
 	entry: {
 		'index': 'src/index.ts',
 		'charts': 'src/charts.ts',
-		'theme-validator': 'scripts/theme-validator.ts',
-		'validate-themes': 'scripts/validate-themes.ts',
+		'theme/theme-validator': 'scripts/theme/theme-validator.ts',
+		'theme/validate-themes': 'scripts/theme/validate-themes.ts',
 	},
 	platform: 'neutral',
 	deps: { neverBundle: [/^node:/] },

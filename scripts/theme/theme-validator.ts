@@ -180,7 +180,7 @@ let contract: ParsedTheme | undefined;
 
 function getContract(): ParsedTheme {
 	if (!contract) {
-		contract = parse(readFileSync(new URL('../src/styles/theme.css', import.meta.url), 'utf8'));
+		contract = parse(readFileSync(new URL('../../src/styles/theme.css', import.meta.url), 'utf8'));
 		if (contract.diagnostics.length)
 			throw new Error(`Invalid shonk-ui theme contract: ${contract.diagnostics[0]!.message}`);
 	}

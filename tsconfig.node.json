@@ -15,7 +15,7 @@
 		"skipLibCheck": true
 	},
 	"include": [
-		"scripts/*.ts",
+		"scripts/**/*.ts",
 		"vite.config.ts",
 		"tsdown.config.ts",
 		"eslint.config.ts"

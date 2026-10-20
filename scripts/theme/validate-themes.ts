@@ -16,7 +16,7 @@ else if (options.some(argument => argument.startsWith('-'))) {
 	process.exitCode = 1;
 }
 else {
-	const styles = new URL('../src/styles/', import.meta.url);
+	const styles = new URL('../../src/styles/', import.meta.url);
 	const files = separator === -1 ? args : [...options, ...args.slice(separator + 1)];
 	if (!files.length) {
 		files.push(fileURLToPath(new URL('theme.css', styles)));

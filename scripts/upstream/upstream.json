@@ -1,0 +1,150 @@
+{
+	"repo": "https://github.com/unovue/shadcn-vue.git",
+	"branch": "dev",
+	"path": "apps/v4/registry/new-york-v4/ui",
+	"vendored": {
+		"accordion": {
+			"ref": "3f048dfb"
+		},
+		"alert": {
+			"ref": "3f048dfb"
+		},
+		"aspect-ratio": {
+			"ref": "3f048dfb"
+		},
+		"avatar": {
+			"ref": "3f048dfb"
+		},
+		"badge": {
+			"ref": "3f048dfb"
+		},
+		"breadcrumb": {
+			"ref": "3f048dfb"
+		},
+		"button": {
+			"ref": "3f048dfb"
+		},
+		"button-group": {
+			"ref": "3f048dfb"
+		},
+		"calendar": {
+			"ref": "3f048dfb"
+		},
+		"card": {
+			"ref": "3f048dfb"
+		},
+		"carousel": {
+			"ref": "3f048dfb"
+		},
+		"chart": {
+			"ref": "b251d9fd"
+		},
+		"checkbox": {
+			"ref": "3f048dfb"
+		},
+		"collapsible": {
+			"ref": "3f048dfb"
+		},
+		"combobox": {
+			"ref": "3f048dfb"
+		},
+		"command": {
+			"ref": "3f048dfb"
+		},
+		"context-menu": {
+			"ref": "3f048dfb"
+		},
+		"dialog": {
+			"ref": "3f048dfb"
+		},
+		"dropdown-menu": {
+			"ref": "3f048dfb"
+		},
+		"hover-card": {
+			"ref": "3f048dfb"
+		},
+		"input": {
+			"ref": "3f048dfb"
+		},
+		"input-group": {
+			"ref": "3f048dfb"
+		},
+		"input-otp": {
+			"ref": "67c9a392"
+		},
+		"label": {
+			"ref": "3f048dfb"
+		},
+		"native-select": {
+			"ref": "3f048dfb"
+		},
+		"pagination": {
+			"ref": "3f048dfb"
+		},
+		"popover": {
+			"ref": "3f048dfb"
+		},
+		"progress": {
+			"ref": "67c9a392"
+		},
+		"radio-group": {
+			"ref": "3f048dfb"
+		},
+		"range-calendar": {
+			"ref": "3f048dfb"
+		},
+		"resizable": {
+			"ref": "3f048dfb"
+		},
+		"scroll-area": {
+			"ref": "3f048dfb"
+		},
+		"select": {
+			"ref": "3f048dfb"
+		},
+		"separator": {
+			"ref": "3f048dfb"
+		},
+		"sheet": {
+			"ref": "3f048dfb"
+		},
+		"sidebar": {
+			"ref": "3f048dfb"
+		},
+		"skeleton": {
+			"ref": "3f048dfb"
+		},
+		"slider": {
+			"ref": "3f048dfb"
+		},
+		"spinner": {
+			"ref": "3f048dfb"
+		},
+		"stepper": {
+			"ref": "3f048dfb"
+		},
+		"switch": {
+			"ref": "3f048dfb"
+		},
+		"table": {
+			"ref": "3f048dfb"
+		},
+		"tabs": {
+			"ref": "3f048dfb"
+		},
+		"tags-input": {
+			"ref": "3f048dfb"
+		},
+		"textarea": {
+			"ref": "3f048dfb"
+		},
+		"toast": {
+			"ref": "3f048dfb",
+			"from": "sonner"
+		},
+		"tooltip": {
+			"ref": "3f048dfb"
+		}
+	},
+	"skipped": {}
+}

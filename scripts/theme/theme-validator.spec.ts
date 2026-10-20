@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { afterAll, describe, expect, it } from 'vitest';
 import { validateThemeCss } from './theme-validator';
 
-const styles = new URL('../src/styles/', import.meta.url);
+const styles = new URL('../../src/styles/', import.meta.url);
 const preset = readFileSync(new URL('themes/atlas.css', styles), 'utf8');
 const darkStart = preset.indexOf('.dark ');
 const light = preset.slice(0, darkStart);
@@ -161,7 +161,7 @@ describe('theme validation', () => {
 
 describe('published CLI', () => {
 	const directory = mkdtempSync(join(tmpdir(), 'shonk-theme-validator-'));
-	const cli = fileURLToPath(new URL('../dist/validate-themes.js', import.meta.url));
+	const cli = fileURLToPath(new URL('../../dist/theme/validate-themes.js', import.meta.url));
 	const valid = join(directory, 'valid theme.css');
 	const invalid = join(directory, 'invalid.css');
 	const malformed = join(directory, 'malformed.css');
