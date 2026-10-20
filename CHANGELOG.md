@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.12.2 (2026-10-20)
+
+- feat(filtered-search): list picks first on edit [`bb1f6030`](https://github.com/tednaaa/shonk-ui/commit/bb1f60303baa5876d30c43575e953165b212b793)
+
 ## v0.12.1 (2026-10-20)
 
 - perf(filtered-search): memo option rows [`7113be1e`](https://github.com/tednaaa/shonk-ui/commit/7113be1e7ea66a0e044591f1d1972fa4f2c87888)
