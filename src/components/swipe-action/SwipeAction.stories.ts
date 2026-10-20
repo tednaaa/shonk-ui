@@ -19,7 +19,15 @@ const meta: Meta<typeof SwipeAction> = {
 	parameters: {
 		docs: {
 			description: {
-				component: 'A row whose sideways swipe reveals an action. Fill the `left-action` slot, the `right-action` slot, or both — the row only travels towards a side that has one. A short swipe past `openThreshold` snaps the row open so the action can be confirmed with a tap; dragging on past `triggerThreshold` sweeps the row away and emits `trigger` with the side that fired. Gestures are touch-only, so enable device emulation to try them with a mouse. Each action is a real button that opens the row on focus, which keeps it reachable without a touchscreen.',
+				component: [
+					'A row whose sideways swipe reveals an action.',
+					'',
+					'- fill the `left-action` slot, the `right-action` slot or both; the row only travels towards a side that has one',
+					'- a short swipe past `openThreshold` snaps the row open so the action can be confirmed with a tap',
+					'- dragging on past `triggerThreshold` sweeps the row away and emits `trigger` with the side that fired',
+					'- gestures are touch-only, so enable device emulation to try them with a mouse',
+					'- each action is a real button that opens the row on focus, which keeps it reachable without a touchscreen',
+				].join('\n'),
 			},
 		},
 	},
@@ -67,7 +75,12 @@ export const BothSides: Story = {
 export const Thresholds: Story = {
 	parameters: example(
 		swipeThresholdsSource,
-		'Both thresholds are fractions, but of different widths. `triggerThreshold` is a fraction of the whole row and defaults to `0.6`: swipe the same distance down both lists and the eager one deletes where the deliberate one only snaps open. `openThreshold` is a fraction of the action button instead, defaulting to `0.5`, and decides how far you must drag before a released row stays open rather than springing shut.',
+		[
+			'Both thresholds are fractions, but of different widths.',
+			'',
+			'- `triggerThreshold` is a fraction of the whole row, `0.6` by default: swipe the same distance down both lists and the eager one deletes where the deliberate one only snaps open',
+			'- `openThreshold` is a fraction of the action button, `0.5` by default, and decides how far to drag before a released row stays open rather than springing shut',
+		].join('\n'),
 	),
 	render: render({ SwipeThresholds, StorybookLabel }, `
     <div class="mx-auto max-w-sm space-y-2">
