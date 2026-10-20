@@ -159,6 +159,9 @@
 		},
 		"drawer": {
 			"ref": "de1f76cb"
+		},
+		"menubar": {
+			"ref": "de1f76cb"
 		}
 	},
 	"skipped": {
