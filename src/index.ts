@@ -28,6 +28,7 @@ export * from './components/input-password';
 export * from './components/kbd';
 export * from './components/label';
 export * from './components/native-select';
+export * from './components/number-field';
 export * from './components/pagination';
 export * from './components/popover';
 export * from './components/progress';
