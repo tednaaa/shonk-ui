@@ -50,7 +50,7 @@ Keep these when an upstream hunk touches them:
 - `tooltip` — `bg-primary text-primary-foreground` content; `Tooltip` takes `content`, `side`, `contentClass` and brings its own provider
 - `kbd` — inside tooltip content takes `primary-foreground` tones, following the `bg-primary` tooltip
 - `toggle` — `outline` hovers on `bg-muted`, not the `bg-accent` of the pressed state
-- `attachment` — `animate-pulse` for uploading and processing titles, a group without the scroll fade: upstream `shimmer` and `scroll-fade-*` live in its docs-site CSS, not the registry
+- `attachment`, `trace` — `animate-pulse` for in-progress titles, a group without the scroll fade: upstream `shimmer` and `scroll-fade-*` live in its docs-site CSS, not the registry
 - `message-scroller` — viewport and button copy come from the `messageScroller` locale; section comments dropped, the three explanatory ones kept as `NOTE:` lines
 - every button in the kit renders `type="button"`
 

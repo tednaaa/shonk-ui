@@ -180,6 +180,9 @@
 		},
 		"message-scroller": {
 			"ref": "de1f76cb"
+		},
+		"trace": {
+			"ref": "de1f76cb"
 		}
 	},
 	"skipped": {
