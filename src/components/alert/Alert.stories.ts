@@ -3,7 +3,7 @@ import { render, showControls, StorybookLabel } from '@/lib/storybook';
 import { Alert } from '.';
 
 const meta: Meta<typeof Alert> = {
-	title: 'Components/Alert',
+	title: 'Feedback/Alert',
 	component: Alert,
 	tags: ['autodocs'],
 	args: {

@@ -5,7 +5,7 @@ import ConfirmDialogDefault from './examples/ConfirmDialogDefault.vue';
 import confirmDialogDefaultSource from './examples/ConfirmDialogDefault.vue?raw';
 
 const meta: Meta<typeof ConfirmDialog> = {
-	title: 'Components/ConfirmDialog',
+	title: 'Overlays/ConfirmDialog',
 	component: ConfirmDialog,
 	tags: ['autodocs'],
 	render: render({ ConfirmDialogDefault }, `<ConfirmDialogDefault />`),

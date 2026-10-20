@@ -5,7 +5,7 @@ import ProgressAnimated from './examples/ProgressAnimated.vue';
 import progressAnimatedSource from './examples/ProgressAnimated.vue?raw';
 
 const meta: Meta<typeof Progress> = {
-	title: 'Components/Progress',
+	title: 'Feedback/Progress',
 	component: Progress,
 	tags: ['autodocs'],
 	args: { modelValue: 60, max: 100 },

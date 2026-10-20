@@ -12,7 +12,7 @@ import TextareaWithLabel from './examples/TextareaWithLabel.vue';
 import textareaWithLabelSource from './examples/TextareaWithLabel.vue?raw';
 
 const meta: Meta<typeof Textarea> = {
-	title: 'Components/Textarea',
+	title: 'Forms/Textarea',
 	component: Textarea,
 	tags: ['autodocs'],
 	render: args => ({

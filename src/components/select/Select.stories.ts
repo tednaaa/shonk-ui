@@ -26,7 +26,7 @@ const components = {
 const selectComponent: FunctionalComponent<ComponentPropsAndSlots<typeof Select>> = Select;
 
 const meta: Meta<typeof Select> = {
-	title: 'Components/Select',
+	title: 'Forms/Select',
 	component: selectComponent,
 	tags: ['autodocs'],
 	render: render(

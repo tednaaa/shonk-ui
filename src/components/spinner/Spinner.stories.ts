@@ -4,7 +4,7 @@ import { Spinner } from '.';
 import { Button } from '../button';
 
 const meta: Meta<typeof Spinner> = {
-	title: 'Components/Spinner',
+	title: 'Feedback/Spinner',
 	component: Spinner,
 	tags: ['autodocs'],
 	render: render({ Spinner }, `<Spinner v-bind="args" />`),

@@ -65,7 +65,7 @@ const trigger = `<ContextMenuTrigger class="border-border text-muted-foreground 
       </ContextMenuTrigger>`;
 
 const meta: Meta<typeof ContextMenu> = {
-	title: 'Components/ContextMenu',
+	title: 'Overlays/ContextMenu',
 	component: ContextMenu,
 	tags: ['autodocs'],
 	render: render(

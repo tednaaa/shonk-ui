@@ -17,7 +17,7 @@ const components = {
 };
 
 const meta: Meta<typeof NativeSelect> = {
-	title: 'Components/NativeSelect',
+	title: 'Forms/NativeSelect',
 	component: NativeSelect,
 	tags: ['autodocs'],
 	render: render(

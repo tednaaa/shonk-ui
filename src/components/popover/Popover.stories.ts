@@ -23,7 +23,7 @@ const components = {
 };
 
 const meta: Meta<typeof Popover> = {
-	title: 'Components/Popover',
+	title: 'Overlays/Popover',
 	component: Popover,
 	tags: ['autodocs'],
 	render: render(

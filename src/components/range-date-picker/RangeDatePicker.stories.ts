@@ -9,7 +9,7 @@ import RangeDatePickerWithPresets from './examples/RangeDatePickerWithPresets.vu
 import rangeDatePickerWithPresetsSource from './examples/RangeDatePickerWithPresets.vue?raw';
 
 const meta: Meta<typeof RangeDatePicker> = {
-	title: 'Components/RangeDatePicker',
+	title: 'Dates/RangeDatePicker',
 	component: RangeDatePicker,
 	tags: ['autodocs'],
 	args: {

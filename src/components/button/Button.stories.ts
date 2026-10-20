@@ -4,7 +4,7 @@ import { render, showControls } from '@/lib/storybook';
 import { Button } from '.';
 
 const meta: Meta<typeof Button> = {
-	title: 'Components/Button',
+	title: 'Actions/Button',
 	component: Button,
 	tags: ['autodocs'],
 	render: render({ Button }, `<Button v-bind="args">Button</Button>`),

@@ -15,7 +15,7 @@ import { Input } from '../input';
 import { Label } from '../label';
 
 const meta: Meta<typeof Card> = {
-	title: 'Components/Card',
+	title: 'Data/Card',
 	component: Card,
 	tags: ['autodocs'],
 	render: render(

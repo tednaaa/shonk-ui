@@ -6,7 +6,7 @@ import InputOTPPasteTransformer from './examples/InputOTPPasteTransformer.vue';
 import inputOTPPasteTransformerSource from './examples/InputOTPPasteTransformer.vue?raw';
 
 const meta: Meta<typeof InputOTP> = {
-	title: 'Components/InputOTP',
+	title: 'Forms/InputOTP',
 	component: InputOTP,
 	tags: ['autodocs'],
 	render: render({ InputOTP }, `<InputOTP v-bind="args" />`),

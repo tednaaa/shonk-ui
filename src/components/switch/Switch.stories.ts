@@ -4,7 +4,7 @@ import { Switch } from '.';
 import { Label } from '../label';
 
 const meta: Meta<typeof Switch> = {
-	title: 'Components/Switch',
+	title: 'Forms/Switch',
 	component: Switch,
 	tags: ['autodocs'],
 	render: render({ Switch }, `<Switch v-bind="args" />`),

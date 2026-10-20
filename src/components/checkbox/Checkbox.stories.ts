@@ -4,7 +4,7 @@ import { Checkbox } from '.';
 import { Label } from '../label';
 
 const meta: Meta<typeof Checkbox> = {
-	title: 'Components/Checkbox',
+	title: 'Forms/Checkbox',
 	component: Checkbox,
 	tags: ['autodocs'],
 	render: render({ Checkbox }, `<Checkbox v-bind="args" />`),

@@ -14,7 +14,7 @@ import CarouselCustomPlugin from './examples/CarouselCustomPlugin.vue';
 import carouselCustomPluginSource from './examples/CarouselCustomPlugin.vue?raw';
 
 const meta: Meta<typeof Carousel> = {
-	title: 'Components/Carousel',
+	title: 'Data/Carousel',
 	component: Carousel,
 	tags: ['autodocs'],
 	render: render(

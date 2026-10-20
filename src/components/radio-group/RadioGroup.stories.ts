@@ -9,7 +9,7 @@ const row
 	= 'flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-base font-normal transition-colors hover:bg-muted has-[[data-state=checked]]:bg-accent has-[[data-state=checked]]:hover:bg-accent has-[[data-state=checked]]:font-semibold';
 
 const meta: Meta<typeof RadioGroup> = {
-	title: 'Components/RadioGroup',
+	title: 'Forms/RadioGroup',
 	component: RadioGroup,
 	tags: ['autodocs'],
 	args: {

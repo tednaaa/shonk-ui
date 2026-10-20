@@ -3,7 +3,7 @@ import { render, showControls } from '@/lib/storybook';
 import { Separator } from '.';
 
 const meta: Meta<typeof Separator> = {
-	title: 'Components/Separator',
+	title: 'Layout/Separator',
 	component: Separator,
 	tags: ['autodocs'],
 	render: render(

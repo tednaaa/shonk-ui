@@ -3,7 +3,7 @@ import { render, showControls } from '@/lib/storybook';
 import { Slider } from '.';
 
 const meta: Meta<typeof Slider> = {
-	title: 'Components/Slider',
+	title: 'Forms/Slider',
 	component: Slider,
 	tags: ['autodocs'],
 	args: { defaultValue: [50], min: 0, max: 100, step: 1 },

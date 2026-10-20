@@ -57,7 +57,7 @@ const items = `
 `;
 
 const meta: Meta<typeof Command> = {
-	title: 'Components/Command',
+	title: 'Overlays/Command',
 	component: Command,
 	tags: ['autodocs'],
 	render: render(

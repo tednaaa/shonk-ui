@@ -16,7 +16,7 @@ const frameworks = [
 const comboboxComponent: FunctionalComponent<ComponentPropsAndSlots<typeof Combobox>> = Combobox;
 
 const meta: Meta<typeof Combobox> = {
-	title: 'Components/Combobox',
+	title: 'Forms/Combobox',
 	component: comboboxComponent,
 	tags: ['autodocs'],
 	args: {

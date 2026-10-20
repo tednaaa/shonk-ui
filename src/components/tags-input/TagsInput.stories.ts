@@ -18,7 +18,7 @@ const components = {
 };
 
 const meta: Meta<typeof TagsInput> = {
-	title: 'Components/TagsInput',
+	title: 'Forms/TagsInput',
 	component: TagsInput,
 	tags: ['autodocs'],
 	render: args => ({

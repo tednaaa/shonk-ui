@@ -33,7 +33,7 @@ const components = {
 };
 
 const meta: Meta<typeof InputGroup> = {
-	title: 'Components/InputGroup',
+	title: 'Forms/InputGroup',
 	component: InputGroup,
 	tags: ['autodocs'],
 	render: render(

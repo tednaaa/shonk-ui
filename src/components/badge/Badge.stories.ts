@@ -4,7 +4,7 @@ import { render, showControls } from '@/lib/storybook';
 import { Badge } from '.';
 
 const meta: Meta<typeof Badge> = {
-	title: 'Components/Badge',
+	title: 'Data/Badge',
 	component: Badge,
 	tags: ['autodocs'],
 	render: render({ Badge }, `<Badge v-bind="args">Badge</Badge>`),

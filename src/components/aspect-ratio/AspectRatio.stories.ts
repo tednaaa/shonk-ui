@@ -3,7 +3,7 @@ import { render, showControls, StorybookLabel } from '@/lib/storybook';
 import { AspectRatio } from '.';
 
 const meta: Meta<typeof AspectRatio> = {
-	title: 'Components/AspectRatio',
+	title: 'Layout/AspectRatio',
 	component: AspectRatio,
 	tags: ['autodocs'],
 	args: { ratio: 16 / 9 },

@@ -73,7 +73,7 @@ const preview: Preview = {
 	parameters: {
 		options: {
 			storySort: {
-				order: ['Changelog', 'Foundations', 'Components', 'Mobile'],
+				order: ['Changelog', 'Foundations', 'Actions', 'Forms', 'Dates', 'Overlays', 'Navigation', 'Data', 'Feedback', 'Layout', 'Chat', 'Mobile'],
 			},
 		},
 		docs: {

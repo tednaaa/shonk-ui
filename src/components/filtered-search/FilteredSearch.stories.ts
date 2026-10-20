@@ -49,7 +49,7 @@ const definitions: FilterDefinition[] = [
 ];
 
 const meta: Meta<typeof FilteredSearch> = {
-	title: 'Components/FilteredSearch',
+	title: 'Data/FilteredSearch',
 	component: FilteredSearch,
 	tags: ['autodocs'],
 	parameters: {

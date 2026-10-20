@@ -4,7 +4,7 @@ import { ScrollArea } from '.';
 import { Separator } from '../separator';
 
 const meta: Meta<typeof ScrollArea> = {
-	title: 'Components/ScrollArea',
+	title: 'Layout/ScrollArea',
 	component: ScrollArea,
 	tags: ['autodocs'],
 	render: render(

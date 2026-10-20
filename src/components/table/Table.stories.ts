@@ -25,7 +25,7 @@ const components = {
 };
 
 const meta: Meta<typeof Table> = {
-	title: 'Components/Table',
+	title: 'Data/Table',
 	component: Table,
 	tags: ['autodocs'],
 	render: render(

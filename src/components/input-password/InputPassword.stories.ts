@@ -6,7 +6,7 @@ import InputPasswordPrefilled from './examples/InputPasswordPrefilled.vue';
 import inputPasswordPrefilledSource from './examples/InputPasswordPrefilled.vue?raw';
 
 const meta: Meta<typeof InputPassword> = {
-	title: 'Components/InputPassword',
+	title: 'Forms/InputPassword',
 	component: InputPassword,
 	tags: ['autodocs'],
 	args: {

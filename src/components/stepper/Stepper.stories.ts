@@ -33,7 +33,7 @@ const steps = [
 ];
 
 const meta: Meta<typeof Stepper> = {
-	title: 'Components/Stepper',
+	title: 'Navigation/Stepper',
 	component: Stepper,
 	tags: ['autodocs'],
 	render: args => ({

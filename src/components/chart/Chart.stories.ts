@@ -13,7 +13,7 @@ import ChartLine from './examples/ChartLine.vue';
 import chartLineSource from './examples/ChartLine.vue?raw';
 
 const meta: Meta<typeof ChartContainer> = {
-	title: 'Components/Chart',
+	title: 'Data/Chart',
 	component: ChartContainer,
 	tags: ['autodocs'],
 	parameters: example(chartAreaSource),

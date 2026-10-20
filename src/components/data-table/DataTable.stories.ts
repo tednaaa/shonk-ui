@@ -44,7 +44,7 @@ import dataTableStoredColumnsSource from './examples/DataTableStoredColumns.vue?
 const dataTableComponent: FunctionalComponent<ComponentPropsAndSlots<typeof DataTable>> = DataTable;
 
 const meta: Meta<typeof DataTable> = {
-	title: 'Components/DataTable',
+	title: 'Data/DataTable',
 	component: dataTableComponent,
 	tags: ['autodocs'],
 	parameters: example(dataTableBasicSource),

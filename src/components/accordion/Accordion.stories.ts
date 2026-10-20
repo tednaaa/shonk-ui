@@ -3,7 +3,7 @@ import { render, showControls } from '@/lib/storybook';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '.';
 
 const meta: Meta<typeof Accordion> = {
-	title: 'Components/Accordion',
+	title: 'Data/Accordion',
 	component: Accordion,
 	tags: ['autodocs'],
 	args: {

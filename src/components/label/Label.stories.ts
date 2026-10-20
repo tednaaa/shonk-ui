@@ -5,7 +5,7 @@ import { Checkbox } from '../checkbox';
 import { Input } from '../input';
 
 const meta: Meta<typeof Label> = {
-	title: 'Components/Label',
+	title: 'Forms/Label',
 	component: Label,
 	tags: ['autodocs'],
 	render: render({ Label }, `<Label v-bind="args">Email address</Label>`),

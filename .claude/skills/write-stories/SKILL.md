@@ -15,7 +15,7 @@ import { render, showControls } from '@/lib/storybook';
 import { Switch } from '.';
 
 const meta: Meta<typeof Switch> = {
-  title: 'Components/Switch',
+  title: 'Forms/Switch',
   component: Switch,
   tags: ['autodocs'],
   render: render({ Switch }, `<Switch v-bind="args" />`),
@@ -31,7 +31,7 @@ export const Checked: Story = { args: { defaultValue: true } };
 ## Rules
 
 - `const meta: Meta<typeof X>` annotation — NOT `satisfies` (triggers TS4023 under `pnpm typecheck`).
-- `title: 'Components/<PascalCase>'`, `tags: ['autodocs']`.
+- `title: '<Scope>/<PascalCase>'`, `tags: ['autodocs']`. Scope is the group in `storySort.order` — `.storybook/preview.ts:76`: Actions, Forms, Dates, Overlays, Navigation, Data, Feedback, Layout, Chat, Mobile (touch-only).
 - Don't write `argTypes` — auto-generated via `vue-component-meta`; override only when needed.
 - Controls are off globally; the arg-driven story (usually `Default`) re-enables with `parameters: showControls`. Hardcoded showcase stories need nothing.
 - No comments. No unused imports (`import type` for types). No `@storybook/test` / play functions.

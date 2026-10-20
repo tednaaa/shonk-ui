@@ -11,7 +11,7 @@ import ToastWithPromise from './examples/ToastWithPromise.vue';
 import toastWithPromiseSource from './examples/ToastWithPromise.vue?raw';
 
 const meta: Meta<typeof Toaster> = {
-	title: 'Components/Toast',
+	title: 'Feedback/Toast',
 	component: Toaster,
 	tags: ['autodocs'],
 };

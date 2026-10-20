@@ -4,7 +4,7 @@ import { render, showControls } from '@/lib/storybook';
 import { RangeCalendar } from '.';
 
 const meta: Meta<typeof RangeCalendar> = {
-	title: 'Components/RangeCalendar',
+	title: 'Dates/RangeCalendar',
 	component: RangeCalendar,
 	tags: ['autodocs'],
 	render: render(

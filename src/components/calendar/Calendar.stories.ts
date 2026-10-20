@@ -4,7 +4,7 @@ import { render, showControls } from '@/lib/storybook';
 import { Calendar } from '.';
 
 const meta: Meta<typeof Calendar> = {
-	title: 'Components/Calendar',
+	title: 'Dates/Calendar',
 	component: Calendar,
 	tags: ['autodocs'],
 	render: render(

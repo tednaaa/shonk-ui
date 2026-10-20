@@ -29,7 +29,7 @@ const components = {
 };
 
 const meta: Meta<typeof Sheet> = {
-	title: 'Components/Sheet',
+	title: 'Overlays/Sheet',
 	component: Sheet,
 	tags: ['autodocs'],
 	render: render(

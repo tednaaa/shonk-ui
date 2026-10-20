@@ -5,7 +5,7 @@ import { ButtonGroup, ButtonGroupSeparator, ButtonGroupText } from '.';
 import { Button } from '../button';
 
 const meta: Meta<typeof ButtonGroup> = {
-	title: 'Components/ButtonGroup',
+	title: 'Actions/ButtonGroup',
 	component: ButtonGroup,
 	tags: ['autodocs'],
 	render: render(

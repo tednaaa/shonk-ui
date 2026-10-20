@@ -3,7 +3,7 @@ import { render, showControls } from '@/lib/storybook';
 import { Skeleton } from '.';
 
 const meta: Meta<typeof Skeleton> = {
-	title: 'Components/Skeleton',
+	title: 'Feedback/Skeleton',
 	component: Skeleton,
 	tags: ['autodocs'],
 	args: {

@@ -9,7 +9,7 @@ import SidebarToggle from './examples/SidebarToggle.vue';
 import sidebarToggleSource from './examples/SidebarToggle.vue?raw';
 
 const meta: Meta<typeof Sidebar> = {
-	title: 'Components/Sidebar',
+	title: 'Navigation/Sidebar',
 	component: Sidebar,
 	tags: ['autodocs'],
 	parameters: example(sidebarAppSource),

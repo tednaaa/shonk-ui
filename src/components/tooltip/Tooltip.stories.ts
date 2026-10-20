@@ -15,7 +15,7 @@ const components = {
 };
 
 const meta: Meta<typeof Tooltip> = {
-	title: 'Components/Tooltip',
+	title: 'Overlays/Tooltip',
 	component: Tooltip,
 	tags: ['autodocs'],
 	args: { content: 'Add to library' },

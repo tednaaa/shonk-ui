@@ -9,7 +9,7 @@ import DatePickerWithPresets from './examples/DatePickerWithPresets.vue';
 import datePickerWithPresetsSource from './examples/DatePickerWithPresets.vue?raw';
 
 const meta: Meta<typeof DatePicker> = {
-	title: 'Components/DatePicker',
+	title: 'Dates/DatePicker',
 	component: DatePicker,
 	tags: ['autodocs'],
 	args: {

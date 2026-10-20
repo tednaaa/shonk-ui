@@ -63,7 +63,7 @@ const components = {
 };
 
 const meta: Meta<typeof DropdownMenu> = {
-	title: 'Components/DropdownMenu',
+	title: 'Overlays/DropdownMenu',
 	component: DropdownMenu,
 	tags: ['autodocs'],
 	render: render(

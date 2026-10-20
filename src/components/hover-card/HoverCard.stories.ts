@@ -16,7 +16,7 @@ const components = {
 };
 
 const meta: Meta<typeof HoverCard> = {
-	title: 'Components/HoverCard',
+	title: 'Overlays/HoverCard',
 	component: HoverCard,
 	tags: ['autodocs'],
 	render: render(
