@@ -1,4 +1,4 @@
-import type { Component } from 'vue';
+import type { Component, VNodeChild } from 'vue';
 
 export interface FilterOption {
 	value: string;
@@ -10,16 +10,18 @@ export interface FilterOperator {
 	label: string;
 }
 
-export interface FilterDefinition {
+export interface FilterDefinition<O extends FilterOption = FilterOption> {
 	key: string;
 	label: string;
 	operators: FilterOperator[];
 	icon?: Component;
 	editor?: Component;
-	options?: FilterOption[];
+	options?: O[];
 	multiSelect?: boolean;
 	unique?: boolean;
 	validate?: (value: string) => string | undefined;
+	renderOption?: (option: O) => VNodeChild;
+	renderValue?: (context: { filter: ActiveFilter; options: O[] }) => VNodeChild;
 }
 
 export interface ActiveFilter {

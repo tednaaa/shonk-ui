@@ -273,6 +273,22 @@ describe('filteredSearch value editors', () => {
 		]);
 	});
 
+	it('should render each suggested option through the definition', async () => {
+		wrapper = createComponent({
+			definitions: [{
+				key: 'status',
+				label: 'Status',
+				operators: [{ value: 'equals', label: 'is' }],
+				options: [{ value: 'open', label: 'Open' }],
+				renderOption: (option: { label: string }) => `Status: ${option.label}`,
+			}],
+		});
+
+		await openValuePhase();
+
+		expect(document.querySelector('[role="option"]')?.textContent?.trim()).toBe('Status: Open');
+	});
+
 	it('should commit what the editor a definition supplies submits', async () => {
 		const YearEditor = markRaw(defineComponent({
 			emits: ['submit'],
@@ -418,6 +434,15 @@ describe('filteredSearch multi select', () => {
 		await flushPromises();
 		return input;
 	}
+
+	it('should render a token value through the definition with the chosen options', () => {
+		wrapper = createComponent({
+			definitions: [{ ...multiDefinitions[0], renderValue: ({ options }: { options: unknown[] }) => `${options.length} labels` }],
+			filters: [{ id: '1', key: 'label', keyLabel: 'Label', operator: 'oneOf', operatorLabel: 'is one of', value: ['bug', 'docs'], valueLabel: 'bug, docs' }],
+		});
+
+		expect(wrapper.get('[aria-label="Edit Label filter"]').text()).toBe('2 labels');
+	});
 
 	it('should gather several options into one filter', async () => {
 		wrapper = createComponent({ definitions: multiDefinitions });

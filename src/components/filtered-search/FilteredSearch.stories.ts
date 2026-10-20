@@ -8,6 +8,8 @@ import FilteredSearchCustomButtonGroup from './examples/FilteredSearchCustomButt
 import filteredSearchCustomButtonGroupSource from './examples/FilteredSearchCustomButtonGroup.vue?raw';
 import FilteredSearchCustomEditor from './examples/FilteredSearchCustomEditor.vue';
 import filteredSearchCustomEditorSource from './examples/FilteredSearchCustomEditor.vue?raw';
+import FilteredSearchCustomRender from './examples/FilteredSearchCustomRender.vue';
+import filteredSearchCustomRenderSource from './examples/FilteredSearchCustomRender.vue?raw';
 import FilteredSearchDraggable from './examples/FilteredSearchDraggable.vue';
 import filteredSearchDraggableSource from './examples/FilteredSearchDraggable.vue?raw';
 import FilteredSearchHistory from './examples/FilteredSearchHistory.vue';
@@ -55,7 +57,17 @@ const meta: Meta<typeof FilteredSearch> = {
 	parameters: {
 		docs: {
 			description: {
-				component: 'A filter bar the application fills with its own vocabulary. The kit ships no operators: every entry of a definition\'s `operators` is yours, so `{ value: \'equals\', label: \'is\' }` and `{ value: \'=\', label: \'is\' }` are equally valid and neither name is interpreted. A definition\'s `icon` and `editor` come from the app the same way. What the kit owns is the chrome — the token list, the suggestions, focus and the keyboard. Give a definition `options` and the kit suggests them; add `multiSelect` and it gathers several into one token; hand it an `editor` component and that replaces the value step outright, keyboard included. `unique` drops a definition from the list once it has been applied, `viewOnly` renders the bar without any way to change it, and `historyItems` is app-owned too — the kit shows recent searches and emits `clearHistory`, but never writes the list.',
+				component: [
+					'A filter bar the application fills with its own vocabulary. The kit owns the chrome: the token list, the suggestions, focus and the keyboard.',
+					'',
+					'- `operators` are yours: `{ value: \'equals\', label: \'is\' }` and `{ value: \'=\', label: \'is\' }` are equally valid, no name is interpreted',
+					'- `icon` and `editor` come from the app; an `editor` component replaces the value step outright, keyboard included',
+					'- `options` are suggested, `multiSelect` gathers several into one token',
+					'- `renderOption` and `renderValue` draw a suggested option and a token value with `h()`; `defineFilter` types them by the definition\'s options',
+					'- `unique` drops a definition from the list once it has been applied',
+					'- `viewOnly` renders the bar without any way to change it',
+					'- `historyItems` are app-owned: the kit shows recent searches and emits `clearHistory`, but never writes the list',
+				].join('\n'),
 			},
 		},
 	},
@@ -104,6 +116,15 @@ export const WithMultiSelect: Story = {
 	render: render({ FilteredSearchMultiSelect }, `
     <div class="max-w-xl">
       <FilteredSearchMultiSelect />
+    </div>
+  `),
+};
+
+export const WithCustomRender: Story = {
+	parameters: example(filteredSearchCustomRenderSource),
+	render: render({ FilteredSearchCustomRender }, `
+    <div class="max-w-xl">
+      <FilteredSearchCustomRender />
     </div>
   `),
 };

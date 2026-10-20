@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FocusOutsideEvent, PointerDownOutsideEvent } from 'reka-ui';
-import type { HTMLAttributes } from 'vue';
+import type { FunctionalComponent, HTMLAttributes, VNodeChild } from 'vue';
 import type { ActiveFilter, FilterDefinition, FilterHistoryItem, FilterOperator, FilterOption, FilterTokenSegment } from './types';
 import { CheckIcon, ChevronLeftIcon, CircleXIcon, SearchIcon, XIcon } from '@lucide/vue';
 import { createReusableTemplate } from '@vueuse/core';
@@ -39,6 +39,8 @@ defineSlots<{
 
 const filters = defineModel<ActiveFilter[]>('filters', { default: () => [] });
 const searchText = defineModel<string>('searchText', { default: '' });
+
+const RenderNode: FunctionalComponent<{ node: VNodeChild }> = props => props.node;
 
 type TokenParts = Partial<Record<FilterTokenSegment, string>>;
 
@@ -248,6 +250,17 @@ function confirmTypedValue() {
 		return;
 	}
 	commitFilter(typed, typed);
+}
+
+function definitionOf(filter: ActiveFilter) {
+	return props.definitions.find(definition => definition.key === filter.key);
+}
+
+function renderValue(filter: ActiveFilter) {
+	const definition = definitionOf(filter);
+	const values = [filter.value].flat();
+	const options = definition?.options?.filter(option => values.includes(option.value)) ?? [];
+	return definition?.renderValue?.({ filter, options });
 }
 
 function isSelected(option: FilterOption) {
@@ -554,7 +567,11 @@ watch(isOpen, (open) => {
 							@remove="removeFilter"
 							@edit="editFilter"
 							@drag-start="startDrag($event, filter.id)"
-						/>
+						>
+							<template v-if="definitionOf(filter)?.renderValue" #value>
+								<RenderNode :node="renderValue(filter)" />
+							</template>
+						</FilterToken>
 						<template v-else>
 							<ReuseParts v-if="pendingParts" :parts="pendingParts" rounded="start" :editable="pendingEditableSegments" />
 							<ReuseInput />
@@ -690,7 +707,10 @@ watch(isOpen, (open) => {
 						@mouseenter="highlightedIndex = index"
 					>
 						<CheckIcon v-if="isMultiSelect" :class="cn('size-3.5 shrink-0', isSelected(option) ? 'opacity-100' : 'opacity-0')" />
-						{{ option.label }}
+						<RenderNode v-if="valueDefinition?.renderOption" :node="valueDefinition.renderOption(option)" />
+						<template v-else>
+							{{ option.label }}
+						</template>
 					</button>
 				</div>
 

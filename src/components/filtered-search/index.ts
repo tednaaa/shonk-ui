@@ -1,3 +1,4 @@
+export { defineFilter } from './defineFilter';
 export { default as FilteredSearch } from './FilteredSearch.vue';
 export { default as FilterToken } from './FilterToken.vue';
 

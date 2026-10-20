@@ -12,6 +12,10 @@ const props = withDefaults(defineProps<{ filter: ActiveFilter; removable?: boole
 
 const emit = defineEmits<{ remove: [id: string]; edit: [id: string, segment: FilterTokenSegment]; dragStart: [event: PointerEvent] }>();
 
+defineSlots<{
+	value?: () => unknown;
+}>();
+
 const locale = useLocale();
 
 function edit(segment: FilterTokenSegment) {
@@ -57,7 +61,9 @@ function edit(segment: FilterTokenSegment) {
 				class="min-w-0 cursor-[inherit] truncate rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
 				@click="edit('value')"
 			>
-				{{ filter.valueLabel }}
+				<slot name="value">
+					{{ filter.valueLabel }}
+				</slot>
 			</component>
 			<button
 				v-if="removable"
