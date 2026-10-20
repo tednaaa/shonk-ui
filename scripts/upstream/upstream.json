@@ -147,6 +147,12 @@
 		},
 		"kbd": {
 			"ref": "de1f76cb"
+		},
+		"toggle": {
+			"ref": "de1f76cb"
+		},
+		"toggle-group": {
+			"ref": "de1f76cb"
 		}
 	},
 	"skipped": {
