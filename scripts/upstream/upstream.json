@@ -146,5 +146,13 @@
 			"ref": "3f048dfb"
 		}
 	},
-	"skipped": {}
+	"skipped": {
+		"alert-dialog": "not needed",
+		"empty": "not needed",
+		"pin-input": "input-otp covers it",
+		"form": "ties the kit to vee-validate",
+		"field": "not needed",
+		"item": "not needed",
+		"questionnaire": "skipped for now"
+	}
 }
