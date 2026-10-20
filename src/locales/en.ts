@@ -56,6 +56,11 @@ export const en: ShonkLocale = {
 		closeButtonAriaLabel: 'Close',
 	},
 
+	fileUpload: {
+		dropzoneTitle: 'Drop files here',
+		dropzoneHint: 'or click to browse',
+	},
+
 	filteredSearch: {
 		placeholder: 'Search or filter…',
 		addFilterPlaceholder: 'Add filter…',

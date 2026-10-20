@@ -22,6 +22,7 @@ export * from './components/date-picker';
 export * from './components/dialog';
 export * from './components/drawer';
 export * from './components/dropdown-menu';
+export * from './components/file-upload';
 export * from './components/filtered-search';
 export * from './components/hover-card';
 export * from './components/input';

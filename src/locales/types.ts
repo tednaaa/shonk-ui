@@ -54,6 +54,11 @@ export interface ShonkLocale {
 		closeButtonAriaLabel: string;
 	};
 
+	fileUpload: {
+		dropzoneTitle: string;
+		dropzoneHint: string;
+	};
+
 	filteredSearch: {
 		placeholder: string;
 		addFilterPlaceholder: string;

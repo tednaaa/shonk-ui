@@ -56,6 +56,11 @@ export const ru: ShonkLocale = {
 		closeButtonAriaLabel: 'Закрыть',
 	},
 
+	fileUpload: {
+		dropzoneTitle: 'Перетащите файлы сюда',
+		dropzoneHint: 'или нажмите, чтобы выбрать',
+	},
+
 	filteredSearch: {
 		placeholder: 'Поиск или фильтр…',
 		addFilterPlaceholder: 'Добавить фильтр…',
