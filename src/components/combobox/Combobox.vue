@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends AcceptableValue = AcceptableValue">
+<script setup lang="ts" generic="T extends AcceptableValue = AcceptableValue, O extends ComboboxOption<T> = ComboboxOption<T>">
 import type { AcceptableValue } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ComboboxOption } from './types';
@@ -20,7 +20,7 @@ import { Spinner } from '../spinner';
 import { comboboxTriggerVariants } from './variants';
 
 const props = defineProps<{
-	options: ComboboxOption<T>[];
+	options: O[];
 	triggerPlaceholder?: string;
 	searchPlaceholder?: string;
 	emptyText?: string;
@@ -35,7 +35,8 @@ const props = defineProps<{
 }>();
 
 defineSlots<{
-	option?: (props: { option: ComboboxOption<T> }) => unknown;
+	option?: (props: { option: O }) => unknown;
+	value?: (props: { option: O }) => unknown;
 	empty?: () => unknown;
 }>();
 
@@ -46,7 +47,7 @@ const locale = useLocale();
 
 const open = ref(false);
 
-const lastSelectedLabel = ref<string>();
+const lastSelectedOption = ref<O>();
 
 watch(
 	[model, () => props.options],
@@ -55,14 +56,14 @@ watch(
 		const cleared = value === undefined || value === null;
 
 		if (selectedOption)
-			lastSelectedLabel.value = selectedOption.label;
+			lastSelectedOption.value = selectedOption;
 		else if (cleared)
-			lastSelectedLabel.value = undefined;
+			lastSelectedOption.value = undefined;
 	},
 	{ immediate: true },
 );
 
-const showClear = computed(() => props.clearable && !!lastSelectedLabel.value && !props.disabled);
+const showClear = computed(() => props.clearable && !!lastSelectedOption.value && !props.disabled);
 
 function onUpdate() {
 	open.value = false;
@@ -70,7 +71,7 @@ function onUpdate() {
 
 function clear() {
 	model.value = undefined;
-	lastSelectedLabel.value = undefined;
+	lastSelectedOption.value = undefined;
 	search.value = '';
 }
 </script>
@@ -84,9 +85,14 @@ function clear() {
 					role="combobox"
 					:aria-expanded="open"
 					:disabled="disabled"
-					:class="cn('bg-field text-field-foreground', comboboxTriggerVariants({ showClear, placeholder: !lastSelectedLabel }), props.class)"
+					:class="cn('bg-field text-field-foreground', comboboxTriggerVariants({ showClear, placeholder: !lastSelectedOption }), props.class)"
 				>
-					<span class="whitespace-nowrap">{{ lastSelectedLabel ?? props.triggerPlaceholder ?? locale.combobox.triggerPlaceholder }}</span>
+					<slot v-if="lastSelectedOption" name="value" :option="lastSelectedOption">
+						<slot name="option" :option="lastSelectedOption">
+							<span class="whitespace-nowrap">{{ lastSelectedOption.label }}</span>
+						</slot>
+					</slot>
+					<span v-else class="whitespace-nowrap">{{ props.triggerPlaceholder ?? locale.combobox.triggerPlaceholder }}</span>
 				</Button>
 			</PopoverTrigger>
 

@@ -2,6 +2,8 @@ import type { ComponentPropsAndSlots, Meta, StoryObj } from '@storybook/vue3-vit
 import type { FunctionalComponent } from 'vue';
 import { example, render, showControls } from '@/lib/storybook';
 import { Combobox } from '.';
+import ComboboxOptionSlot from './examples/ComboboxOptionSlot.vue';
+import comboboxOptionSlotSource from './examples/ComboboxOptionSlot.vue?raw';
 import ComboboxPreselected from './examples/ComboboxPreselected.vue';
 import comboboxPreselectedSource from './examples/ComboboxPreselected.vue?raw';
 
@@ -44,6 +46,15 @@ export const Preselected: Story = {
 	render: render({ ComboboxPreselected }, `
     <div class="max-w-60">
       <ComboboxPreselected />
+    </div>
+  `),
+};
+
+export const WithOptionSlot: Story = {
+	parameters: example(comboboxOptionSlotSource),
+	render: render({ ComboboxOptionSlot }, `
+    <div class="max-w-60">
+      <ComboboxOptionSlot />
     </div>
   `),
 };
