@@ -86,6 +86,12 @@ export interface ShonkLocale {
 		hidePasswordAriaLabel: string;
 	};
 
+	messageScroller: {
+		viewportAriaLabel: string;
+		scrollToEndText: string;
+		scrollToStartText: string;
+	};
+
 	pagination: {
 		navAriaLabel: string;
 		pageButtonAriaLabel: (page: number) => string;

@@ -177,6 +177,9 @@
 		},
 		"attachment": {
 			"ref": "de1f76cb"
+		},
+		"message-scroller": {
+			"ref": "de1f76cb"
 		}
 	},
 	"skipped": {

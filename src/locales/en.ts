@@ -88,6 +88,12 @@ export const en: ShonkLocale = {
 		hidePasswordAriaLabel: 'Hide password',
 	},
 
+	messageScroller: {
+		viewportAriaLabel: 'Messages',
+		scrollToEndText: 'Scroll to end',
+		scrollToStartText: 'Scroll to start',
+	},
+
 	pagination: {
 		navAriaLabel: 'Pages',
 		pageButtonAriaLabel: page => `Page ${page}`,
