@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.12.0 (2026-10-20)
+
+- feat(filtered-search): render options per filter [`0077310a`](https://github.com/tednaaa/shonk-ui/commit/0077310a315de603a13ec972bb5bf06837e43c41)
+- feat(combobox): render options in trigger [`df85397c`](https://github.com/tednaaa/shonk-ui/commit/df85397c71741fb905d26d65da0b2acf49c23b0f)
+
 ## v0.11.1 (2026-10-20)
 
 - feat(button): add pressed state [`41f46b73`](https://github.com/tednaaa/shonk-ui/commit/41f46b73f6fd7c628939b1f16cd46e977f0d54cc)
