@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.11.1 (2026-10-20)
+
+- feat(button): add pressed state [`41f46b73`](https://github.com/tednaaa/shonk-ui/commit/41f46b73f6fd7c628939b1f16cd46e977f0d54cc)
+
 ## v0.11.0 (2026-10-20)
 
 - feat(code-block): add CodeBlock [`2d5403a4`](https://github.com/tednaaa/shonk-ui/commit/2d5403a4c758cc8ea1c4b1f81cb510ab4fc8ea72)
