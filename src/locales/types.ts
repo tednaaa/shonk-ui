@@ -11,6 +11,11 @@ export interface ShonkLocale {
 		nextButtonScreenReaderText: string;
 	};
 
+	codeBlock: {
+		copyButtonAriaLabel: string;
+		copiedText: string;
+	};
+
 	combobox: {
 		triggerPlaceholder: string;
 		searchPlaceholder: string;

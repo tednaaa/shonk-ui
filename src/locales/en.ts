@@ -13,6 +13,11 @@ export const en: ShonkLocale = {
 		nextButtonScreenReaderText: 'Next Slide',
 	},
 
+	codeBlock: {
+		copyButtonAriaLabel: 'Copy',
+		copiedText: 'Copied',
+	},
+
 	combobox: {
 		triggerPlaceholder: 'Select…',
 		searchPlaceholder: 'Search…',

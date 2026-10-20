@@ -74,6 +74,7 @@
 		"clsx": "2.1.1",
 		"embla-carousel-vue": "8.6.0",
 		"reka-ui": "2.10.5",
+		"shiki": "4.5.0",
 		"tailwind-merge": "3.6.0",
 		"vue-sonner": "2.0.9",
 		"write-excel-file": "4.1.1"

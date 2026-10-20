@@ -13,6 +13,11 @@ export const ru: ShonkLocale = {
 		nextButtonScreenReaderText: 'Следующий слайд',
 	},
 
+	codeBlock: {
+		copyButtonAriaLabel: 'Копировать',
+		copiedText: 'Скопировано',
+	},
+
 	combobox: {
 		triggerPlaceholder: 'Выбрать…',
 		searchPlaceholder: 'Найти…',
