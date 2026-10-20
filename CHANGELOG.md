@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.11.0 (2026-10-20)
+
+- feat(code-block): add CodeBlock [`2d5403a4`](https://github.com/tednaaa/shonk-ui/commit/2d5403a4c758cc8ea1c4b1f81cb510ab4fc8ea72)
+- feat(trace): add Trace [`d7f8bcb1`](https://github.com/tednaaa/shonk-ui/commit/d7f8bcb19b5bff4080071cec9ca8c7501b005d80)
+- feat(message-scroller): add MessageScroller [`04e7266e`](https://github.com/tednaaa/shonk-ui/commit/04e7266e87b1f049959aae39fb9b38192f972f04)
+- feat(file-upload): add FileUpload [`1b5d9e6f`](https://github.com/tednaaa/shonk-ui/commit/1b5d9e6fd220d32ab18612329034e92eaa3c9428)
+- feat(attachment): add Attachment [`5cedb63d`](https://github.com/tednaaa/shonk-ui/commit/5cedb63d5581d5ff358b26eaf81cc07edf46a615)
+- feat(message): add Message and Bubble [`6a79e8fc`](https://github.com/tednaaa/shonk-ui/commit/6a79e8fcc4174845aed011310ee59a9fa47e0cd7)
+- feat(marker): add Marker [`c488a423`](https://github.com/tednaaa/shonk-ui/commit/c488a423105b909ccc61cd345cc668161ea82480)
+- feat(navigation-menu): add NavigationMenu [`8791753d`](https://github.com/tednaaa/shonk-ui/commit/8791753d45bc65b2a2e434d85a3711927cc8f329)
+- feat(menubar): add Menubar [`0b5c628b`](https://github.com/tednaaa/shonk-ui/commit/0b5c628b8109d745ee6ecff61bc2736de07c6ec5)
+- feat(drawer): add Drawer [`4acebee2`](https://github.com/tednaaa/shonk-ui/commit/4acebee287b756def6721220ed246b2317080790)
+- feat(number-field): add NumberField [`fd7420c5`](https://github.com/tednaaa/shonk-ui/commit/fd7420c5e15c3485e977e26597a61d171b330c72)
+- feat(toggle): add Toggle and ToggleGroup [`96efe74b`](https://github.com/tednaaa/shonk-ui/commit/96efe74bcf8657f7a36e10e84f3fd3e103c7c78a)
+- feat(kbd): add Kbd and KbdGroup [`dadc706d`](https://github.com/tednaaa/shonk-ui/commit/dadc706d22a2c5ce3bd4c66833239903c5efaeca)
+- chore(storybook): group stories by scope [`32a33d0e`](https://github.com/tednaaa/shonk-ui/commit/32a33d0e73449c9dba65ea6e4d16628d4894d910)
+- feat(tooltip): add content shorthand [`318d6b91`](https://github.com/tednaaa/shonk-ui/commit/318d6b915705779f139532d7595f3cdbc1b963b4)
+
 ## v0.10.1 (2026-10-18)
 
 - feat(filtered-search): jump to earlier step [`33d619f0`](https://github.com/tednaaa/shonk-ui/commit/33d619f05404761781e519399ea367c508652b96)
