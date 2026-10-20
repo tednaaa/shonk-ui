@@ -54,14 +54,37 @@ const assignees = defineFilter<ColoredOption>({
 	renderValue: ({ filter, options }) => withMarks(options.map(avatar), options.length > 1 ? `${options.length} people` : filter.valueLabel),
 });
 
-const definitions = [labels, assignees];
+interface TokenOption extends FilterOption {
+	hue: number;
+}
+
+function coin({ hue, label }: TokenOption) {
+	return h('span', { class: 'size-4 shrink-0 rounded-full', style: { backgroundColor: `hsl(${hue} 70% 50%)` }, title: label });
+}
+
+const tokens = defineFilter<TokenOption>({
+	key: 'token',
+	label: 'Token',
+	multiSelect: true,
+	operators,
+	options: Array.from({ length: 1000 }, (_, index) => ({ value: `T${index + 1}`, label: `TOKEN${index + 1}`, hue: (index * 37) % 360 })),
+	renderOption: option => withMarks([coin(option)], option.label),
+	renderValue: ({ options }) => {
+		const listed = options.slice(0, 2);
+		const rest = options.length - listed.length;
+		return withMarks(listed.map(coin), [listed.map(option => option.label).join(', '), rest > 0 && `+${rest}`].filter(Boolean).join(' '));
+	},
+});
+
+const definitions = [labels, assignees, tokens];
 
 const filters = ref<ActiveFilter[]>([
 	{ id: 'labels', key: 'label', keyLabel: 'Label', operator: 'oneOf', operatorLabel: 'is one of', value: ['bug', 'feature', 'docs'], valueLabel: 'bug, feature, docs' },
 	{ id: 'assignees', key: 'assignee', keyLabel: 'Assignee', operator: 'oneOf', operatorLabel: 'is one of', value: ['ada', 'grace'], valueLabel: 'Ada Lovelace, Grace Hopper' },
+	{ id: 'tokens', key: 'token', keyLabel: 'Token', operator: 'noneOf', operatorLabel: 'is none of', value: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'], valueLabel: 'TOKEN1, TOKEN2, TOKEN3, TOKEN4, TOKEN5, TOKEN6' },
 ]);
 </script>
 
 <template>
-	<FilteredSearch v-model:filters="filters" :definitions="definitions" />
+	<FilteredSearch v-model:filters="filters" :definitions="definitions" wrap />
 </template>

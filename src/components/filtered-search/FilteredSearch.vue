@@ -694,6 +694,7 @@ watch(isOpen, (open) => {
 					<button
 						v-for="(option, index) in valueOptions"
 						:key="option.value"
+						v-memo="[option, index, index === highlightedIndex, isSelected(option), isMultiSelect, valueDefinition]"
 						type="button"
 						role="option"
 						:aria-selected="index === highlightedIndex"
