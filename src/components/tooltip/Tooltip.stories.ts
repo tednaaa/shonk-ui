@@ -3,7 +3,6 @@ import { render, showControls } from '@/lib/storybook';
 import {
 	Tooltip,
 	TooltipContent,
-	TooltipProvider,
 	TooltipTrigger,
 } from '.';
 import { Button } from '../button';
@@ -11,7 +10,6 @@ import { Button } from '../button';
 const components = {
 	Tooltip,
 	TooltipContent,
-	TooltipProvider,
 	TooltipTrigger,
 	Button,
 };
@@ -20,19 +18,12 @@ const meta: Meta<typeof Tooltip> = {
 	title: 'Components/Tooltip',
 	component: Tooltip,
 	tags: ['autodocs'],
-	render: render(
-		components,
-		`<TooltipProvider>
-      <Tooltip v-bind="args">
-        <TooltipTrigger as-child>
-          <Button variant="secondary">Hover me</Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Add to library</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>`,
-	),
+	args: { content: 'Add to library' },
+	render: render(components, `
+  <Tooltip v-bind="args">
+    <Button variant="secondary">Hover me</Button>
+  </Tooltip>
+`),
 };
 
 export default meta;
@@ -43,19 +34,40 @@ export const Default: Story = {
 };
 
 export const Sides: Story = {
-	render: render(
-		components,
-		`<TooltipProvider>
-      <div class="flex flex-wrap gap-2">
-        <Tooltip v-for="side in ['top', 'right', 'bottom', 'left']" :key="side">
-          <TooltipTrigger as-child>
-            <Button variant="secondary" class="capitalize">{{ side }}</Button>
-          </TooltipTrigger>
-          <TooltipContent :side="side">
-            <p class="capitalize">{{ side }} tooltip</p>
-          </TooltipContent>
-        </Tooltip>
-      </div>
-    </TooltipProvider>`,
-	),
+	render: render(components, `
+  <div class="flex flex-wrap gap-2">
+    <Tooltip
+      v-for="side in ['top', 'right', 'bottom', 'left']"
+      :key="side"
+      :side="side"
+      :content="side + ' tooltip'"
+    >
+      <Button variant="secondary" class="capitalize">{{ side }}</Button>
+    </Tooltip>
+  </div>
+`),
+};
+
+export const RichContent: Story = {
+	render: render(components, `
+  <Tooltip>
+    <Button variant="secondary">Save</Button>
+    <template #content>
+      Save changes <kbd class="font-mono">Ctrl+S</kbd>
+    </template>
+  </Tooltip>
+`),
+};
+
+export const Composed: Story = {
+	render: render(components, `
+  <Tooltip>
+    <TooltipTrigger as-child>
+      <Button variant="secondary">Hover me</Button>
+    </TooltipTrigger>
+    <TooltipContent side="bottom" :side-offset="8">
+      <p>Add to library</p>
+    </TooltipContent>
+  </Tooltip>
+`),
 };
