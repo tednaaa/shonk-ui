@@ -589,6 +589,20 @@ describe('filteredSearch editing a filter', () => {
 		]);
 	});
 
+	it('should list the picks of a multi select filter first and keep that order while picking', async () => {
+		wrapper = createComponent({ definitions: editDefinitions, filters: [{ ...applied[0], value: ['docs'], valueLabel: 'docs' }] });
+		const optionLabels = () => [...document.querySelectorAll('[role="option"]')].map(option => option.textContent?.trim());
+
+		await editToken('Label');
+
+		expect(optionLabels()).toEqual(['docs', 'bug', 'WIP']);
+
+		document.querySelector<HTMLElement>('[role="option"]:nth-child(2)')?.click();
+		await flushPromises();
+
+		expect(optionLabels()).toEqual(['docs', 'bug', 'WIP']);
+	});
+
 	it('should prefill a typed value and replace it in place', async () => {
 		wrapper = createComponent({ definitions: editDefinitions, filters: applied });
 

@@ -63,6 +63,7 @@ const anchorRef = ref<HTMLElement | null>(null);
 const tokenListRef = ref<HTMLElement | null>(null);
 const highlightedIndex = ref(-1);
 const selectedValues = ref<FilterOption[]>([]);
+const pinnedValues = ref<string[]>([]);
 const editingId = ref<string | null>(null);
 const valueError = ref<string | null>(null);
 const valueHintId = useId();
@@ -112,10 +113,17 @@ const suggestsOptions = computed(() => Boolean(valueDefinition.value?.options &&
 
 const isMultiSelect = computed(() => suggestsOptions.value && Boolean(valueDefinition.value?.multiSelect));
 
+function pinFirst(options: FilterOption[]) {
+	if (pinnedValues.value.length === 0)
+		return options;
+	const pinned = options.filter(option => pinnedValues.value.includes(option.value));
+	return [...pinned, ...options.filter(option => !pinnedValues.value.includes(option.value))];
+}
+
 const valueOptions = computed(() => {
 	if (!suggestsOptions.value)
 		return [];
-	const options = valueDefinition.value?.options ?? [];
+	const options = pinFirst(valueDefinition.value?.options ?? []);
 	if (!inputText.value)
 		return options;
 	const query = inputText.value.toLowerCase();
@@ -181,6 +189,7 @@ function showStep(next: DropdownStep) {
 	inputText.value = '';
 	highlightedIndex.value = -1;
 	selectedValues.value = [];
+	pinnedValues.value = [];
 }
 
 function resetToKeyPhase() {
@@ -294,15 +303,19 @@ function removeFilter(id: string) {
 }
 
 function prefillEditedValue() {
+	pinnedValues.value = [];
 	const filter = editingFilter.value;
 	const definition = valueDefinition.value;
 	if (!filter || !definition || definition.key !== filter.key)
 		return;
 	const values = [filter.value].flat();
-	if (definition.multiSelect)
+	if (definition.multiSelect) {
 		selectedValues.value = definition.options?.filter(option => values.includes(option.value)) ?? [];
-	else if (!definition.options && !definition.editor)
+		pinnedValues.value = values;
+	}
+	else if (!definition.options && !definition.editor) {
 		inputText.value = values.join(', ');
+	}
 }
 
 function showEditedKey() {
