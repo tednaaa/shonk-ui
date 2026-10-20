@@ -144,6 +144,9 @@
 		},
 		"tooltip": {
 			"ref": "3f048dfb"
+		},
+		"kbd": {
+			"ref": "de1f76cb"
 		}
 	},
 	"skipped": {

@@ -6,12 +6,14 @@ import {
 	TooltipTrigger,
 } from '.';
 import { Button } from '../button';
+import { Kbd } from '../kbd';
 
 const components = {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 	Button,
+	Kbd,
 };
 
 const meta: Meta<typeof Tooltip> = {
@@ -53,7 +55,7 @@ export const RichContent: Story = {
   <Tooltip>
     <Button variant="secondary">Save</Button>
     <template #content>
-      Save changes <kbd class="font-mono">Ctrl+S</kbd>
+      Save changes <Kbd>Ctrl+S</Kbd>
     </template>
   </Tooltip>
 `),
