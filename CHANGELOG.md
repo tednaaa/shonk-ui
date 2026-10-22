@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.13.2 (2026-10-22)
+
+- chore(storybook): share appearance with docs [`943e4c38`](https://github.com/tednaaa/shonk-ui/commit/943e4c386c704132fc108c88606b74e899c40a18)
+
 ## v0.13.1 (2026-10-22)
 
 - refactor(themes): atlas as default [`34f185eb`](https://github.com/tednaaa/shonk-ui/commit/34f185ebec9ac6a24f4737f0f7585bf60dfa5f93)
