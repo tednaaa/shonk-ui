@@ -8,6 +8,7 @@ export default defineConfig({
 	themeConfig: {
 		nav: [
 			{ text: 'Guide', link: '/guide/getting-started' },
+			{ text: 'Storybook', link: '/storybook/', target: '_self' },
 		],
 
 		sidebar: [

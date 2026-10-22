@@ -31,7 +31,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm publish --no-git-checks --provenance
 
-  deploy_storybook:
+  deploy_site:
     runs-on: ubuntu-latest
     needs: [ci, publish_package]
     environment:
@@ -47,9 +47,10 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build-storybook
+      - run: pnpm docs:build
+      - run: pnpm build-storybook --output-dir docs/.vitepress/dist/storybook
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: storybook-static
+          path: docs/.vitepress/dist
       - id: deployment
         uses: actions/deploy-pages@v5
