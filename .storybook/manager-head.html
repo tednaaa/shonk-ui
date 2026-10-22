@@ -1,1 +1,10 @@
 <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+<script>
+	try {
+		const palette = JSON.parse(localStorage.getItem('shonk-ui/storybook-palette'));
+
+		if (palette)
+			document.documentElement.style.background = palette.colors.sidebar;
+	}
+	catch {}
+</script>

@@ -1,6 +1,11 @@
 import type { Preview } from '@storybook/vue3-vite';
+import type { Globals } from 'storybook/internal/types';
+import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
+import { addons } from 'storybook/preview-api';
 import { computed, provide } from 'vue';
 import { templateSource } from '@/lib/storybook';
+import { ThemedDocsContainer } from '@/lib/storybook/docsContainer';
+import { PALETTE_EVENT, readPalette } from '@/lib/storybook/palette';
 import { en, localeInjectionKey, resolveLocale, ru } from '@/locales';
 import { registerVueGrammar } from './highlighting';
 import './preview.css';
@@ -17,6 +22,25 @@ const presetItems = [
 ];
 
 const defaultPreset = presetItems[0].value;
+
+const channel = addons.getChannel();
+
+function applyAppearance({ globals }: { globals: Globals }) {
+	const root = document.documentElement;
+	const preset = globals.preset ?? defaultPreset;
+
+	root.classList.toggle('dark', globals.theme === 'dark');
+	delete root.dataset.theme;
+
+	if (preset !== defaultPreset)
+		root.dataset.theme = preset;
+
+	root.style.removeProperty('background');
+	channel.emit(PALETTE_EVENT, readPalette(root));
+}
+
+channel.on(SET_GLOBALS, applyAppearance);
+channel.on(GLOBALS_UPDATED, applyAppearance);
 
 const preview: Preview = {
 	initialGlobals: {
@@ -46,19 +70,6 @@ const preview: Preview = {
 		},
 	},
 	decorators: [
-		(_story, context) => {
-			const theme = context.globals.theme ?? 'light';
-			const preset = context.globals.preset ?? defaultPreset;
-			const root = document.documentElement;
-
-			root.classList.toggle('dark', theme === 'dark');
-			delete root.dataset.theme;
-
-			if (preset !== defaultPreset)
-				root.dataset.theme = preset as string;
-
-			return { template: '<story />' };
-		},
 		(_story, context) => ({
 			setup() {
 				provide(localeInjectionKey, computed(() => {
@@ -77,6 +88,7 @@ const preview: Preview = {
 			},
 		},
 		docs: {
+			container: ThemedDocsContainer,
 			source: {
 				language: 'vue',
 				transform: templateSource,
