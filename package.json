@@ -57,7 +57,10 @@
 		"test:unit": "vitest run --project=unit --project=theme-validator",
 		"validate:themes": "node dist/theme/validate-themes.js",
 		"upstream": "node scripts/upstream/upstream.ts",
-		"prepublishOnly": "pnpm run build"
+		"prepublishOnly": "pnpm run build",
+		"docs:dev": "vitepress dev docs --port 5555",
+		"docs:build": "vitepress build docs",
+		"docs:preview": "vitepress preview docs --port 5555"
 	},
 	"peerDependencies": {
 		"@internationalized/date": ">=3.12.1",
@@ -107,6 +110,7 @@
 		"tsdown": "0.22.1",
 		"typescript": "6.0.3",
 		"vite": "8.2.1",
+		"vitepress": "2.0.0-alpha.20",
 		"vitest": "4.1.10",
 		"vue": "3.5.41",
 		"vue-tsc": "3.3.9"
