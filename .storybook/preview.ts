@@ -4,6 +4,7 @@ import { GLOBALS_UPDATED, SET_GLOBALS } from 'storybook/internal/core-events';
 import { addons } from 'storybook/preview-api';
 import { computed, provide } from 'vue';
 import { templateSource } from '@/lib/storybook';
+import { storeAppearance, storedAppearance } from '@/lib/storybook/appearance';
 import { ThemedDocsContainer } from '@/lib/storybook/docsContainer';
 import { PALETTE_EVENT, readPalette } from '@/lib/storybook/palette';
 import { en, localeInjectionKey, resolveLocale, ru } from '@/locales';
@@ -30,6 +31,7 @@ function applyAppearance({ globals }: { globals: Globals }) {
 	const preset = globals.preset ?? defaultPreset;
 
 	root.classList.toggle('dark', globals.theme === 'dark');
+	storeAppearance(globals.theme === 'dark' ? 'dark' : 'light');
 	delete root.dataset.theme;
 
 	if (preset !== defaultPreset)
@@ -44,7 +46,7 @@ channel.on(GLOBALS_UPDATED, applyAppearance);
 
 const preview: Preview = {
 	initialGlobals: {
-		theme: 'light',
+		theme: storedAppearance(),
 		locale: 'en',
 		preset: defaultPreset,
 	},
