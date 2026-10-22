@@ -90,7 +90,7 @@ export const Default: Story = {
 };
 
 export const NotSearchable: Story = {
-	args: { searchable: false, placeholder: 'Filter…' },
+	args: { searchable: false, locale: { placeholder: 'Filter…' } },
 };
 
 export const WithIcons: Story = {

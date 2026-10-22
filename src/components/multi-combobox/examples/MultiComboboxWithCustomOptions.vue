@@ -26,9 +26,7 @@ const selectedMembers = ref(['jackson']);
 		<MultiCombobox
 			v-model="selectedTokens"
 			:options="tokens"
-			trigger-placeholder="Select tokens…"
-			all-selected-text="All tokens"
-			search-placeholder="Search token…"
+			:locale="{ triggerPlaceholder: 'Select tokens…', allText: 'All tokens', searchPlaceholder: 'Search token…' }"
 		>
 			<template #option="{ option }">
 				<span class="size-4 shrink-0 rounded-full" :class="option.color" />
@@ -51,9 +49,7 @@ const selectedMembers = ref(['jackson']);
 		<MultiCombobox
 			v-model="selectedMembers"
 			:options="members"
-			trigger-placeholder="Select members…"
-			all-selected-text="All members"
-			search-placeholder="Search member…"
+			:locale="{ triggerPlaceholder: 'Select members…', allText: 'All members', searchPlaceholder: 'Search member…' }"
 		>
 			<template #option="{ option }">
 				<Avatar class="size-7">

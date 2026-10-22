@@ -18,9 +18,7 @@ const value = ref<string>();
 		v-model="value"
 		clearable
 		:options="tokens"
-		trigger-placeholder="Select token…"
-		search-placeholder="Search token…"
-		empty-text="No token found."
+		:locale="{ triggerPlaceholder: 'Select token…', searchPlaceholder: 'Search token…', emptyText: 'No token found.' }"
 	>
 		<template #option="{ option }">
 			<span class="size-4 shrink-0 rounded-full" :class="option.color" />

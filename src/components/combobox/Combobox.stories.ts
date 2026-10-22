@@ -23,9 +23,7 @@ const meta: Meta<typeof Combobox> = {
 	tags: ['autodocs'],
 	args: {
 		options: frameworks,
-		triggerPlaceholder: 'Select framework…',
-		searchPlaceholder: 'Search framework…',
-		emptyText: 'No framework found.',
+		locale: { triggerPlaceholder: 'Select framework…', searchPlaceholder: 'Search framework…', emptyText: 'No framework found.' },
 	},
 	render: render({ Combobox }, `
     <div class="max-w-60">
@@ -60,7 +58,7 @@ export const WithOptionSlot: Story = {
 };
 
 export const Loading: Story = {
-	args: { loading: true, loadingText: 'Loading…' },
+	args: { loading: true },
 };
 
 export const Disabled: Story = {

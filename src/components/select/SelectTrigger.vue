@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { SelectTriggerProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { ChevronDown, X } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import { injectSelectRootContext, SelectIcon, SelectTrigger, useForwardProps } from 'reka-ui';
@@ -15,15 +16,15 @@ const props = withDefaults(defineProps<SelectTriggerProps & {
 	class?: HTMLAttributes['class'];
 	size?: 'sm' | 'md';
 	clearable?: boolean;
-	clearButtonAriaLabel?: string;
+	locale?: Partial<ShonkLocale['select']>;
 }>(), {
 	size: 'md',
 });
 
 const attrs = useAttrs();
-const locale = useLocale();
+const locale = useLocale(() => ({ select: props.locale }));
 
-const delegatedProps = reactiveOmit(props, 'class', 'size', 'clearable', 'clearButtonAriaLabel');
+const delegatedProps = reactiveOmit(props, 'class', 'size', 'clearable', 'locale');
 const forwardedProps = useForwardProps(delegatedProps);
 
 const rootContext = injectSelectRootContext();
@@ -59,7 +60,7 @@ function clear() {
 		<button
 			v-if="showClear"
 			type="button"
-			:aria-label="props.clearButtonAriaLabel ?? locale.select.clearButtonAriaLabel"
+			:aria-label="locale.select.clearButtonAriaLabel"
 			tabindex="-1"
 			class="absolute top-1/2 right-8 -translate-y-1/2 cursor-pointer rounded-xs text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
 			@pointerdown.stop.prevent="clear"

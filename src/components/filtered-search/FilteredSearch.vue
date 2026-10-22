@@ -2,6 +2,7 @@
 import type { FocusOutsideEvent, PointerDownOutsideEvent } from 'reka-ui';
 import type { FunctionalComponent, HTMLAttributes, VNodeChild } from 'vue';
 import type { ActiveFilter, FilterDefinition, FilterHistoryItem, FilterOperator, FilterOption, FilterTokenSegment } from './types';
+import type { ShonkLocale } from '@/locales';
 import { CheckIcon, ChevronLeftIcon, CircleXIcon, SearchIcon, XIcon } from '@lucide/vue';
 import { createReusableTemplate } from '@vueuse/core';
 import { computed, nextTick, ref, useId, watch } from 'vue';
@@ -18,12 +19,12 @@ import { filteredSearchTokenListVariants, filteredSearchVariants, filterTokenPar
 const props = withDefaults(defineProps<{
 	definitions: FilterDefinition[];
 	historyItems?: FilterHistoryItem[];
-	placeholder?: string;
 	searchable?: boolean;
 	draggable?: boolean;
 	viewOnly?: boolean;
 	wrap?: boolean;
 	class?: HTMLAttributes['class'];
+	locale?: Partial<ShonkLocale['filteredSearch']>;
 }>(), {
 	searchable: true,
 	draggable: false,
@@ -49,7 +50,7 @@ type DropdownStep
 		| { phase: 'operator'; key: string; keyLabel: string; operators: FilterOperator[] }
 		| { phase: 'value'; key: string; keyLabel: string; operator: string; operatorLabel: string };
 
-const locale = useLocale();
+const locale = useLocale(() => ({ filteredSearch: props.locale }));
 
 const [DefineField, ReuseField] = createReusableTemplate<{ fieldClass?: HTMLAttributes['class'] }>();
 const [DefineInput, ReuseInput] = createReusableTemplate();
@@ -175,7 +176,7 @@ const inputPlaceholder = computed(() => {
 		return locale.value.filteredSearch.selectOperatorPlaceholder;
 	if (filters.value.length > 0 || searchText.value)
 		return locale.value.filteredSearch.addFilterPlaceholder;
-	return props.placeholder ?? locale.value.filteredSearch.placeholder;
+	return locale.value.filteredSearch.placeholder;
 });
 
 const editingInputSize = computed(() => Math.max(inputText.value.length, step.value.phase === 'key' ? 1 : inputPlaceholder.value.length));

@@ -184,12 +184,16 @@ Pass a ref or getter to follow a language switcher without a reload:
 app.use(shonkUI, { locale: computed(() => (lang.value === 'ru' ? ru : en)) });
 ```
 
-Every string also has a prop, for one-off overrides:
+A `locale` prop takes the keys of the component's locale section, merged over the app locale key by key. On a
+root it reaches every part inside:
 
 ```vue
-<PaginationNext button-text="Далее" />
-
-<ConfirmDialog title="Внимание" cancel-button-text="Отмена" />
+<Pagination :total="100" :locale="{ nextButtonText: 'Дальше', previousButtonText: 'Раньше' }">
+	<PaginationContent>
+		<PaginationPrevious />
+		<PaginationNext />
+	</PaginationContent>
+</Pagination>
 ```
 
 And `require()` overrides a single confirm dialog:

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { ChevronLeftIcon } from '@lucide/vue';
 import { computed } from 'vue';
 import { useLocale } from '@/locales';
@@ -9,12 +10,12 @@ import { useSidebar } from './utils';
 
 const props = defineProps<{
 	class?: HTMLAttributes['class'];
-	ariaLabel?: string;
+	locale?: Partial<ShonkLocale['sidebar']>;
 }>();
 
-const locale = useLocale();
+const locale = useLocale(() => ({ sidebar: props.locale }));
 
-const toggleLabel = computed(() => props.ariaLabel ?? locale.value.sidebar.toggleAriaLabel);
+const toggleLabel = computed(() => locale.value.sidebar.toggleAriaLabel);
 
 const { toggleSidebar } = useSidebar();
 </script>

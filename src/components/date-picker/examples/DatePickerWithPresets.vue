@@ -10,7 +10,7 @@ function setDaysFromNow(days: number) {
 </script>
 
 <template>
-	<DatePicker v-model="date" trigger-placeholder="Pick a date">
+	<DatePicker v-model="date">
 		<div class="flex flex-col gap-1 border-l p-2">
 			<Button variant="ghost" class="justify-start" @click="setDaysFromNow(0)">Today</Button>
 			<Button variant="ghost" class="justify-start" @click="setDaysFromNow(1)">Tomorrow</Button>

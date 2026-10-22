@@ -13,7 +13,7 @@ function setLastDays(days: number) {
 </script>
 
 <template>
-	<RangeDatePicker v-model="dates" trigger-placeholder="Pick a date range">
+	<RangeDatePicker v-model="dates">
 		<div class="flex flex-col gap-1 border-l p-2">
 			<Button variant="ghost" class="justify-start" @click="setLastDays(7)">Last 7 days</Button>
 			<Button variant="ghost" class="justify-start" @click="setLastDays(30)">Last 30 days</Button>

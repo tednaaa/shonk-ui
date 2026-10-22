@@ -22,7 +22,7 @@ const blankTable = useDataTable<Invoice>({ data: [], columns });
 	<div class="flex max-w-3xl flex-col gap-6">
 		<DataTable
 			:table="filteredTable"
-			empty-text="No invoices match the filters"
+			:locale="{ emptyText: 'No invoices match the filters' }"
 		/>
 
 		<DataTable :table="blankTable">

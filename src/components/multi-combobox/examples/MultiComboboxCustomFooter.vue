@@ -19,7 +19,7 @@ const open = ref(false);
 		v-model="value"
 		v-model:open="open"
 		:options="frameworks"
-		search-placeholder="Search framework…"
+		:locale="{ searchPlaceholder: 'Search framework…' }"
 	>
 		<template #footer>
 			<div class="flex justify-end gap-2 border-t p-2">

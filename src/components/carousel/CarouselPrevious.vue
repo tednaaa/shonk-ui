@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { WithClassAsProps } from './interface';
 import type { ButtonVariants } from '@/components/button';
+import type { ShonkLocale } from '@/locales';
 import { ArrowLeft } from '@lucide/vue';
 import { Button } from '@/components/button';
 import { useLocale } from '@/locales';
@@ -11,14 +12,14 @@ import { carouselPreviousVariants } from './variants';
 const props = withDefaults(defineProps<{
 	variant?: ButtonVariants['variant'];
 	size?: ButtonVariants['size'];
-	screenReaderText?: string;
+	locale?: Partial<ShonkLocale['carousel']>;
 }
 & WithClassAsProps>(), {
 	variant: 'secondary',
 	size: 'icon',
 });
 
-const locale = useLocale();
+const locale = useLocale(() => ({ carousel: props.locale }));
 
 const { orientation, canScrollPrev, scrollPrev } = useCarousel();
 </script>
@@ -34,7 +35,7 @@ const { orientation, canScrollPrev, scrollPrev } = useCarousel();
 	>
 		<slot>
 			<ArrowLeft />
-			<span class="sr-only">{{ props.screenReaderText ?? locale.carousel.previousButtonScreenReaderText }}</span>
+			<span class="sr-only">{{ locale.carousel.previousButtonScreenReaderText }}</span>
 		</slot>
 	</Button>
 </template>

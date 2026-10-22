@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ButtonVariants } from '../button';
+import type { ShonkLocale } from '@/locales';
 import { computed, ref, watch } from 'vue';
 import { useLocale } from '@/locales';
 import { Button } from '../button';
@@ -16,12 +17,11 @@ import {
 import { useConfirmState } from './useConfirm';
 
 const props = defineProps<{
-	title?: string;
-	cancelButtonText?: string;
 	acceptButtonVariant?: ButtonVariants['variant'];
+	locale?: Partial<ShonkLocale['confirmDialog']>;
 }>();
 
-const locale = useLocale();
+const locale = useLocale(() => ({ confirmDialog: props.locale }));
 
 const state = useConfirmState();
 const open = computed(() => state.value !== null);
@@ -37,8 +37,8 @@ watch(state, (request) => {
 	pendingRequest = request;
 });
 
-const resolvedTitle = computed(() => shownRequest.value?.title ?? props.title ?? locale.value.confirmDialog.title);
-const resolvedCancelButtonText = computed(() => shownRequest.value?.cancelButtonText ?? props.cancelButtonText ?? locale.value.confirmDialog.cancelButtonText);
+const resolvedTitle = computed(() => shownRequest.value?.title ?? locale.value.confirmDialog.title);
+const resolvedCancelButtonText = computed(() => shownRequest.value?.cancelButtonText ?? locale.value.confirmDialog.cancelButtonText);
 const resolvedAcceptButtonVariant = computed(() => shownRequest.value?.acceptButtonVariant ?? props.acceptButtonVariant);
 
 function takePendingRequest() {

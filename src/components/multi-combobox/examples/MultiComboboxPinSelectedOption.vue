@@ -19,6 +19,6 @@ const value = ref(['svelte', 'astro']);
 		clearable
 		pin-selected-option
 		:options="frameworks"
-		search-placeholder="Search framework…"
+		:locale="{ searchPlaceholder: 'Search framework…' }"
 	/>
 </template>

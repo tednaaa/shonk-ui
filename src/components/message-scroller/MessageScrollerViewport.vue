@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { onBeforeUnmount, onMounted, useTemplateRef, watch } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
@@ -8,6 +9,7 @@ import { SCROLL_KEYS, useMessageScrollerContext } from './useMessageScroller';
 const props = withDefaults(defineProps<{
 	class?: HTMLAttributes['class'];
 	preserveScrollOnPrepend?: boolean;
+	locale?: Partial<ShonkLocale['messageScroller']>;
 }>(), {
 	preserveScrollOnPrepend: true,
 });
@@ -22,7 +24,7 @@ const {
 	userScrollIntent,
 } = useMessageScrollerContext();
 
-const locale = useLocale();
+const locale = useLocale(() => ({ messageScroller: props.locale }));
 
 const viewportEl = useTemplateRef<HTMLElement>('viewport');
 

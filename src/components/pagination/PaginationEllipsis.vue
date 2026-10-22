@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { PaginationEllipsisProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { MoreHorizontal } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import { PaginationEllipsis } from 'reka-ui';
@@ -9,12 +10,12 @@ import { cn } from '@/utils';
 
 const props = defineProps<PaginationEllipsisProps & {
 	class?: HTMLAttributes['class'];
-	screenReaderText?: string;
+	locale?: Partial<ShonkLocale['pagination']>;
 }>();
 
-const locale = useLocale();
+const locale = useLocale(() => ({ pagination: props.locale }));
 
-const delegatedProps = reactiveOmit(props, 'class', 'screenReaderText');
+const delegatedProps = reactiveOmit(props, 'class', 'locale');
 </script>
 
 <template>
@@ -25,7 +26,7 @@ const delegatedProps = reactiveOmit(props, 'class', 'screenReaderText');
 	>
 		<slot>
 			<MoreHorizontal class="size-4" />
-			<span class="sr-only">{{ props.screenReaderText ?? locale.pagination.ellipsisScreenReaderText }}</span>
+			<span class="sr-only">{{ locale.pagination.ellipsisScreenReaderText }}</span>
 		</slot>
 	</PaginationEllipsis>
 </template>

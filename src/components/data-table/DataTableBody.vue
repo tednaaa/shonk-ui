@@ -12,7 +12,6 @@ import { injectDataTableRowPinning } from './lib/rowPinning';
 const props = defineProps<{
 	table: KitTable<TData>;
 	rowClass?: (row: TData) => HTMLAttributes['class'];
-	emptyText?: string;
 	loading?: boolean;
 	loadingMore?: boolean;
 	onRowClick?: (row: TData) => void;
@@ -91,7 +90,7 @@ const pinnedRowsClass = computed(() => cn(
 				v-else
 				name="empty"
 			>
-				{{ emptyText ?? locale.dataTable.emptyText }}
+				{{ locale.dataTable.emptyText }}
 			</slot>
 		</TableEmpty>
 

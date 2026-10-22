@@ -2,6 +2,7 @@
 import type { HTMLAttributes } from 'vue';
 import type { ButtonVariants } from '../button';
 import type { MessageScrollerButtonDirection } from './useMessageScroller';
+import type { ShonkLocale } from '@/locales';
 import { ArrowDownIcon } from '@lucide/vue';
 import { computed } from 'vue';
 import { useLocale } from '@/locales';
@@ -15,6 +16,7 @@ const props = withDefaults(defineProps<{
 	behavior?: ScrollBehavior;
 	variant?: ButtonVariants['variant'];
 	size?: ButtonVariants['size'];
+	locale?: Partial<ShonkLocale['messageScroller']>;
 }>(), {
 	direction: 'end',
 	behavior: 'smooth',
@@ -24,7 +26,7 @@ const props = withDefaults(defineProps<{
 
 const { scrollToEnd, scrollToStart } = useMessageScroller();
 const scrollable = useMessageScrollerScrollable();
-const locale = useLocale();
+const locale = useLocale(() => ({ messageScroller: props.locale }));
 
 const active = computed(() =>
 	props.direction === 'start' ? scrollable.value.start : scrollable.value.end);

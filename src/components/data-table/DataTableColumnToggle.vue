@@ -4,6 +4,7 @@ import type { AcceptableValue } from 'reka-ui';
 import type { VNodeChild } from 'vue';
 import type { KitFeatures } from './lib/features';
 import type { DataTableInstance } from './types';
+import type { ShonkLocale } from '@/locales';
 import { Columns3Icon } from '@lucide/vue';
 import { computed } from 'vue';
 import { useLocale } from '@/locales';
@@ -15,6 +16,7 @@ import { unwrapDataTable } from './lib/instance';
 
 const props = defineProps<{
 	table: DataTableInstance<TData>;
+	locale?: Partial<ShonkLocale['dataTable']>;
 }>();
 
 defineSlots<{
@@ -23,7 +25,7 @@ defineSlots<{
 
 const open = defineModel<boolean>('open', { default: false });
 
-const locale = useLocale();
+const locale = useLocale(() => ({ dataTable: props.locale }));
 
 const kitTable = computed(() => unwrapDataTable(props.table));
 

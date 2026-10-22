@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { useSidebar } from './utils';
 
 const props = defineProps<{
 	class?: HTMLAttributes['class'];
-	ariaLabel?: string;
+	locale?: Partial<ShonkLocale['sidebar']>;
 }>();
 
-const locale = useLocale();
+const locale = useLocale(() => ({ sidebar: props.locale }));
 
 const { toggleSidebar } = useSidebar();
 </script>
@@ -19,9 +20,9 @@ const { toggleSidebar } = useSidebar();
 		type="button"
 		data-sidebar="rail"
 		data-slot="sidebar-rail"
-		:aria-label="props.ariaLabel ?? locale.sidebar.toggleAriaLabel"
+		:aria-label="locale.sidebar.toggleAriaLabel"
 		:tabindex="-1"
-		:title="props.ariaLabel ?? locale.sidebar.toggleAriaLabel"
+		:title="locale.sidebar.toggleAriaLabel"
 		:class="cn(
 			'absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear group-data-[side=left]:-right-4 group-data-[side=right]:left-0 after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border sm:flex',
 			'in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize',

@@ -2,6 +2,7 @@
 import type { AcceptableValue } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ComboboxOption } from '../combobox';
+import type { ShonkLocale } from '@/locales';
 import { ChevronDownIcon, XIcon } from '@lucide/vue';
 import { useFilter } from 'reka-ui';
 import { computed, shallowRef, watch } from 'vue';
@@ -23,12 +24,6 @@ import { multiComboboxTriggerVariants } from './variants';
 
 const props = defineProps<{
 	options: O[];
-	triggerPlaceholder?: string;
-	allSelectedText?: string;
-	searchPlaceholder?: string;
-	emptyText?: string;
-	loadingText?: string;
-	clearButtonAriaLabel?: string;
 	disabled?: boolean;
 	loading?: boolean;
 	clearable?: boolean;
@@ -37,6 +32,7 @@ const props = defineProps<{
 	hideFooter?: boolean;
 	class?: HTMLAttributes['class'];
 	contentClass?: HTMLAttributes['class'];
+	locale?: Partial<ShonkLocale['combobox'] & ShonkLocale['multiCombobox']>;
 }>();
 
 defineSlots<{
@@ -52,7 +48,7 @@ const model = defineModel<T[]>({ default: () => [] });
 const search = defineModel<string>('search', { default: '' });
 const open = defineModel<boolean>('open', { default: false });
 
-const locale = useLocale();
+const locale = useLocale(() => ({ combobox: props.locale, multiCombobox: props.locale }));
 
 const pinnedValues = shallowRef<T[]>([]);
 
@@ -105,9 +101,9 @@ const visibleSelection = computed(() => {
 const triggerText = computed(() => {
 	const [first] = model.value;
 	if (first === undefined)
-		return props.triggerPlaceholder ?? locale.value.combobox.triggerPlaceholder;
+		return locale.value.combobox.triggerPlaceholder;
 	if (allSelected.value)
-		return props.allSelectedText ?? locale.value.multiCombobox.allText;
+		return locale.value.multiCombobox.allText;
 	if (model.value.length === 1)
 		return knownOptions.value.get(first)?.label ?? locale.value.multiCombobox.selectedCountText(1);
 	return locale.value.multiCombobox.selectedCountText(model.value.length);
@@ -173,7 +169,7 @@ function clear() {
 				<button
 					v-if="showClear"
 					type="button"
-					:aria-label="props.clearButtonAriaLabel ?? locale.combobox.clearButtonAriaLabel"
+					:aria-label="locale.combobox.clearButtonAriaLabel"
 					tabindex="-1"
 					class="pointer-events-auto cursor-pointer rounded-xs text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
 					@pointerdown.stop.prevent="clear"
@@ -192,7 +188,7 @@ function clear() {
 				:manual-filter
 			>
 				<CommandInput
-					:placeholder="props.searchPlaceholder ?? locale.combobox.searchPlaceholder"
+					:placeholder="locale.combobox.searchPlaceholder"
 					@update:model-value="(v: string) => (search = v)"
 				/>
 				<CommandList>
@@ -201,7 +197,7 @@ function clear() {
 						class="flex items-center justify-center gap-2 py-6 text-sm text-muted-foreground"
 					>
 						<Spinner />
-						<span>{{ props.loadingText ?? locale.combobox.loadingText }}</span>
+						<span>{{ locale.combobox.loadingText }}</span>
 					</div>
 					<template v-else>
 						<label
@@ -216,7 +212,7 @@ function clear() {
 						</label>
 						<CommandEmpty>
 							<slot name="empty">
-								{{ props.emptyText ?? locale.combobox.emptyText }}
+								{{ locale.combobox.emptyText }}
 							</slot>
 						</CommandEmpty>
 						<CommandGroup>

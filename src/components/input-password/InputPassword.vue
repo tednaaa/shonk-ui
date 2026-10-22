@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { Eye, EyeOff } from '@lucide/vue';
 import { computed, ref } from 'vue';
 import { useLocale } from '@/locales';
@@ -11,8 +12,7 @@ export interface InputPasswordProps {
 	name: string;
 	invalid?: boolean;
 	class?: HTMLAttributes['class'];
-	showPasswordAriaLabel?: string;
-	hidePasswordAriaLabel?: string;
+	locale?: Partial<ShonkLocale['inputPassword']>;
 }
 
 defineOptions({ inheritAttrs: false });
@@ -21,14 +21,14 @@ const props = defineProps<InputPasswordProps>();
 
 const modelValue = defineModel<string>();
 
-const locale = useLocale();
+const locale = useLocale(() => ({ inputPassword: props.locale }));
 
 const visible = ref(false);
 
 const inputType = computed(() => visible.value ? 'text' : 'password');
 const buttonAriaLabel = computed(() => visible.value
-	? (props.hidePasswordAriaLabel ?? locale.value.inputPassword.hidePasswordAriaLabel)
-	: (props.showPasswordAriaLabel ?? locale.value.inputPassword.showPasswordAriaLabel));
+	? (locale.value.inputPassword.hidePasswordAriaLabel)
+	: (locale.value.inputPassword.showPasswordAriaLabel));
 </script>
 
 <template>

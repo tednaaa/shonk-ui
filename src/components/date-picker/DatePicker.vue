@@ -2,6 +2,7 @@
 import type { DateValue } from '@internationalized/date';
 import type { WeekStartsOn } from 'reka-ui/date';
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { CalendarDate } from '@internationalized/date';
 import { CalendarIcon } from '@lucide/vue';
 import { computed, ref } from 'vue';
@@ -17,7 +18,6 @@ import {
 } from '../popover';
 
 const props = withDefaults(defineProps<{
-	triggerPlaceholder?: string;
 	closeOnSelect?: boolean;
 	minValue?: DateValue;
 	maxValue?: DateValue;
@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<{
 	formatter?: (date: Date) => string;
 	weekStartsOn?: WeekStartsOn;
 	class?: HTMLAttributes['class'];
+	locale?: Partial<ShonkLocale['datePicker'] & Pick<ShonkLocale, 'intlLocale'>>;
 }>(), {
 	closeOnSelect: true,
 	weekStartsOn: 1,
@@ -33,7 +34,7 @@ const props = withDefaults(defineProps<{
 const date = defineModel<Date>();
 const open = ref(false);
 
-const locale = useLocale();
+const locale = useLocale(() => ({ intlLocale: props.locale?.intlLocale, datePicker: props.locale }));
 
 const calendarValue = computed<DateValue | undefined>(() => {
 	const value = date.value;
@@ -66,7 +67,7 @@ defineExpose({ close });
 				:class="cn('w-55 justify-start bg-field text-left font-normal text-field-foreground', !displayValue && 'text-muted-foreground', props.class)"
 			>
 				<CalendarIcon :size="16" />
-				<span>{{ displayValue || (props.triggerPlaceholder ?? locale.datePicker.triggerPlaceholder) }}</span>
+				<span>{{ displayValue || (locale.datePicker.triggerPlaceholder) }}</span>
 			</Button>
 		</PopoverTrigger>
 		<PopoverContent align="start" side="top" class="w-auto overflow-hidden p-0">

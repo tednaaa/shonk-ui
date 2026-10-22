@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Sheet, SheetContent } from '../sheet';
@@ -13,8 +14,7 @@ export interface SidebarProps {
 	side?: 'left' | 'right';
 	variant?: 'sidebar' | 'floating' | 'inset';
 	collapsible?: 'offcanvas' | 'icon' | 'none';
-	mobileScreenReaderTitle?: string;
-	mobileScreenReaderDescription?: string;
+	locale?: Partial<ShonkLocale['sidebar']>;
 	class?: HTMLAttributes['class'];
 }
 
@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 	collapsible: 'offcanvas',
 });
 
-const locale = useLocale();
+const locale = useLocale(() => ({ sidebar: props.locale }));
 
 const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
 </script>
@@ -55,8 +55,8 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
 			}"
 		>
 			<SheetHeader class="sr-only">
-				<SheetTitle>{{ props.mobileScreenReaderTitle ?? locale.sidebar.mobileScreenReaderTitle }}</SheetTitle>
-				<SheetDescription>{{ props.mobileScreenReaderDescription ?? locale.sidebar.mobileScreenReaderDescription }}</SheetDescription>
+				<SheetTitle>{{ locale.sidebar.mobileScreenReaderTitle }}</SheetTitle>
+				<SheetDescription>{{ locale.sidebar.mobileScreenReaderDescription }}</SheetDescription>
 			</SheetHeader>
 			<div class="flex size-full flex-col">
 				<slot />

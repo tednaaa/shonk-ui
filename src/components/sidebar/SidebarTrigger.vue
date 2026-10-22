@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { PanelLeft } from '@lucide/vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
@@ -8,10 +9,10 @@ import { useSidebar } from './utils';
 
 const props = defineProps<{
 	class?: HTMLAttributes['class'];
-	screenReaderText?: string;
+	locale?: Partial<ShonkLocale['sidebar']>;
 }>();
 
-const locale = useLocale();
+const locale = useLocale(() => ({ sidebar: props.locale }));
 
 const { toggleSidebar } = useSidebar();
 </script>
@@ -26,6 +27,6 @@ const { toggleSidebar } = useSidebar();
 		@click="toggleSidebar"
 	>
 		<PanelLeft />
-		<span class="sr-only">{{ props.screenReaderText ?? locale.sidebar.toggleAriaLabel }}</span>
+		<span class="sr-only">{{ locale.sidebar.toggleAriaLabel }}</span>
 	</Button>
 </template>

@@ -1,8 +1,10 @@
 <script setup lang="ts" generic="TData extends object">
 import type { HTMLAttributes, VNodeChild } from 'vue';
 import type { DataTableCellContext, DataTableHeaderContext, DataTableInstance } from './types';
+import type { ShonkLocale } from '@/locales';
 import { unrefElement, useInfiniteScroll } from '@vueuse/core';
 import { computed, useTemplateRef } from 'vue';
+import { provideLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Table } from '../table';
 import DataTableBody from './DataTableBody.vue';
@@ -17,11 +19,11 @@ const props = defineProps<{
 	table: DataTableInstance<TData>;
 	class?: HTMLAttributes['class'];
 	rowClass?: (row: TData) => HTMLAttributes['class'];
-	emptyText?: string;
 	loading?: boolean;
 	hasNextPage?: boolean;
 	loadingMore?: boolean;
 	onRowClick?: (row: TData) => void;
+	locale?: Partial<ShonkLocale['dataTable']>;
 }>();
 
 const emit = defineEmits<{
@@ -34,6 +36,8 @@ const slots = defineSlots<{
 	expanded?: (context: { row: TData }) => VNodeChild;
 	empty?: () => VNodeChild;
 }>();
+
+provideLocale(() => ({ dataTable: props.locale }));
 
 const kitTable = computed(() => unwrapDataTable(props.table));
 
@@ -89,7 +93,6 @@ useInfiniteScroll(
 			<DataTableBody
 				:table="kitTable"
 				:row-class="rowClass"
-				:empty-text="emptyText"
 				:loading="loading"
 				:loading-more="loadingMore"
 				:on-row-click="onRowClick"

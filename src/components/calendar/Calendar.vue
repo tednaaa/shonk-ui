@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { AcceptableValue, CalendarRootEmits, CalendarRootProps, DateValue } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { getLocalTimeZone, today } from '@internationalized/date';
 import { createReusableTemplate, reactiveOmit } from '@vueuse/core';
 import { CalendarRoot, useDateFormatter, useForwardPropsEmits } from 'reka-ui';
@@ -23,7 +24,12 @@ import CalendarPrevButton from './CalendarPrevButton.vue';
 
 export type LayoutTypes = 'month-and-year' | 'month-only' | 'year-only' | undefined;
 
-const props = withDefaults(defineProps<Omit<CalendarRootProps, 'placeholder'> & { class?: HTMLAttributes['class']; layout?: LayoutTypes; yearRange?: DateValue[] }>(), {
+const props = withDefaults(defineProps<Omit<CalendarRootProps, 'placeholder' | 'locale'> & {
+	class?: HTMLAttributes['class'];
+	layout?: LayoutTypes;
+	yearRange?: DateValue[];
+	locale?: Partial<Pick<ShonkLocale, 'intlLocale'>>;
+}>(), {
 	modelValue: undefined,
 	layout: undefined,
 	weekdayFormat: 'short',
@@ -38,9 +44,9 @@ const initialPlaceholder = toRaw(placeholder.value);
 
 const delegatedProps = reactiveOmit(props, 'class', 'layout', 'locale');
 
-const uiLocale = useLocale();
+const locale = useLocale(() => ({ intlLocale: props.locale?.intlLocale }));
 
-const localeCode = computed(() => props.locale ?? uiLocale.value.intlLocale);
+const localeCode = computed(() => locale.value.intlLocale);
 
 const formatter = useDateFormatter(localeCode.value);
 

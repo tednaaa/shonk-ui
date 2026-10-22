@@ -248,14 +248,14 @@ describe('dataTable', () => {
 		});
 
 		it('should show the empty text passed in props', () => {
-			const wrapper = mountTable('<DataTable :table="table" empty-text="Nothing found" />', { data: [] });
+			const wrapper = mountTable('<DataTable :table="table" :locale="{ emptyText: \'Nothing found\' }" />', { data: [] });
 
 			expect(wrapper.get('tbody td').text()).toBe('Nothing found');
 		});
 
 		it('should prefer the empty slot over the empty text', () => {
 			const wrapper = mountTable(
-				`<DataTable :table="table" empty-text="Nothing found">
+				`<DataTable :table="table" :locale="{ emptyText: 'Nothing found' }">
           <template #empty>Create the first record</template>
         </DataTable>`,
 				{ data: [] },

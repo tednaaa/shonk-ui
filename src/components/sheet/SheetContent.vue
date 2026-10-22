@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { DialogContentEmits, DialogContentProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { X } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import {
@@ -17,7 +18,7 @@ import { sheetContentVariants } from './variants';
 interface SheetContentProps extends DialogContentProps {
 	class?: HTMLAttributes['class'];
 	side?: 'top' | 'right' | 'bottom' | 'left';
-	closeButtonScreenReaderText?: string;
+	locale?: Partial<ShonkLocale['sheet']>;
 }
 
 defineOptions({
@@ -29,9 +30,9 @@ const props = withDefaults(defineProps<SheetContentProps>(), {
 });
 const emits = defineEmits<DialogContentEmits>();
 
-const locale = useLocale();
+const locale = useLocale(() => ({ sheet: props.locale }));
 
-const delegatedProps = reactiveOmit(props, 'class', 'side', 'closeButtonScreenReaderText');
+const delegatedProps = reactiveOmit(props, 'class', 'side', 'locale');
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
@@ -50,7 +51,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 				class="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none data-[state=open]:bg-secondary"
 			>
 				<X class="size-4" />
-				<span class="sr-only">{{ props.closeButtonScreenReaderText ?? locale.sheet.closeButtonScreenReaderText }}</span>
+				<span class="sr-only">{{ locale.sheet.closeButtonScreenReaderText }}</span>
 			</DialogClose>
 		</DialogContent>
 	</DialogPortal>

@@ -2,6 +2,7 @@
 import type { PaginationPrevProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ButtonVariants } from '@/components/button';
+import type { ShonkLocale } from '@/locales';
 import { ChevronLeftIcon } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import { PaginationPrev, useForwardProps } from 'reka-ui';
@@ -13,16 +14,16 @@ import { cn } from '@/utils';
 const props = withDefaults(defineProps<PaginationPrevProps & {
 	size?: ButtonVariants['size'];
 	class?: HTMLAttributes['class'];
-	buttonText?: string;
+	locale?: Partial<ShonkLocale['pagination']>;
 }>(), {
 	size: 'default',
 });
 
-const locale = useLocale();
+const locale = useLocale(() => ({ pagination: props.locale }));
 
-const resolvedButtonText = computed(() => props.buttonText ?? locale.value.pagination.previousButtonText);
+const resolvedButtonText = computed(() => locale.value.pagination.previousButtonText);
 
-const delegatedProps = reactiveOmit(props, 'class', 'size', 'buttonText');
+const delegatedProps = reactiveOmit(props, 'class', 'size', 'locale');
 const forwarded = useForwardProps(delegatedProps);
 </script>
 

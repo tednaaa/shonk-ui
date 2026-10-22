@@ -12,9 +12,6 @@ const meta: Meta<typeof DatePicker> = {
 	title: 'Dates/DatePicker',
 	component: DatePicker,
 	tags: ['autodocs'],
-	args: {
-		triggerPlaceholder: 'Pick a date',
-	},
 	render: render({ DatePicker }, `<DatePicker v-bind="args" />`),
 };
 

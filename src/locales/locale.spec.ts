@@ -116,17 +116,17 @@ describe('localized components', () => {
 		expect(host.querySelector('nav')?.getAttribute('aria-label')).toBe('хлебные крошки');
 	});
 
-	it('should let a prop win over the locale', () => {
-		const host = mount(Breadcrumb, { ariaLabel: 'Навигация' });
+	it('should let an aria-label attribute win over the locale', () => {
+		const host = mount(Breadcrumb, { 'aria-label': 'Навигация' });
 
 		expect(host.querySelector('nav')?.getAttribute('aria-label')).toBe('Навигация');
 	});
 });
 
 describe('calendar weekdays', () => {
-	function weekdays(component: Component, options: ShonkUIOptions) {
+	function weekdays(component: Component, options: ShonkUIOptions, props?: Record<string, unknown>) {
 		const host = document.createElement('div');
-		createApp(component).use(shonkUI, options).mount(host);
+		createApp(component, props).use(shonkUI, options).mount(host);
 
 		return [...host.querySelectorAll('[data-slot$="head-cell"]')].map(cell => cell.textContent?.trim());
 	}
@@ -138,5 +138,10 @@ describe('calendar weekdays', () => {
 
 	it('should abbreviate weekdays in the default locale', () => {
 		expect(weekdays(Calendar, {})).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
+	});
+
+	it('should take the Intl locale of one calendar from its locale prop over the app locale', () => {
+		expect(weekdays(Calendar, { locale: en }, { locale: { intlLocale: 'ru-RU' } })).toEqual(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
+		expect(weekdays(RangeCalendar, { locale: en }, { locale: { intlLocale: 'ru-RU' } })).toEqual(['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']);
 	});
 });

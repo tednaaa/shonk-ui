@@ -18,8 +18,6 @@ const value = ref('nuxt');
 		v-model="value"
 		clearable
 		:options="frameworks"
-		trigger-placeholder="Select framework…"
-		search-placeholder="Search framework…"
-		empty-text="No framework found."
+		:locale="{ triggerPlaceholder: 'Select framework…', searchPlaceholder: 'Search framework…', emptyText: 'No framework found.' }"
 	/>
 </template>

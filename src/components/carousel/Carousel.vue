@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import type { CarouselEmits, CarouselProps, WithClassAsProps } from './interface';
+import type { ShonkLocale } from '@/locales';
+import { provideLocale } from '@/locales';
 import { cn } from '@/utils';
 import { useProvideCarousel } from './useCarousel';
 
-const props = withDefaults(defineProps<CarouselProps & WithClassAsProps>(), {
+const props = withDefaults(defineProps<CarouselProps & WithClassAsProps & {
+	locale?: Partial<ShonkLocale['carousel']>;
+}>(), {
 	orientation: 'horizontal',
 });
 
 const emits = defineEmits<CarouselEmits>();
+
+provideLocale(() => ({ carousel: props.locale }));
 
 const { canScrollNext, canScrollPrev, carouselApi, carouselRef, orientation, scrollNext, scrollPrev } = useProvideCarousel(props, emits);
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { XIcon } from '@lucide/vue';
 import { DialogClose } from 'reka-ui';
 import { useLocale } from '@/locales';
@@ -9,12 +10,12 @@ import { Button } from '../button';
 const props = withDefaults(defineProps<{
 	class?: HTMLAttributes['class'];
 	showCloseButton?: boolean;
-	closeButtonAriaLabel?: string;
+	locale?: Partial<ShonkLocale['dialog']>;
 }>(), {
 	showCloseButton: true,
 });
 
-const locale = useLocale();
+const locale = useLocale(() => ({ dialog: props.locale }));
 </script>
 
 <template>
@@ -26,7 +27,7 @@ const locale = useLocale();
 			<slot />
 		</div>
 		<DialogClose v-if="showCloseButton" as-child>
-			<Button variant="ghost" size="icon-sm" :aria-label="props.closeButtonAriaLabel ?? locale.dialog.closeButtonAriaLabel" class="-mr-2 shrink-0">
+			<Button variant="ghost" size="icon-sm" :aria-label="locale.dialog.closeButtonAriaLabel" class="-mr-2 shrink-0">
 				<XIcon class="size-5" />
 			</Button>
 		</DialogClose>

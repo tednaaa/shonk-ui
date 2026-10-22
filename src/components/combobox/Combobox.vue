@@ -2,6 +2,7 @@
 import type { AcceptableValue } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ComboboxOption } from './types';
+import type { ShonkLocale } from '@/locales';
 import { CheckIcon, ChevronDownIcon, XIcon } from '@lucide/vue';
 import { computed, ref, watch } from 'vue';
 import { useLocale } from '@/locales';
@@ -21,17 +22,13 @@ import { comboboxTriggerVariants } from './variants';
 
 const props = defineProps<{
 	options: O[];
-	triggerPlaceholder?: string;
-	searchPlaceholder?: string;
-	emptyText?: string;
-	loadingText?: string;
-	clearButtonAriaLabel?: string;
 	disabled?: boolean;
 	loading?: boolean;
 	clearable?: boolean;
 	manualFilter?: boolean;
 	class?: HTMLAttributes['class'];
 	contentClass?: HTMLAttributes['class'];
+	locale?: Partial<ShonkLocale['combobox']>;
 }>();
 
 defineSlots<{
@@ -43,7 +40,7 @@ defineSlots<{
 const model = defineModel<T>();
 const search = defineModel<string>('search', { default: '' });
 
-const locale = useLocale();
+const locale = useLocale(() => ({ combobox: props.locale }));
 
 const open = ref(false);
 
@@ -92,7 +89,7 @@ function clear() {
 							<span class="whitespace-nowrap">{{ lastSelectedOption.label }}</span>
 						</slot>
 					</slot>
-					<span v-else class="whitespace-nowrap">{{ props.triggerPlaceholder ?? locale.combobox.triggerPlaceholder }}</span>
+					<span v-else class="whitespace-nowrap">{{ locale.combobox.triggerPlaceholder }}</span>
 				</Button>
 			</PopoverTrigger>
 
@@ -100,7 +97,7 @@ function clear() {
 				<button
 					v-if="showClear"
 					type="button"
-					:aria-label="props.clearButtonAriaLabel ?? locale.combobox.clearButtonAriaLabel"
+					:aria-label="locale.combobox.clearButtonAriaLabel"
 					tabindex="-1"
 					class="pointer-events-auto cursor-pointer rounded-xs text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
 					@pointerdown.stop.prevent="clear"
@@ -118,7 +115,7 @@ function clear() {
 				@update:model-value="onUpdate"
 			>
 				<CommandInput
-					:placeholder="props.searchPlaceholder ?? locale.combobox.searchPlaceholder"
+					:placeholder="locale.combobox.searchPlaceholder"
 					@update:model-value="(v: string) => (search = v)"
 				/>
 				<CommandList>
@@ -127,12 +124,12 @@ function clear() {
 						class="flex items-center justify-center gap-2 py-6 text-sm text-muted-foreground"
 					>
 						<Spinner />
-						<span>{{ props.loadingText ?? locale.combobox.loadingText }}</span>
+						<span>{{ locale.combobox.loadingText }}</span>
 					</div>
 					<template v-else>
 						<CommandEmpty>
 							<slot name="empty">
-								{{ props.emptyText ?? locale.combobox.emptyText }}
+								{{ locale.combobox.emptyText }}
 							</slot>
 						</CommandEmpty>
 						<CommandGroup>

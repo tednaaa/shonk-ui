@@ -25,8 +25,7 @@ const meta: Meta<typeof MultiCombobox> = {
 	tags: ['autodocs'],
 	args: {
 		options: frameworks,
-		searchPlaceholder: 'Search framework…',
-		emptyText: 'No framework found.',
+		locale: { searchPlaceholder: 'Search framework…', emptyText: 'No framework found.' },
 	},
 	render: render({ MultiCombobox }, `
     <div class="max-w-60">
@@ -74,7 +73,7 @@ export const HideFooter: Story = {
 };
 
 export const Loading: Story = {
-	args: { loading: true, loadingText: 'Loading…' },
+	args: { loading: true },
 };
 
 export const Disabled: Story = {

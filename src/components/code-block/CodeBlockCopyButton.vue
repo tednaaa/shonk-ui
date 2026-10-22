@@ -2,6 +2,7 @@
 import type { PrimitiveProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ButtonVariants } from '../button';
+import type { ShonkLocale } from '@/locales';
 import { CheckIcon, CopyIcon } from '@lucide/vue';
 import { useClipboard } from '@vueuse/core';
 import { useLocale } from '@/locales';
@@ -14,6 +15,7 @@ const props = withDefaults(defineProps<PrimitiveProps & {
 	variant?: ButtonVariants['variant'];
 	size?: ButtonVariants['size'];
 	class?: HTMLAttributes['class'];
+	locale?: Partial<ShonkLocale['codeBlock']>;
 }>(), {
 	as: 'button',
 	variant: 'ghost',
@@ -21,7 +23,7 @@ const props = withDefaults(defineProps<PrimitiveProps & {
 });
 
 const { copy, copied } = useClipboard({ copiedDuring: 2000, legacy: true });
-const locale = useLocale();
+const locale = useLocale(() => ({ codeBlock: props.locale }));
 </script>
 
 <template>

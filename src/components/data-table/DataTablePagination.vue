@@ -1,7 +1,9 @@
 <script setup lang="ts" generic="TData extends object">
 import type { HTMLAttributes } from 'vue';
 import type { DataTableInstance } from './types';
+import type { ShonkLocale } from '@/locales';
 import { computed, ref } from 'vue';
+import { provideLocale } from '@/locales';
 import { cn } from '@/utils';
 import { unwrapDataTable } from './lib/instance';
 import { provideDataTablePaginationContext } from './lib/paginationContext';
@@ -9,7 +11,10 @@ import { provideDataTablePaginationContext } from './lib/paginationContext';
 const props = defineProps<{
 	table: DataTableInstance<TData>;
 	class?: HTMLAttributes['class'];
+	locale?: Partial<ShonkLocale['dataTable'] & ShonkLocale['pagination']>;
 }>();
+
+provideLocale(() => ({ dataTable: props.locale, pagination: props.locale }));
 
 const kitTable = computed(() => unwrapDataTable(props.table));
 const pagination = computed(() => kitTable.value.atoms.pagination.get());

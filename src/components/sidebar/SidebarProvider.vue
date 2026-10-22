@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { defaultDocument, useEventListener, useMediaQuery } from '@vueuse/core';
 import { TooltipProvider } from 'reka-ui';
 import { computed, ref } from 'vue';
+import { provideLocale } from '@/locales';
 import { cn } from '@/utils';
 import { provideSidebarContext, SIDEBAR_COOKIE_MAX_AGE, SIDEBAR_COOKIE_NAME, SIDEBAR_KEYBOARD_SHORTCUT, SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON } from './utils';
 
 const props = defineProps<{
 	class?: HTMLAttributes['class'];
+	locale?: Partial<ShonkLocale['sidebar']>;
 }>();
+
+provideLocale(() => ({ sidebar: props.locale }));
 
 const open = defineModel<boolean>('open', {
 	default: () => !defaultDocument?.cookie.includes(`${SIDEBAR_COOKIE_NAME}=false`),

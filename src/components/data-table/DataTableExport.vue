@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="TData extends object">
 import type { DataTableExportFormat, DataTableInstance } from './types';
+import type { ShonkLocale } from '@/locales';
 import { DownloadIcon } from '@lucide/vue';
 import { computed } from 'vue';
 import { useLocale } from '@/locales';
@@ -13,14 +14,15 @@ const props = defineProps<{
 	sheetName?: string;
 	formats?: DataTableExportFormat[];
 	disabled?: boolean;
+	locale?: Partial<ShonkLocale['dataTable']>;
 }>();
 
-const locale = useLocale();
+const locale = useLocale(() => ({ dataTable: props.locale }));
 
 const formats = computed<DataTableExportFormat[]>(() => props.formats ?? ['csv', 'xlsx']);
 
 const { downloadTable } = useDataTableExport(() => props.table, {
-	fileName: () => props.fileName,
+	fileName: () => props.fileName ?? locale.value.dataTable.exportFileName,
 	sheetName: () => props.sheetName,
 });
 

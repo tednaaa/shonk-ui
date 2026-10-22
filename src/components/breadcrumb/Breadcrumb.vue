@@ -1,18 +1,19 @@
 <script lang="ts" setup>
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { useLocale } from '@/locales';
 
 const props = defineProps<{
 	class?: HTMLAttributes['class'];
-	ariaLabel?: string;
+	locale?: Partial<ShonkLocale['breadcrumb']>;
 }>();
 
-const locale = useLocale();
+const locale = useLocale(() => ({ breadcrumb: props.locale }));
 </script>
 
 <template>
 	<nav
-		:aria-label="props.ariaLabel ?? locale.breadcrumb.navAriaLabel"
+		:aria-label="locale.breadcrumb.navAriaLabel"
 		data-slot="breadcrumb"
 		:class="props.class"
 	>

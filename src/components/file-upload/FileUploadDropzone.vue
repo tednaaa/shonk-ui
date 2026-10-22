@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { UploadIcon } from '@lucide/vue';
 import { useDropZone } from '@vueuse/core';
 import { useTemplateRef } from 'vue';
@@ -9,10 +10,11 @@ import { useFileUploadContext } from './context';
 
 const props = defineProps<{
 	class?: HTMLAttributes['class'];
+	locale?: Partial<ShonkLocale['fileUpload']>;
 }>();
 
 const context = useFileUploadContext();
-const locale = useLocale();
+const locale = useLocale(() => ({ fileUpload: props.locale }));
 
 const zone = useTemplateRef('zone');
 const { isOverDropZone } = useDropZone(zone, {

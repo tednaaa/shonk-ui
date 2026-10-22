@@ -144,7 +144,7 @@ describe('multiCombobox', () => {
 	});
 
 	it('should show the custom placeholder when nothing is selected and the custom all text when everything is', async () => {
-		const { wrapper, selected } = mountMultiCombobox([], '<MultiCombobox v-model="selected" :options="frameworks" trigger-placeholder="Pick frameworks" all-selected-text="Every framework" />');
+		const { wrapper, selected } = mountMultiCombobox([], '<MultiCombobox v-model="selected" :options="frameworks" :locale="{ triggerPlaceholder: \'Pick frameworks\', allText: \'Every framework\' }" />');
 
 		expect(trigger(wrapper).text()).toBe('Pick frameworks');
 

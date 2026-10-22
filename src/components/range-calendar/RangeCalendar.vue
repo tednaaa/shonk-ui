@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { RangeCalendarRootEmits, RangeCalendarRootProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
+import type { ShonkLocale } from '@/locales';
 import { reactiveOmit } from '@vueuse/core';
 import { RangeCalendarRoot, useForwardPropsEmits } from 'reka-ui';
 import { computed } from 'vue';
@@ -18,15 +19,18 @@ import RangeCalendarHeading from './RangeCalendarHeading.vue';
 import RangeCalendarNextButton from './RangeCalendarNextButton.vue';
 import RangeCalendarPrevButton from './RangeCalendarPrevButton.vue';
 
-const props = withDefaults(defineProps<RangeCalendarRootProps & { class?: HTMLAttributes['class'] }>(), {
+const props = withDefaults(defineProps<Omit<RangeCalendarRootProps, 'locale'> & {
+	class?: HTMLAttributes['class'];
+	locale?: Partial<Pick<ShonkLocale, 'intlLocale'>>;
+}>(), {
 	weekdayFormat: 'short',
 });
 
 const emits = defineEmits<RangeCalendarRootEmits>();
 
-const uiLocale = useLocale();
+const locale = useLocale(() => ({ intlLocale: props.locale?.intlLocale }));
 
-const localeCode = computed(() => props.locale ?? uiLocale.value.intlLocale);
+const localeCode = computed(() => locale.value.intlLocale);
 
 const delegatedProps = reactiveOmit(props, 'class', 'locale');
 
