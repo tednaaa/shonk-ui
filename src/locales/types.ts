@@ -97,6 +97,15 @@ export interface ShonkLocale {
 		scrollToStartText: string;
 	};
 
+	multiCombobox: {
+		allText: string;
+		selectedCountText: (selected: number) => string;
+		selectAllText: string;
+		resetButtonText: string;
+		allSelectedCountText: (total: number) => string;
+		selectedOfTotalText: (selected: number, total: number) => string;
+	};
+
 	pagination: {
 		navAriaLabel: string;
 		pageButtonAriaLabel: (page: number) => string;

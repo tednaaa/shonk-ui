@@ -99,6 +99,15 @@ export const ru: ShonkLocale = {
 		scrollToStartText: 'Прокрутить в начало',
 	},
 
+	multiCombobox: {
+		allText: 'Все',
+		selectedCountText: selected => `${selected} выбрано`,
+		selectAllText: 'Выбрать все',
+		resetButtonText: 'Сбросить',
+		allSelectedCountText: total => `Выбраны все · ${total}`,
+		selectedOfTotalText: (selected, total) => `Выбрано ${selected} из ${total}`,
+	},
+
 	pagination: {
 		navAriaLabel: 'Страницы',
 		pageButtonAriaLabel: page => `Страница ${page}`,

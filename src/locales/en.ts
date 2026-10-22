@@ -99,6 +99,15 @@ export const en: ShonkLocale = {
 		scrollToStartText: 'Scroll to start',
 	},
 
+	multiCombobox: {
+		allText: 'All',
+		selectedCountText: selected => `${selected} selected`,
+		selectAllText: 'Select all',
+		resetButtonText: 'Reset',
+		allSelectedCountText: total => `All selected · ${total}`,
+		selectedOfTotalText: (selected, total) => `${selected} of ${total} selected`,
+	},
+
 	pagination: {
 		navAriaLabel: 'Pages',
 		pageButtonAriaLabel: page => `Page ${page}`,
