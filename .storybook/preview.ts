@@ -12,7 +12,6 @@ const locales = { en, ru };
 const presetItems = [
 	{ value: 'atlas', title: 'Atlas' },
 	{ value: 'acorn', title: 'Acorn' },
-	{ value: 'graphite', title: 'Graphite' },
 	{ value: 'nocturne', title: 'Nocturne' },
 	{ value: 'orchid', title: 'Orchid' },
 ];

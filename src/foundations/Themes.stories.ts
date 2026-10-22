@@ -8,7 +8,6 @@ interface Preset {
 const presets: readonly Preset[] = [
 	{ name: 'atlas', summary: 'White day, deep neutral night, one blue. Also the default.' },
 	{ name: 'acorn', summary: 'Cream neutrals, a brown primary by day and a gold one by night.' },
-	{ name: 'graphite', summary: 'Near-neutral greys and one confident blue.' },
 	{ name: 'nocturne', summary: 'Navy surfaces on both sides, cool saturated accents.' },
 	{ name: 'orchid', summary: 'Lavender-tinted neutrals and a violet primary.' },
 ] as const;

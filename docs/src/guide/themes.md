@@ -21,7 +21,6 @@ Shipped presets:
 
 - `atlas` — white day, deep neutral night, one blue; the default
 - `acorn` — cream neutrals, brown primary by day, gold by night
-- `graphite` — near-neutral greys, one confident blue
 - `nocturne` — navy surfaces on both sides, cool saturated accents
 - `orchid` — lavender-tinted neutrals, violet primary
 
