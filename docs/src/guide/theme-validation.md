@@ -7,7 +7,7 @@ pnpm exec shonk-ui-validate-themes ./my-theme.css
 ```
 
 - Accepts one or more standalone CSS files.
-- With no paths, checks the packaged default and all presets.
+- With no paths, checks every packaged preset, Atlas included.
 - Requires every palette variable in light, dark-on-the-theme-element, and dark-on-an-ancestor scopes.
 - Reports missing scopes, missing or empty variables, reset keywords, unresolved references, and cycles.
 - Returns exit code `1` when a file fails validation or cannot be read.

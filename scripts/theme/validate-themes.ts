@@ -9,7 +9,7 @@ const separator = args.indexOf('--');
 const options = separator === -1 ? args : args.slice(0, separator);
 
 if (options.includes('--help') || options.includes('-h')) {
-	process.stdout.write('Usage: shonk-ui-validate-themes [file.css ...]\n\nWith no files, validates the packaged default theme and all presets.\n');
+	process.stdout.write('Usage: shonk-ui-validate-themes [file.css ...]\n\nWith no files, validates every packaged preset.\n');
 }
 else if (options.some(argument => argument.startsWith('-'))) {
 	process.stderr.write('Unknown option. Use --help for usage.\n');
@@ -19,7 +19,6 @@ else {
 	const styles = new URL('../../src/styles/', import.meta.url);
 	const files = separator === -1 ? args : [...options, ...args.slice(separator + 1)];
 	if (!files.length) {
-		files.push(fileURLToPath(new URL('theme.css', styles)));
 		files.push(...readdirSync(new URL('themes/', styles)).filter(name => name.endsWith('.css')).sort().map(name => fileURLToPath(new URL(`themes/${name}`, styles))));
 	}
 

@@ -180,7 +180,10 @@ let contract: ParsedTheme | undefined;
 
 function getContract(): ParsedTheme {
 	if (!contract) {
-		contract = parse(readFileSync(new URL('../../src/styles/theme.css', import.meta.url), 'utf8'));
+		const styles = new URL('../../src/styles/', import.meta.url);
+		const css = ['theme.css', 'themes/atlas.css'].map(file => readFileSync(new URL(file, styles), 'utf8')).join('\n');
+		const parsed = parse(css);
+		contract = { ...parsed, rules: parsed.rules.filter(rule => rule.theme === null) };
 		if (contract.diagnostics.length)
 			throw new Error(`Invalid shonk-ui theme contract: ${contract.diagnostics[0]!.message}`);
 	}

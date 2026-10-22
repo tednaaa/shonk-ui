@@ -24,12 +24,13 @@ Radius: `rounded-sm|md|lg|xl|2xl|3xl|4xl`, all derived from `--radius`.
 - Hover and active states are opacity modifiers on the base token — `hover:bg-primary/90`, not a separate token.
 - Disabled states use `opacity-50`, not a disabled color token.
 - `accent` is the hover/highlight surface for menu and list items; `secondary` is for secondary buttons and badges.
-- Only `src/styles/theme.css` defines raw color values. It holds `:root`/`.dark` variables plus the `@theme inline` block that maps them to `--color-*`; everything else consumes them.
+- Raw palette values live only in the presets, `src/styles/themes/*.css`. `atlas.css` is the default and also targets `:root` and `.dark`.
+- `src/styles/theme.css` holds the `@theme inline` block that maps tokens to `--color-*`, plus derived tokens and radii built from the palette; everything else consumes them.
 - `@custom-variant dark` lives in `.storybook/preview.css` — leave it there.
 
 ## Adding a token
 
-Add the raw value to both `:root` and `.dark` in `src/styles/theme.css`, then map it in `@theme inline` as `--color-<name>: var(--<name>)`. Give it a `-foreground` partner if anything will sit on top of it. `--success` and `--warning` follow this pattern.
+Add the raw value to the light and dark blocks of every preset in `src/styles/themes/`, then map it in `@theme inline` in `src/styles/theme.css` as `--color-<name>: var(--<name>)`. Give it a `-foreground` partner if anything will sit on top of it. `--success` and `--warning` follow this pattern.
 
 ## Branching on classes
 

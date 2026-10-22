@@ -7,14 +7,14 @@ import { afterAll, describe, expect, it } from 'vitest';
 import { validateThemeCss } from './theme-validator';
 
 const styles = new URL('../../src/styles/', import.meta.url);
-const preset = readFileSync(new URL('themes/atlas.css', styles), 'utf8');
+const preset = readFileSync(new URL('themes/orchid.css', styles), 'utf8');
 const darkStart = preset.indexOf('.dark ');
 const light = preset.slice(0, darkStart);
 const dark = preset.slice(darkStart);
 
 describe('theme validation', () => {
-	it('accepts the default theme and every shipped preset', () => {
-		const files = ['theme.css', ...readdirSync(new URL('themes/', styles)).filter(name => name.endsWith('.css')).map(name => `themes/${name}`)];
+	it('accepts every shipped preset', () => {
+		const files = readdirSync(new URL('themes/', styles)).filter(name => name.endsWith('.css')).map(name => `themes/${name}`);
 		for (const file of files) {
 			const result = validateThemeCss(readFileSync(new URL(file, styles), 'utf8'), { file });
 			expect(result.diagnostics, file).toEqual([]);
@@ -28,11 +28,11 @@ describe('theme validation', () => {
 		expect(result.diagnostics).toContainEqual(expect.objectContaining({
 			code: 'missing-variable',
 			file: 'custom.css',
-			theme: 'atlas',
+			theme: 'orchid',
 			mode: 'light',
 			scope: 'light',
 			variable: '--primary',
-			selector: '[data-theme="atlas"]',
+			selector: '[data-theme="orchid"]',
 			line: 1,
 			column: 1,
 		}));
@@ -49,38 +49,38 @@ describe('theme validation', () => {
 	it.each([
 		[light, ['dark-self', 'dark-ancestor']],
 		[dark, ['light']],
-		[preset.replace('.dark [data-theme="atlas"],', ''), ['dark-ancestor']],
-		[preset.replace('.dark[data-theme="atlas"]', '.other'), ['dark-self']],
+		[preset.replace('.dark [data-theme="orchid"],', ''), ['dark-ancestor']],
+		[preset.replace('.dark[data-theme="orchid"]', '.other'), ['dark-self']],
 	])('detects missing theme scopes', (css, scopes) => {
 		const result = validateThemeCss(css);
 		expect(result.diagnostics.filter(diagnostic => diagnostic.code === 'missing-scope').map(diagnostic => diagnostic.scope)).toEqual(scopes);
 	});
 
 	it('validates multiple named themes independently', () => {
-		const result = validateThemeCss(preset + preset.replaceAll('atlas', 'custom').replace(/--ring: [^;]+;/, ''));
-		expect(result.themes).toEqual(['atlas', 'custom']);
+		const result = validateThemeCss(preset + preset.replaceAll('orchid', 'custom').replace(/--ring: [^;]+;/, ''));
+		expect(result.themes).toEqual(['orchid', 'custom']);
 		expect(result.diagnostics.every(diagnostic => diagnostic.theme === 'custom')).toBe(true);
 		expect(result.valid).toBe(false);
 	});
 
 	it('accepts reordered rules and split declarations', () => {
-		const css = `${dark}${light.replace(/--primary: [^;]+;/, '')}\n[data-theme="atlas"] { --primary: rebeccapurple; }`;
+		const css = `${dark}${light.replace(/--primary: [^;]+;/, '')}\n[data-theme="orchid"] { --primary: rebeccapurple; }`;
 		expect(validateThemeCss(css).diagnostics).toEqual([]);
 	});
 
 	it('accepts single-quoted and unquoted theme names and reversed same-element selectors', () => {
-		const css = preset.replaceAll('"atlas"', '\'atlas\'').replace('.dark[data-theme=\'atlas\']', '[data-theme=atlas].dark');
+		const css = preset.replaceAll('"orchid"', '\'orchid\'').replace('.dark[data-theme=\'orchid\']', '[data-theme=orchid].dark');
 		expect(validateThemeCss(css).diagnostics).toEqual([]);
 	});
 
 	it('accepts comments and punctuation inside strings', () => {
-		const css = `${preset}\n[data-theme="atlas"] { --label: "/* ; { } var(--missing) */"; /* var(--missing) */ }`;
+		const css = `${preset}\n[data-theme="orchid"] { --label: "/* ; { } var(--missing) */"; /* var(--missing) */ }`;
 		expect(validateThemeCss(css).diagnostics).toEqual([]);
 	});
 
 	it('accepts helpers, nested fallbacks and optional shared-token overrides', () => {
 		const css = `${preset}
-      [data-theme="atlas"] {
+      [data-theme="orchid"] {
         --helper: var(--absent, var(--also-absent, oklch(0.5 0.1 100)));
         --field: color-mix(in oklab, var(--helper) 40%, var(--primary));
         --radius: 1rem;
@@ -95,12 +95,12 @@ describe('theme validation', () => {
 	});
 
 	it.each(['', 'initial', 'inherit', 'unset', 'revert', 'revert-layer'])('rejects unusable explicit values: %s', (value) => {
-		const result = validateThemeCss(`${preset}\n[data-theme="atlas"] { --primary: ${value}; }`);
+		const result = validateThemeCss(`${preset}\n[data-theme="orchid"] { --primary: ${value}; }`);
 		expect(result.diagnostics).toContainEqual(expect.objectContaining({ code: 'invalid-value', variable: '--primary', mode: 'light' }));
 	});
 
 	it('reports unresolved references without treating strings as variables', () => {
-		const result = validateThemeCss(`${preset}\n[data-theme="atlas"] { --primary: color-mix(in oklab, var(--typo) 50%, red); }`);
+		const result = validateThemeCss(`${preset}\n[data-theme="orchid"] { --primary: color-mix(in oklab, var(--typo) 50%, red); }`);
 		expect(result.diagnostics).toContainEqual(expect.objectContaining({ code: 'unresolved-reference', variable: '--primary', line: 88 }));
 		expect(result.diagnostics.some(diagnostic => diagnostic.message.includes('--typo'))).toBe(true);
 	});
@@ -110,20 +110,20 @@ describe('theme validation', () => {
 		'--first: var(--second); --second: var(--first);',
 		'--first: var(--primary, var(--second)); --second: var(--first);',
 	])('detects cycles, including fallback edges', (declarations) => {
-		const result = validateThemeCss(`${preset}\n[data-theme="atlas"] { ${declarations} }`);
-		expect(result.diagnostics).toContainEqual(expect.objectContaining({ code: 'cycle', theme: 'atlas' }));
+		const result = validateThemeCss(`${preset}\n[data-theme="orchid"] { ${declarations} }`);
+		expect(result.diagnostics).toContainEqual(expect.objectContaining({ code: 'cycle', theme: 'orchid' }));
 	});
 
 	it('respects specificity, order and important declarations', () => {
 		const css = `${preset}
-      .dark[data-theme="atlas"] { --field: red; }
-      [data-theme="atlas"] { --field: var(--missing); --field: blue !important; }
-      [data-theme="atlas"] { --field: var(--missing-again); }`;
+      .dark[data-theme="orchid"] { --field: red; }
+      [data-theme="orchid"] { --field: var(--missing); --field: blue !important; }
+      [data-theme="orchid"] { --field: var(--missing-again); }`;
 		expect(validateThemeCss(css).diagnostics).toEqual([]);
 	});
 
 	it('uses dark derived-token dependencies when dark is on the theme element', () => {
-		const css = `${preset}\n.dark[data-theme="atlas"] { --muted: var(--button-secondary); }`;
+		const css = `${preset}\n.dark[data-theme="orchid"] { --muted: var(--button-secondary); }`;
 		const result = validateThemeCss(css);
 		expect(result.diagnostics.filter(diagnostic => diagnostic.code === 'cycle')).toEqual([
 			expect.objectContaining({ scope: 'dark-self', message: expect.stringContaining('--button-secondary') }),
@@ -131,12 +131,12 @@ describe('theme validation', () => {
 	});
 
 	it.each([
-		['[data-theme="atlas"] { --primary: red;', 'Missing "}"'],
+		['[data-theme="orchid"] { --primary: red;', 'Missing "}"'],
 		['/* comment', 'Unterminated CSS comment'],
-		['[data-theme="atlas"] { --label: "oops; }', 'Unterminated CSS string'],
-		['[data-theme="atlas"] { --primary: oklch(1 0 0; }', 'Unexpected "}"'],
-		['[data-theme="atlas"] { --primary: var(primary); }', 'var() requires'],
-		['[data-theme="atlas"] { --primary red; }', 'Expected a CSS declaration'],
+		['[data-theme="orchid"] { --label: "oops; }', 'Unterminated CSS string'],
+		['[data-theme="orchid"] { --primary: oklch(1 0 0; }', 'Unexpected "}"'],
+		['[data-theme="orchid"] { --primary: var(primary); }', 'var() requires'],
+		['[data-theme="orchid"] { --primary red; }', 'Expected a CSS declaration'],
 	])('reports malformed CSS', (css, message) => {
 		const result = validateThemeCss(css);
 		expect(result.valid).toBe(false);
@@ -149,7 +149,7 @@ describe('theme validation', () => {
 		`.wrapper { ${preset} }`,
 		`${preset} .unknown { --primary: red; }`,
 		`${preset} @import "other.css";`,
-		preset.replaceAll('atlas', 'at\\6cas'),
+		preset.replaceAll('orchid', 'or\\63hid'),
 	])('rejects unsupported theme structures instead of passing silently', (css) => {
 		expect(validateThemeCss(css).diagnostics).toContainEqual(expect.objectContaining({ code: 'unsupported' }));
 	});
@@ -177,20 +177,20 @@ describe('published CLI', () => {
 	it('validates packaged themes from an unrelated working directory', () => {
 		const result = run();
 		expect(result.status, result.stderr).toBe(0);
-		expect(result.stdout.match(/: valid/g)).toHaveLength(5);
+		expect(result.stdout.match(/: valid/g)).toHaveLength(4);
 		expect(result.stderr).toBe('');
 	});
 
 	it('accepts a custom file with spaces in its path', () => {
 		const result = run(valid);
 		expect(result.status, result.stderr).toBe(0);
-		expect(result.stdout).toContain('valid (atlas)');
+		expect(result.stdout).toContain('valid (orchid)');
 	});
 
 	it('continues across failing files and exits nonzero', () => {
 		const result = run(invalid, 'missing.css', malformed, valid);
 		expect(result.status).toBe(1);
-		expect(result.stdout).toContain('valid (atlas)');
+		expect(result.stdout).toContain('valid (orchid)');
 		expect(result.stderr).toContain('dark-self');
 		expect(result.stderr).toContain('missing.css');
 		expect(result.stderr).toContain('Missing "}"');
@@ -206,6 +206,6 @@ describe('published CLI', () => {
 		writeFileSync(join(directory, '--help'), preset);
 		const result = run('--', '--help');
 		expect(result.status, result.stderr).toBe(0);
-		expect(result.stdout).toContain('valid (atlas)');
+		expect(result.stdout).toContain('valid (orchid)');
 	});
 });
