@@ -195,7 +195,7 @@ function handleKeydown(event: KeyboardEvent, index: number) {
 					:required="required"
 					:aria-invalid="invalid || undefined"
 					:class="cn(
-						'relative size-10 border-y border-r border-border bg-field text-center text-sm text-field-foreground shadow-xs transition-all outline-none placeholder:text-muted-foreground first:rounded-l-md first:border-l last:rounded-r-md disabled:cursor-not-allowed',
+						'relative size-10 border border-field-border bg-field text-center text-sm text-field-foreground shadow-xs transition-all outline-none not-first:-ml-px placeholder:text-muted-foreground first:rounded-l-md last:rounded-r-md disabled:cursor-not-allowed',
 						'focus-visible:z-10 focus-visible:border-ring',
 						'aria-invalid:border-destructive focus-visible:aria-invalid:ring-destructive-ring',
 					)"
