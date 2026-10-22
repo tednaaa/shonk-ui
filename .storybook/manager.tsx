@@ -10,7 +10,7 @@ import {
 addons.setConfig({
 	theme: create({
 		base: 'light',
-		brandTitle: `Shonk UI v${version}`,
+		brandTitle: `<span style="display: inline-flex; align-items: center; gap: 8px"><img src="./logo.svg" width="24" height="24" alt="" />Shonk UI v${version}</span>`,
 	}),
 });
 

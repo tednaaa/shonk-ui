@@ -4,8 +4,11 @@ export default defineConfig({
 	srcDir: 'src',
 
 	title: 'Shonk UI',
+	head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
 	description: 'Vue 3 components on Reka UI and Tailwind CSS v4',
 	themeConfig: {
+		logo: '/logo.svg',
+
 		nav: [
 			{ text: 'Guide', link: '/guide/getting-started' },
 			{ text: 'Storybook', link: '/storybook/', target: '_self' },

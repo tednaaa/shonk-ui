@@ -8,6 +8,7 @@ const config: StorybookConfig = {
 		'../src/Changelog.mdx',
 		'../src/**/*.stories.ts',
 	],
+	staticDirs: ['../docs/src/public'],
 	addons: ['@storybook/addon-docs'],
 	framework: {
 		name: '@storybook/vue3-vite',

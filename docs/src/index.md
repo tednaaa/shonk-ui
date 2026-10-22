@@ -5,6 +5,9 @@ hero:
   name: Shonk UI
   text: Vue 3 components
   tagline: Built on Reka UI and Tailwind CSS v4
+  image:
+    src: /logo.svg
+    alt: Shonk UI
   actions:
     - theme: brand
       text: Get started
