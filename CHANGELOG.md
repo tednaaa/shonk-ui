@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.13.1 (2026-10-22)
+
+- refactor(themes): atlas as default [`34f185eb`](https://github.com/tednaaa/shonk-ui/commit/34f185ebec9ac6a24f4737f0f7585bf60dfa5f93)
+
 ## v0.13.0 (2026-10-22)
 
 - chore(storybook): sync UI with theme [`1426bbbd`](https://github.com/tednaaa/shonk-ui/commit/1426bbbd9fb20e917a8c7a0edfcb014a8c774f5f)
