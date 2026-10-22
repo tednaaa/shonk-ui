@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.13.0 (2026-10-22)
+
+- chore(storybook): sync UI with theme [`1426bbbd`](https://github.com/tednaaa/shonk-ui/commit/1426bbbd9fb20e917a8c7a0edfcb014a8c774f5f)
+- feat(themes)!: remove graphite preset [`e1258d80`](https://github.com/tednaaa/shonk-ui/commit/e1258d80babb28c95ca8365a8362bca5f63cb05d)
+- feat(themes): add acorn preset [`eb4043e5`](https://github.com/tednaaa/shonk-ui/commit/eb4043e5d6f84582b3c7878c80189bcdc48bb9fb)
+- fix(input-otp): slot borders in dark [`d7bd65a4`](https://github.com/tednaaa/shonk-ui/commit/d7bd65a4c95925ad1e589197c8ed2245bbf9bbbf)
+- feat(locale)!: text via locale prop only [`1252ead3`](https://github.com/tednaaa/shonk-ui/commit/1252ead37522a18893a765badea579ac27e2bf8e)
+- feat(multi-combobox): add MultiCombobox [`ca516858`](https://github.com/tednaaa/shonk-ui/commit/ca516858d61920e1473e1dc4065f06f58417065b)
+
 ## v0.12.2 (2026-10-20)
 
 - feat(filtered-search): list picks first on edit [`bb1f6030`](https://github.com/tednaaa/shonk-ui/commit/bb1f60303baa5876d30c43575e953165b212b793)
