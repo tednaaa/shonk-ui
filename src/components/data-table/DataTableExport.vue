@@ -1,4 +1,5 @@
 <script setup lang="ts" generic="TData extends object">
+import type { DropdownMenuContentProps } from 'reka-ui';
 import type { DataTableExportFormat, DataTableInstance } from './types';
 import type { ShonkLocale } from '@/locales';
 import { DownloadIcon } from '@lucide/vue';
@@ -8,14 +9,17 @@ import { Button } from '../button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../dropdown-menu';
 import { useDataTableExport } from './useDataTableExport';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
 	table: DataTableInstance<TData>;
 	fileName?: string;
 	sheetName?: string;
 	formats?: DataTableExportFormat[];
 	disabled?: boolean;
+	align?: DropdownMenuContentProps['align'];
 	locale?: Partial<ShonkLocale['dataTable']>;
-}>();
+}>(), {
+	align: 'end',
+});
 
 const locale = useLocale(() => ({ dataTable: props.locale }));
 
@@ -53,7 +57,7 @@ function formatLabel(format: DataTableExportFormat) {
 			</Button>
 		</DropdownMenuTrigger>
 
-		<DropdownMenuContent align="end">
+		<DropdownMenuContent :align="align">
 			<DropdownMenuItem
 				v-for="format in formats"
 				:key="format"

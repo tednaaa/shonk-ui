@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="TData extends object">
 import type { Column } from '@tanstack/vue-table';
-import type { AcceptableValue } from 'reka-ui';
+import type { AcceptableValue, PopoverContentProps } from 'reka-ui';
 import type { VNodeChild } from 'vue';
 import type { KitFeatures } from './lib/features';
 import type { DataTableInstance } from './types';
@@ -14,10 +14,13 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger } from '../popover';
 import { unwrapDataTable } from './lib/instance';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
 	table: DataTableInstance<TData>;
+	align?: PopoverContentProps['align'];
 	locale?: Partial<ShonkLocale['dataTable']>;
-}>();
+}>(), {
+	align: 'end',
+});
 
 defineSlots<{
 	trigger?: () => VNodeChild;
@@ -69,7 +72,7 @@ function showAllColumns() {
 		</PopoverTrigger>
 
 		<PopoverContent
-			align="end"
+			:align="align"
 			class="w-64 p-0"
 		>
 			<Command

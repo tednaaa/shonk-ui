@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends AcceptableValue = AcceptableValue, O extends ComboboxOption<T> = ComboboxOption<T>">
-import type { AcceptableValue } from 'reka-ui';
+import type { AcceptableValue, PopoverContentProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ComboboxOption } from '../combobox';
 import type { ShonkLocale } from '@/locales';
@@ -22,7 +22,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../popover';
 import { Spinner } from '../spinner';
 import { multiComboboxTriggerVariants } from './variants';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
 	options: O[];
 	disabled?: boolean;
 	loading?: boolean;
@@ -30,10 +30,13 @@ const props = defineProps<{
 	manualFilter?: boolean;
 	pinSelectedOption?: boolean;
 	hideFooter?: boolean;
+	align?: PopoverContentProps['align'];
 	class?: HTMLAttributes['class'];
 	contentClass?: HTMLAttributes['class'];
 	locale?: Partial<ShonkLocale['combobox'] & ShonkLocale['multiCombobox']>;
-}>();
+}>(), {
+	align: 'start',
+});
 
 defineSlots<{
 	option?: (props: { option: O }) => unknown;
@@ -180,7 +183,7 @@ function clear() {
 			</div>
 		</div>
 
-		<PopoverContent align="start" :class="cn('p-0', contentClass)">
+		<PopoverContent :align="align" :class="cn('p-0', contentClass)">
 			<Command
 				:model-value="model"
 				multiple

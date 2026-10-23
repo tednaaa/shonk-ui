@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends AcceptableValue = AcceptableValue, O extends ComboboxOption<T> = ComboboxOption<T>">
-import type { AcceptableValue } from 'reka-ui';
+import type { AcceptableValue, PopoverContentProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ComboboxOption } from './types';
 import type { ShonkLocale } from '@/locales';
@@ -20,16 +20,19 @@ import { Popover, PopoverContent, PopoverTrigger } from '../popover';
 import { Spinner } from '../spinner';
 import { comboboxTriggerVariants } from './variants';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
 	options: O[];
 	disabled?: boolean;
 	loading?: boolean;
 	clearable?: boolean;
 	manualFilter?: boolean;
+	align?: PopoverContentProps['align'];
 	class?: HTMLAttributes['class'];
 	contentClass?: HTMLAttributes['class'];
 	locale?: Partial<ShonkLocale['combobox']>;
-}>();
+}>(), {
+	align: 'start',
+});
 
 defineSlots<{
 	option?: (props: { option: O }) => unknown;
@@ -108,7 +111,7 @@ function clear() {
 			</div>
 		</div>
 
-		<PopoverContent align="start" :class="cn('p-0', contentClass)">
+		<PopoverContent :align="align" :class="cn('p-0', contentClass)">
 			<Command
 				v-model="model"
 				:manual-filter
