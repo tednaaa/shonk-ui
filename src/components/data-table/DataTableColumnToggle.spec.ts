@@ -73,6 +73,10 @@ function headers(wrapper: Wrapper) {
 	return wrapper.findAll('th').map(header => header.text());
 }
 
+function hideAllButton() {
+	return body.getElementByText('[data-slot="popover-content"] button', 'Hide all');
+}
+
 function showAllButton() {
 	return body.getElementByText('[data-slot="popover-content"] button', 'Show all');
 }
@@ -182,7 +186,19 @@ describe('dataTableColumnToggle', () => {
 		expect(headers(wrapper)).toEqual(expect.arrayContaining(['Age', 'City', 'Phone']));
 		expect(columnVisibility.value).toMatchObject({ age: true, city: true, phone: true });
 		expect(body.get('[data-slot="popover-content"]').text()).toContain('3 of 3');
-		expect(showAllButton().attributes('disabled')).toBeDefined();
+	});
+
+	it('should hide every field but the first at once when all of them are visible', async () => {
+		const { wrapper, columnVisibility } = mountToggle();
+
+		await openToggle(wrapper);
+		await hideAllButton().trigger('click');
+
+		expect(headers(wrapper)).toContain('Age');
+		expect(headers(wrapper)).not.toContain('Phone');
+		expect(columnVisibility.value).toMatchObject({ age: true, city: false, phone: false });
+		expect(body.get('[data-slot="popover-content"]').text()).toContain('1 of 3');
+		expect(showAllButton().exists()).toBe(true);
 	});
 
 	it('should keep the last visible field from being hidden', async () => {

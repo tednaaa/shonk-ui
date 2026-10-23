@@ -48,6 +48,7 @@ export const en: ShonkLocale = {
 		columnToggleSearchPlaceholder: 'Find a column…',
 		columnToggleEmptyText: 'No columns found',
 		columnToggleShowAllButtonText: 'Show all',
+		columnToggleHideAllButtonText: 'Hide all',
 		columnToggleVisibleCountText: (visible, total) => `${visible} of ${total}`,
 		exportButtonText: 'Download',
 		exportFileName: 'table',

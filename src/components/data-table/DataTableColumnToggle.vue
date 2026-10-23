@@ -55,8 +55,9 @@ function showOnlyColumns(columnIds: AcceptableValue) {
 	}));
 }
 
-function showAllColumns() {
-	showOnlyColumns(hideableColumns.value.map(column => column.id));
+function toggleAllColumns() {
+	const columns = allColumnsVisible.value ? hideableColumns.value.slice(0, 1) : hideableColumns.value;
+	showOnlyColumns(columns.map(column => column.id));
 }
 </script>
 
@@ -110,10 +111,9 @@ function showAllColumns() {
 				<Button
 					variant="ghost"
 					size="sm"
-					:disabled="allColumnsVisible"
-					@click="showAllColumns"
+					@click="toggleAllColumns"
 				>
-					{{ locale.dataTable.columnToggleShowAllButtonText }}
+					{{ allColumnsVisible ? locale.dataTable.columnToggleHideAllButtonText : locale.dataTable.columnToggleShowAllButtonText }}
 				</Button>
 			</div>
 		</PopoverContent>

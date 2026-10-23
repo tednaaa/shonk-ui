@@ -48,6 +48,7 @@ export const ru: ShonkLocale = {
 		columnToggleSearchPlaceholder: 'Найти поле…',
 		columnToggleEmptyText: 'Поле не найдено',
 		columnToggleShowAllButtonText: 'Показать все',
+		columnToggleHideAllButtonText: 'Скрыть все',
 		columnToggleVisibleCountText: (visible, total) => `${visible} из ${total}`,
 		exportButtonText: 'Скачать',
 		exportFileName: 'таблица',

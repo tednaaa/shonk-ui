@@ -46,6 +46,7 @@ export interface ShonkLocale {
 		columnToggleSearchPlaceholder: string;
 		columnToggleEmptyText: string;
 		columnToggleShowAllButtonText: string;
+		columnToggleHideAllButtonText: string;
 		columnToggleVisibleCountText: (visible: number, total: number) => string;
 		exportButtonText: string;
 		exportFileName: string;
