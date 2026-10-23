@@ -2,8 +2,8 @@
 @import "tw-animate-css";
 @import "../src/styles/theme.css";
 @import "vue-sonner/style.css";
-@import "../src/styles/themes/acorn.css";
 @import "../src/styles/themes/atlas.css";
+@import "../src/styles/themes/acorn.css";
 @import "../src/styles/themes/nocturne.css";
 @import "../src/styles/themes/orchid.css";
 
