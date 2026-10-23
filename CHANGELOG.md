@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.14.0 (2026-10-23)
+
+- feat(data-table): add hide all columns [`33684cb4`](https://github.com/tednaaa/shonk-ui/commit/33684cb4bed1bad39732d0532c0e2d63d32131f6)
+- feat: add align prop to popover pickers [`da1d998d`](https://github.com/tednaaa/shonk-ui/commit/da1d998d9b1755189e1f1d186076d693645260b2)
+
 ## v0.13.2 (2026-10-22)
 
 - chore(storybook): share appearance with docs [`943e4c38`](https://github.com/tednaaa/shonk-ui/commit/943e4c386c704132fc108c88606b74e899c40a18)
