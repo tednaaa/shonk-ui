@@ -29,6 +29,7 @@ const props = withDefaults(defineProps<{
 	clearable?: boolean;
 	manualFilter?: boolean;
 	pinSelectedOption?: boolean;
+	hideSelectAll?: boolean;
 	hideFooter?: boolean;
 	align?: PopoverContentProps['align'];
 	class?: HTMLAttributes['class'];
@@ -204,7 +205,7 @@ function clear() {
 					</div>
 					<template v-else>
 						<label
-							v-if="visibleOptions.length > 0"
+							v-if="!hideSelectAll && visibleOptions.length > 0"
 							class="flex w-full cursor-pointer items-center gap-2 border-b px-3 py-2 text-sm font-medium select-none"
 						>
 							<Checkbox

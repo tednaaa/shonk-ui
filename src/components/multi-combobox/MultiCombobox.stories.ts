@@ -68,6 +68,10 @@ export const CustomFooter: Story = {
   `),
 };
 
+export const HideSelectAll: Story = {
+	args: { hideSelectAll: true },
+};
+
 export const HideFooter: Story = {
 	args: { hideFooter: true },
 };
