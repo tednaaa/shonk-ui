@@ -673,6 +673,22 @@ describe('filteredSearch editing a filter', () => {
 		]);
 	});
 
+	it('should list every key with the current one selected so typing replaces it when the key is clicked', async () => {
+		wrapper = createComponent({ definitions: editDefinitions, filters: applied });
+		const optionLabels = () => [...document.querySelectorAll('[role="option"]')].map(option => option.textContent?.trim());
+
+		await wrapper.get('[aria-label="Change Author filter type"]').trigger('click');
+		await flushPromises();
+		const input = wrapper.find('input').element as HTMLInputElement;
+
+		expect(optionLabels()).toEqual(['Label', 'Author']);
+		expect(input.value.slice(input.selectionStart ?? 0, input.selectionEnd ?? 0)).toBe('Author');
+
+		await wrapper.find('input').setValue('Lab');
+
+		expect(optionLabels()).toEqual(['Label']);
+	});
+
 	it('should leave the filter untouched when the edit is cancelled', async () => {
 		wrapper = createComponent({ definitions: editDefinitions, filters: applied });
 

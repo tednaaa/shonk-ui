@@ -60,6 +60,7 @@ const isOpen = ref(false);
 const step = ref<DropdownStep>({ phase: 'key' });
 const inputText = ref('');
 const inputRef = ref<HTMLInputElement | null>(null);
+const isEditedKeyUntouched = ref(false);
 const anchorRef = ref<HTMLElement | null>(null);
 const tokenListRef = ref<HTMLElement | null>(null);
 const highlightedIndex = ref(-1);
@@ -92,7 +93,7 @@ const availableDefinitions = computed(() => props.definitions.filter(definition 
 ));
 
 const filteredDefinitions = computed(() => {
-	if (step.value.phase !== 'key' || !inputText.value)
+	if (step.value.phase !== 'key' || !inputText.value || isEditedKeyUntouched.value)
 		return availableDefinitions.value;
 	const query = inputText.value.toLowerCase();
 	return availableDefinitions.value.filter(definition =>
@@ -188,6 +189,7 @@ function focusInput() {
 function showStep(next: DropdownStep) {
 	step.value = next;
 	inputText.value = '';
+	isEditedKeyUntouched.value = false;
 	highlightedIndex.value = -1;
 	selectedValues.value = [];
 	pinnedValues.value = [];
@@ -325,8 +327,11 @@ function showEditedKey() {
 		return;
 	showStep({ phase: 'key' });
 	inputText.value = filter.keyLabel;
+	isEditedKeyUntouched.value = true;
 	nextTick(() => {
 		highlightedIndex.value = filteredDefinitions.value.findIndex(definition => definition.key === filter.key);
+		inputRef.value?.focus();
+		inputRef.value?.select();
 	});
 }
 
@@ -521,6 +526,7 @@ watch(isOpen, (open) => {
 					:size="editingId ? editingInputSize : undefined"
 					:class="cn('bg-transparent text-sm outline-none placeholder:text-muted-foreground', editingId ? 'w-auto shrink-0' : 'min-w-20 flex-1', step.phase === 'key' && 'focus:placeholder:text-transparent')"
 					@focus="isOpen = true"
+					@input="isEditedKeyUntouched = false"
 					@keydown="handleKeydown"
 				>
 			</PopoverAnchor>
