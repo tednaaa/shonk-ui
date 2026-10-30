@@ -466,6 +466,26 @@ describe('filteredSearch multi select', () => {
 		]);
 	});
 
+	it('should count the picks and drop them all on Reset', async () => {
+		wrapper = createComponent({ definitions: multiDefinitions });
+
+		const input = await openValuePhase();
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'Enter' });
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+
+		expect(document.body.textContent).toContain('2 of 3 selected');
+
+		const reset = [...document.querySelectorAll('button')].find(button => button.textContent?.trim() === 'Reset');
+		reset?.click();
+		await flushPromises();
+
+		expect(document.body.textContent).toContain('0 of 3 selected');
+		expect(input.attributes('placeholder')).toBe('Enter value…');
+	});
+
 	it('should drop the last pick on Backspace instead of leaving the value phase', async () => {
 		wrapper = createComponent({ definitions: multiDefinitions });
 

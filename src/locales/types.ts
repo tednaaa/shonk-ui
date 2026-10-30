@@ -73,6 +73,8 @@ export interface ShonkLocale {
 		emptyText: string;
 		valueHintText: string;
 		applyButtonText: string;
+		resetButtonText: string;
+		selectedOfTotalText: (selected: number, total: number) => string;
 		historyButtonAriaLabel: string;
 		historyHeaderText: string;
 		historyEmptyText: string;

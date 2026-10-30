@@ -75,6 +75,8 @@ export const en: ShonkLocale = {
 		emptyText: 'No filters found.',
 		valueHintText: 'Type a value and press Enter to confirm',
 		applyButtonText: 'Apply',
+		resetButtonText: 'Reset',
+		selectedOfTotalText: (selected, total) => `${selected} of ${total} selected`,
 		historyButtonAriaLabel: 'Toggle search history',
 		historyHeaderText: 'Recent searches',
 		historyEmptyText: 'You don\'t have any recent searches',

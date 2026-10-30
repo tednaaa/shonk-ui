@@ -75,6 +75,8 @@ export const ru: ShonkLocale = {
 		emptyText: 'Фильтры не найдены.',
 		valueHintText: 'Введите значение и нажмите Enter',
 		applyButtonText: 'Применить',
+		resetButtonText: 'Сбросить',
+		selectedOfTotalText: (selected, total) => `Выбрано ${selected} из ${total}`,
 		historyButtonAriaLabel: 'Показать историю поиска',
 		historyHeaderText: 'Недавние запросы',
 		historyEmptyText: 'Недавних запросов пока нет',

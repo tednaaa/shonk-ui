@@ -10,6 +10,7 @@ import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Button } from '../button';
 import { ButtonGroup } from '../button-group';
+import { checkboxVariants } from '../checkbox';
 import { Popover, PopoverAnchor, PopoverContent } from '../popover';
 import FilterHistory from './FilterHistory.vue';
 import FilterToken from './FilterToken.vue';
@@ -283,6 +284,11 @@ function toggleValue(option: FilterOption) {
 	selectedValues.value = isSelected(option)
 		? selectedValues.value.filter(selected => selected.value !== option.value)
 		: [...selectedValues.value, option];
+}
+
+function resetSelectedValues() {
+	selectedValues.value = [];
+	focusInput();
 }
 
 function applySelectedValues() {
@@ -707,6 +713,7 @@ watch(isOpen, (open) => {
 			/>
 
 			<template v-else-if="suggestsOptions">
+				<!-- TODO: virtualize the options, 1000 of them take ~150ms to open -->
 				<div role="listbox" class="max-h-60 overflow-y-auto py-1" @mouseleave="highlightedIndex = -1">
 					<p v-if="valueOptions.length === 0" class="px-3 py-2 text-sm text-muted-foreground">
 						{{ locale.filteredSearch.emptyText }}
@@ -727,7 +734,14 @@ watch(isOpen, (open) => {
 						@click="chooseValue(option)"
 						@mouseenter="highlightedIndex = index"
 					>
-						<CheckIcon v-if="isMultiSelect" :class="cn('size-3.5 shrink-0', isSelected(option) ? 'opacity-100' : 'opacity-0')" />
+						<span
+							v-if="isMultiSelect"
+							aria-hidden="true"
+							:data-state="isSelected(option) ? 'checked' : 'unchecked'"
+							:class="cn(checkboxVariants(), 'grid place-content-center')"
+						>
+							<CheckIcon v-if="isSelected(option)" class="size-3.5" />
+						</span>
 						<RenderNode v-if="valueDefinition?.renderOption" :node="valueDefinition.renderOption(option)" />
 						<template v-else>
 							{{ option.label }}
@@ -735,11 +749,20 @@ watch(isOpen, (open) => {
 					</button>
 				</div>
 
-				<div v-if="isMultiSelect" class="border-t p-1">
+				<div v-if="isMultiSelect" class="flex items-center gap-2 border-t p-1">
 					<Button
 						variant="ghost"
 						size="sm"
-						class="w-full justify-start"
+						:disabled="selectedValues.length === 0"
+						@click="resetSelectedValues"
+					>
+						{{ locale.filteredSearch.resetButtonText }}
+					</Button>
+					<span class="ml-auto text-xs text-muted-foreground tabular-nums">
+						{{ locale.filteredSearch.selectedOfTotalText(selectedValues.length, valueDefinition?.options?.length ?? 0) }}
+					</span>
+					<Button
+						size="sm"
 						:disabled="selectedValues.length === 0"
 						@click="applySelectedValues"
 					>
