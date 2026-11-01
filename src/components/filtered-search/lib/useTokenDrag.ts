@@ -1,5 +1,5 @@
 import type { MaybeRefOrGetter, Ref } from 'vue';
-import type { ActiveFilter } from './types';
+import type { ActiveFilter } from '../types';
 import { nextTick, ref, toValue } from 'vue';
 
 const DRAG_THRESHOLD = 4;

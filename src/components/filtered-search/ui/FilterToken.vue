@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { ActiveFilter, FilterTokenSegment } from './types';
+import type { ActiveFilter, FilterTokenSegment } from '../types';
 import type { ShonkLocale } from '@/locales';
 import { GripVerticalIcon, XIcon } from '@lucide/vue';
 import { useLocale } from '@/locales';
-import { filterTokenPartVariants, filterTokenVariants } from './variants';
+import { filterTokenPartVariants, filterTokenVariants } from '../variants';
 
 const props = withDefaults(defineProps<{
 	filter: ActiveFilter;

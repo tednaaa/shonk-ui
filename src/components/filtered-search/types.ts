@@ -40,3 +40,5 @@ export interface FilterHistoryItem {
 }
 
 export type FilterTokenSegment = 'key' | 'operator' | 'value';
+
+export type TokenParts = Partial<Record<FilterTokenSegment, string>>;

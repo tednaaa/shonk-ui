@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { FilterHistoryItem } from './types';
+import type { FilterHistoryItem } from '../types';
 import { HistoryIcon } from '@lucide/vue';
 import { ref } from 'vue';
 import { useLocale } from '@/locales';
-import { Button } from '../button';
-import { Popover, PopoverContent, PopoverTrigger } from '../popover';
+import { Button } from '../../button';
+import { Popover, PopoverContent, PopoverTrigger } from '../../popover';
 import FilterToken from './FilterToken.vue';
 
 defineProps<{ items: FilterHistoryItem[] }>();
