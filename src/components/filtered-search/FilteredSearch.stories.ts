@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import type { FilterDefinition } from './types';
 import { example, render, showControls } from '@/lib/storybook';
 import { FilteredSearch } from '.';
-import FilteredSearchControlled from './examples/FilteredSearchControlled.vue';
-import filteredSearchControlledSource from './examples/FilteredSearchControlled.vue?raw';
+import FilteredSearchControlledSearchText from './examples/FilteredSearchControlledSearchText.vue';
+import filteredSearchControlledSearchTextSource from './examples/FilteredSearchControlledSearchText.vue?raw';
 import FilteredSearchCustomButtonGroup from './examples/FilteredSearchCustomButtonGroup.vue';
 import filteredSearchCustomButtonGroupSource from './examples/FilteredSearchCustomButtonGroup.vue?raw';
 import FilteredSearchCustomEditor from './examples/FilteredSearchCustomEditor.vue';
@@ -201,11 +201,11 @@ export const WithSuffix: Story = {
   `),
 };
 
-export const Controlled: Story = {
-	parameters: example(filteredSearchControlledSource),
-	render: render({ FilteredSearchControlled }, `
+export const ControlledSearchText: Story = {
+	parameters: example(filteredSearchControlledSearchTextSource),
+	render: render({ FilteredSearchControlledSearchText }, `
     <div class="max-w-xl">
-      <FilteredSearchControlled />
+      <FilteredSearchControlledSearchText />
     </div>
   `),
 };
