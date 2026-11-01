@@ -129,6 +129,7 @@ export interface ShonkLocale {
 
 	sheet: {
 		closeButtonScreenReaderText: string;
+		resizeHandleAriaLabel: string;
 	};
 
 	sidebar: {

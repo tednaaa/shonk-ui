@@ -131,6 +131,7 @@ export const ru: ShonkLocale = {
 
 	sheet: {
 		closeButtonScreenReaderText: 'Закрыть',
+		resizeHandleAriaLabel: 'Изменить ширину',
 	},
 
 	sidebar: {

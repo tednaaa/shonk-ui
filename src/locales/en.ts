@@ -131,6 +131,7 @@ export const en: ShonkLocale = {
 
 	sheet: {
 		closeButtonScreenReaderText: 'Close',
+		resizeHandleAriaLabel: 'Resize',
 	},
 
 	sidebar: {

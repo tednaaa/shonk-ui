@@ -116,6 +116,23 @@ export const WithForm: Story = {
 	),
 };
 
+export const Resizable: Story = {
+	render: render(
+		components,
+		`<Sheet v-bind="args">
+      <SheetTrigger as-child>
+        <Button variant="secondary">Open comments</Button>
+      </SheetTrigger>
+      <SheetContent resizable storage-key="storybook-sheet-width" :default-width="480" :min-width="360" :max-width="960">
+        <SheetHeader>
+          <SheetTitle>Comments</SheetTitle>
+          <SheetDescription>Drag the left edge or focus it and press the arrow keys. The width is kept after a reload.</SheetDescription>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>`,
+	),
+};
+
 export const WithoutCloseButton: Story = {
 	render: render(
 		components,
