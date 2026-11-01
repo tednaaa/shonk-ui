@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.15.0 (2026-11-01)
+
+- feat(avatar): AvatarGroup [`db0390e5`](https://github.com/tednaaa/shonk-ui/commit/db0390e58a06fafaae90b424cdd0d4ad1e9be270)
+- feat(avatar): initials from a name [`0263aa22`](https://github.com/tednaaa/shonk-ui/commit/0263aa223a4f3f40ddb323834e207397b5f85231)
+- feat(sheet): resizable width [`a131a061`](https://github.com/tednaaa/shonk-ui/commit/a131a0613a81e73b39fcdedba49172e47b3f408b)
+- feat(sheet): optional close button [`1e3acb13`](https://github.com/tednaaa/shonk-ui/commit/1e3acb13c08edb75b6e0b2b7bbadfdd00835f95d)
+- fix(filtered-search): empty list enter [`1e2ee75f`](https://github.com/tednaaa/shonk-ui/commit/1e2ee75f0c246f4a5ce908cd8b7b418bfe16b144)
+- fix(filtered-search): match accents [`2144b669`](https://github.com/tednaaa/shonk-ui/commit/2144b66924e813e6c8d75a73412fb8bc684772e6)
+- feat(filtered-search): reset and counter [`16b886d1`](https://github.com/tednaaa/shonk-ui/commit/16b886d15c2bd9b51cf73c83d631f9da48e10c58)
+- fix(filtered-search): list keys on edit [`feaceaa1`](https://github.com/tednaaa/shonk-ui/commit/feaceaa1cae638bf9295b86fef578c327cfcdd1a)
+- feat(multi-combobox): hide select all [`35b68db8`](https://github.com/tednaaa/shonk-ui/commit/35b68db820854483fde0b2967c64d0ae613d35ef)
+
 ## v0.14.0 (2026-10-23)
 
 - feat(data-table): add hide all columns [`33684cb4`](https://github.com/tednaaa/shonk-ui/commit/33684cb4bed1bad39732d0532c0e2d63d32131f6)
