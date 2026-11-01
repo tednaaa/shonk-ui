@@ -1,17 +1,17 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends string | number">
 import type { HTMLAttributes } from 'vue';
 import { cn } from '@/utils';
 
-export interface InputProps {
-	defaultValue?: string | number;
+export interface InputProps<T extends string | number = string | number> {
+	defaultValue?: T;
 	class?: HTMLAttributes['class'];
 	invalid?: boolean;
 }
 
-const props = defineProps<InputProps>();
+const props = defineProps<InputProps<T>>();
 
-const modelValue = defineModel<string | number>({
-	default: (rawProps: InputProps) => rawProps.defaultValue ?? '',
+const modelValue = defineModel<T | ''>({
+	default: (rawProps: InputProps<T>) => rawProps.defaultValue ?? '',
 });
 </script>
 

@@ -1,11 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/vue3-vite';
+import type { ComponentPropsAndSlots, Meta, StoryObj } from '@storybook/vue3-vite';
+import type { FunctionalComponent } from 'vue';
 import { render, showControls, StorybookLabel } from '@/lib/storybook';
 import { Input } from '.';
 import { Label } from '../label';
 
+const inputComponent: FunctionalComponent<ComponentPropsAndSlots<typeof Input>> = Input;
+
 const meta: Meta<typeof Input> = {
 	title: 'Forms/Input',
-	component: Input,
+	component: inputComponent,
 	tags: ['autodocs'],
 	render: render({ Input }, `
     <div class="max-w-xs">

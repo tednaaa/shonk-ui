@@ -7,7 +7,7 @@ const props = defineProps<{
 	class?: HTMLAttributes['class'];
 }>();
 
-const modelValue = defineModel<string | number>({ required: true });
+const modelValue = defineModel<string>({ required: true });
 </script>
 
 <template>
