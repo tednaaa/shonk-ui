@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Avatar, AvatarFallback, MultiCombobox } from 'shonk-ui';
+import { Avatar, AvatarFallback, AvatarGroup, MultiCombobox } from 'shonk-ui';
 import { ref } from 'vue';
 
 const tokens = [
@@ -11,10 +11,10 @@ const tokens = [
 ];
 
 const members = [
-	{ label: 'Olivia Martin', value: 'olivia', initials: 'OM', role: 'Designer', color: 'bg-chart-1/15 text-chart-1' },
-	{ label: 'Jackson Lee', value: 'jackson', initials: 'JL', role: 'Engineer', color: 'bg-chart-2/15 text-chart-2' },
-	{ label: 'Isabella Nguyen', value: 'isabella', initials: 'IN', role: 'Engineer', color: 'bg-chart-4/15 text-chart-4' },
-	{ label: 'William Kim', value: 'william', initials: 'WK', role: 'Product manager', color: 'bg-chart-5/15 text-chart-5' },
+	{ label: 'Olivia Martin', value: 'olivia', role: 'Designer' },
+	{ label: 'Jackson Lee', value: 'jackson', role: 'Engineer' },
+	{ label: 'Isabella Nguyen', value: 'isabella', role: 'Engineer' },
+	{ label: 'William Kim', value: 'william', role: 'Product manager' },
 ];
 
 const selectedTokens = ref(['BTC', 'ETH']);
@@ -53,9 +53,7 @@ const selectedMembers = ref(['jackson']);
 		>
 			<template #option="{ option }">
 				<Avatar class="size-7">
-					<AvatarFallback class="text-[11px] font-semibold" :class="option.color">
-						{{ option.initials }}
-					</AvatarFallback>
+					<AvatarFallback :name="option.label" />
 				</Avatar>
 				<span class="grid leading-tight">
 					{{ option.label }}
@@ -64,17 +62,15 @@ const selectedMembers = ref(['jackson']);
 			</template>
 
 			<template #value="{ selected, text }">
-				<span class="flex gap-1">
+				<AvatarGroup class="-space-x-1.5">
 					<Avatar
 						v-for="option in selected"
 						:key="option.value"
 						class="size-5"
 					>
-						<AvatarFallback class="text-[9px] font-semibold" :class="option.color">
-							{{ option.initials }}
-						</AvatarFallback>
+						<AvatarFallback :name="option.label" />
 					</Avatar>
-				</span>
+				</AvatarGroup>
 				<span class="truncate">{{ text }}</span>
 			</template>
 		</MultiCombobox>

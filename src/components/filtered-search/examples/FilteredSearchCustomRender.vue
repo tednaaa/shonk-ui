@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ActiveFilter, FilterOption } from 'shonk-ui';
-import { defineFilter, FilteredSearch } from 'shonk-ui';
+import { Avatar, AvatarFallback, AvatarGroup, defineFilter, FilteredSearch } from 'shonk-ui';
 import { h, ref } from 'vue';
 
 interface ColoredOption extends FilterOption {
@@ -16,9 +16,8 @@ function dot({ color }: ColoredOption) {
 	return h('span', { class: ['size-2 shrink-0 rounded-full', color] });
 }
 
-function avatar({ color, label }: ColoredOption) {
-	const initials = label.split(' ').map(part => part.charAt(0)).join('');
-	return h('span', { class: ['flex size-4 shrink-0 items-center justify-center rounded-full text-[8px] font-semibold text-white', color] }, initials);
+function avatar({ label }: FilterOption) {
+	return h(Avatar, { class: 'size-4' }, () => h(AvatarFallback, { name: label }));
 }
 
 function withMarks(marks: ReturnType<typeof h>[], text: string) {
@@ -40,18 +39,18 @@ const labels = defineFilter<ColoredOption>({
 	renderValue: ({ filter, options }) => withMarks(options.map(dot), options.length > 2 ? `${options.length} labels` : filter.valueLabel),
 });
 
-const assignees = defineFilter<ColoredOption>({
+const assignees = defineFilter({
 	key: 'assignee',
 	label: 'Assignee',
 	multiSelect: true,
 	operators,
 	options: [
-		{ value: 'ada', label: 'Ada Lovelace', color: 'bg-violet-500' },
-		{ value: 'alan', label: 'Alan Turing', color: 'bg-teal-500' },
-		{ value: 'grace', label: 'Grace Hopper', color: 'bg-rose-500' },
+		{ value: 'ada', label: 'Ada Lovelace' },
+		{ value: 'alan', label: 'Alan Turing' },
+		{ value: 'grace', label: 'Grace Hopper' },
 	],
 	renderOption: option => withMarks([avatar(option)], option.label),
-	renderValue: ({ filter, options }) => withMarks(options.map(avatar), options.length > 1 ? `${options.length} people` : filter.valueLabel),
+	renderValue: ({ filter, options }) => withMarks([h(AvatarGroup, { class: '-space-x-1 **:data-[slot=avatar]:border' }, () => options.map(avatar))], options.length > 1 ? `${options.length} people` : filter.valueLabel),
 });
 
 interface TokenOption extends FilterOption {
