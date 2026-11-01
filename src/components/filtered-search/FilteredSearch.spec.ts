@@ -289,6 +289,25 @@ describe('filteredSearch value editors', () => {
 		expect(document.querySelector('[role="option"]')?.textContent?.trim()).toBe('Status: Open');
 	});
 
+	it('should find an option typed without its accents', async () => {
+		wrapper = createComponent({
+			definitions: [{
+				key: 'author',
+				label: 'Author',
+				operators: [{ value: 'equals', label: 'is' }],
+				options: [
+					{ value: 'u7', label: 'Ann' },
+					{ value: 'u42', label: 'Élodie' },
+				],
+			}],
+		});
+
+		const input = await openValuePhase();
+		await input.setValue('elod');
+
+		expect([...document.querySelectorAll('[role="option"]')].map(option => option.textContent?.trim())).toEqual(['Élodie']);
+	});
+
 	it('should commit what the editor a definition supplies submits', async () => {
 		const YearEditor = markRaw(defineComponent({
 			emits: ['submit'],

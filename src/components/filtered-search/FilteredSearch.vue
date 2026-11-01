@@ -5,6 +5,7 @@ import type { ActiveFilter, FilterDefinition, FilterHistoryItem, FilterOperator,
 import type { ShonkLocale } from '@/locales';
 import { CheckIcon, ChevronLeftIcon, CircleXIcon, SearchIcon, XIcon } from '@lucide/vue';
 import { createReusableTemplate } from '@vueuse/core';
+import { useFilter } from 'reka-ui';
 import { computed, nextTick, ref, useId, watch } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
@@ -93,13 +94,16 @@ const availableDefinitions = computed(() => props.definitions.filter(definition 
 	!definition.unique || !filters.value.some(filter => filter.key === definition.key && filter.id !== editingId.value),
 ));
 
+const { contains } = useFilter({ sensitivity: 'base' });
+
+function matchesQuery(...texts: string[]) {
+	return texts.some(text => contains(text, inputText.value));
+}
+
 const filteredDefinitions = computed(() => {
 	if (step.value.phase !== 'key' || !inputText.value || isEditedKeyUntouched.value)
 		return availableDefinitions.value;
-	const query = inputText.value.toLowerCase();
-	return availableDefinitions.value.filter(definition =>
-		definition.label.toLowerCase().includes(query) || definition.key.toLowerCase().includes(query),
-	);
+	return availableDefinitions.value.filter(definition => matchesQuery(definition.label, definition.key));
 });
 
 const valueDefinition = computed(() => valueStep.value?.definition ?? null);
@@ -135,12 +139,7 @@ const valueOptions = computed(() => {
 	if (!suggestsOptions.value)
 		return [];
 	const options = pinFirst(valueDefinition.value?.options ?? []);
-	if (!inputText.value)
-		return options;
-	const query = inputText.value.toLowerCase();
-	return options.filter(option =>
-		option.label.toLowerCase().includes(query) || option.value.toLowerCase().includes(query),
-	);
+	return inputText.value ? options.filter(option => matchesQuery(option.label, option.value)) : options;
 });
 
 const highlightableCount = computed(() => {
