@@ -194,24 +194,43 @@ describe('filteredSearch definitions', () => {
 		return input;
 	}
 
+	const uniqueStatusApplied = {
+		definitions: [{ ...definitions[0], unique: true }],
+		filters: [{
+			id: 'a',
+			key: 'status',
+			keyLabel: 'Status',
+			operator: 'equals',
+			operatorLabel: 'is',
+			value: 'open',
+			valueLabel: 'Open',
+		}],
+	};
+
 	it('should hide a unique definition once it has been applied', async () => {
-		wrapper = createComponent({
-			definitions: [{ ...definitions[0], unique: true }],
-			filters: [{
-				id: 'a',
-				key: 'status',
-				keyLabel: 'Status',
-				operator: 'equals',
-				operatorLabel: 'is',
-				value: 'open',
-				valueLabel: 'Open',
-			}],
-		});
+		wrapper = createComponent(uniqueStatusApplied);
 
 		await openKeyList();
 
 		expect(document.querySelectorAll('[role="option"]')).toHaveLength(0);
 		expect(document.body.textContent).toContain('No filters found.');
+	});
+
+	it('should ignore Enter when ArrowDown opens an empty key list', async () => {
+		const errorHandler = vi.fn();
+		wrapper = mount(FilteredSearch, {
+			attachTo: document.body,
+			props: uniqueStatusApplied,
+			global: { config: { errorHandler } },
+		});
+
+		const input = wrapper.find('input');
+		await input.trigger('keydown', { key: 'ArrowDown' });
+		await input.trigger('keydown', { key: 'Enter' });
+		await flushPromises();
+
+		expect(errorHandler).not.toHaveBeenCalled();
+		expect(wrapper.emitted('update:filters')).toBeUndefined();
 	});
 
 	it('should skip the operator phase when a definition has a single operator', async () => {

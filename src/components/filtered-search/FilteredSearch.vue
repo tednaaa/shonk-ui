@@ -452,7 +452,7 @@ function handleKeydown(e: KeyboardEvent) {
 		e.preventDefault();
 		if (!isOpen.value) {
 			isOpen.value = true;
-			highlightedIndex.value = 0;
+			highlightedIndex.value = Math.min(0, highlightableCount.value - 1);
 			return;
 		}
 		highlightedIndex.value = Math.min(highlightedIndex.value + 1, highlightableCount.value - 1);
