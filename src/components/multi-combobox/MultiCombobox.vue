@@ -7,7 +7,7 @@ import { ChevronDownIcon, XIcon } from '@lucide/vue';
 import { useFilter } from 'reka-ui';
 import { computed, shallowRef, watch } from 'vue';
 import { useLocale } from '@/locales';
-import { cn } from '@/utils';
+import { cn, pinFirst } from '@/utils';
 import { Button } from '../button';
 import { Checkbox } from '../checkbox';
 import {
@@ -80,10 +80,7 @@ const selectedOptions = computed(() => model.value.flatMap((value) => {
 }));
 
 const listedOptions = computed(() => props.pinSelectedOption
-	? [
-			...props.options.filter(option => pinnedValues.value.includes(option.value)),
-			...props.options.filter(option => !pinnedValues.value.includes(option.value)),
-		]
+	? pinFirst(props.options, pinnedValues.value)
 	: props.options);
 
 const selectableOptions = computed(() => props.options.filter(option => !option.disabled));

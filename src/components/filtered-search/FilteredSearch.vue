@@ -8,7 +8,7 @@ import { createReusableTemplate } from '@vueuse/core';
 import { useFilter } from 'reka-ui';
 import { computed, nextTick, ref, useId, watch } from 'vue';
 import { useLocale } from '@/locales';
-import { cn } from '@/utils';
+import { cn, pinFirst } from '@/utils';
 import { Button } from '../button';
 import { ButtonGroup } from '../button-group';
 import { checkboxVariants } from '../checkbox';
@@ -128,17 +128,10 @@ const suggestsOptions = computed(() => Boolean(valueDefinition.value?.options &&
 
 const isMultiSelect = computed(() => suggestsOptions.value && Boolean(valueDefinition.value?.multiSelect));
 
-function pinFirst(options: FilterOption[]) {
-	if (pinnedValues.value.length === 0)
-		return options;
-	const pinned = options.filter(option => pinnedValues.value.includes(option.value));
-	return [...pinned, ...options.filter(option => !pinnedValues.value.includes(option.value))];
-}
-
 const valueOptions = computed(() => {
 	if (!suggestsOptions.value)
 		return [];
-	const options = pinFirst(valueDefinition.value?.options ?? []);
+	const options = pinFirst(valueDefinition.value?.options ?? [], pinnedValues.value);
 	return inputText.value ? options.filter(option => matchesQuery(option.label, option.value)) : options;
 });
 
