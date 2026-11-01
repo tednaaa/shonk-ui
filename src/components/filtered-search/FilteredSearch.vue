@@ -14,6 +14,8 @@ import { ButtonGroup } from '../button-group';
 import { checkboxVariants } from '../checkbox';
 import { Popover, PopoverAnchor, PopoverContent } from '../popover';
 import FilterHistory from './FilterHistory.vue';
+import FilterListbox from './FilterListbox.vue';
+import FilterListboxOption from './FilterListboxOption.vue';
 import FilterToken from './FilterToken.vue';
 import { useTokenDrag } from './useTokenDrag';
 import { filteredSearchTokenListVariants, filteredSearchVariants, filterTokenPartVariants, filterTokenVariants, searchTokenVariants, valueHintVariants } from './variants';
@@ -628,49 +630,30 @@ watch(isOpen, (open) => {
 				<span class="text-xs text-muted-foreground">{{ stepLabel }}</span>
 			</div>
 
-			<div v-if="step.phase === 'key'" role="listbox" class="max-h-60 overflow-y-auto py-1" @mouseleave="highlightedIndex = -1">
-				<p v-if="filteredDefinitions.length === 0" class="px-3 py-2 text-sm text-muted-foreground">
-					{{ locale.filteredSearch.emptyText }}
-				</p>
-				<button
+			<FilterListbox v-if="step.phase === 'key'" :empty="filteredDefinitions.length === 0" @mouseleave="highlightedIndex = -1">
+				<FilterListboxOption
 					v-for="(definition, index) in filteredDefinitions"
 					:key="definition.key"
-					type="button"
-					role="option"
-					:aria-selected="index === highlightedIndex"
-					:class="cn(
-						'flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm transition-colors',
-						index === highlightedIndex
-							? 'bg-accent text-accent-foreground'
-							: 'hover:bg-accent hover:text-accent-foreground',
-					)"
+					:highlighted="index === highlightedIndex"
 					@click="selectKey(definition)"
 					@mouseenter="highlightedIndex = index"
 				>
 					<component :is="definition.icon" v-if="definition.icon" class="size-3.5 shrink-0 text-muted-foreground" />
 					{{ definition.label }}
-				</button>
-			</div>
+				</FilterListboxOption>
+			</FilterListbox>
 
-			<div v-else-if="operatorStep" role="listbox" class="py-1" @mouseleave="highlightedIndex = -1">
-				<button
+			<FilterListbox v-else-if="operatorStep" @mouseleave="highlightedIndex = -1">
+				<FilterListboxOption
 					v-for="(operator, index) in operatorStep.definition.operators"
 					:key="operator.value"
-					type="button"
-					role="option"
-					:aria-selected="index === highlightedIndex"
-					:class="cn(
-						'w-full px-3 py-1.5 text-left text-sm transition-colors',
-						index === highlightedIndex
-							? 'bg-accent text-accent-foreground'
-							: 'hover:bg-accent hover:text-accent-foreground',
-					)"
+					:highlighted="index === highlightedIndex"
 					@click="selectOperator(operator)"
 					@mouseenter="highlightedIndex = index"
 				>
 					{{ operator.label }}
-				</button>
-			</div>
+				</FilterListboxOption>
+			</FilterListbox>
 
 			<component
 				:is="valueStep.definition.editor"
@@ -683,23 +666,12 @@ watch(isOpen, (open) => {
 
 			<template v-else-if="suggestsOptions">
 				<!-- TODO: virtualize the options, 1000 of them take ~150ms to open -->
-				<div role="listbox" class="max-h-60 overflow-y-auto py-1" @mouseleave="highlightedIndex = -1">
-					<p v-if="valueOptions.length === 0" class="px-3 py-2 text-sm text-muted-foreground">
-						{{ locale.filteredSearch.emptyText }}
-					</p>
-					<button
+				<FilterListbox :empty="valueOptions.length === 0" @mouseleave="highlightedIndex = -1">
+					<FilterListboxOption
 						v-for="(option, index) in valueOptions"
 						:key="option.value"
 						v-memo="[option, index, index === highlightedIndex, isSelected(option), isMultiSelect, valueDefinition]"
-						type="button"
-						role="option"
-						:aria-selected="index === highlightedIndex"
-						:class="cn(
-							'flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm transition-colors',
-							index === highlightedIndex
-								? 'bg-accent text-accent-foreground'
-								: 'hover:bg-accent hover:text-accent-foreground',
-						)"
+						:highlighted="index === highlightedIndex"
 						@click="chooseValue(option)"
 						@mouseenter="highlightedIndex = index"
 					>
@@ -715,8 +687,8 @@ watch(isOpen, (open) => {
 						<template v-else>
 							{{ option.label }}
 						</template>
-					</button>
-				</div>
+					</FilterListboxOption>
+				</FilterListbox>
 
 				<div v-if="isMultiSelect" class="flex items-center gap-2 border-t p-1">
 					<Button
