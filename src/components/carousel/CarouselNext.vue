@@ -2,7 +2,7 @@
 import type { WithClassAsProps } from './interface';
 import type { ButtonVariants } from '@/components/button';
 import type { ShonkLocale } from '@/locales';
-import { ArrowRight } from '@lucide/vue';
+import { ArrowRightIcon } from '@lucide/vue';
 import { Button } from '@/components/button';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
@@ -34,7 +34,7 @@ const { orientation, canScrollNext, scrollNext } = useCarousel();
 		@click="scrollNext"
 	>
 		<slot>
-			<ArrowRight />
+			<ArrowRightIcon />
 			<span class="sr-only">{{ locale.carousel.nextButtonScreenReaderText }}</span>
 		</slot>
 	</Button>

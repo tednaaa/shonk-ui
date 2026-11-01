@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
 import type { ShonkLocale } from '@/locales';
-import { PanelLeft } from '@lucide/vue';
+import { PanelLeftIcon } from '@lucide/vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Button } from '../button';
@@ -26,7 +26,7 @@ const { toggleSidebar } = useSidebar();
 		:class="cn('size-7', props.class)"
 		@click="toggleSidebar"
 	>
-		<PanelLeft />
+		<PanelLeftIcon />
 		<span class="sr-only">{{ locale.sidebar.toggleAriaLabel }}</span>
 	</Button>
 </template>

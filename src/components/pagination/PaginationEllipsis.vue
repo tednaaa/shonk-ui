@@ -2,7 +2,7 @@
 import type { PaginationEllipsisProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ShonkLocale } from '@/locales';
-import { MoreHorizontal } from '@lucide/vue';
+import { MoreHorizontalIcon } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import { PaginationEllipsis } from 'reka-ui';
 import { useLocale } from '@/locales';
@@ -25,7 +25,7 @@ const delegatedProps = reactiveOmit(props, 'class', 'locale');
 		:class="cn('flex size-9 items-center justify-center text-muted-foreground', props.class)"
 	>
 		<slot>
-			<MoreHorizontal class="size-4" />
+			<MoreHorizontalIcon class="size-4" />
 			<span class="sr-only">{{ locale.pagination.ellipsisScreenReaderText }}</span>
 		</slot>
 	</PaginationEllipsis>

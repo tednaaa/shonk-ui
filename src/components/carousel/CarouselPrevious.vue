@@ -2,7 +2,7 @@
 import type { WithClassAsProps } from './interface';
 import type { ButtonVariants } from '@/components/button';
 import type { ShonkLocale } from '@/locales';
-import { ArrowLeft } from '@lucide/vue';
+import { ArrowLeftIcon } from '@lucide/vue';
 import { Button } from '@/components/button';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
@@ -34,7 +34,7 @@ const { orientation, canScrollPrev, scrollPrev } = useCarousel();
 		@click="scrollPrev"
 	>
 		<slot>
-			<ArrowLeft />
+			<ArrowLeftIcon />
 			<span class="sr-only">{{ locale.carousel.previousButtonScreenReaderText }}</span>
 		</slot>
 	</Button>

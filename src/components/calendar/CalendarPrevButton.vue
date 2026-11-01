@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { CalendarPrevProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
-import { ChevronLeft } from '@lucide/vue';
+import { ChevronLeftIcon } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import { CalendarPrev, useForwardProps } from 'reka-ui';
 import { cn } from '@/utils';
@@ -25,7 +25,7 @@ const forwardedProps = useForwardProps(delegatedProps);
 		v-bind="forwardedProps"
 	>
 		<slot>
-			<ChevronLeft class="size-4" />
+			<ChevronLeftIcon class="size-4" />
 		</slot>
 	</CalendarPrev>
 </template>

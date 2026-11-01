@@ -2,7 +2,7 @@
 import type { SelectTriggerProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ShonkLocale } from '@/locales';
-import { ChevronDown, X } from '@lucide/vue';
+import { ChevronDownIcon, XIcon } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import { injectSelectRootContext, SelectIcon, SelectTrigger, useForwardProps } from 'reka-ui';
 import { computed, useAttrs } from 'vue';
@@ -53,7 +53,7 @@ function clear() {
 		>
 			<slot />
 			<SelectIcon as-child>
-				<ChevronDown :class="selectTriggerIconVariants({ showClear })" />
+				<ChevronDownIcon :class="selectTriggerIconVariants({ showClear })" />
 			</SelectIcon>
 		</SelectTrigger>
 
@@ -65,7 +65,7 @@ function clear() {
 			class="absolute top-1/2 right-8 -translate-y-1/2 cursor-pointer rounded-xs text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
 			@pointerdown.stop.prevent="clear"
 		>
-			<X class="size-4" />
+			<XIcon class="size-4" />
 		</button>
 	</div>
 </template>

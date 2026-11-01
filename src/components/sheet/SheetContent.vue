@@ -2,7 +2,7 @@
 import type { DialogContentEmits, DialogContentProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import type { ShonkLocale } from '@/locales';
-import { X } from '@lucide/vue';
+import { XIcon } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import {
 	DialogClose,
@@ -50,7 +50,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 			<DialogClose
 				class="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none data-[state=open]:bg-secondary"
 			>
-				<X class="size-4" />
+				<XIcon class="size-4" />
 				<span class="sr-only">{{ locale.sheet.closeButtonScreenReaderText }}</span>
 			</DialogClose>
 		</DialogContent>

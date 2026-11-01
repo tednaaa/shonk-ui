@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ContextMenuSubTriggerProps } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
-import { ChevronRight } from '@lucide/vue';
+import { ChevronRightIcon } from '@lucide/vue';
 import { reactiveOmit } from '@vueuse/core';
 import {
 	ContextMenuSubTrigger,
@@ -27,6 +27,6 @@ const forwardedProps = useForwardProps(delegatedProps);
 		)"
 	>
 		<slot />
-		<ChevronRight class="ml-auto" />
+		<ChevronRightIcon class="ml-auto" />
 	</ContextMenuSubTrigger>
 </template>
