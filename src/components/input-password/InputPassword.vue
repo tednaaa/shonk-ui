@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
 import type { ShonkLocale } from '@/locales';
-import { Eye, EyeOff } from '@lucide/vue';
+import { EyeIcon, EyeOffIcon } from '@lucide/vue';
 import { computed, ref } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
@@ -49,8 +49,8 @@ const buttonAriaLabel = computed(() => visible.value
 			:aria-label="buttonAriaLabel"
 			@click="visible = !visible"
 		>
-			<EyeOff v-if="visible" />
-			<Eye v-else />
+			<EyeOffIcon v-if="visible" />
+			<EyeIcon v-else />
 		</Button>
 	</div>
 </template>
