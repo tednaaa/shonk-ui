@@ -3,10 +3,9 @@ import type { DateValue } from '@internationalized/date';
 import type { WeekStartsOn } from 'reka-ui/date';
 import type { HTMLAttributes } from 'vue';
 import type { ShonkLocale } from '@/locales';
-import { CalendarDate } from '@internationalized/date';
 import { CalendarIcon } from '@lucide/vue';
 import { computed, ref } from 'vue';
-import { formatDate } from '@/lib/date';
+import { formatDate, toCalendarDate } from '@/lib/date';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Button } from '../button';
@@ -38,7 +37,7 @@ const locale = useLocale(() => ({ intlLocale: props.locale?.intlLocale, datePick
 
 const calendarValue = computed<DateValue | undefined>(() => {
 	const value = date.value;
-	return value ? new CalendarDate(value.getFullYear(), value.getMonth() + 1, value.getDate()) : undefined;
+	return value ? toCalendarDate(value) : undefined;
 });
 
 function onUpdate(value: DateValue | undefined) {

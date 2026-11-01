@@ -5,10 +5,9 @@ import type { WeekStartsOn } from 'reka-ui/date';
 
 import type { HTMLAttributes } from 'vue';
 import type { ShonkLocale } from '@/locales';
-import { CalendarDate } from '@internationalized/date';
 import { CalendarIcon } from '@lucide/vue';
 import { computed, ref } from 'vue';
-import { formatDate } from '@/lib/date';
+import { formatDate, toCalendarDate } from '@/lib/date';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Button } from '../button';
@@ -41,8 +40,8 @@ const locale = useLocale(() => ({ intlLocale: props.locale?.intlLocale, rangeDat
 const calendarValue = computed<DateRange>(() => {
 	const [start, end] = dates.value;
 	return {
-		start: start ? new CalendarDate(start.getFullYear(), start.getMonth() + 1, start.getDate()) : undefined,
-		end: end ? new CalendarDate(end.getFullYear(), end.getMonth() + 1, end.getDate()) : undefined,
+		start: start ? toCalendarDate(start) : undefined,
+		end: end ? toCalendarDate(end) : undefined,
 	};
 });
 
