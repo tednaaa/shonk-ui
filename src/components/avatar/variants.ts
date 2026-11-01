@@ -18,3 +18,18 @@ export const avatarFallbackVariants = cva(
 		},
 	},
 );
+
+export const avatarGroupVariants = cva(
+	'flex -space-x-2 **:data-[slot=avatar]:border-2 **:data-[slot=avatar]:border-background **:data-[slot=avatar]:bg-background',
+	{
+		variants: {
+			interactive: {
+				true: '*:relative *:duration-300 *:ease-in-out *:before:absolute *:before:inset-x-0 *:before:top-0 *:before:-bottom-1 *:hover:-translate-y-1 *:focus-visible:z-10 *:focus-visible:-translate-y-1 *:has-focus-visible:z-10 *:has-focus-visible:-translate-y-1 *:motion-safe:transition-transform',
+				false: '',
+			},
+		},
+		defaultVariants: {
+			interactive: false,
+		},
+	},
+);
