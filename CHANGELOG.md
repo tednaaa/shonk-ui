@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.15.1 (2026-11-01)
+
+- fix(input): narrow model value types [`aa7c8021`](https://github.com/tednaaa/shonk-ui/commit/aa7c802144e74e90b5d1cb4a99a03b88fbd68140)
+- feat(data-table): sort descending first [`32d3f00c`](https://github.com/tednaaa/shonk-ui/commit/32d3f00c0d3d353630e4b5cf4c10cfd2ef444469)
+
 ## v0.15.0 (2026-11-01)
 
 - feat(avatar): AvatarGroup [`db0390e5`](https://github.com/tednaaa/shonk-ui/commit/db0390e58a06fafaae90b424cdd0d4ad1e9be270)
