@@ -48,8 +48,8 @@ type TokenParts = Partial<Record<FilterTokenSegment, string>>;
 
 type DropdownStep
 	= | { phase: 'key' }
-		| { phase: 'operator'; key: string; keyLabel: string; operators: FilterOperator[] }
-		| { phase: 'value'; key: string; keyLabel: string; operator: string; operatorLabel: string };
+		| { phase: 'operator'; definition: FilterDefinition }
+		| { phase: 'value'; definition: FilterDefinition; operator: FilterOperator };
 
 const locale = useLocale(() => ({ filteredSearch: props.locale }));
 
@@ -102,15 +102,23 @@ const filteredDefinitions = computed(() => {
 	);
 });
 
-const valueDefinition = computed(() => {
-	const s = valueStep.value;
-	return s ? props.definitions.find(definition => definition.key === s.key) ?? null : null;
-});
+const valueDefinition = computed(() => valueStep.value?.definition ?? null);
 
-const valueOperator = computed(() => {
-	const s = valueStep.value;
-	return valueDefinition.value?.operators.find(operator => operator.value === s?.operator) ?? null;
-});
+const definitionsByKey = computed(() => new Map(props.definitions.map(definition => [definition.key, definition])));
+
+function definitionOf(filter: ActiveFilter) {
+	return definitionsByKey.value.get(filter.key);
+}
+
+function hasOperatorChoice(definition: FilterDefinition) {
+	return definition.operators.length > 1;
+}
+
+function stepAfterKey(definition: FilterDefinition): DropdownStep {
+	return hasOperatorChoice(definition)
+		? { phase: 'operator', definition }
+		: { phase: 'value', definition, operator: definition.operators[0] };
+}
 
 const suggestsOptions = computed(() => Boolean(valueDefinition.value?.options && !valueDefinition.value.editor));
 
@@ -139,7 +147,7 @@ const highlightableCount = computed(() => {
 	if (step.value.phase === 'key')
 		return filteredDefinitions.value.length;
 	if (operatorStep.value)
-		return operatorStep.value.operators.length;
+		return operatorStep.value.definition.operators.length;
 	return valueOptions.value.length;
 });
 
@@ -148,15 +156,15 @@ const stepLabel = computed(() => {
 	if (s.phase === 'key')
 		return null;
 	if (s.phase === 'operator')
-		return s.keyLabel;
-	return `${s.keyLabel} ${s.operatorLabel}`;
+		return s.definition.label;
+	return `${s.definition.label} ${s.operator.label}`;
 });
 
 const pendingParts = computed<TokenParts | null>(() => {
 	const s = step.value;
 	if (s.phase === 'key')
 		return null;
-	return { key: s.keyLabel, operator: s.phase === 'value' ? s.operatorLabel : undefined };
+	return { key: s.definition.label, operator: s.phase === 'value' ? s.operator.label : undefined };
 });
 
 const editedRest = computed<TokenParts | null>(() => {
@@ -166,7 +174,7 @@ const editedRest = computed<TokenParts | null>(() => {
 		return null;
 	if (s.phase === 'key')
 		return { operator: filter.operatorLabel, value: filter.valueLabel };
-	if (s.phase === 'operator' && s.key === filter.key)
+	if (s.phase === 'operator' && s.definition.key === filter.key)
 		return { value: filter.valueLabel };
 	return null;
 });
@@ -196,37 +204,25 @@ function showStep(next: DropdownStep) {
 	pinnedValues.value = [];
 }
 
+function pickStep(next: DropdownStep) {
+	showStep(next);
+	prefillEditedValue();
+	focusInput();
+}
+
 function resetToKeyPhase() {
 	editingId.value = null;
 	showStep({ phase: 'key' });
 }
 
 function selectKey(definition: FilterDefinition) {
-	const [only] = definition.operators;
-	step.value = definition.operators.length === 1
-		? { phase: 'value', key: definition.key, keyLabel: definition.label, operator: only.value, operatorLabel: only.label }
-		: { phase: 'operator', key: definition.key, keyLabel: definition.label, operators: definition.operators };
-	inputText.value = '';
-	highlightedIndex.value = -1;
-	prefillEditedValue();
-	focusInput();
+	pickStep(stepAfterKey(definition));
 }
 
 function selectOperator(operator: FilterOperator) {
 	const s = operatorStep.value;
-	if (!s)
-		return;
-	step.value = {
-		phase: 'value',
-		key: s.key,
-		keyLabel: s.keyLabel,
-		operator: operator.value,
-		operatorLabel: operator.label,
-	};
-	inputText.value = '';
-	highlightedIndex.value = -1;
-	prefillEditedValue();
-	focusInput();
+	if (s)
+		pickStep({ phase: 'value', definition: s.definition, operator });
 }
 
 function commitFilter(value: string | string[], valueLabel: string) {
@@ -235,10 +231,10 @@ function commitFilter(value: string | string[], valueLabel: string) {
 		return;
 	const filter: ActiveFilter = {
 		id: editingId.value ?? crypto.randomUUID(),
-		key: s.key,
-		keyLabel: s.keyLabel,
-		operator: s.operator,
-		operatorLabel: s.operatorLabel,
+		key: s.definition.key,
+		keyLabel: s.definition.label,
+		operator: s.operator.value,
+		operatorLabel: s.operator.label,
 		value,
 		valueLabel,
 	};
@@ -263,10 +259,6 @@ function confirmTypedValue() {
 		return;
 	}
 	commitFilter(typed, typed);
-}
-
-function definitionOf(filter: ActiveFilter) {
-	return props.definitions.find(definition => definition.key === filter.key);
 }
 
 function renderValue(filter: ActiveFilter) {
@@ -312,7 +304,6 @@ function removeFilter(id: string) {
 }
 
 function prefillEditedValue() {
-	pinnedValues.value = [];
 	const filter = editingFilter.value;
 	const definition = valueDefinition.value;
 	if (!filter || !definition || definition.key !== filter.key)
@@ -343,21 +334,15 @@ function showEditedKey() {
 
 const pendingEditableSegments = computed<FilterTokenSegment[]>(() => {
 	const s = step.value;
-	if (s.phase !== 'value')
-		return ['key'];
-	const operators = valueDefinition.value?.operators ?? [];
-	return operators.length > 1 ? ['key', 'operator'] : ['key'];
+	return s.phase === 'value' && hasOperatorChoice(s.definition) ? ['key', 'operator'] : ['key'];
 });
 
 function editPendingSegment(segment: FilterTokenSegment) {
 	const s = step.value;
-	if (s.phase === 'key')
-		return;
 	if (segment === 'key')
-		showStep({ phase: 'key' });
+		pickStep({ phase: 'key' });
 	else if (segment === 'operator' && s.phase === 'value')
-		showStep({ phase: 'operator', key: s.key, keyLabel: s.keyLabel, operators: valueDefinition.value?.operators ?? [] });
-	focusInput();
+		pickStep({ phase: 'operator', definition: s.definition });
 }
 
 function segmentAriaLabel(segment: FilterTokenSegment, keyLabel: string) {
@@ -366,24 +351,24 @@ function segmentAriaLabel(segment: FilterTokenSegment, keyLabel: string) {
 		: locale.value.filteredSearch.changeOperatorButtonAriaLabel(keyLabel);
 }
 
+function appliedOperator(definition: FilterDefinition, filter: ActiveFilter): FilterOperator {
+	return definition.operators.find(operator => operator.value === filter.operator)
+		?? { value: filter.operator, label: filter.operatorLabel };
+}
+
 function editFilter(id: string, segment: FilterTokenSegment) {
 	const filter = filters.value.find(existing => existing.id === id);
-	const operators = props.definitions.find(definition => definition.key === filter?.key)?.operators ?? [];
-	if (!filter || !operators.length)
+	const definition = filter && definitionOf(filter);
+	if (!filter || !definition?.operators.length)
 		return;
 	editingId.value = id;
-	if (segment === 'key') {
-		showEditedKey();
-	}
-	else if (segment === 'operator' && operators.length > 1) {
-		showStep({ phase: 'operator', key: filter.key, keyLabel: filter.keyLabel, operators });
-	}
-	else {
-		showStep({ phase: 'value', key: filter.key, keyLabel: filter.keyLabel, operator: filter.operator, operatorLabel: filter.operatorLabel });
-		prefillEditedValue();
-	}
 	isOpen.value = true;
-	focusInput();
+	if (segment === 'key')
+		showEditedKey();
+	else if (segment === 'operator' && hasOperatorChoice(definition))
+		pickStep({ phase: 'operator', definition });
+	else
+		pickStep({ phase: 'value', definition, operator: appliedOperator(definition, filter) });
 }
 
 const hasActiveFilters = computed(() => filters.value.length > 0 || !!searchText.value);
@@ -409,18 +394,10 @@ function backToKey() {
 
 function goBack() {
 	const s = step.value;
-	if (s.phase === 'operator') {
+	if (s.phase === 'value' && hasOperatorChoice(s.definition))
+		showStep({ phase: 'operator', definition: s.definition });
+	else if (s.phase !== 'key')
 		backToKey();
-		focusInput();
-		return;
-	}
-	if (s.phase === 'value') {
-		const operators = valueDefinition.value?.operators ?? [];
-		if (operators.length > 1)
-			showStep({ phase: 'operator', key: s.key, keyLabel: s.keyLabel, operators });
-		else
-			backToKey();
-	}
 	focusInput();
 }
 
@@ -445,7 +422,7 @@ function confirmHighlighted() {
 
 	if (operatorStep.value) {
 		if (highlightedIndex.value >= 0)
-			selectOperator(operatorStep.value.operators[highlightedIndex.value]);
+			selectOperator(operatorStep.value.definition.operators[highlightedIndex.value]);
 		return;
 	}
 
@@ -685,7 +662,7 @@ watch(isOpen, (open) => {
 
 			<div v-else-if="operatorStep" role="listbox" class="py-1" @mouseleave="highlightedIndex = -1">
 				<button
-					v-for="(operator, index) in operatorStep.operators"
+					v-for="(operator, index) in operatorStep.definition.operators"
 					:key="operator.value"
 					type="button"
 					role="option"
@@ -704,10 +681,10 @@ watch(isOpen, (open) => {
 			</div>
 
 			<component
-				:is="valueDefinition.editor"
-				v-else-if="valueDefinition?.editor && valueOperator"
-				:definition="valueDefinition"
-				:operator="valueOperator"
+				:is="valueStep.definition.editor"
+				v-else-if="valueStep?.definition.editor"
+				:definition="valueStep.definition"
+				:operator="valueStep.operator"
 				:search="inputText"
 				@submit="confirmValue"
 			/>
