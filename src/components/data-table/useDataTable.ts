@@ -16,6 +16,7 @@ export interface UseDataTableOptions<TData extends object> {
 	totalRowCount?: MaybeRefOrGetter<number>;
 	sorting?: Ref<DataTableSortingState>;
 	enableMultiSort?: boolean;
+	sortDescFirst?: boolean;
 	pagination?: Ref<DataTablePaginationState>;
 	rowSelection?: Ref<DataTableRowSelectionState>;
 	selectedRows?: Ref<TData[]>;
@@ -93,7 +94,7 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
 		manualPagination: serverSide,
 		rowCount: totalRowCount === undefined ? undefined : computed(() => toValue(totalRowCount)),
 		enableMultiSort: options.enableMultiSort ?? false,
-		sortDescFirst: false,
+		sortDescFirst: options.sortDescFirst ?? false,
 		enableRowSelection: enableRowSelection === undefined ? undefined : row => enableRowSelection(row.original),
 		getRowCanExpand: row => getRowCanExpand?.(row.original) ?? true,
 		enableColumnResizing: options.columnSizing !== undefined,

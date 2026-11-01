@@ -185,6 +185,41 @@ describe('dataTable', () => {
 			expect(rowIds(wrapper)).toEqual(['linus', 'ada', 'grace']);
 		});
 
+		it('should sort a column descending first when it asks to', async () => {
+			const wrapper = mountTable(undefined, {
+				data: crew,
+				columns: [{ accessorKey: 'age', header: 'Age', sortable: true, sortDescFirst: true }],
+			});
+			const ageHeader = wrapper.getElementByText('th', 'Age');
+
+			await ageHeader.trigger('click');
+
+			expect(ageHeader.attributes('aria-sort')).toBe('descending');
+
+			await ageHeader.trigger('click');
+
+			expect(ageHeader.attributes('aria-sort')).toBe('ascending');
+		});
+
+		it('should sort descending first table-wide unless a column opts out', async () => {
+			const wrapper = mountTable(undefined, {
+				data: crew,
+				columns: [
+					{ accessorKey: 'name', header: 'Name', sortable: true, sortDescFirst: false },
+					{ accessorKey: 'age', header: 'Age', sortable: true },
+				],
+				tableOptions: { sortDescFirst: true },
+			});
+
+			await wrapper.getElementByText('th', 'Age').trigger('click');
+
+			expect(wrapper.getElementByText('th', 'Age').attributes('aria-sort')).toBe('descending');
+
+			await wrapper.getElementByText('th', 'Name').trigger('click');
+
+			expect(wrapper.getElementByText('th', 'Name').attributes('aria-sort')).toBe('ascending');
+		});
+
 		it('should sort from the keyboard', async () => {
 			const wrapper = mountSortable();
 			const ageHeader = wrapper.getElementByText('th', 'Age');

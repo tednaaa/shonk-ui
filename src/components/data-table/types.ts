@@ -45,6 +45,7 @@ export type DataTableAccessorKeyColumn<TData, TKey extends keyof TData & string>
 	accessorFn?: undefined;
 	columns?: undefined;
 	sortable?: boolean;
+	sortDescFirst?: boolean;
 	spanRows?: boolean | ((context: DataTableSpanRowsContext<TData, TData[TKey]>) => boolean);
 	cell?: (context: DataTableCellContext<TData, TData[TKey]>) => VNodeChild;
 	exportValue?: (context: DataTableCellContext<TData, TData[TKey]>) => DataTableExportValue;
@@ -56,6 +57,7 @@ export type DataTableAccessorFnColumn<TData> = DataTableColumnBase<TData> & {
 	accessorFn: (row: TData) => unknown;
 	columns?: undefined;
 	sortable?: boolean;
+	sortDescFirst?: boolean;
 	spanRows?: boolean | ((context: DataTableSpanRowsContext<TData>) => boolean);
 	cell?: (context: DataTableCellContext<TData>) => VNodeChild;
 	exportValue?: (context: DataTableCellContext<TData>) => DataTableExportValue;
@@ -67,6 +69,7 @@ export type DataTableDisplayColumn<TData> = DataTableColumnBase<TData> & {
 	accessorFn?: undefined;
 	columns?: undefined;
 	sortable?: undefined;
+	sortDescFirst?: undefined;
 	spanRows?: undefined;
 	cell?: (context: DataTableCellContext<TData>) => VNodeChild;
 	exportValue?: (context: DataTableCellContext<TData>) => DataTableExportValue;
@@ -89,6 +92,7 @@ export interface DataTableGroupColumn<TData> {
 	accessorFn?: undefined;
 	columns: DataTableColumn<TData>[];
 	sortable?: undefined;
+	sortDescFirst?: undefined;
 	spanRows?: undefined;
 	cell?: undefined;
 	exportValue?: undefined;
@@ -109,6 +113,7 @@ export interface DataTableSelectColumn {
 	accessorFn?: undefined;
 	columns?: undefined;
 	sortable?: undefined;
+	sortDescFirst?: undefined;
 	spanRows?: undefined;
 	cell?: undefined;
 	exportValue?: undefined;
@@ -129,6 +134,7 @@ export interface DataTableExpandColumn {
 	accessorFn?: undefined;
 	columns?: undefined;
 	sortable?: undefined;
+	sortDescFirst?: undefined;
 	spanRows?: undefined;
 	cell?: undefined;
 	exportValue?: undefined;

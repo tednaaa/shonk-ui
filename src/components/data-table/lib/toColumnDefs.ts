@@ -82,6 +82,7 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
 		header: column.header,
 		footer: footerDef<TData>(column.footer),
 		enableSorting: column.sortable ?? false,
+		sortDescFirst: column.sortDescFirst,
 		enableHiding: column.hideable ?? true,
 		enableResizing: resizable,
 		size: column.size,

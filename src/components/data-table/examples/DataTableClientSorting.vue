@@ -24,7 +24,7 @@ const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' });
 const columns: DataTableColumn<Invoice>[] = [
 	{ accessorKey: 'id', header: 'Invoice', class: 'font-medium', sortable: true },
 	{ accessorKey: 'client', header: 'Client', sortable: true },
-	{ accessorKey: 'issued', header: 'Issued', sortable: true, cell: ({ value }) => date.format(value) },
+	{ accessorKey: 'issued', header: 'Issued', sortable: true, sortDescFirst: true, cell: ({ value }) => date.format(value) },
 	{ accessorKey: 'paid', header: 'Status' },
 	{
 		accessorKey: 'amount',
@@ -32,6 +32,7 @@ const columns: DataTableColumn<Invoice>[] = [
 		class: 'text-right',
 		headerClass: 'text-right',
 		sortable: true,
+		sortDescFirst: true,
 		cell: ({ value }) => currency.format(value),
 	},
 ];
