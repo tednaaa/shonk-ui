@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
+import { XIcon } from '@lucide/vue';
 import { render, showControls } from '@/lib/storybook';
 import {
 	Sheet,
@@ -26,6 +27,7 @@ const components = {
 	Button,
 	Input,
 	Label,
+	XIcon,
 };
 
 const meta: Meta<typeof Sheet> = {
@@ -109,6 +111,30 @@ export const WithForm: Story = {
             </SheetClose>
           </SheetFooter>
         </form>
+      </SheetContent>
+    </Sheet>`,
+	),
+};
+
+export const WithoutCloseButton: Story = {
+	render: render(
+		components,
+		`<Sheet v-bind="args">
+      <SheetTrigger as-child>
+        <Button variant="secondary">Open sheet</Button>
+      </SheetTrigger>
+      <SheetContent :show-close-button="false">
+        <SheetHeader class="flex-row items-start justify-between gap-4">
+          <div class="flex flex-col gap-1.5">
+            <SheetTitle>Notifications</SheetTitle>
+            <SheetDescription>The header brings its own close button.</SheetDescription>
+          </div>
+          <SheetClose as-child>
+            <Button variant="ghost" size="icon-sm" aria-label="Close notifications">
+              <XIcon class="size-4" />
+            </Button>
+          </SheetClose>
+        </SheetHeader>
       </SheetContent>
     </Sheet>`,
 	),

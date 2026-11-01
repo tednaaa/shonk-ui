@@ -18,6 +18,7 @@ import { sheetContentVariants } from './variants';
 interface SheetContentProps extends DialogContentProps {
 	class?: HTMLAttributes['class'];
 	side?: 'top' | 'right' | 'bottom' | 'left';
+	showCloseButton?: boolean;
 	locale?: Partial<ShonkLocale['sheet']>;
 }
 
@@ -27,12 +28,13 @@ defineOptions({
 
 const props = withDefaults(defineProps<SheetContentProps>(), {
 	side: 'right',
+	showCloseButton: true,
 });
 const emits = defineEmits<DialogContentEmits>();
 
 const locale = useLocale(() => ({ sheet: props.locale }));
 
-const delegatedProps = reactiveOmit(props, 'class', 'side', 'locale');
+const delegatedProps = reactiveOmit(props, 'class', 'side', 'showCloseButton', 'locale');
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 </script>
@@ -48,6 +50,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 			<slot />
 
 			<DialogClose
+				v-if="showCloseButton"
 				class="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none data-[state=open]:bg-secondary"
 			>
 				<XIcon class="size-4" />
