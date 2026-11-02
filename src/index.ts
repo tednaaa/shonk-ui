@@ -43,6 +43,7 @@ export * from './components/number-field';
 export * from './components/pagination';
 export * from './components/popover';
 export * from './components/progress';
+export * from './components/radar-chart';
 export * from './components/radio-group';
 export * from './components/range-calendar';
 export * from './components/range-date-picker';
