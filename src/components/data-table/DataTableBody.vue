@@ -62,7 +62,7 @@ const pinnedRowsClass = computed(() => cn(
 		</DataTableRow>
 	</TableBody>
 
-	<TableBody :class="cn('transition-opacity', loading && hasRows && 'pointer-events-none opacity-50')">
+	<TableBody :class="cn(loading && hasRows && 'pointer-events-none [&>tr]:opacity-50')">
 		<DataTableRow
 			v-for="row in centerRows"
 			:key="row.id"

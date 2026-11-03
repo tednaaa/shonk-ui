@@ -628,7 +628,7 @@ describe('dataTable', () => {
 	it('should dim the rows and mark the table busy while loading', () => {
 		const wrapper = mountTable('<DataTable :table="table" loading />');
 
-		expect(wrapper.get('tbody').classes()).toEqual(expect.arrayContaining(['pointer-events-none', 'opacity-50']));
+		expect(wrapper.get('tbody').classes()).toEqual(expect.arrayContaining(['pointer-events-none', '[&>tr]:opacity-50']));
 		expect(wrapper.get('[aria-busy]').attributes('aria-busy')).toBe('true');
 		expect(bodyRows(wrapper)).toHaveLength(2);
 	});
@@ -1004,7 +1004,7 @@ describe('dataTable', () => {
 
 			expect(topRows?.classes()).toEqual(expect.arrayContaining(['pointer-events-none', '[&>tr]:opacity-50']));
 			expect(topRows?.classes()).not.toContain('opacity-50');
-			expect(centerRows?.classes()).toEqual(expect.arrayContaining(['pointer-events-none', 'opacity-50']));
+			expect(centerRows?.classes()).toEqual(expect.arrayContaining(['pointer-events-none', '[&>tr]:opacity-50']));
 		});
 
 		it('should expand a pinned row inside the pinned rows', () => {
@@ -1262,7 +1262,7 @@ describe('dataTable', () => {
 			expect(lastCell.find('[role="status"]').exists()).toBe(true);
 			expect(lastCell.attributes('colspan')).toBe('2');
 			expect(wrapper.findAll('tbody tr')).toHaveLength(3);
-			expect(wrapper.get('tbody').classes()).not.toContain('opacity-50');
+			expect(wrapper.get('tbody').classes()).not.toContain('[&>tr]:opacity-50');
 			expect(wrapper.get('[aria-busy]').attributes('aria-busy')).toBe('true');
 		});
 	});
