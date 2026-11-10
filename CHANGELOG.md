@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.16.0 (2026-11-10)
+
+- fix(data-table): dim loading rows on Safari [`3aa34049`](https://github.com/tednaaa/shonk-ui/commit/3aa3404961412478374943bd1cfa013eb9058184)
+- feat(radar-chart): add RadarChart [`dc50554d`](https://github.com/tednaaa/shonk-ui/commit/dc50554dc07d1aeeb8d636d51fbd24e400570eae)
+
 ## v0.15.1 (2026-11-01)
 
 - fix(input): narrow model value types [`aa7c8021`](https://github.com/tednaaa/shonk-ui/commit/aa7c802144e74e90b5d1cb4a99a03b88fbd68140)
