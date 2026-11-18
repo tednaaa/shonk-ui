@@ -678,6 +678,23 @@ describe('filteredSearch editing a filter', () => {
 		]);
 	});
 
+	it('should hand the editor of a definition the value being edited', async () => {
+		const YearEditor = markRaw(defineComponent({
+			props: { value: { type: [String, Array], default: undefined } },
+			setup(props) {
+				return () => h('span', { 'data-testid': 'edited' }, String(props.value));
+			},
+		}));
+		wrapper = createComponent({
+			definitions: [{ key: 'createdAt', label: 'Created', operators: [{ value: 'equals', label: 'is' }], editor: YearEditor }],
+			filters: [{ id: 'c', key: 'createdAt', keyLabel: 'Created', operator: 'equals', operatorLabel: 'is', value: '2026', valueLabel: 'This year' }],
+		});
+
+		await editToken('Created');
+
+		expect(document.querySelector('[data-testid="edited"]')?.textContent).toBe('2026');
+	});
+
 	it('should edit the filter where its token sits instead of after the last one', async () => {
 		wrapper = createComponent({ definitions: editDefinitions, filters: applied });
 

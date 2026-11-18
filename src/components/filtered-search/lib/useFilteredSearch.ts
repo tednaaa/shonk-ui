@@ -48,6 +48,7 @@ export function useFilteredSearch(options: {
 	const valueStep = computed(() => step.value.phase === 'value' ? step.value : null);
 
 	const editingFilter = computed(() => filters.value.find(filter => filter.id === editingId.value) ?? null);
+	const editedValue = computed(() => editingFilter.value?.key === valueStep.value?.definition.key ? editingFilter.value?.value : undefined);
 
 	const availableDefinitions = computed(() => toValue(options.definitions).filter(definition =>
 		!definition.unique || !filters.value.some(filter => filter.key === definition.key && filter.id !== editingId.value),
@@ -421,6 +422,7 @@ export function useFilteredSearch(options: {
 		highlightedIndex,
 		selectedValues,
 		editingId,
+		editedValue,
 		valueError,
 		valueHintId,
 		operatorStep,

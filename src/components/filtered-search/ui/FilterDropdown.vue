@@ -21,6 +21,7 @@ const {
 	valueHintId,
 	operatorStep,
 	valueStep,
+	editedValue,
 	filteredDefinitions,
 	valueDefinition,
 	suggestsOptions,
@@ -82,6 +83,7 @@ const {
 		:definition="valueStep.definition"
 		:operator="valueStep.operator"
 		:search="inputText"
+		:value="editedValue"
 		@submit="confirmValue"
 	/>
 

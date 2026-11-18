@@ -61,7 +61,7 @@ const meta: Meta<typeof FilteredSearch> = {
 					'A filter bar the application fills with its own vocabulary. The kit owns the chrome: the token list, the suggestions, focus and the keyboard.',
 					'',
 					'- `operators` are yours: `{ value: \'equals\', label: \'is\' }` and `{ value: \'=\', label: \'is\' }` are equally valid, no name is interpreted',
-					'- `icon` and `editor` come from the app; an `editor` component replaces the value step outright, keyboard included',
+					'- `icon` and `editor` come from the app; an `editor` component replaces the value step outright, keyboard included, and gets `definition`, `operator`, `search` and the `value` of the filter being edited',
 					'- `options` are suggested, `multiSelect` gathers several into one token',
 					'- `renderOption` and `renderValue` draw a suggested option and a token value with `h()`; `defineFilter` types them by the definition\'s options',
 					'- `unique` drops a definition from the list once it has been applied',
