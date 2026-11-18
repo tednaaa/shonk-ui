@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.17.0 (2026-11-18)
+
+- feat(filtered-search): pass edited value [`b47064d4`](https://github.com/tednaaa/shonk-ui/commit/b47064d4126ccc0bcb27510876239455356fe80c)
+
 ## v0.16.0 (2026-11-10)
 
 - fix(data-table): dim loading rows on Safari [`3aa34049`](https://github.com/tednaaa/shonk-ui/commit/3aa3404961412478374943bd1cfa013eb9058184)
