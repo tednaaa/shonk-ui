@@ -1,0 +1,17 @@
+@layer components {
+	[data-slot="data-table-sort"] {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+	}
+
+	[data-slot="data-table-card-header"] {
+		position: sticky;
+		top: var(--data-table-sort-height, 0px);
+		z-index: 5;
+	}
+
+	[data-slot="data-table-cards-item"] {
+		scroll-margin-top: calc(var(--data-table-sort-height, 0px) + --spacing(2));
+	}
+}

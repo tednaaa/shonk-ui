@@ -40,6 +40,7 @@
 		"src/components",
 		"src/foundations",
 		"src/lib",
+		"src/styles/components",
 		"src/styles/main.css",
 		"src/styles/theme.css",
 		"src/styles/themes",

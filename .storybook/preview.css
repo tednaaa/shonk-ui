@@ -6,6 +6,7 @@
 @import "../src/styles/themes/acorn.css";
 @import "../src/styles/themes/nocturne.css";
 @import "../src/styles/themes/orchid.css";
+@import "../src/styles/components/data-table.css";
 
 @custom-variant dark (&:is(.dark *));
 

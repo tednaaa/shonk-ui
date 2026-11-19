@@ -3,6 +3,8 @@ import type { MaybeRefOrGetter, Ref } from 'vue';
 import type { DataTableColumn, DataTableColumnSizingState, DataTableColumnVisibilityState, DataTableExpandedState, DataTableInstance, DataTablePaginationState, DataTableRowPinningState, DataTableRowSelectionState, DataTableSortingState } from '../types';
 import { functionalUpdate, useTable } from '@tanstack/vue-table';
 import { computed, ref, toValue } from 'vue';
+import { defaultCardFieldLimit } from '../cards/cards';
+import { findStoredCardVisibility } from '../column-visibility/useStoredColumnVisibility';
 import { syncSelectedRows } from '../row-selection/selectedRows';
 import { features } from './features';
 import { createDataTableInstance } from './instance';
@@ -111,5 +113,11 @@ export function useDataTable<TData extends object>(options: UseDataTableOptions<
 		return Object.fromEntries(rowIds.map((rowId): [string, true] => [rowId, true]));
 	}
 
-	return createDataTableInstance(table, () => toExportValues(toValue(options.columns)));
+	const cards = {
+		active: ref(false),
+		fieldLimit: ref(defaultCardFieldLimit),
+		visibility: findStoredCardVisibility(options.columnVisibility) ?? ref<DataTableColumnVisibilityState>({}),
+	};
+
+	return createDataTableInstance(table, () => toExportValues(toValue(options.columns)), cards);
 }

@@ -2,6 +2,7 @@
 
 @import "./theme.css";
 @import "./themes/atlas.css";
+@import "./components/data-table.css";
 /* NOTE: uncomment this if in dist any styles... */
 /*@import "../../dist/style.css";*/
 

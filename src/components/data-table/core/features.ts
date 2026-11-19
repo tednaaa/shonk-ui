@@ -1,5 +1,6 @@
 import type { VueTable } from '@tanstack/vue-table';
 import type { HTMLAttributes } from 'vue';
+import type { DataTableCardRole } from '../types';
 import {
 	cellSpanningFeature,
 	columnPinningFeature,
@@ -25,6 +26,7 @@ export interface KitColumnMeta {
 	class?: HTMLAttributes['class'];
 	headerClass?: HTMLAttributes['class'];
 	sized?: boolean;
+	card?: DataTableCardRole | 'select' | 'expand';
 }
 
 export const features = tableFeatures({

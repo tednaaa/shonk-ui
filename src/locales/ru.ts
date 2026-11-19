@@ -1,5 +1,11 @@
 import type { ShonkLocale } from './types';
 
+const fieldWords: Partial<Record<Intl.LDMLPluralRule, string>> = { one: 'поле', few: 'поля' };
+
+function fieldWord(count: number) {
+	return fieldWords[new Intl.PluralRules('ru').select(count)] ?? 'полей';
+}
+
 export const ru: ShonkLocale = {
 	intlLocale: 'ru-RU',
 
@@ -50,6 +56,19 @@ export const ru: ShonkLocale = {
 		columnToggleShowAllButtonText: 'Показать все',
 		columnToggleHideAllButtonText: 'Скрыть все',
 		columnToggleVisibleCountText: (visible, total) => `${visible} из ${total}`,
+		columnToggleCardsButtonText: 'Поля',
+		sortButtonText: 'Сортировка',
+		sortDescription: 'Нажмите поле, чтобы отсортировать по нему. Повторное нажатие меняет направление.',
+		sortOrderLabel: 'Порядок сортировки',
+		sortAddButtonText: 'Добавить сортировку',
+		sortFlipLabel: (column, direction, level) => `${level === undefined ? '' : `Уровень ${level}: `}${column}, ${direction}. Сменить направление`,
+		sortResetButtonText: 'Сбросить',
+		sortApplyButtonText: 'Применить',
+		sortRemoveLabel: column => `Убрать сортировку: ${column}`,
+		sortedAscendingLabel: 'по возрастанию',
+		sortedDescendingLabel: 'по убыванию',
+		cardShowMoreText: count => `Ещё ${count} ${fieldWord(count)}`,
+		cardShowLessText: 'Свернуть',
 		exportButtonText: 'Скачать',
 		exportFileName: 'таблица',
 	},

@@ -1,3 +1,7 @@
+export { default as DataTableCard } from './cards/DataTableCard.vue';
+export { default as DataTableCardCell } from './cards/DataTableCardCell.vue';
+export { default as DataTableCardFields } from './cards/DataTableCardFields.vue';
+export { default as DataTableCardSelect } from './cards/DataTableCardSelect.vue';
 export { useStoredColumnSizing } from './column-sizing/useStoredColumnSizing';
 export { default as DataTableColumnToggle } from './column-visibility/DataTableColumnToggle.vue';
 export { useStoredColumnVisibility } from './column-visibility/useStoredColumnVisibility';
@@ -15,6 +19,8 @@ export { selectColumn } from './row-selection/selectColumn';
 export type {
 	DataTableAccessorFnColumn,
 	DataTableAccessorKeyColumn,
+	DataTableCardRole,
+	DataTableCardsBreakpoint,
 	DataTableCellContext,
 	DataTableColumn,
 	DataTableColumnSizingState,

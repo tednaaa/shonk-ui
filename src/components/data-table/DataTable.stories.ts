@@ -4,6 +4,8 @@ import { example, render } from '@/lib/storybook';
 import { DataTable } from '.';
 import DataTableBasic from './_examples/DataTableBasic.vue';
 import dataTableBasicSource from './_examples/DataTableBasic.vue?raw';
+import DataTableCards from './_examples/DataTableCards.vue';
+import dataTableCardsSource from './_examples/DataTableCards.vue?raw';
 import DataTableClientSorting from './_examples/DataTableClientSorting.vue';
 import dataTableClientSortingSource from './_examples/DataTableClientSorting.vue?raw';
 import DataTableColumnResizing from './_examples/DataTableColumnResizing.vue';
@@ -114,6 +116,12 @@ export const ColumnToggle: Story = {
 export const StoredColumns: Story = {
 	parameters: example(dataTableStoredColumnsSource),
 	render: render({ DataTableStoredColumns }, `<DataTableStoredColumns />`),
+};
+
+export const Cards: Story = {
+	parameters: example(dataTableCardsSource),
+	globals: { viewport: { value: 'mobile1', isRotated: false } },
+	render: render({ DataTableCards }, `<DataTableCards />`),
 };
 
 export const PinnedColumns: Story = {

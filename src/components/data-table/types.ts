@@ -17,6 +17,10 @@ export type DataTableExportValue = string | number | null | undefined;
 
 export type DataTableExportFormat = 'csv' | 'xlsx';
 
+export type DataTableCardRole = 'title' | 'action' | 'field' | 'hidden';
+
+export type DataTableCardsBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+
 export interface DataTableSpanRowsContext<TData, TValue = unknown> {
 	row: TData;
 	value: TValue;
@@ -37,6 +41,7 @@ interface DataTableColumnBase<TData> {
 	resizable?: boolean;
 	class?: HTMLAttributes['class'];
 	headerClass?: HTMLAttributes['class'];
+	card?: DataTableCardRole;
 }
 
 export type DataTableAccessorKeyColumn<TData, TKey extends keyof TData & string> = DataTableColumnBase<TData> & {
@@ -88,6 +93,7 @@ export interface DataTableGroupColumn<TData> {
 	maxSize?: undefined;
 	resizable?: undefined;
 	headerClass?: HTMLAttributes['class'];
+	card?: undefined;
 	accessorKey?: undefined;
 	accessorFn?: undefined;
 	columns: DataTableColumn<TData>[];
@@ -109,6 +115,7 @@ export interface DataTableSelectColumn {
 	minSize?: undefined;
 	maxSize?: undefined;
 	resizable?: undefined;
+	card?: undefined;
 	accessorKey?: undefined;
 	accessorFn?: undefined;
 	columns?: undefined;
@@ -130,6 +137,7 @@ export interface DataTableExpandColumn {
 	minSize?: undefined;
 	maxSize?: undefined;
 	resizable?: undefined;
+	card?: undefined;
 	accessorKey?: undefined;
 	accessorFn?: undefined;
 	columns?: undefined;

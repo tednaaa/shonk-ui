@@ -12,7 +12,8 @@ import { Button } from '../../button';
 import { Checkbox } from '../../checkbox';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../../command';
 import { Popover, PopoverContent, PopoverTrigger } from '../../popover';
-import { unwrapDataTable } from '../core/instance';
+import { useCardFields } from '../cards/useCardFields';
+import { unwrapCards, unwrapDataTable } from '../core/instance';
 
 const props = withDefaults(defineProps<{
 	table: DataTableInstance<TData>;
@@ -32,9 +33,19 @@ const locale = useLocale(() => ({ dataTable: props.locale }));
 
 const kitTable = computed(() => unwrapDataTable(props.table));
 
-const hideableColumns = computed(() => kitTable.value.getAllLeafColumns().filter(column => column.getCanHide()));
+const cards = computed(() => unwrapCards(props.table));
 
-const visibleColumnIds = computed(() => hideableColumns.value.filter(column => column.getIsVisible()).map(column => column.id));
+const cardFields = useCardFields(() => kitTable.value, () => cards.value);
+
+const cardsMode = computed(() => cards.value.active.value);
+
+const hideableColumns = computed(() => (cardsMode.value
+	? cardFields.fieldColumns.value
+	: kitTable.value.getAllLeafColumns().filter(column => column.getCanHide())));
+
+const visibleColumnIds = computed(() => (cardsMode.value
+	? cardFields.selectedIds.value
+	: hideableColumns.value.filter(column => column.getIsVisible()).map(column => column.id)));
 
 const allColumnsVisible = computed(() => visibleColumnIds.value.length === hideableColumns.value.length);
 
@@ -42,12 +53,21 @@ function columnLabel(column: Column<KitFeatures, TData>) {
 	return column.columnDef.meta?.label ?? column.id;
 }
 
+function isColumnVisible(column: Column<KitFeatures, TData>) {
+	return visibleColumnIds.value.includes(column.id);
+}
+
 function isLastVisibleColumn(column: Column<KitFeatures, TData>) {
-	return visibleColumnIds.value.length === 1 && column.getIsVisible();
+	return visibleColumnIds.value.length === 1 && isColumnVisible(column);
 }
 
 function showOnlyColumns(columnIds: AcceptableValue) {
 	const visibleIds = Array.isArray(columnIds) ? columnIds : [];
+
+	if (cardsMode.value) {
+		cardFields.select(visibleIds.map(String));
+		return;
+	}
 
 	kitTable.value.setColumnVisibility(visibility => ({
 		...visibility,
@@ -67,7 +87,7 @@ function toggleAllColumns() {
 			<slot name="trigger">
 				<Button variant="secondary">
 					<Columns3Icon />
-					{{ locale.dataTable.columnToggleButtonText }}
+					{{ cardsMode ? locale.dataTable.columnToggleCardsButtonText : locale.dataTable.columnToggleButtonText }}
 				</Button>
 			</slot>
 		</PopoverTrigger>
@@ -93,7 +113,7 @@ function toggleAllColumns() {
 							:disabled="isLastVisibleColumn(column)"
 						>
 							<Checkbox
-								:model-value="column.getIsVisible()"
+								:model-value="isColumnVisible(column)"
 								tabindex="-1"
 								aria-hidden="true"
 								class="pointer-events-none"

@@ -49,7 +49,7 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
 			enableHiding: false,
 			enableResizing: false,
 			minSize: 0,
-			meta: { class: 'relative w-px', headerClass: 'relative w-px' },
+			meta: { class: 'relative w-px', headerClass: 'relative w-px', card: 'select' },
 			header: ({ table }) => h(DataTableSelectPageRowsCheckbox<TData>, { table }),
 			cell: ({ row }) => h(DataTableSelectRowCheckbox<TData>, { row }),
 		};
@@ -61,7 +61,7 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
 			enableHiding: false,
 			enableResizing: false,
 			minSize: 0,
-			meta: { class: 'w-px', headerClass: 'w-px' },
+			meta: { class: 'w-px', headerClass: 'w-px', card: 'expand' },
 			header: ({ table }) => h(DataTableExpandAllRowsButton<TData>, { table }),
 			cell: ({ row }) => h(DataTableExpandRowButton<TData>, { row }),
 		};
@@ -88,7 +88,7 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
 		size: column.size,
 		minSize: column.minSize ?? (resizable ? Math.min(defaultMinSize, column.size ?? defaultMinSize) : 0),
 		maxSize: column.maxSize,
-		meta: { label: column.label ?? column.header, class: column.class, headerClass: column.headerClass, sized: column.size !== undefined },
+		meta: { label: column.label ?? column.header, class: column.class, headerClass: column.headerClass, sized: column.size !== undefined, card: column.card },
 	};
 
 	if (isAccessorKeyColumn(column)) {
