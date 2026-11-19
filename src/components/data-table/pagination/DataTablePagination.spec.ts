@@ -91,6 +91,16 @@ describe('dataTablePagination', () => {
 
 			expect(paginationButtons(wrapper)).toEqual(['First', 'Previous', '3', '4', '5', '6', '7', 'Next', 'Last']);
 		});
+
+		it('should drop the sibling pages on a phone screen and keep previous and next', async () => {
+			vi.stubGlobal('matchMedia', (query: string) => ({ matches: true, media: query, addEventListener: vi.fn(), removeEventListener: vi.fn() }));
+
+			const wrapper = mountPagination(serverPage);
+			await flushPromises();
+			vi.unstubAllGlobals();
+
+			expect(paginationButtons(wrapper)).toEqual(['Previous', '1', '5', '10', 'Next']);
+		});
 	});
 
 	describe('page size select', () => {

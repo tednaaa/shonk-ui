@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from '@lucide/vue';
+import { useMediaQuery } from '@vueuse/core';
+import { computed } from 'vue';
 import { cn } from '@/utils';
 import {
 	Pagination,
@@ -26,13 +28,21 @@ const pageRangeByVariant = {
 	compact: { siblingCount: 2, showEdges: false },
 };
 
+const phoneScreen = useMediaQuery('(width < 40rem)');
+
+const pageRange = computed(() => {
+	const range = pageRangeByVariant[props.variant];
+
+	return phoneScreen.value ? { ...range, siblingCount: range.siblingCount - 1 } : range;
+});
+
 const { page, pageSize, rowCount, goToPage } = useDataTablePagination();
 </script>
 
 <template>
 	<Pagination
 		#default="{ page: currentPage }"
-		v-bind="pageRangeByVariant[variant]"
+		v-bind="pageRange"
 		:page="page"
 		:total="rowCount"
 		:items-per-page="pageSize"
