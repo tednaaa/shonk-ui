@@ -11,8 +11,8 @@ import {
 	StepperTrigger,
 } from '.';
 import { Button } from '../button';
-import StepperControlled from './examples/StepperControlled.vue';
-import stepperControlledSource from './examples/StepperControlled.vue?raw';
+import StepperControlled from './_examples/StepperControlled.vue';
+import stepperControlledSource from './_examples/StepperControlled.vue?raw';
 
 const components = {
 	Stepper,

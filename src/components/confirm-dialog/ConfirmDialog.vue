@@ -14,7 +14,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '../dialog';
-import { useConfirmState } from './useConfirm';
+import { useConfirmState } from './composables/useConfirm';
 
 const props = defineProps<{
 	acceptButtonVariant?: ButtonVariants['variant'];

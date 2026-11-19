@@ -7,7 +7,7 @@ export { default as CodeBlockHeader } from './CodeBlockHeader.vue';
 export { default as CodeBlockLine } from './CodeBlockLine.vue';
 export { default as CodeBlockTitle } from './CodeBlockTitle.vue';
 export { default as CodeBlockToken } from './CodeBlockToken.vue';
+export { useHighlightedCode } from './composables/useHighlightedCode';
 export { highlightCode, loadHighlighter } from './highlighter';
 export type { HighlightedToken } from './highlighter';
-export { useHighlightedCode } from './useHighlightedCode';
 export { codeBlockLineVariants, type CodeBlockLineVariants, codeBlockVariants, type CodeBlockVariants } from './variants';

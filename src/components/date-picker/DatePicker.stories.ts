@@ -3,10 +3,10 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { CalendarDate, getLocalTimeZone } from '@internationalized/date';
 import { example, render, showControls, StorybookLabel } from '@/lib/storybook';
 import { DatePicker } from '.';
-import DatePickerPreselected from './examples/DatePickerPreselected.vue';
-import datePickerPreselectedSource from './examples/DatePickerPreselected.vue?raw';
-import DatePickerWithPresets from './examples/DatePickerWithPresets.vue';
-import datePickerWithPresetsSource from './examples/DatePickerWithPresets.vue?raw';
+import DatePickerPreselected from './_examples/DatePickerPreselected.vue';
+import datePickerPreselectedSource from './_examples/DatePickerPreselected.vue?raw';
+import DatePickerWithPresets from './_examples/DatePickerWithPresets.vue';
+import datePickerWithPresetsSource from './_examples/DatePickerWithPresets.vue?raw';
 
 const meta: Meta<typeof DatePicker> = {
 	title: 'Dates/DatePicker',

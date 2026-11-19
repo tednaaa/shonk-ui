@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { example, render } from '@/lib/storybook';
 import { ConfirmDialog } from '.';
-import ConfirmDialogDefault from './examples/ConfirmDialogDefault.vue';
-import confirmDialogDefaultSource from './examples/ConfirmDialogDefault.vue?raw';
+import ConfirmDialogDefault from './_examples/ConfirmDialogDefault.vue';
+import confirmDialogDefaultSource from './_examples/ConfirmDialogDefault.vue?raw';
 
 const meta: Meta<typeof ConfirmDialog> = {
 	title: 'Overlays/ConfirmDialog',

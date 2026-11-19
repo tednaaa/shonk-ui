@@ -29,10 +29,10 @@ import {
 	DropdownMenuTrigger,
 } from '.';
 import { Button } from '../button';
-import DropdownMenuWithCheckboxItems from './examples/DropdownMenuWithCheckboxItems.vue';
-import dropdownMenuWithCheckboxItemsSource from './examples/DropdownMenuWithCheckboxItems.vue?raw';
-import DropdownMenuWithRadioItems from './examples/DropdownMenuWithRadioItems.vue';
-import dropdownMenuWithRadioItemsSource from './examples/DropdownMenuWithRadioItems.vue?raw';
+import DropdownMenuWithCheckboxItems from './_examples/DropdownMenuWithCheckboxItems.vue';
+import dropdownMenuWithCheckboxItemsSource from './_examples/DropdownMenuWithCheckboxItems.vue?raw';
+import DropdownMenuWithRadioItems from './_examples/DropdownMenuWithRadioItems.vue';
+import dropdownMenuWithRadioItemsSource from './_examples/DropdownMenuWithRadioItems.vue?raw';
 
 const components = {
 	DropdownMenu,

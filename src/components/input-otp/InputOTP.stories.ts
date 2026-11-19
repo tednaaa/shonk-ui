@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { DotIcon } from '@lucide/vue';
 import { example, render, showControls, StorybookLabel } from '@/lib/storybook';
 import { InputOTP, REGEXP_ONLY_DIGITS } from '.';
-import InputOTPPasteTransformer from './examples/InputOTPPasteTransformer.vue';
-import inputOTPPasteTransformerSource from './examples/InputOTPPasteTransformer.vue?raw';
+import InputOTPPasteTransformer from './_examples/InputOTPPasteTransformer.vue';
+import inputOTPPasteTransformerSource from './_examples/InputOTPPasteTransformer.vue?raw';
 
 const meta: Meta<typeof InputOTP> = {
 	title: 'Forms/InputOTP',

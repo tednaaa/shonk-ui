@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { example, render } from '@/lib/storybook';
 import { Toaster } from '.';
-import ToastDefault from './examples/ToastDefault.vue';
-import toastDefaultSource from './examples/ToastDefault.vue?raw';
-import ToastVariants from './examples/ToastVariants.vue';
-import toastVariantsSource from './examples/ToastVariants.vue?raw';
-import ToastWithAction from './examples/ToastWithAction.vue';
-import toastWithActionSource from './examples/ToastWithAction.vue?raw';
-import ToastWithPromise from './examples/ToastWithPromise.vue';
-import toastWithPromiseSource from './examples/ToastWithPromise.vue?raw';
+import ToastDefault from './_examples/ToastDefault.vue';
+import toastDefaultSource from './_examples/ToastDefault.vue?raw';
+import ToastVariants from './_examples/ToastVariants.vue';
+import toastVariantsSource from './_examples/ToastVariants.vue?raw';
+import ToastWithAction from './_examples/ToastWithAction.vue';
+import toastWithActionSource from './_examples/ToastWithAction.vue?raw';
+import ToastWithPromise from './_examples/ToastWithPromise.vue';
+import toastWithPromiseSource from './_examples/ToastWithPromise.vue?raw';
 
 const meta: Meta<typeof Toaster> = {
 	title: 'Feedback/Toast',

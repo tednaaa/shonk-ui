@@ -6,8 +6,8 @@ import {
 	NativeSelectOption,
 } from '.';
 import { Label } from '../label';
-import NativeSelectPreselected from './examples/NativeSelectPreselected.vue';
-import nativeSelectPreselectedSource from './examples/NativeSelectPreselected.vue?raw';
+import NativeSelectPreselected from './_examples/NativeSelectPreselected.vue';
+import nativeSelectPreselectedSource from './_examples/NativeSelectPreselected.vue?raw';
 
 const components = {
 	NativeSelect,

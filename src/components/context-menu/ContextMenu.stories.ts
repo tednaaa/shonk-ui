@@ -28,10 +28,10 @@ import {
 	ContextMenuSubTrigger,
 	ContextMenuTrigger,
 } from '.';
-import ContextMenuWithCheckboxItems from './examples/ContextMenuWithCheckboxItems.vue';
-import contextMenuWithCheckboxItemsSource from './examples/ContextMenuWithCheckboxItems.vue?raw';
-import ContextMenuWithRadioItems from './examples/ContextMenuWithRadioItems.vue';
-import contextMenuWithRadioItemsSource from './examples/ContextMenuWithRadioItems.vue?raw';
+import ContextMenuWithCheckboxItems from './_examples/ContextMenuWithCheckboxItems.vue';
+import contextMenuWithCheckboxItemsSource from './_examples/ContextMenuWithCheckboxItems.vue?raw';
+import ContextMenuWithRadioItems from './_examples/ContextMenuWithRadioItems.vue';
+import contextMenuWithRadioItemsSource from './_examples/ContextMenuWithRadioItems.vue?raw';
 
 const components = {
 	ContextMenu,

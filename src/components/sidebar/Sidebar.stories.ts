@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { example, render, showControls } from '@/lib/storybook';
 import { Sidebar } from '.';
-import SidebarApp from './examples/SidebarApp.vue';
-import sidebarAppSource from './examples/SidebarApp.vue?raw';
-import SidebarSkeleton from './examples/SidebarSkeleton.vue';
-import sidebarSkeletonSource from './examples/SidebarSkeleton.vue?raw';
-import SidebarToggle from './examples/SidebarToggle.vue';
-import sidebarToggleSource from './examples/SidebarToggle.vue?raw';
+import SidebarApp from './_examples/SidebarApp.vue';
+import sidebarAppSource from './_examples/SidebarApp.vue?raw';
+import SidebarSkeleton from './_examples/SidebarSkeleton.vue';
+import sidebarSkeletonSource from './_examples/SidebarSkeleton.vue?raw';
+import SidebarToggle from './_examples/SidebarToggle.vue';
+import sidebarToggleSource from './_examples/SidebarToggle.vue?raw';
 
 const meta: Meta<typeof Sidebar> = {
 	title: 'Navigation/Sidebar',

@@ -1,3 +1,7 @@
+# Component layout
+
+Folders inside a component follow `CONTRIBUTING.md` → "Component layout".
+
 # Skills
 
 - **write-stories** — when creating or updating Storybook stories for components (`src/components/**/*.stories.ts`).

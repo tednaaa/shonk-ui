@@ -7,13 +7,13 @@ import { computed, useTemplateRef } from 'vue';
 import { provideLocale } from '@/locales';
 import { cn } from '@/utils';
 import { Table } from '../table';
-import DataTableBody from './DataTableBody.vue';
-import DataTableFooter from './DataTableFooter.vue';
-import DataTableHeader from './DataTableHeader.vue';
-import { useColumnPinning } from './lib/columnPinning';
-import { useColumnSizing } from './lib/columnSizing';
-import { unwrapDataTable } from './lib/instance';
-import { useRowPinning } from './lib/rowPinning';
+import { useColumnSizing } from './column-sizing/columnSizing';
+import { unwrapDataTable } from './core/instance';
+import { useColumnPinning } from './pinning/columnPinning';
+import { useRowPinning } from './pinning/rowPinning';
+import DataTableBody from './table/DataTableBody.vue';
+import DataTableFooter from './table/DataTableFooter.vue';
+import DataTableHeader from './table/DataTableHeader.vue';
 
 const props = defineProps<{
 	table: DataTableInstance<TData>;

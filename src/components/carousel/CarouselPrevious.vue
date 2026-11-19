@@ -6,7 +6,7 @@ import { ArrowLeftIcon } from '@lucide/vue';
 import { Button } from '@/components/button';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
-import { useCarousel } from './useCarousel';
+import { useCarousel } from './composables/useCarousel';
 import { carouselPreviousVariants } from './variants';
 
 const props = withDefaults(defineProps<{

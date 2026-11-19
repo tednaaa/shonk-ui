@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { example, render, StorybookLabel } from '@/lib/storybook';
 import { SwipeAction } from '.';
-import SwipeBothSides from './examples/SwipeBothSides.vue';
-import swipeBothSidesSource from './examples/SwipeBothSides.vue?raw';
-import SwipeDisabled from './examples/SwipeDisabled.vue';
-import swipeDisabledSource from './examples/SwipeDisabled.vue?raw';
-import SwipeThresholds from './examples/SwipeThresholds.vue';
-import swipeThresholdsSource from './examples/SwipeThresholds.vue?raw';
-import SwipeToArchive from './examples/SwipeToArchive.vue';
-import swipeToArchiveSource from './examples/SwipeToArchive.vue?raw';
-import SwipeToDelete from './examples/SwipeToDelete.vue';
-import swipeToDeleteSource from './examples/SwipeToDelete.vue?raw';
+import SwipeBothSides from './_examples/SwipeBothSides.vue';
+import swipeBothSidesSource from './_examples/SwipeBothSides.vue?raw';
+import SwipeDisabled from './_examples/SwipeDisabled.vue';
+import swipeDisabledSource from './_examples/SwipeDisabled.vue?raw';
+import SwipeThresholds from './_examples/SwipeThresholds.vue';
+import swipeThresholdsSource from './_examples/SwipeThresholds.vue?raw';
+import SwipeToArchive from './_examples/SwipeToArchive.vue';
+import swipeToArchiveSource from './_examples/SwipeToArchive.vue?raw';
+import SwipeToDelete from './_examples/SwipeToDelete.vue';
+import swipeToDeleteSource from './_examples/SwipeToDelete.vue?raw';
 
 const meta: Meta<typeof SwipeAction> = {
 	title: 'Mobile/SwipeAction',

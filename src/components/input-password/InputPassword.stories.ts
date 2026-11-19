@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { example, render, showControls } from '@/lib/storybook';
 import { InputPassword } from '.';
 import { Label } from '../label';
-import InputPasswordPrefilled from './examples/InputPasswordPrefilled.vue';
-import inputPasswordPrefilledSource from './examples/InputPasswordPrefilled.vue?raw';
+import InputPasswordPrefilled from './_examples/InputPasswordPrefilled.vue';
+import inputPasswordPrefilledSource from './_examples/InputPasswordPrefilled.vue?raw';
 
 const meta: Meta<typeof InputPassword> = {
 	title: 'Forms/InputPassword',

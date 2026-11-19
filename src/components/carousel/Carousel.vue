@@ -3,7 +3,7 @@ import type { CarouselEmits, CarouselProps, WithClassAsProps } from './interface
 import type { ShonkLocale } from '@/locales';
 import { provideLocale } from '@/locales';
 import { cn } from '@/utils';
-import { useProvideCarousel } from './useCarousel';
+import { useProvideCarousel } from './composables/useCarousel';
 
 const props = withDefaults(defineProps<CarouselProps & WithClassAsProps & {
 	locale?: Partial<ShonkLocale['carousel']>;

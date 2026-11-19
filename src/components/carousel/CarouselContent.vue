@@ -2,7 +2,7 @@
 import type { ComponentPublicInstance } from 'vue';
 import type { WithClassAsProps } from './interface';
 import { cn } from '@/utils';
-import { useCarousel } from './useCarousel';
+import { useCarousel } from './composables/useCarousel';
 import { carouselContentVariants } from './variants';
 
 defineOptions({

@@ -1,11 +1,17 @@
-export { expandColumn } from './columns/expandColumn';
-export { selectColumn } from './columns/selectColumn';
+export { useStoredColumnSizing } from './column-sizing/useStoredColumnSizing';
+export { default as DataTableColumnToggle } from './column-visibility/DataTableColumnToggle.vue';
+export { useStoredColumnVisibility } from './column-visibility/useStoredColumnVisibility';
+export { useDataTable } from './core/useDataTable';
+export type { UseDataTableOptions } from './core/useDataTable';
 export { default as DataTable } from './DataTable.vue';
-export { default as DataTableColumnToggle } from './DataTableColumnToggle.vue';
-export { default as DataTableExport } from './DataTableExport.vue';
-export { default as DataTablePagination } from './DataTablePagination.vue';
-export { default as DataTablePaginationPages } from './DataTablePaginationPages.vue';
-export { default as DataTablePaginationPageSizeSelect } from './DataTablePaginationPageSizeSelect.vue';
+export { default as DataTableExport } from './export/DataTableExport.vue';
+export { useDataTableExport } from './export/useDataTableExport';
+export type { UseDataTableExportOptions } from './export/useDataTableExport';
+export { default as DataTablePagination } from './pagination/DataTablePagination.vue';
+export { default as DataTablePaginationPages } from './pagination/DataTablePaginationPages.vue';
+export { default as DataTablePaginationPageSizeSelect } from './pagination/DataTablePaginationPageSizeSelect.vue';
+export { expandColumn } from './row-expansion/expandColumn';
+export { selectColumn } from './row-selection/selectColumn';
 export type {
 	DataTableAccessorFnColumn,
 	DataTableAccessorKeyColumn,
@@ -30,9 +36,3 @@ export type {
 	DataTableSortingState,
 	DataTableSpanRowsContext,
 } from './types';
-export { useDataTable } from './useDataTable';
-export type { UseDataTableOptions } from './useDataTable';
-export { useDataTableExport } from './useDataTableExport';
-export type { UseDataTableExportOptions } from './useDataTableExport';
-export { useStoredColumnSizing } from './useStoredColumnSizing';
-export { useStoredColumnVisibility } from './useStoredColumnVisibility';

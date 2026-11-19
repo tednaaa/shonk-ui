@@ -3,10 +3,10 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { CalendarDate, getLocalTimeZone } from '@internationalized/date';
 import { example, render, showControls, StorybookLabel } from '@/lib/storybook';
 import { RangeDatePicker } from '.';
-import RangeDatePickerPreselected from './examples/RangeDatePickerPreselected.vue';
-import rangeDatePickerPreselectedSource from './examples/RangeDatePickerPreselected.vue?raw';
-import RangeDatePickerWithPresets from './examples/RangeDatePickerWithPresets.vue';
-import rangeDatePickerWithPresetsSource from './examples/RangeDatePickerWithPresets.vue?raw';
+import RangeDatePickerPreselected from './_examples/RangeDatePickerPreselected.vue';
+import rangeDatePickerPreselectedSource from './_examples/RangeDatePickerPreselected.vue?raw';
+import RangeDatePickerWithPresets from './_examples/RangeDatePickerWithPresets.vue';
+import rangeDatePickerWithPresetsSource from './_examples/RangeDatePickerWithPresets.vue?raw';
 
 const meta: Meta<typeof RangeDatePicker> = {
 	title: 'Dates/RangeDatePicker',

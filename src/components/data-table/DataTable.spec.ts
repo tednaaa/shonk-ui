@@ -1,12 +1,12 @@
 import type { DOMWrapper } from '@vue/test-utils';
+import type { UseDataTableOptions } from './core/useDataTable';
 import type { DataTableColumn, DataTableColumnSizingState, DataTableColumnVisibilityState, DataTableExpandedState, DataTablePaginationState, DataTableRowPinningState, DataTableRowSelectionState, DataTableSortingState, DataTableSpanRowsContext } from './types';
-import type { UseDataTableOptions } from './useDataTable';
 import { flushPromises, mount } from '@vue/test-utils';
 import { defineComponent, h, nextTick, ref } from 'vue';
-import { expandColumn } from './columns/expandColumn';
-import { selectColumn } from './columns/selectColumn';
+import { useDataTable } from './core/useDataTable';
 import DataTable from './DataTable.vue';
-import { useDataTable } from './useDataTable';
+import { expandColumn } from './row-expansion/expandColumn';
+import { selectColumn } from './row-selection/selectColumn';
 
 interface Person {
 	id: string;

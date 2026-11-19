@@ -18,8 +18,8 @@ import {
 	CommandSeparator,
 	CommandShortcut,
 } from '.';
-import CommandWithDialog from './examples/CommandWithDialog.vue';
-import commandWithDialogSource from './examples/CommandWithDialog.vue?raw';
+import CommandWithDialog from './_examples/CommandWithDialog.vue';
+import commandWithDialogSource from './_examples/CommandWithDialog.vue?raw';
 
 const components = {
 	Command,

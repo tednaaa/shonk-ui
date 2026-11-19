@@ -15,8 +15,8 @@ import {
 	InputGroupText,
 	InputGroupTextarea,
 } from '.';
-import InputGroupWithTextarea from './examples/InputGroupWithTextarea.vue';
-import inputGroupWithTextareaSource from './examples/InputGroupWithTextarea.vue?raw';
+import InputGroupWithTextarea from './_examples/InputGroupWithTextarea.vue';
+import inputGroupWithTextareaSource from './_examples/InputGroupWithTextarea.vue?raw';
 
 const components = {
 	InputGroup,

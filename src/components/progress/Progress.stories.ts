@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { example, render, showControls } from '@/lib/storybook';
 import { Progress } from '.';
-import ProgressAnimated from './examples/ProgressAnimated.vue';
-import progressAnimatedSource from './examples/ProgressAnimated.vue?raw';
+import ProgressAnimated from './_examples/ProgressAnimated.vue';
+import progressAnimatedSource from './_examples/ProgressAnimated.vue?raw';
 
 const meta: Meta<typeof Progress> = {
 	title: 'Feedback/Progress',

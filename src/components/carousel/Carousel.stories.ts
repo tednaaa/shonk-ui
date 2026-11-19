@@ -8,10 +8,10 @@ import {
 	CarouselPrevious,
 } from '.';
 import { Card, CardContent } from '../card';
-import CarouselAutoplay from './examples/CarouselAutoplay.vue';
-import carouselAutoplaySource from './examples/CarouselAutoplay.vue?raw';
-import CarouselCustomPlugin from './examples/CarouselCustomPlugin.vue';
-import carouselCustomPluginSource from './examples/CarouselCustomPlugin.vue?raw';
+import CarouselAutoplay from './_examples/CarouselAutoplay.vue';
+import carouselAutoplaySource from './_examples/CarouselAutoplay.vue?raw';
+import CarouselCustomPlugin from './_examples/CarouselCustomPlugin.vue';
+import carouselCustomPluginSource from './_examples/CarouselCustomPlugin.vue?raw';
 
 const meta: Meta<typeof Carousel> = {
 	title: 'Data/Carousel',

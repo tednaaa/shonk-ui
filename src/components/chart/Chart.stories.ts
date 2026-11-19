@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { example, render, StorybookLabel } from '@/lib/storybook';
 import { ChartContainer, ChartTooltipContent } from '.';
-import ChartArea from './examples/ChartArea.vue';
-import chartAreaSource from './examples/ChartArea.vue?raw';
-import ChartBarGrouped from './examples/ChartBarGrouped.vue';
-import chartBarGroupedSource from './examples/ChartBarGrouped.vue?raw';
-import ChartBarStacked from './examples/ChartBarStacked.vue';
-import chartBarStackedSource from './examples/ChartBarStacked.vue?raw';
-import ChartComposed from './examples/ChartComposed.vue';
-import chartComposedSource from './examples/ChartComposed.vue?raw';
-import ChartLine from './examples/ChartLine.vue';
-import chartLineSource from './examples/ChartLine.vue?raw';
+import ChartArea from './_examples/ChartArea.vue';
+import chartAreaSource from './_examples/ChartArea.vue?raw';
+import ChartBarGrouped from './_examples/ChartBarGrouped.vue';
+import chartBarGroupedSource from './_examples/ChartBarGrouped.vue?raw';
+import ChartBarStacked from './_examples/ChartBarStacked.vue';
+import chartBarStackedSource from './_examples/ChartBarStacked.vue?raw';
+import ChartComposed from './_examples/ChartComposed.vue';
+import chartComposedSource from './_examples/ChartComposed.vue?raw';
+import ChartLine from './_examples/ChartLine.vue';
+import chartLineSource from './_examples/ChartLine.vue?raw';
 
 const meta: Meta<typeof ChartContainer> = {
 	title: 'Data/Chart',

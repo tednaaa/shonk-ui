@@ -2,12 +2,12 @@ import type { ComponentPropsAndSlots, Meta, StoryObj } from '@storybook/vue3-vit
 import type { FunctionalComponent } from 'vue';
 import { example, render, showControls } from '@/lib/storybook';
 import { MultiCombobox } from '.';
-import MultiComboboxCustomFooter from './examples/MultiComboboxCustomFooter.vue';
-import multiComboboxCustomFooterSource from './examples/MultiComboboxCustomFooter.vue?raw';
-import MultiComboboxPinSelectedOption from './examples/MultiComboboxPinSelectedOption.vue';
-import multiComboboxPinSelectedOptionSource from './examples/MultiComboboxPinSelectedOption.vue?raw';
-import MultiComboboxWithCustomOptions from './examples/MultiComboboxWithCustomOptions.vue';
-import multiComboboxWithCustomOptionsSource from './examples/MultiComboboxWithCustomOptions.vue?raw';
+import MultiComboboxCustomFooter from './_examples/MultiComboboxCustomFooter.vue';
+import multiComboboxCustomFooterSource from './_examples/MultiComboboxCustomFooter.vue?raw';
+import MultiComboboxPinSelectedOption from './_examples/MultiComboboxPinSelectedOption.vue';
+import multiComboboxPinSelectedOptionSource from './_examples/MultiComboboxPinSelectedOption.vue?raw';
+import MultiComboboxWithCustomOptions from './_examples/MultiComboboxWithCustomOptions.vue';
+import multiComboboxWithCustomOptionsSource from './_examples/MultiComboboxWithCustomOptions.vue?raw';
 
 const frameworks = [
 	{ label: 'Next.js', value: 'next' },

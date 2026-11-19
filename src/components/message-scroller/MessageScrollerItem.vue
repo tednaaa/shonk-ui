@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from 'vue';
 import { onBeforeUnmount, onMounted, useTemplateRef, watch } from 'vue';
 import { cn } from '@/utils';
-import { useMessageScrollerRegister } from './useMessageScroller';
+import { useMessageScrollerRegister } from './composables/useMessageScroller';
 
 const props = withDefaults(defineProps<{
 	messageId?: string;

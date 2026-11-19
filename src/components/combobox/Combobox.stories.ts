@@ -2,10 +2,10 @@ import type { ComponentPropsAndSlots, Meta, StoryObj } from '@storybook/vue3-vit
 import type { FunctionalComponent } from 'vue';
 import { example, render, showControls } from '@/lib/storybook';
 import { Combobox } from '.';
-import ComboboxOptionSlot from './examples/ComboboxOptionSlot.vue';
-import comboboxOptionSlotSource from './examples/ComboboxOptionSlot.vue?raw';
-import ComboboxPreselected from './examples/ComboboxPreselected.vue';
-import comboboxPreselectedSource from './examples/ComboboxPreselected.vue?raw';
+import ComboboxOptionSlot from './_examples/ComboboxOptionSlot.vue';
+import comboboxOptionSlotSource from './_examples/ComboboxOptionSlot.vue?raw';
+import ComboboxPreselected from './_examples/ComboboxPreselected.vue';
+import comboboxPreselectedSource from './_examples/ComboboxPreselected.vue?raw';
 
 const frameworks = [
 	{ label: 'Next.js', value: 'next' },

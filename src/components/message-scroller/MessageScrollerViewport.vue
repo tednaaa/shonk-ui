@@ -4,7 +4,7 @@ import type { ShonkLocale } from '@/locales';
 import { onBeforeUnmount, onMounted, useTemplateRef, watch } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
-import { SCROLL_KEYS, useMessageScrollerContext } from './useMessageScroller';
+import { SCROLL_KEYS, useMessageScrollerContext } from './composables/useMessageScroller';
 
 const props = withDefaults(defineProps<{
 	class?: HTMLAttributes['class'];

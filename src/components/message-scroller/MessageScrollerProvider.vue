@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { MessageScrollerProviderProps } from './useMessageScroller';
-import { provideMessageScroller } from './useMessageScroller';
+import type { MessageScrollerProviderProps } from './composables/useMessageScroller';
+import { provideMessageScroller } from './composables/useMessageScroller';
 
 const props = defineProps<MessageScrollerProviderProps>();
 

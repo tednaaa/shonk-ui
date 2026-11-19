@@ -2,14 +2,14 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { ref } from 'vue';
 import { example, render, showControls } from '@/lib/storybook';
 import { Textarea } from '.';
-import TextareaAutoResize from './examples/TextareaAutoResize.vue';
-import textareaAutoResizeSource from './examples/TextareaAutoResize.vue?raw';
-import TextareaDisabled from './examples/TextareaDisabled.vue';
-import textareaDisabledSource from './examples/TextareaDisabled.vue?raw';
-import TextareaPrefilled from './examples/TextareaPrefilled.vue';
-import textareaPrefilledSource from './examples/TextareaPrefilled.vue?raw';
-import TextareaWithLabel from './examples/TextareaWithLabel.vue';
-import textareaWithLabelSource from './examples/TextareaWithLabel.vue?raw';
+import TextareaAutoResize from './_examples/TextareaAutoResize.vue';
+import textareaAutoResizeSource from './_examples/TextareaAutoResize.vue?raw';
+import TextareaDisabled from './_examples/TextareaDisabled.vue';
+import textareaDisabledSource from './_examples/TextareaDisabled.vue?raw';
+import TextareaPrefilled from './_examples/TextareaPrefilled.vue';
+import textareaPrefilledSource from './_examples/TextareaPrefilled.vue?raw';
+import TextareaWithLabel from './_examples/TextareaWithLabel.vue';
+import textareaWithLabelSource from './_examples/TextareaWithLabel.vue?raw';
 
 const meta: Meta<typeof Textarea> = {
 	title: 'Forms/Textarea',

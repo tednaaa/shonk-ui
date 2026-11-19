@@ -13,7 +13,7 @@ import {
 import { computed, ref, shallowRef } from 'vue';
 import { useLocale } from '@/locales';
 import { cn } from '@/utils';
-import SheetOverlay from './SheetOverlay.vue';
+import SheetOverlay from './ui/SheetOverlay.vue';
 import { sheetContentVariants, sheetResizeHandleVariants } from './variants';
 
 interface SheetContentProps extends DialogContentProps {

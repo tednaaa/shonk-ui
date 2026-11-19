@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { example, render } from '@/lib/storybook';
 import { RadarChart } from '.';
-import RadarChartDefault from './examples/RadarChartDefault.vue';
-import radarChartDefaultSource from './examples/RadarChartDefault.vue?raw';
+import RadarChartDefault from './_examples/RadarChartDefault.vue';
+import radarChartDefaultSource from './_examples/RadarChartDefault.vue?raw';
 
 const meta: Meta<typeof RadarChart> = {
 	title: 'Data/RadarChart',

@@ -69,7 +69,7 @@ Only a lone element with no wrapper stays inline — `` `<Switch v-bind="args" /
 
 ### Reach for an example file when any of those bite
 
-- Put it in `src/components/<group>/examples/<Group><Case>.vue`, importing from `'shonk-ui'`.
+- Put it in `src/components/<group>/_examples/<Group><Case>.vue`, importing from `'shonk-ui'`.
 - Import it twice in the story — the component, and its source with `?raw`.
 - `parameters: example(<case>Source)` then prints the real file, `<script setup>` and all.
 
