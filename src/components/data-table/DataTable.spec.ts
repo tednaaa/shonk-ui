@@ -373,6 +373,14 @@ describe('dataTable', () => {
 			return cells.map(cell => cell.attributes('style'));
 		}
 
+		function isPinned(cell: Pick<DOMWrapper<Element>, 'attributes'>) {
+			return cell.attributes('data-pinned') !== undefined;
+		}
+
+		function isPinnedEdge(cell: Pick<DOMWrapper<Element>, 'attributes'>) {
+			return cell.attributes('data-pinned-edge') !== undefined;
+		}
+
 		it('should move the pinned columns to the start and offset each by the widths of the pinned columns before it', async () => {
 			const wrapper = await mountPinnedTable();
 			const stickyOffsets = ['inset-inline-start: 0px;', 'inset-inline-start: 120px;', undefined];
@@ -381,22 +389,22 @@ describe('dataTable', () => {
 			expect(offsets(wrapper.findAll('th'))).toEqual(stickyOffsets);
 			expect(offsets(wrapper.get('tbody tr').findAll('td'))).toEqual(stickyOffsets);
 			expect(offsets(wrapper.get('tfoot tr').findAll('td'))).toEqual(stickyOffsets);
-			expect(wrapper.findAll('th').map(header => header.classes('sticky'))).toEqual([true, true, false]);
+			expect(wrapper.findAll('th').map(isPinned)).toEqual([true, true, false]);
 		});
 
 		it('should keep the select column sticky in every row when it is pinned with the columns after it', async () => {
 			const wrapper = await mountPinnedTable({ columns: [selectColumn(), ...pinnedColumns] });
 
-			expect(wrapper.get('thead th').classes('sticky')).toBe(true);
-			expect(wrapper.get('tbody td').classes('sticky')).toBe(true);
-			expect(wrapper.get('tfoot td').classes('sticky')).toBe(true);
+			expect(isPinned(wrapper.get('thead th'))).toBe(true);
+			expect(isPinned(wrapper.get('tbody td'))).toBe(true);
+			expect(isPinned(wrapper.get('tfoot td'))).toBe(true);
 		});
 
 		it('should draw the edge after the last pinned column only', async () => {
 			const wrapper = await mountPinnedTable();
 
-			expect(wrapper.findAll('th').map(header => header.classes('after:border-e'))).toEqual([false, true, false]);
-			expect(wrapper.get('tbody tr').findAll('td').map(cell => cell.classes('after:border-e'))).toEqual([false, true, false]);
+			expect(wrapper.findAll('th').map(isPinnedEdge)).toEqual([false, true, false]);
+			expect(wrapper.get('tbody tr').findAll('td').map(isPinnedEdge)).toEqual([false, true, false]);
 		});
 
 		it('should offset the pinned columns by the visible ones only', async () => {

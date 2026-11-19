@@ -16,11 +16,9 @@ const props = defineProps<{
 const { pinnedCellAttrs } = injectDataTableColumnPinning();
 
 function cellAttrs(header: Header<KitFeatures, TData, unknown>) {
-	const pinnedCell = pinnedCellAttrs([header.column.id]);
-
 	return {
-		class: cn('shadow-[inset_0_1px_0_var(--border)]', header.column.columnDef.meta?.class, pinnedCell?.class),
-		style: pinnedCell?.style,
+		...pinnedCellAttrs([header.column.id]),
+		class: cn('shadow-[inset_0_1px_0_var(--border)]', header.column.columnDef.meta?.class),
 	};
 }
 

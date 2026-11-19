@@ -49,7 +49,7 @@ function toColumnDef<TData extends object>(column: AnyDataTableColumn<TData>): K
 			enableHiding: false,
 			enableResizing: false,
 			minSize: 0,
-			meta: { class: 'relative w-px', headerClass: 'relative w-px', card: 'select' },
+			meta: { class: 'not-data-pinned:relative w-px', headerClass: 'not-data-pinned:relative w-px', card: 'select' },
 			header: ({ table }) => h(DataTableSelectPageRowsCheckbox<TData>, { table }),
 			cell: ({ row }) => h(DataTableSelectRowCheckbox<TData>, { row }),
 		};

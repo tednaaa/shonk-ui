@@ -55,9 +55,8 @@ const labelStyle = computed(() => resizable.value ? contentStyle(props.header.co
 
 const headCellClass = computed(() => cn(
 	'shadow-[inset_0_-1px_0_var(--border)]',
-	resizable.value && 'relative',
+	resizable.value && !pinnedCell.value && 'relative',
 	props.header.column.columnDef.meta?.headerClass,
-	pinnedCell.value?.class,
 ));
 
 const sortable = computed(() => props.header.column.getCanSort());
@@ -100,7 +99,7 @@ function handleClick(event: MouseEvent) {
 		:aria-sort="direction ? ariaSortByDirection[direction] : 'none'"
 		tabindex="0"
 		:class="cn('cursor-pointer outline-none select-none hover:bg-muted/50 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-inset', headCellClass)"
-		:style="pinnedCell?.style"
+		v-bind="pinnedCell"
 		@mousedown="handleMouseDown"
 		@click="handleClick"
 		@keydown.enter.self.prevent="toggleSorting"
@@ -141,7 +140,7 @@ function handleClick(event: MouseEvent) {
 		:colspan="header.colSpan"
 		:rowspan="header.rowSpan"
 		:class="headCellClass"
-		:style="pinnedCell?.style"
+		v-bind="pinnedCell"
 	>
 		<DataTableCellContent :column="header.column">
 			<slot

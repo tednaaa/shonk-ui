@@ -1,4 +1,31 @@
 @layer components {
+	:is([data-slot="table-head"], [data-slot="table-cell"])[data-pinned] {
+		position: sticky;
+		z-index: 1;
+		background-color: inherit;
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			z-index: -10;
+		}
+
+		&::before {
+			background-color: var(--background);
+		}
+
+		&::after {
+			background-color: inherit;
+			box-shadow: inherit;
+		}
+
+		&[data-pinned-edge]::after {
+			border-inline-end: 1px solid var(--border);
+		}
+	}
+
 	[data-slot="data-table-sort"] {
 		position: sticky;
 		top: 0;

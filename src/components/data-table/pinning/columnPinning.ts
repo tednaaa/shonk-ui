@@ -4,16 +4,12 @@ import type { KitFeatures, KitTable } from '../core/features';
 import { useElementSize } from '@vueuse/core';
 import { createContext } from 'reka-ui';
 import { computed, ref, toValue, watch } from 'vue';
-import { cn } from '@/utils';
 
 interface PinnedCellAttrs {
-	class: string;
-	style: StyleValue;
+	'data-pinned': '';
+	'data-pinned-edge': '' | undefined;
+	'style': StyleValue;
 }
-
-const pinnedCellClass = 'sticky z-[1] bg-inherit before:absolute before:inset-0 before:-z-10 before:bg-background after:absolute after:inset-0 after:-z-10 after:bg-inherit after:[box-shadow:inherit]';
-
-const pinnedEdgeClass = 'after:border-e after:border-border';
 
 export const [injectDataTableColumnPinning, provideDataTableColumnPinning] = createContext<{
 	pinnedCellAttrs: (columnIds: readonly string[]) => PinnedCellAttrs | undefined;
@@ -48,8 +44,9 @@ export function useColumnPinning<TData extends object>(
 			return undefined;
 
 		return {
-			class: cn(pinnedCellClass, columnIds.at(-1) === startPinnedColumnIds.value.at(-1) && pinnedEdgeClass),
-			style: { insetInlineStart: `${offset}px` },
+			'data-pinned': '',
+			'data-pinned-edge': columnIds.at(-1) === startPinnedColumnIds.value.at(-1) ? '' : undefined,
+			'style': { insetInlineStart: `${offset}px` },
 		};
 	}
 

@@ -21,9 +21,7 @@ const { pinnedCellAttrs } = injectDataTableColumnPinning();
 const cells = computed(() => props.row.getVisibleCells().filter(cell => !cell.getIsCovered()));
 
 function cellAttrs(cell: Cell<KitFeatures, TData>) {
-	const pinnedCell = pinnedCellAttrs([cell.column.id]);
-
-	return { class: cn(cell.column.columnDef.meta?.class, pinnedCell?.class), style: pinnedCell?.style };
+	return { ...pinnedCellAttrs([cell.column.id]), class: cell.column.columnDef.meta?.class };
 }
 
 function rowSpan(cell: Cell<KitFeatures, TData>) {
