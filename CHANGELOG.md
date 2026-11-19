@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.18.0 (2026-11-19)
+
+- fix(data-table): fewer pages on phones [`1741a6a9`](https://github.com/tednaaa/shonk-ui/commit/1741a6a9ba3023e68b0c9d96bf5d49f9d65946e2)
+- feat(data-table): show rows as cards [`03574faf`](https://github.com/tednaaa/shonk-ui/commit/03574fafdf2fd23ecd43f8910add020f830260a0)
+
 ## v0.17.0 (2026-11-18)
 
 - feat(filtered-search): pass edited value [`b47064d4`](https://github.com/tednaaa/shonk-ui/commit/b47064d4126ccc0bcb27510876239455356fe80c)
