@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.19.0 (2026-11-20)
+
+- feat(filtered-search): name key from editor [`fc0df067`](https://github.com/tednaaa/shonk-ui/commit/fc0df067999446b9426b816a579f0a7951afb0e4)
+
 ## v0.18.0 (2026-11-19)
 
 - fix(data-table): fewer pages on phones [`1741a6a9`](https://github.com/tednaaa/shonk-ui/commit/1741a6a9ba3023e68b0c9d96bf5d49f9d65946e2)
