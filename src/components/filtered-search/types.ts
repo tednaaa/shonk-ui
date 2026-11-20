@@ -5,6 +5,10 @@ export interface FilterOption {
 	label: string;
 }
 
+export interface FilterSubmission extends FilterOption {
+	keyLabel?: string;
+}
+
 export interface FilterOperator {
 	value: string;
 	label: string;

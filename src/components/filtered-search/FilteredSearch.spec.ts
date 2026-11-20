@@ -356,6 +356,35 @@ describe('filteredSearch value editors', () => {
 			{ key: 'createdAt', operator: 'equals', value: '2026', valueLabel: 'This year' },
 		]);
 	});
+
+	it('should name the token by the key label the editor submits', async () => {
+		const TimeframeEditor = markRaw(defineComponent({
+			emits: ['submit'],
+			setup(_, { emit }) {
+				return () => h('button', {
+					'data-testid': 'timeframe',
+					'onClick': () => emit('submit', { value: '4h:30', label: '30', keyLabel: 'MFI 4h' }),
+				});
+			},
+		}));
+
+		wrapper = createComponent({
+			definitions: [{
+				key: 'mfi',
+				label: 'MFI',
+				operators: [{ value: 'lte', label: '≤' }],
+				editor: TimeframeEditor,
+			}],
+		});
+
+		await openValuePhase();
+		document.querySelector<HTMLButtonElement>('[data-testid="timeframe"]')?.click();
+		await flushPromises();
+
+		expect(wrapper.emitted('update:filters')?.at(-1)?.[0]).toMatchObject([
+			{ key: 'mfi', keyLabel: 'MFI 4h', value: '4h:30' },
+		]);
+	});
 });
 
 describe('filteredSearch view only', () => {

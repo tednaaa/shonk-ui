@@ -1,5 +1,5 @@
 import type { MaybeRefOrGetter, Ref } from 'vue';
-import type { ActiveFilter, FilterDefinition, FilterHistoryItem, FilterOperator, FilterOption, FilterTokenSegment, TokenParts } from '../types';
+import type { ActiveFilter, FilterDefinition, FilterHistoryItem, FilterOperator, FilterOption, FilterSubmission, FilterTokenSegment, TokenParts } from '../types';
 import { useFilter } from 'reka-ui';
 import { computed, nextTick, ref, shallowRef, toValue, useId, watch } from 'vue';
 import { pinFirst } from '@/utils';
@@ -177,14 +177,14 @@ export function useFilteredSearch(options: {
 			pickStep({ phase: 'value', definition: s.definition, operator });
 	}
 
-	function commitFilter(value: string | string[], valueLabel: string) {
+	function commitFilter(value: string | string[], valueLabel: string, keyLabel?: string) {
 		const s = valueStep.value;
 		if (!s)
 			return;
 		const filter: ActiveFilter = {
 			id: editingId.value ?? crypto.randomUUID(),
 			key: s.definition.key,
-			keyLabel: s.definition.label,
+			keyLabel: keyLabel ?? s.definition.label,
 			operator: s.operator.value,
 			operatorLabel: s.operator.label,
 			value,
@@ -197,8 +197,8 @@ export function useFilteredSearch(options: {
 		focusInput();
 	}
 
-	function confirmValue(option: FilterOption) {
-		commitFilter(option.value, option.label);
+	function confirmValue(option: FilterSubmission) {
+		commitFilter(option.value, option.label, option.keyLabel);
 	}
 
 	function confirmTypedValue() {
